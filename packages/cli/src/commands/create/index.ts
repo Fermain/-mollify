@@ -29,7 +29,7 @@ async function createEntity(entityType: EntityType, destination = '') {
   await createEntityFiles(entity, destination);
 }
 
-const entityCommand = new Command('create')
+export default new Command('create')
   .arguments('<entity-type> [destination]')
   .description('Create a new entity')
   .action((entityType: EntityType, destination: string) => {
@@ -45,5 +45,3 @@ const entityCommand = new Command('create')
         process.exit(1);
       });
   });
-
-export default entityCommand;

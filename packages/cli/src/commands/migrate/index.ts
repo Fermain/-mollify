@@ -31,7 +31,7 @@ async function migrate() {
   }
 }
 
-const migrateCommand = new Command('migrate')
+export default new Command('migrate')
   .description('Migrate existing content to Mollify structure')
   .action(() => {
     migrate()
@@ -41,5 +41,3 @@ const migrateCommand = new Command('migrate')
         process.exit(1);
       });
   });
-
-export default migrateCommand;
