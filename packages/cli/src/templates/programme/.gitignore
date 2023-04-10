@@ -1,0 +1,17 @@
+# Ignore everything
+*
+
+# Allow files and directories in the root directory of the repo
+!/.gitignore
+!/README.md
+!package.json
+!package-lock.json
+!LICENSE
+
+# Allow the content directory and its subdirectories
+!/content/
+/content/**
+!/content/**/
+!/content/**/+page.md
+!/content/**/+server.js
+!/content/**/+server.ts

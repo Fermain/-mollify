@@ -1,0 +1,11 @@
+{
+  "name": "template-programme",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "mollify-lms start",
+    "build": "mollify-lms build"
+  },
+  "devDependencies": {
+    "@Mollify/lms": "latest"
+  }
+}
