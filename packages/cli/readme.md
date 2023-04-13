@@ -22,7 +22,7 @@ Mollify CLI provides the following commands for managing the filesystem:
 - \`mollify remove [filepath]\`: Remove an existing entity of the specified type.
 - \`mollify format [filepath]\`: Format the specified file.
 - \`mollify migrate [filepath]\`: Migrate the specified file to the required file structure.
-- \`mollify add <entity-type> <giturl>\`: Add a submodule, designed mainly for adding courses to a programme, but can be used for other entity types as well.
+- \`mollify link <entity-type> <giturl>\`: Add a submodule, designed mainly for adding courses to a programme, but can be used for other entity types as well.
 
 Note: The \`[filepath]\` parameter is optional for the \`archive\`, \`remove\`, \`format\`, and \`migrate\` commands. If not provided, the command will use the current working directory.
 
