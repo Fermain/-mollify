@@ -1,7 +1,7 @@
-<script>
-	import Default from './Default.svelte';
+<script lang="ts">
+	import CourseNav from './CourseNav.svelte';
 </script>
 
-<Default>
+<CourseNav>
 	<slot />
-</Default>
+</CourseNav>

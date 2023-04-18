@@ -12,12 +12,8 @@
 	// const paths = currentPath.split('/');
 
 	// console.log('Current path:', currentPath, 'Paths:', paths.length);
-	let expandedCourse = null;
+	let expandedCourse: string | null = null;
 </script>
-
-<header>
-	<label id="switch" class="switch" />
-</header>
 
 <main>
 	<div>
@@ -51,10 +47,6 @@
 		</section>
 	</div>
 </main>
-
-<footer>
-	© {new Date().getFullYear()} Noroff Fagskole AS
-</footer>
 
 <style>
 	@media (min-width: 768px) {
