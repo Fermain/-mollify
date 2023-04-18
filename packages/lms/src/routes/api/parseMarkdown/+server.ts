@@ -5,7 +5,7 @@ import matter from 'gray-matter';
 function parseMarkdown(dir: string) {
 	function walkSync(
 		currentDir: string,
-		fileList: Record<string, Record<string, Record<string, any[]>>> = {}
+		fileList: Record<string, Record<string, Record<string, object[]>>> = {}
 	) {
 		const files = fs.readdirSync(currentDir);
 
@@ -50,7 +50,7 @@ function parseMarkdown(dir: string) {
 	return walkSync(dir);
 }
 
-export async function GET(): Promise<any> {
+export async function GET(): Promise<object> {
 	const files = parseMarkdown('src/routes/content');
 
 	return new Response(JSON.stringify(files));
