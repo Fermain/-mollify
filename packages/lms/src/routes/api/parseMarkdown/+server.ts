@@ -3,7 +3,10 @@ import path from 'path';
 import matter from 'gray-matter';
 
 function parseMarkdown(dir: string) {
-	function walkSync(currentDir: string, fileList: any[] = []) {
+	function walkSync(
+		currentDir: string,
+		fileList: Record<string, Record<string, Record<string, any[]>>> = {}
+	) {
 		const files = fs.readdirSync(currentDir);
 
 		files.forEach((filename) => {
@@ -16,23 +19,26 @@ function parseMarkdown(dir: string) {
 				const rawContent = fs.readFileSync(filePath, 'utf-8');
 				const { data } = matter(rawContent);
 
-				// Split the filePath into segments
 				const filePathSegments = filePath.split(path.sep);
-				// Get the Subject, Course, and Module names from the segments
 				const subject = filePathSegments[filePathSegments.length - 4];
 				const course = filePathSegments[filePathSegments.length - 3];
 				const module = filePathSegments[filePathSegments.length - 2];
 
-				// Organize the data into the desired nested structure
-				fileList.push({
-					[subject]: {
-						[course]: {
-							[module]: {
-								...data,
-								filePath
-							}
-						}
-					}
+				if (!fileList[subject]) {
+					fileList[subject] = {};
+				}
+
+				if (!fileList[subject][course]) {
+					fileList[subject][course] = {};
+				}
+
+				if (!fileList[subject][course][module]) {
+					fileList[subject][course][module] = [];
+				}
+
+				fileList[subject][course][module].push({
+					...data,
+					filePath
 				});
 			}
 		});
@@ -46,10 +52,6 @@ function parseMarkdown(dir: string) {
 
 export async function GET(): Promise<any> {
 	const files = parseMarkdown('src/routes/content');
-	console.log(files);
-	return {
-		body: {
-			files: files
-		}
-	};
+
+	return new Response(JSON.stringify(files));
 }
