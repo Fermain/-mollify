@@ -1,11 +1,12 @@
 ---
-name: Subject 1 Course 1 Module 1
-slug: example-course-1-mod-1
+name: Pastries
+slug: example-course-2-mod-3
 tags:
-  - module 1
+  - module 3
+  - Pastries
 ---
 
-# Module 1
+# Pastries
 
 _Get comfortable with the basics to double your workflow efficiency!_
 

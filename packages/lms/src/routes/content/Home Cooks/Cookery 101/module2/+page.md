@@ -1,11 +1,12 @@
 ---
-name: Subject 1 Course 2 module 2
-slug: example-course-2-mod-2
+name: Baking
+slug: example-course-1-mod-2
 tags:
   - module 2
+  - baking
 ---
 
-# Module 2
+# Baking
 
 _Get comfortable with the basics to double your workflow efficiency!_
 

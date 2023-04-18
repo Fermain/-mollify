@@ -1,11 +1,12 @@
 ---
-name: Subject 1 Course 2 module 3
-slug: example-course-2-mod-3
+name: Gastronomy
+slug: example-course-1-mod-3
 tags:
   - module 3
+  - gastronomy
 ---
 
-# Module 3
+# Gastronomy
 
 _Get comfortable with the basics to double your workflow efficiency!_
 
