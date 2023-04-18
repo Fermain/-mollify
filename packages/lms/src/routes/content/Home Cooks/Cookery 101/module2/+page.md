@@ -4,6 +4,29 @@ slug: example-course-1-mod-2
 tags:
   - module 2
   - baking
+  - cooking lessons
+  - baking lessons
+  - gastronomy for beginners
+  - cooking skills
+  - baking skills
+  - knife skills
+  - seasoning
+  - heat control
+  - sauteing
+  - roasting
+  - boiling
+  - measuring
+  - mixing
+  - oven temperatures
+  - cookies
+  - cakes
+  - breads
+  - flavor profiles
+  - seasonal cooking
+  - food pairing
+  - flavor extraction
+  - molecular gastronomy
+  - plating techniques
 ---
 
 # Baking for Beginners

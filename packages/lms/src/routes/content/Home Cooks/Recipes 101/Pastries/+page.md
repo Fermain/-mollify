@@ -4,6 +4,17 @@ slug: example-course-2-mod-3
 tags:
   - module 3
   - Pastries
+  - pastry making
+  - baking pastries
+  - beginner pastry baking
+  - pastry recipes
+  - croissants
+  - turnovers
+  - puff pastry
+  - pastry dough
+  - pastry filling
+  - homemade pastries
+  - gluten-free pastries
 ---
 
 # How to Make Pastries

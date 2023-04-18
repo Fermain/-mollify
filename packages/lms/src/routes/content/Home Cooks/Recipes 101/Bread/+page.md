@@ -4,6 +4,17 @@ slug: example-course-2-mod-2
 tags:
   - module 2
   - Bread
+  - bread making
+  - baking bread
+  - beginner bread baking
+  - bread recipes
+  - sourdough
+  - yeast bread
+  - bread baking tips
+  - homemade bread
+  - bread dough
+  - gluten-free bread
+  - artisan bread
 ---
 
 # How to Make Bread

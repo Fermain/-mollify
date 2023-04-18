@@ -4,6 +4,17 @@ slug: example-course-2-mod-1
 tags:
   - module 1
   - Cake
+  - cake making
+  - baking cakes
+  - beginner cake baking
+  - cake recipes
+  - layer cakes
+  - cake decorating
+  - frosting and icing
+  - cake baking tips
+  - homemade cakes
+  - gluten-free cakes
+  - celebration cakes
 ---
 
 # How to Make a Basic Vanilla Cake

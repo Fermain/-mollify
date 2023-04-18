@@ -4,6 +4,18 @@ slug: cooking
 tags:
   - module 1
   - cooking
+  - cooking lessons
+  - beginner cooking
+  - cooking skills
+  - home cook basics
+  - knife skills
+  - seasoning
+  - heat control
+  - sauteing
+  - roasting
+  - boiling
+  - recipes for beginners
+  - meal planning
 ---
 
 # Cooking for Beginners
