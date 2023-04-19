@@ -1,43 +1,49 @@
 import { Command } from 'commander';
-import inquirer from 'inquirer';
-import path from 'path';
-import {
-  countMarkdownFiles,
-  recursivelyFindMarkdown,
-  moveMarkdownFile,
-} from '../../utilities';
+import { prompt } from 'enquirer';
+import { EntityType } from '../../types';
+import listMarkdown from '../../actions/listMarkdown';
+import migrateEntity from '../../actions/migrateEntity';
 
-async function migrate() {
-  const projectRoot = process.cwd();
-  const srcRoutesPath = path.join(projectRoot, 'content');
-  const count = countMarkdownFiles(projectRoot);
+async function migrateEntityPrompt(entityType: EntityType, basePath = '') {
+  const files = await listMarkdown(basePath);
 
-  const { convert } = await inquirer.prompt<{
-    convert: boolean;
+  const { originPath, name } = await prompt<{
+    originPath: string;
+    name: string;
   }>([
     {
-      type: 'confirm',
-      name: 'convert',
-      message: 'Convert existing Markdown files to Mollify content?',
-      when: count > 0,
-      default: true,
+      type: 'autocomplete',
+      name: 'originPath',
+      message: `Which ${entityType} do you want to migrate?`,
+      choices: files,
+      initial: 0,
+    },
+    {
+      type: 'input',
+      name: 'name',
+      message: `What is the name of the ${entityType}?`,
+      validate(input) {
+        return input.length > 0;
+      },
     },
   ]);
 
-  if (convert) {
-    for await (const markdownFile of recursivelyFindMarkdown(projectRoot)) {
-      await moveMarkdownFile(markdownFile);
-    }
-  }
+  await migrateEntity(originPath, entityType, name);
 }
 
 export default new Command('migrate')
-  .description('Migrate existing content to Mollify structure')
-  .action(() => {
-    migrate()
-      .then(() => console.log('Migration completed'))
+  .arguments('<entity-type>')
+  .description('Migrate a markdown file to an entity')
+  .action((entityType: EntityType) => {
+    if (!Object.values(EntityType).includes(entityType)) {
+      console.error(`Invalid entity type: ${entityType}`);
+      process.exit(1);
+    }
+
+    migrateEntityPrompt(entityType)
+      .then(() => console.log('Entity migrated'))
       .catch((error) => {
-        console.error(`Error during migration: ${error.message}`);
+        console.error(`Error migrating entity: ${error.message}`);
         process.exit(1);
       });
   });

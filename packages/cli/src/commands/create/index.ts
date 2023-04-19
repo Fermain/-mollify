@@ -1,10 +1,10 @@
 import { Command } from 'commander';
 import { prompt } from 'enquirer';
-import { createEntityFiles } from '../../utilities';
-import { EntityType, Entity } from '../../types';
 import slugify from 'slugify';
+import { EntityType, Entity } from '../../types';
+import createEntity from '../../actions/createEntity';
 
-async function createEntity(entityType: EntityType, destination = '') {
+async function createEntityPrompt(entityType: EntityType, destination = '') {
   const entity: Entity = {
     ...(await prompt<Entity>([
       {
@@ -26,7 +26,7 @@ async function createEntity(entityType: EntityType, destination = '') {
     type: entityType,
   };
 
-  await createEntityFiles(entity, destination);
+  await createEntity(entity, destination);
 }
 
 export default new Command('create')
@@ -38,7 +38,7 @@ export default new Command('create')
       process.exit(1);
     }
 
-    createEntity(entityType, destination)
+    createEntityPrompt(entityType, destination)
       .then(() => console.log('Entity created'))
       .catch((error) => {
         console.error(`Error creating entity: ${error.message}`);
