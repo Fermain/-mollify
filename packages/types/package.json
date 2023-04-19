@@ -1,0 +1,26 @@
+{
+  "name": "@mollify/types",
+  "version": "0.0.1",
+  "description": "Global type definitions for @mollify",
+  "author": "Fermain <Fermain@users.noreply.github.com>",
+  "homepage": "https://github.com/Fermain/-Mollify#readme",
+  "license": "ISC",
+  "main": "lib/index.ts",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fermain/-Mollify.git"
+  },
+  "scripts": {
+    "test": "node ./__tests__/types.test.js"
+  },
+  "bugs": {
+    "url": "https://github.com/Fermain/-Mollify/issues"
+  }
+}
