@@ -1,0 +1,13 @@
+---
+name: Culinary Basics
+slug: example-course-1-mod-3
+tags:
+---
+
+# Culinary Basics - The Burnt Toast Way
+
+Are you tired of those fancy culinary schools that teach you how to cook like a professional chef? Look no further than The Burnt Toast Institute's Culinary Basics course!
+
+In this course, we'll teach you the fundamentals of cooking like a true amateur. You'll learn how to burn toast like a pro, overcook your pasta to a mushy consistency, and turn your vegetables into a soggy mess.
+
+At The Burnt Toast Institute, we believe in taking the basics to the extreme. So forget about perfectly seared steaks and expertly seasoned sauces, and come join us for a culinary adventure that will leave you with a kitchen full of smoke and a stomach full of regret. Sign up for Culinary Basics - The Burnt Toast Way today!
