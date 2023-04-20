@@ -1,14 +1,15 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import RecursiveNav from '../nav/RecursiveNav.svelte';
+	import { files } from '$lib/stores/files.ts';
 
 	let institutes = {};
 
 	onMount(async () => {
-		const response = await fetch('/api/parseMarkdown');
-		institutes = await response.json();
-
-		console.log(institutes);
+		const unsubscribe = files.subscribe((data) => {
+			institutes = data;
+		});
+		return () => unsubscribe();
 	});
 </script>
 
@@ -24,6 +25,9 @@
 </main>
 
 <style>
+	main {
+		padding: 1rem;
+	}
 	@media (min-width: 768px) {
 		div {
 			display: grid;

@@ -1,10 +1,14 @@
 <script>
 	import { onMount } from 'svelte';
+	import { files } from '$lib/stores/files.ts';
+
 	let institutes = {};
+
 	onMount(async () => {
-		const response = await fetch('/api/parseMarkdown');
-		institutes = await response.json();
-		console.log('institutes:', institutes);
+		const unsubscribe = files.subscribe((data) => {
+			institutes = data;
+		});
+		return () => unsubscribe();
 	});
 </script>
 
