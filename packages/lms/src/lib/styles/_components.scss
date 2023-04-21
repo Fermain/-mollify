@@ -78,10 +78,10 @@ select {
 	display: flex;
 	align-items: center;
 	border: 0;
-	border-radius: 10px;
+	border-radius: 5px;
 	background-color: var(--background-input);
 	color: var(--text-input);
-	padding: $spacing-s;
+	padding: var(--spacing-s);
 	font-size: var(--spacing-m);
 	font-family: 'Inter', sans-serif;
 	width: 100%;
@@ -96,7 +96,6 @@ select {
 }
 
 input[type='search'] {
-	border-radius: 20px;
 	background-color: var(--background-input);
 	color: var(--text-input);
 	padding: $spacing-xs $spacing-m;
