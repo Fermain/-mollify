@@ -4,9 +4,7 @@
 
 <style>
     
-    .chat-content {
-  background-color: #06528558;
-  border: 3px solid #0f5a8f;
+  .chat-content {
   flex-grow: 1;
   }
   
@@ -14,12 +12,11 @@
   
   .greeting {
   color: white;
-  max-width: 70%;
-  margin: 10px;
+  max-width: 100%;
+  margin: 0;
+  margin: 5px 0px 5px 0px;
+  background-color: #323e47e8;
   cursor: default; 
-  background-color: #0d5686; 
-  border: 3px solid #1373b7;
-  border-radius: 10px 10px 10px 10px;
   padding: 10px;
   display: flex; 
   }
@@ -31,9 +28,6 @@
 </style>
 
 <div class="chat-content">
-
-  
-
   <div class="greeting">
     <Logo />
    <span>Hello, what can I do for you?</span>

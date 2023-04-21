@@ -1,18 +1,23 @@
 <script lang=ts>
 export let expanded: boolean = false;
 
-export let command: string; 
+export let expandButton = () => {
+  expanded = !expanded;
+}
+
 </script>
 
 <style>
   button {
-  padding: 10px;
-  border: 1px solid #0f5a8f;
-  border-radius: 5px;
-  background-color: #065285;
-  color: white;
+    padding: 10px;
+  background-color: #323E47;
+  border: none;
+  color: white; 
   cursor: pointer;
   }
-</style>
 
-<button on:click={() => expanded = !expanded}>{command}</button>
+
+</style> 
+
+
+<button on:click={expandButton}>V</button>
