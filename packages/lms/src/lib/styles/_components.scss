@@ -1,0 +1,133 @@
+// icons
+@mixin icon {
+	font-family: 'Material Symbols Outlined';
+	font-style: normal;
+	font-size: 28px;
+	display: inline-block;
+	line-height: 1;
+	text-transform: none;
+	letter-spacing: normal;
+	word-wrap: normal;
+	white-space: nowrap;
+	direction: ltr;
+	font-variation-settings: 'FILL' 1, 'wght' 100, 'GRAD' -25, 'opsz' 48;
+}
+
+.icon-f {
+	@include icon;
+}
+
+.icon-o {
+	@include icon;
+	font-variation-settings: 'FILL' 0;
+}
+
+// buttons
+@mixin button {
+	padding: $spacing-s $spacing-l;
+	border-radius: $border-radius-xs;
+	border: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	column-gap: 5px;
+	font-size: var(--font-size-xs);
+	font-weight: 400;
+	letter-spacing: 0.2px;
+	width: fit-content;
+	cursor: pointer;
+	font-family: inherit;
+	color: var(--text-primary);
+	i {
+		font-size: 20px;
+
+		&.dark {
+			color: var(--primary);
+		}
+
+		&.light {
+			color: var(--white);
+		}
+	}
+}
+
+button {
+	@include button;
+
+	&.ghost {
+		color: var(--text-primary);
+		background-color: unset;
+		padding: 0;
+	}
+}
+
+input[type='text'],
+input[type='password'],
+input[type='email'],
+input[type='search'],
+input[type='datetime-local'],
+input[type='date'],
+input[type='month'],
+input[type='number'],
+input[type='tel'],
+input[type='time'],
+input[type='url'],
+input[type='week'],
+textarea,
+select {
+	display: flex;
+	align-items: center;
+	border: 0;
+	border-radius: 10px;
+	background-color: var(--background-input);
+	color: var(--text-input);
+	padding: $spacing-s;
+	font-size: var(--spacing-m);
+	font-family: 'Inter', sans-serif;
+	width: 100%;
+
+	&::-webkit-scrollbar {
+		display: none;
+	}
+
+	i {
+		font-size: 18px;
+	}
+}
+
+input[type='search'] {
+	border-radius: 20px;
+	background-color: var(--background-input);
+	color: var(--text-input);
+	padding: $spacing-xs $spacing-m;
+}
+
+input[type='date'] {
+	position: relative;
+}
+
+input[type='date']::-webkit-calendar-picker-indicator {
+	background: transparent;
+	bottom: 0;
+	color: transparent;
+	cursor: pointer;
+	height: auto;
+	left: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: auto;
+}
+
+input:focus,
+textarea:focus,
+select:focus,
+input:hover,
+textarea:hover,
+select:hover {
+	outline: none;
+}
+
+textarea {
+	resize: none;
+}

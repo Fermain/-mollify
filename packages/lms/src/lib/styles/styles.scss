@@ -1,11 +1,3 @@
-*,
-*:before,
-*:after {
-	box-sizing: inherit;
-}
-
-body {
-	margin: 0;
-	box-sizing: border-box;
-	background-color: red;
-}
+@import 'colors';
+@import 'variables';
+@import 'global';
