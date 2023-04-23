@@ -12,7 +12,7 @@ const config = {
 			highlight: {},
 			extensions: ['.md'],
 			layout: {
-				_: './src/lib/components/layout/DefaultWrapper.svelte'
+				_: './src/lib/components/layout/MarkdownWrapper.svelte'
 			}
 		})
 	],
