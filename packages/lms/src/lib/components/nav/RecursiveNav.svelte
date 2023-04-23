@@ -1,24 +1,33 @@
 <script lang="ts">
 	export let data: Record<string, any> = {};
 	export let open = false;
+
 	function toggleOpen() {
 		open = !open;
 	}
-	export let indent = 0;
-	export let path = '/content/';
+
+	export let indent = 0.125;
+	export let path: string;
 </script>
 
 {#each Object.entries(data) as [name, children]}
 	<h3 style="padding-left: {indent}rem" on:click={toggleOpen}>
 		{name}
-		{open ? '(open)' : '(closed)'}
 	</h3>
 	{#if open}
 		{#each Object.entries(children) as [childName, child]}
-			{#if childName === 'description'}
+			{#if childName === 'description' && Object.keys(children).length === 1}
 				<a href={`${path}${name}`} style="padding-left: {indent}rem">{child.name}</a>
+			{:else if childName === 'description'}
+				<a href={`${path}${name}`} style="padding-left: {indent + 1.5}rem">{child.name}</a>
 			{:else if typeof child === 'object'}
-				<svelte:self data={{ [childName]: child }} indent={indent + 1} path={`${path}${name}/`} />
+				{#if Object.values(child).every((value) => typeof value !== 'object')}
+					<a href={`${path}${name}/${childName}`} style="padding-left: {indent + 1}rem"
+						>{childName}</a
+					>
+				{:else}
+					<svelte:self data={{ [childName]: child }} indent={indent + 1} path={`${path}${name}/`} />
+				{/if}
 			{/if}
 		{/each}
 	{/if}
@@ -32,7 +41,8 @@
 		display: block;
 		border: 1px solid black;
 		margin: 0;
-		font-size: 1.5rem;
+		font-size: 1.25rem;
+		cursor: pointer;
 	}
 	a {
 		font-size: 1.2rem;
