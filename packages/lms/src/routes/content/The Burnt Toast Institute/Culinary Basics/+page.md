@@ -3,7 +3,7 @@ name: Culinary Basics
 slug: culinary-basics
 type: Programme
 path: The Burnt Toast Institute/Culinary Basics
-url: https://cdn.discordapp.com/attachments/1075082732482330704/1098553676680933449/Ancalagen_vector_logo_of_burnt_toast_for_a_cooking_institute_d3ea6350-c10f-4141-8684-e44599ef0076.png
+url: https://cdn.discordapp.com/attachments/1075082732482330704/1100040094498431127/Ancalagen_Kitchen_burning_toast_overflowing_pots_on_stove_carto_efb79654-879c-4c22-ad23-7e627ba04c1e.png
 summary: Are you tired of those fancy culinary schools that teach you how to cook like a professional chef? Look no further than The Burnt Toast Institute's Culinary Basics course!
 tags:
 ---
