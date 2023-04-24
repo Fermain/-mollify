@@ -1,6 +1,39 @@
 <script lang="ts">
-import sendChat from "../logo/paper-plane.svg";
-export let img: string = sendChat;
+  import sendChat from '../logo/paper-plane.svg';
+  export let img: string = sendChat;
+
+  interface Message {
+      role: 'user' | 'assistant';
+      content: string;
+  }
+
+  const messages: Message[] = [];
+
+  function sendMessage(): void {
+      const textarea: HTMLTextAreaElement | null = document.querySelector('textarea');
+      if (!textarea) return;
+
+      const content: string = textarea.value.trim();
+
+      if (content !== '') {
+          const message: Message = {
+              role: 'user',
+              content: content
+          };
+
+          messages.push(message);
+          console.log(messages);
+
+          // Call an API or a function to get a response from the assistant
+          // and add it to the messages array with a role of "assistant"
+
+          // Clear the textarea
+          textarea.value = '';
+      } else {
+          // Display an error message if the textarea is empty
+          alert('Please enter a message.');
+      }
+  }
 
 </script>
 
@@ -43,7 +76,7 @@ export let img: string = sendChat;
 
 <div class="chat-input">
   
-  <form action="push">
+  <form on:submit|preventDefault={sendMessage}>
 
    <textarea placeholder="Ask Molly"/>
 
