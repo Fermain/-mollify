@@ -20,5 +20,5 @@ export let expandButton = () => {
   }
 </style>
 
-    <button class="chat-bubble" on:click={expandButton}> <Logo /></button>
+<button class="chat-bubble" on:click={expandButton}> <Logo /></button>
   

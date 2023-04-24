@@ -1,3 +1,8 @@
+<script lang="ts">
+import sendChat from "../logo/paper-plane.svg";
+export let img: string = sendChat;
+
+</script>
 
 <style>
     .chat-input {
@@ -22,21 +27,27 @@
 
   .chat-input button {
   padding: 10px;
+  width: 50px;
   border: none;
-  border-radius: 5px;
-  background-color: #323D47;
+  border-radius: 10px;
+  background-color: #21A299;
   color: white;
   cursor: pointer;
+  }
+
+  img {
+    width: 20px;
+    height: 20px;
   }
 </style>
 
 <div class="chat-input">
   
-  <form action="">
+  <form action="push">
 
    <textarea placeholder="Ask Molly"/>
 
-   <button>send</button>
+   <button><img src={img} alt="send message"></button>
 
   </form>
 
