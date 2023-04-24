@@ -4,31 +4,38 @@
 	import CourseNav from '../nav/CourseNav.svelte';
 	import { files } from '$lib/stores/files';
 	import { getCurrent } from '$lib/utils/getCurrent';
+	import { browser } from '$app/environment';
 
 	let institutes = {};
 	let current = {};
 	let isCourse = false;
 
-	onMount(async () => {
-		const unsubscribe = files.subscribe((data) => {
-			institutes = data;
+	if (browser) {
+		onMount(async () => {
+			const unsubscribe = files.subscribe((data) => {
+				institutes = data;
+			});
+
+			return () => unsubscribe();
 		});
-		current = getCurrent(institutes, pathArray);
-		if (
-			current.description.type === 'Course' ||
-			current.description.type === 'Module' ||
-			current.description.type === 'Lesson'
-		) {
-			isCourse = true;
-		}
+	}
 
-		console.log(isCourse);
-		return () => unsubscribe();
-	});
-
-	const path = window.location.pathname.replaceAll(`%20`, ' ');
+	const path = browser ? window.location.pathname.replaceAll(`%20`, ' ') : '';
 	const objectPath = path.replace('/content/', '');
 	const pathArray = objectPath.split('/');
+
+	$: {
+		current = getCurrent(institutes, pathArray);
+		if (
+			current?.description?.type === 'Course' ||
+			current?.description?.type === 'Module' ||
+			current?.description?.type === 'Lesson'
+		) {
+			isCourse = true;
+		} else {
+			isCourse = false;
+		}
+	}
 </script>
 
 {#if isCourse}
