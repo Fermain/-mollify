@@ -1,13 +1,11 @@
 <script lang="ts">
-	import { dataset_dev } from 'svelte/internal';
-
 	export let data: Record<string, any> = {};
 	export let indent = 0.125;
 	const path = '/content/';
 </script>
 
 <h3 style="padding-left: {indent}rem">
-	{data.description.name}
+	{data.description.title}
 </h3>
 <a href={`${path}${data.description.path}`} style="padding-left: {indent + 1}rem">Overview</a>
 {#each Object.entries(data) as [moduleName, module]}

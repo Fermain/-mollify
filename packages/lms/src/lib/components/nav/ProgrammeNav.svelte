@@ -5,14 +5,14 @@
 <main>
 	<slot />
 
-	<h2>{data.description?.name} {data.description?.type}s</h2>
+	<h2>{data.description?.title} {data.description?.type}s</h2>
 	<div class="inst-grid">
 		{#each Object.entries(data) as [institute, instituteData]}
 			{#if institute !== 'description'}
 				<div class="card">
 					{#if instituteData.description}
-						<h3>{instituteData.description.name}</h3>
-						<img src={instituteData.description.url} alt={instituteData.description.name} />
+						<h3>{instituteData.description.title}</h3>
+						<img src={instituteData.description.url} alt={instituteData.description.title} />
 						<p>{instituteData.description.summary}</p>
 						<a href={`/content/${instituteData.description.path}`}>View Details</a>
 					{/if}

@@ -1,9 +1,9 @@
 ---
-name: Burnt Pie Crusts
+title: Burnt Pie Crusts
 slug: burnt-pie-crusts
 type: Lesson
 path: The Burnt Toast Institute/Baking Disasters/Introduction to Baking Disasters/Pies and Tarts/Burnt Pie Crusts
-dependency: None
+dependency: null
 tags:
 ---
 

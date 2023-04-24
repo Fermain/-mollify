@@ -1,5 +1,5 @@
 ---
-name: Baking Disasters
+title: Baking Disasters
 slug: baking-disasters
 type: Programme
 path: The Burnt Toast Institute/Baking Disasters

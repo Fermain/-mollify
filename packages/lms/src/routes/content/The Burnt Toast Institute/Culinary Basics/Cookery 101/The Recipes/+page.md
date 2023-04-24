@@ -1,9 +1,9 @@
 ---
-name: Recipes 101
+title: Recipes 101
 slug: recipes-101
 type: Module
 path: The Burnt Toast Institute/Culinary Basics/Cookery 101/The Recipes
-dependency: None
+dependency: null
 tags:
 ---
 

@@ -1,5 +1,5 @@
 ---
-name: Gastronomy
+title: Gastronomy
 slug: gastronomy
 type: Lesson
 path: The Burnt Toast Institute/Culinary Basics/Cookery 101/The Basics/Gastronomy

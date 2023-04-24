@@ -1,9 +1,9 @@
 ---
-name: Pies and Tarts
+title: Pies and Tarts
 slug: pies-and-tarts
 type: Module
 path: The Burnt Toast Institute/Baking Disasters/Introduction to Baking Disasters/Pies and Tarts
-dependency: None
+dependency: null
 tags:
 ---
 

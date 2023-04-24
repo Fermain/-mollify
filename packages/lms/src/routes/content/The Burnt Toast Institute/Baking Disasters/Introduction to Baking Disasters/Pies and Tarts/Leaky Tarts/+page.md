@@ -1,9 +1,9 @@
 ---
-name: Leaky Tarts
+title: Leaky Tarts
 slug: leaky-tarts
 type: Lesson
 path: The Burnt Toast Institute/Baking Disasters/Introduction to Baking Disasters/Pies and Tarts/Leaky Tarts
-dependency: None
+dependency: Overfilled and Sticky Pies
 tags:
 ---
 

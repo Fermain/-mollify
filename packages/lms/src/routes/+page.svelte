@@ -37,7 +37,7 @@
 			<div class="card">
 				<h3>{institute}</h3>
 				{#if instituteData.description}
-					<img src={instituteData.description.url} alt={instituteData.description.name} />
+					<img src={instituteData.description.url} alt={instituteData.description.title} />
 					<p>{instituteData.description.summary}</p>
 					<a href={`/content/${institute}`}>View Details</a>
 				{/if}

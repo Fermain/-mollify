@@ -1,5 +1,5 @@
 ---
-name: The Basics
+title: The Basics
 slug: the-basics
 type: Module
 path: The Burnt Toast Institute/Culinary Basics/Cookery 101/The Basics

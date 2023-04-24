@@ -1,5 +1,5 @@
 ---
-name: Culinary Basics
+title: Culinary Basics
 slug: culinary-basics
 type: Programme
 path: The Burnt Toast Institute/Culinary Basics
