@@ -1,9 +1,5 @@
 <script lang="ts">
-	import { dataset_dev } from 'svelte/internal';
-
 	export let data: Record<string, any> = {};
-	const path = '/content/';
-	console.log(data);
 </script>
 
 <main>
@@ -15,6 +11,7 @@
 			{#if institute !== 'description'}
 				<div class="card">
 					{#if instituteData.description}
+						<h3>{instituteData.description.name}</h3>
 						<img src={instituteData.description.url} alt={instituteData.description.name} />
 						<p>{instituteData.description.summary}</p>
 						<a href={`/content/${instituteData.description.path}`}>View Details</a>

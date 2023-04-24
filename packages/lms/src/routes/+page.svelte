@@ -1,6 +1,6 @@
-<script>
+<script lang="ts">
 	import { onMount } from 'svelte';
-	import { files } from '$lib/stores/files.ts';
+	import { files } from '$lib/stores/files';
 
 	let institutes = {};
 
