@@ -1,6 +1,11 @@
 import adapter from '@sveltejs/adapter-auto';
 import { vitePreprocess } from '@sveltejs/kit/vite';
 import { mdsvex } from 'mdsvex';
+import { join } from 'path';
+import { fileURLToPath } from 'url';
+
+const currentDir = fileURLToPath(new URL('.', import.meta.url));
+const pathToLayout = join(currentDir, 'src/lib/components/layout/MarkdownWrapper.svelte');
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -12,7 +17,7 @@ const config = {
 			highlight: {},
 			extensions: ['.md'],
 			layout: {
-				_: './src/lib/components/layout/MarkdownWrapper.svelte'
+				_: pathToLayout
 			}
 		})
 	],
