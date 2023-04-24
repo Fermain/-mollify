@@ -1,13 +1,12 @@
 ---
-name: Cookery 101
-slug: cookery-101
-type: Course
-path: The Burnt Toast Institute/Culinary Basics/Cookery 101
-dependency: None
+name: The Basics
+slug: the-basics
+type: Module
+path: The Burnt Toast Institute/Culinary Basics/Cookery 101/The Basics
 tags:
 ---
 
-### Cookery 101 - The Burnt Toast Institute
+### The Basics - The Burnt Toast Institute
 
 Welcome to Cookery 101, the module that will teach you the most essential culinary skills at The Burnt Toast Institute.
 

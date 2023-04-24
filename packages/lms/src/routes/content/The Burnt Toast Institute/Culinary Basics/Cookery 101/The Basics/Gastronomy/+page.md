@@ -1,6 +1,9 @@
 ---
 name: Gastronomy
-slug: example-course-1-mod-3
+slug: gastronomy
+type: Lesson
+path: The Burnt Toast Institute/Culinary Basics/Cookery 101/The Basics/Gastronomy
+dependency: Baking
 tags:
   - module 3
   - gastronomy
@@ -29,6 +32,6 @@ tags:
   - plating techniques
 ---
 
-# Cookery 101
+# Gastronomy for Beginners
 
-Course description blah blah blah!!!.
+lesson description blah blah blah!!!.

@@ -1,6 +1,9 @@
 ---
 name: Baking
-slug: example-course-1-mod-2
+slug: baking
+type: Lesson
+path: The Burnt Toast Institute/Culinary Basics/Cookery 101/The Basics/Baking
+dependency: Cooking
 tags:
   - module 2
   - baking

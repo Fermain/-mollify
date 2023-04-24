@@ -1,0 +1,12 @@
+---
+name: Lopsided Cakes
+slug: lopsided-cakes
+type: Lesson
+path: The Burnt Toast Institute/Baking Disasters/Introduction to Baking Disasters/Cakes and Cupcakes/Lopsided Cakes
+dependency: None
+tags:
+---
+
+# Lopsided Cakes
+
+Discover the art of creating lopsided cakes, perfect for any celebration that screams imperfection.
