@@ -1,26 +1,29 @@
 <script lang="ts">
-	export let type: String;
+	let searchValue: String;
 </script>
 
-<nav class="block-nav {type}">
-	{type} nav
+<nav class="block-nav">
+	<i class="icon-f">home</i>
+	<input type="search" bind:value={searchValue} placeholder="Search..." />
 </nav>
 
 <style>
 	nav {
-		display: grid;
+		display: flex;
+		flex-direction: column;
+		grid-area: nav;
 		justify-content: center;
-		align-items: center;
-		width: 100px;
-		height: 100px;
+		width: 200px;
+		height: 200px;
+		top: var(--spacing-xxl);
+		left: 0;
 		background-color: var(--primary-ltr);
+		position: absolute;
 	}
 
-	.module {
-		grid-area: nav1;
-	}
-
-	.course {
-		grid-area: nav2;
+	input {
+		grid-area: reader;
+		width: 50%;
+		margin: 0 auto;
 	}
 </style>

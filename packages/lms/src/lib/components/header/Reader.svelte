@@ -2,10 +2,13 @@
 	let searchValue: String;
 </script>
 
-<input type="search" bind:value={searchValue} placeholder="Search..." />
+<div class="reader">Reader</div>
 
 <style>
-	input {
+	.reader {
 		grid-area: reader;
+		width: 50%;
+		margin: 0 auto;
+		text-align: center;
 	}
 </style>

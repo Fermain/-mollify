@@ -7,5 +7,6 @@
 		grid-area: footer;
 		background-color: var(--primary);
 		color: var(--white);
+		padding: var(--spacing-m);
 	}
 </style>
