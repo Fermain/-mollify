@@ -5,7 +5,10 @@
 <main>
 	<slot />
 
-	<h2>{data.description?.title} {data.description?.type}s</h2>
+	<h2>
+		{data.description?.title}
+		{#if data.description?.type === 'Institute'}Programmes{:else}Courses{/if}
+	</h2>
 	<div class="inst-grid">
 		{#each Object.entries(data) as [institute, instituteData]}
 			{#if institute !== 'description'}
