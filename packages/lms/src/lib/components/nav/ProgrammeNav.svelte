@@ -7,7 +7,7 @@
 
 	<h2>
 		{data.frontmatter?.title}
-		{#if data.frontmatter?.type === 'Institute'}Programmes{:else}Courses{/if}
+		{data.frontmatter?.type === 'Institute' ? 'Programmes' : 'Courses'}
 	</h2>
 	<div class="inst-grid">
 		{#each Object.entries(data) as [institute, instituteData]}
