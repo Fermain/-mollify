@@ -25,7 +25,7 @@ export function parseMarkdown(dir: string) {
 				// If the current item is a markdown file, read the file and parse the frontmatter
 				const rawContent = fs.readFileSync(filePath, 'utf-8');
 				const { data } = matter(rawContent);
-				currentObject.description = { ...data, filePath };
+				currentObject.frontmatter = { ...data, filePath };
 			}
 		});
 

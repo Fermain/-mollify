@@ -23,13 +23,14 @@
 	const path = browser ? window.location.pathname.replaceAll(`%20`, ' ') : '';
 	const objectPath = path.replace('/content/', '');
 	const pathArray = objectPath.split('/');
+	const currentPath: string = pathArray[pathArray.length - 1];
 
 	$: {
 		current = getCurrent(institutes, pathArray);
 		if (
-			current?.description?.type === 'Course' ||
-			current?.description?.type === 'Module' ||
-			current?.description?.type === 'Lesson'
+			current?.frontmatter?.type === 'Course' ||
+			current?.frontmatter?.type === 'Module' ||
+			current?.frontmatter?.type === 'Lesson'
 		) {
 			isCourse = true;
 		} else {
@@ -43,7 +44,7 @@
 	<main>
 		<div>
 			<nav>
-				<CourseNav data={current} />
+				<CourseNav data={current} {currentPath} />
 			</nav>
 			<section>
 				<slot />
@@ -55,6 +56,11 @@
 	<ProgrammeNav data={current}>
 		<slot />
 	</ProgrammeNav>
+{:else}
+	<!-- If current path is to a page that doesn't exist -->
+	<main>
+		<slot />
+	</main>
 {/if}
 
 <style>

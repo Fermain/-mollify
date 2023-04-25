@@ -16,9 +16,9 @@
 	</h3>
 	{#if open}
 		{#each Object.entries(children) as [childName, child]}
-			{#if childName === 'description' && Object.keys(children).length === 1}
+			{#if childName === 'frontmatter' && Object.keys(children).length === 1}
 				<a href={`${path}${name}`} style="padding-left: {indent}rem">{child.name}</a>
-			{:else if childName === 'description'}
+			{:else if childName === 'frontmatter'}
 				<a href={`${path}${name}`} style="padding-left: {indent + 1.5}rem">{child.name}</a>
 			{:else if typeof child === 'object'}
 				{#if Object.values(child).every((value) => typeof value !== 'object')}

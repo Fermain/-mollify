@@ -2,18 +2,19 @@
 	export let data: Record<string, any> = {};
 	export let indent = 0.125;
 	const path = '/content/';
+	export let currentPath: string;
 </script>
 
 <h3 style="padding-left: {indent}rem">
-	{data.description.title}
+	{data.frontmatter.title}
 </h3>
-<a href={`${path}${data.description.path}`} style="padding-left: {indent + 1}rem">Overview</a>
+<a href={`${path}${data.frontmatter.path}`} style="padding-left: {indent + 1}rem">Overview</a>
 {#each Object.entries(data) as [moduleName, module]}
-	{#if moduleName !== 'description'}
+	{#if moduleName !== 'frontmatter'}
 		<h3>{moduleName}</h3>
 		{#each Object.entries(module) as [lessonName, lesson]}
-			{#if lessonName !== 'description'}
-				<a href={`${path}${lesson.description.path}`} style="padding-left: {indent + 1}rem"
+			{#if lessonName !== 'frontmatter'}
+				<a href={`${path}${lesson.frontmatter.path}`} style="padding-left: {indent + 1}rem"
 					>{lessonName}</a
 				>
 			{:else}
@@ -42,5 +43,6 @@
 		padding: 0.25rem;
 		display: block;
 		border: 1px solid gray;
+		text-decoration: none;
 	}
 </style>

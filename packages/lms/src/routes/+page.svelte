@@ -36,9 +36,9 @@
 		{#each Object.entries(institutes) as [institute, instituteData]}
 			<div class="card">
 				<h3>{institute}</h3>
-				{#if instituteData.description}
-					<img src={instituteData.description.url} alt={instituteData.description.title} />
-					<p>{instituteData.description.summary}</p>
+				{#if instituteData.frontmatter}
+					<img src={instituteData.frontmatter.url} alt={instituteData.frontmatter.title} />
+					<p>{instituteData.frontmatter.summary}</p>
 					<a href={`/content/${institute}`}>View Details</a>
 				{/if}
 			</div>

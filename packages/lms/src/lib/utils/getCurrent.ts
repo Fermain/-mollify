@@ -13,7 +13,7 @@ export function getCurrent(obj: any, keys: string[]): any {
 	}
 
 	// If the current object is a course, return it
-	if (obj.description?.type === 'Course') {
+	if (obj.frontmatter?.type === 'Course') {
 		return obj;
 	}
 

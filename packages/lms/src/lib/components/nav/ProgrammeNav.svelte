@@ -6,18 +6,18 @@
 	<slot />
 
 	<h2>
-		{data.description?.title}
-		{#if data.description?.type === 'Institute'}Programmes{:else}Courses{/if}
+		{data.frontmatter?.title}
+		{#if data.frontmatter?.type === 'Institute'}Programmes{:else}Courses{/if}
 	</h2>
 	<div class="inst-grid">
 		{#each Object.entries(data) as [institute, instituteData]}
-			{#if institute !== 'description'}
+			{#if institute !== 'frontmatter'}
 				<div class="card">
-					{#if instituteData.description}
-						<h3>{instituteData.description.title}</h3>
-						<img src={instituteData.description.url} alt={instituteData.description.title} />
-						<p>{instituteData.description.summary}</p>
-						<a href={`/content/${instituteData.description.path}`}>View Details</a>
+					{#if instituteData.frontmatter}
+						<h3>{instituteData.frontmatter.title}</h3>
+						<img src={instituteData.frontmatter.url} alt={instituteData.frontmatter.title} />
+						<p>{instituteData.frontmatter.summary}</p>
+						<a href={`/content/${instituteData.frontmatter.path}`}>View Details</a>
 					{/if}
 				</div>
 			{/if}
