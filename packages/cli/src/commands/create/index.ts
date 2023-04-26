@@ -4,8 +4,8 @@ import slugify from 'slugify';
 import { EntityType, Entity } from '../../types';
 import createEntity from '../../actions/createEntity';
 
-async function createEntityPrompt(entityType: EntityType, destination = '') {
-  const title = await prompt<{ title: string }>([
+async function createEntityPrompt(entityType: EntityType, destination = '', passedTitle?: string, passedSlug?: string) {
+  const title = passedTitle ?? (await prompt<{ title: string }>([
     {
       type: 'input',
       name: 'title',
@@ -15,9 +15,9 @@ async function createEntityPrompt(entityType: EntityType, destination = '') {
         return input.length > 0;
       },
     },
-  ]);
+  ])).title;
 
-  const slug = await prompt<{ slug: string }>([
+  const slug = passedSlug ?? (await prompt<{ slug: string }>([
     {
       type: 'input',
       name: 'slug',
@@ -26,13 +26,13 @@ async function createEntityPrompt(entityType: EntityType, destination = '') {
         return input.length > 0;
       },
       message: `What is the slug of the ${entityType}?`,
-      initial: slugify(title.title, { lower: true, strict: true }),
+      initial: slugify(title, { lower: true, strict: true }),
     },
-  ]);
+  ])).slug;
 
   const entity: Entity = {
-    ...title,
-    ...slug,
+    title,
+    slug,
     type: entityType,
   };
 
@@ -40,15 +40,15 @@ async function createEntityPrompt(entityType: EntityType, destination = '') {
 }
 
 export default new Command('create')
-  .arguments('<entity-type> [destination]')
+  .arguments('<entity-type> [destination] [title] [slug]')
   .description('Create a new entity')
-  .action((entityType: EntityType, destination: string) => {
+  .action((entityType: EntityType, destination: string, title?: string, slug?: string) => {
     if (!Object.values(EntityType).includes(entityType)) {
       console.error(`Invalid entity type: ${entityType}`);
       process.exit(1);
     }
 
-    createEntityPrompt(entityType, destination)
+    createEntityPrompt(entityType, destination, title, slug)
       .then(() => console.log('Entity created'))
       .catch((error) => {
         console.error(`Error creating entity: ${error.message}`);
