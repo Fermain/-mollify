@@ -11,14 +11,13 @@
 	nav {
 		display: flex;
 		flex-direction: column;
-		grid-area: nav;
+		grid-area: nav2;
 		justify-content: center;
 		width: 200px;
 		height: 200px;
 		top: var(--spacing-xxl);
 		left: 0;
 		background-color: var(--primary-ltr);
-		position: absolute;
 	}
 
 	input {

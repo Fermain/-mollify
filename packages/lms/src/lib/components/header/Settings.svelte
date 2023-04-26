@@ -1,7 +1,6 @@
 <script lang="ts">
 	let fontSize: number = 16;
 	let themeChoice: string;
-
 	let isActive: Boolean = false;
 </script>
 
@@ -48,10 +47,11 @@
 
 <style>
 	.wrapper {
+		grid-area: settings;
 		position: relative;
 	}
+
 	.settings {
-		grid-area: settings;
 		position: absolute;
 		right: 0;
 		background-color: var(--primary);

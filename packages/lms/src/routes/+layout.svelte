@@ -7,14 +7,7 @@
 	import Settings from '$lib/components/header/Settings.svelte';
 	import Molly from '$lib/components/molly/Molly.svelte';
 	import Navigation from '$lib/components/navigation/Navigation.svelte';
-	import { onMount } from 'svelte';
-	import { files } from '$lib/stores/files';
-
-	onMount(async () => {
-		const response = await fetch('/api/parseMarkdown');
-		const data = await response.json();
-		files.set(data);
-	});
+	import ContentNav from '$lib/components/navigation/ContentNav.svelte';
 </script>
 
 <div class="layout-grid">
@@ -22,26 +15,47 @@
 	<Reader />
 	<Settings />
 	<Molly />
+	<div class="icons" />
 	<Main>
 		<slot />
 	</Main>
-	<Footer />
 	<Navigation />
+	<ContentNav />
+	<Footer />
 </div>
 
 <style lang="scss">
+	* {
+		&:before,
+		&:after {
+			box-sizing: inherit;
+		}
+	}
+
+	body {
+		font-family: sans-serif;
+		margin: 0;
+		box-sizing: border-box;
+	}
+
+	h1 {
+		margin: 0;
+	}
+
 	.layout-grid {
 		display: grid;
-		position: relative;
-		width: 100%;
-		max-width: 1024px;
-		margin: 0 auto;
-		grid-template-columns: 2rem 1fr 3.75rem;
-		grid-template-rows: 2rem auto 1fr auto;
+		grid-template-columns: 3rem calc(80ch + 2rem) 1fr 1fr;
+		grid-template-rows: 3rem 1fr 3rem;
+		min-height: 100vh;
 		grid-template-areas:
-			'brand reader settings'
-			'brand tbc tbc'
-			'. main main'
-			'footer footer footer';
+			'brand header reader settings'
+			'icons body nav1 nav2'
+			'footer  footer footer footer';
+		gap: 0.5rem;
+		padding-right: 1rem;
+	}
+
+	.icons {
+		grid-area: icons;
 	}
 </style>
