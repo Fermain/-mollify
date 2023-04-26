@@ -4,7 +4,7 @@
  * @param keys the keys to search for
  */
 export function getCurrent(obj: any, keys: string[]): any {
-	if (!obj) {
+	if (!obj || !keys) {
 		return undefined;
 	}
 
