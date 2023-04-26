@@ -1,6 +1,6 @@
 ---
 title: Template Evaluation
-slug: template-evaluation
+type: evaluation
 tags:
 - template
 - evaluation

@@ -1,33 +1,39 @@
 import glob from 'glob';
 import path from 'path';
-import matter from 'gray-matter';
 import fs from 'fs/promises';
+import matter from 'gray-matter';
 import type { EntityType, Entity } from '../types';
 
 export default async function getEntities(entityType: EntityType, basePath = ''): Promise<Entity[]> {
-  const pattern = path.join(basePath, '*', '+page.md');
-  const files = glob.sync(pattern);
+  const pattern = path.join(basePath, '**/*', '+page.md');
+  const ignorePattern = path.join('src', 'templates', '**/*'); // Ignore pattern for src/templates
+  const files = glob.sync(pattern, { ignore: ignorePattern });
 
-  const entities: Entity[] = [];
-
-  for (const file of files) {
+  // Utility function to process a single file
+  const processFile = async (file: string): Promise<Entity | null> => {
     try {
       const fileContent = await fs.readFile(file, 'utf8');
       const { data: frontmatter } = matter(fileContent);
       const slug = path.dirname(file).split(path.sep).pop();
 
       if (frontmatter.type === entityType && slug) {
-        entities.push({
-          name: frontmatter.name,
+        return {
+          ...frontmatter,
+          title: frontmatter.title,
           slug,
           type: entityType,
-          ...frontmatter,
-        });
+          path: file
+        };
       }
     } catch (error) {
       console.error(`Error reading file ${file}:`, error);
     }
-  }
+    return null;
+  };
 
-  return entities;
+  // Read all files concurrently using Promise.all
+  const entities = await Promise.all(files.map(processFile));
+
+  // Remove null entries and return the valid entities
+  return entities.filter((entity): entity is Entity => Boolean(entity));
 }

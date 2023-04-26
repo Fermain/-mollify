@@ -33,7 +33,6 @@ export default new Command('remove')
     }
 
     removeEntityPrompt(entityType, basePath)
-      .then(() => console.log('Entity removed'))
       .catch((error) => {
         console.error(`Error removing entity: ${error.message}`);
         process.exit(1);

@@ -1,11 +1,9 @@
 ---
 title: Template Institution
-slug: template-institution
+type: institution
 tags:
 - template
 - institution
-children:
-- template-course
 ---
 
 # Template Institution

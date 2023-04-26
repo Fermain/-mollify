@@ -7,8 +7,9 @@ const main = new Command();
 
 main.addCommand(commands.create);
 // main.addCommand(commands.link); not yet implemented
-// main.addCommand(commands.remove); not yet implemented
+main.addCommand(commands.remove);
 main.addCommand(commands.migrate);
+main.addCommand(commands.list);
 // main.addCommand(commands.format); not yet implemented
 
 // Object.values(commands).forEach((command) => main.addCommand(command));

@@ -5,24 +5,34 @@ import { EntityType, Entity } from '../../types';
 import createEntity from '../../actions/createEntity';
 
 async function createEntityPrompt(entityType: EntityType, destination = '') {
+  const title = await prompt<{ title: string }>([
+    {
+      type: 'input',
+      name: 'title',
+      message: `What is the name of the ${entityType}?`,
+      required: true,
+      validate(input) {
+        return input.length > 0;
+      },
+    },
+  ]);
+
+  const slug = await prompt<{ slug: string }>([
+    {
+      type: 'input',
+      name: 'slug',
+      required: true,
+      validate(input) {
+        return input.length > 0;
+      },
+      message: `What is the slug of the ${entityType}?`,
+      initial: slugify(title.title, { lower: true, strict: true }),
+    },
+  ]);
+
   const entity: Entity = {
-    ...(await prompt<Entity>([
-      {
-        type: 'input',
-        name: 'name',
-        message: `What is the name of the ${entityType}?`,
-        validate(input) {
-          return input.length > 0;
-        },
-      },
-      {
-        type: 'input',
-        name: 'slug',
-        message: `What is the slug of the ${entityType}?`,
-        initial: ({ name }: { name: string }) =>
-          slugify(name, { lower: true, strict: true }),
-      },
-    ])),
+    ...title,
+    ...slug,
     type: entityType,
   };
 

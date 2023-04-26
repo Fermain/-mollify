@@ -8,12 +8,8 @@ export default async function createEntity(entity: Entity, destination = '') {
   const fileName = path.join(entity.slug, ENTITY_FILE);
   const destinationPath = path.join(destination, fileName);
 
-  try {
-    await copyTemplate(templateName, destinationPath, entity);
-    console.log(
-      `Successfully created a new ${entity.type} at ${destinationPath}`,
-    );
-  } catch (error) {
-    console.error(`Error creating a new ${entity.type}:`, error);
-  }
+  await copyTemplate(templateName, destinationPath, entity);
+  console.log(
+    `Successfully created a new ${entity.type} at ${destinationPath}`,
+  );
 }

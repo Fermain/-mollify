@@ -1,11 +1,9 @@
 ---
 title: Template Course
-slug: template-course
+type: course
 tags:
 - template
 - course
-children:
-- template-module
 ---
 
 # Template Course

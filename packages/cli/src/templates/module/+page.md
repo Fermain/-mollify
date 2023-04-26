@@ -1,11 +1,9 @@
 ---
 title: Template Module
-slug: template-module
+type: module
 tags:
 - template
 - module
-children:
-- template-lesson
 ---
 
 # Template Module

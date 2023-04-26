@@ -3,6 +3,7 @@ import link from './link';
 import remove from './remove';
 import migrate from './migrate';
 import move from './move';
+import list from './list';
 
 export default {
   create,
@@ -10,4 +11,5 @@ export default {
   remove,
   migrate,
   move,
+  list
 };

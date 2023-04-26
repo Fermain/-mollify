@@ -9,6 +9,7 @@ export enum EntityType {
 
 export interface Entity {
 	type: EntityType;
-	name: string;
+	title: string;
 	slug: string;
+  path?: string;
 }
