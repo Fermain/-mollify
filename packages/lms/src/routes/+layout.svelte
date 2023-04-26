@@ -7,6 +7,14 @@
 	import Settings from '$lib/components/header/Settings.svelte';
 	import Molly from '$lib/components/molly/Molly.svelte';
 	import Navigation from '$lib/components/navigation/Navigation.svelte';
+	import { onMount } from 'svelte';
+	import { files } from '$lib/stores/files';
+
+	onMount(async () => {
+		const response = await fetch('/api/parseMarkdown');
+		const data = await response.json();
+		files.set(data);
+	});
 </script>
 
 <div class="layout-grid">
