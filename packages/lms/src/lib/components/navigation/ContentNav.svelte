@@ -7,6 +7,16 @@
 	import RecursiveNav from './RecursiveNav.svelte';
 	import CourseNav from './CourseNav.svelte';
 
+	interface Frontmatter {
+		type?: 'Course' | 'Module' | 'Lesson' | 'Institute' | 'Programme';
+		// Add other properties as needed, e.g., title, date, etc.
+	}
+
+	interface ContentObject {
+		frontmatter?: Frontmatter;
+		// Add other properties as needed, e.g., content, slug, etc.
+	}
+
 	onMount(async () => {
 		if ($files === null) {
 			const response = await fetch('/api/parseMarkdown');
@@ -16,7 +26,7 @@
 	});
 
 	let institutes: {} | null = {};
-	let current = {};
+	let current: ContentObject = {};
 	let isCourse = false;
 	let pathArray: string[];
 	let currentPath: string;

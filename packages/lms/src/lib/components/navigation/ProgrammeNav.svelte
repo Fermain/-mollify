@@ -5,8 +5,19 @@
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
 
+	interface Frontmatter {
+		type?: 'Course' | 'Module' | 'Lesson' | 'Institute' | 'Programme';
+		// Add other properties as needed, e.g., title, date, etc.
+		title: string;
+	}
+
+	interface ContentObject {
+		frontmatter?: Frontmatter;
+		// Add other properties as needed, e.g., content, slug, etc.
+	}
+
 	let institutes: {} | null = {};
-	let current = {};
+	let current: ContentObject = {};
 	let isProgramme = false;
 	let pathArray: string[];
 	let currentPath: string;
@@ -62,12 +73,6 @@
 {/if}
 
 <style>
-	main {
-		padding: 1rem;
-		max-width: 800px;
-		margin: 0 auto;
-	}
-
 	.card {
 		max-width: 300px;
 		margin: 1rem;
