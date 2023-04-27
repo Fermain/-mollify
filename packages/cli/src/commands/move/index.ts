@@ -4,7 +4,7 @@ import { EntityType } from '../../types';
 import getEntities from '../../actions/listEntities';
 import moveEntity from '../../actions/moveEntity';
 
-async function moveEntityPrompt(entityType: EntityType, basePath = '') {
+async function moveEntityPrompt(entityType: EntityType, basePath = '', initialEntitySlug?: string, initialDestination?: string) {
   const entities = await getEntities(entityType, basePath);
 
   const { entitySlug, destination } = await prompt<{
@@ -16,12 +16,15 @@ async function moveEntityPrompt(entityType: EntityType, basePath = '') {
       name: 'entitySlug',
       message: `Which ${entityType} do you want to move?`,
       choices: entities.map((entity) => entity.slug),
-      initial: 0,
+      initial: initialEntitySlug ? entities.findIndex((entity) => entity.slug === initialEntitySlug) : undefined,
+      skip: !!initialEntitySlug,
     },
     {
       type: 'input',
       name: 'destination',
       message: 'Enter the destination path:',
+      initial: initialDestination,
+      skip: !!initialDestination,
       validate(input) {
         return input.length > 0;
       },
@@ -38,15 +41,15 @@ async function moveEntityPrompt(entityType: EntityType, basePath = '') {
 }
 
 export default new Command('move')
-  .arguments('<entity-type>')
+  .arguments('<entity-type> [entity-slug] [destination]')
   .description('Move an entity to a new location')
-  .action((entityType: EntityType) => {
+  .action((entityType: EntityType, entitySlug?: string, destination?: string) => {
     if (!Object.values(EntityType).includes(entityType)) {
       console.error(`Invalid entity type: ${entityType}`);
       process.exit(1);
     }
 
-    moveEntityPrompt(entityType)
+    moveEntityPrompt(entityType, '', entitySlug, destination)
       .then(() => console.log('Entity moved'))
       .catch((error) => {
         console.error(`Error moving entity: ${error.message}`);
