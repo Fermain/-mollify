@@ -29,11 +29,11 @@ export default async function removeEntity(entity: Entity, basePath = '') {
   try {
     await fs.remove(entityDir);
     console.log(
-      `Successfully removed ${entity.type} and its child entities at ${entityPath}`,
+      `Successfully removed ${entity.type}${fileCount > 1 ? ' and its child entities' : ''} at ${entityPath}`,
     );
   } catch (error) {
     console.error(
-      `Error removing ${entity.type} and its child entities at ${entityPath}:`,
+      `Error removing ${entity.type} at ${entityPath}:`,
       error,
     );
   }
