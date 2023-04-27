@@ -2,24 +2,29 @@ import path from 'path';
 import fs from 'fs-extra';
 import type { Entity } from '../types/Entity';
 import { ENTITY_FILE } from '../constants';
-import { countChildFiles } from '../utilities';
+import { countFiles } from '../utilities';
 import { prompt } from 'enquirer';
+
+async function confirmDeletion(entityType: string, fileCount: number) {
+  const message = fileCount > 1 ? `In total ${fileCount} files will be removed. ` : '' + `Are you sure you want to remove this ${entityType}?`;
+
+  const { consent } = await prompt<{ consent: boolean }>({
+    type: 'confirm',
+    name: 'consent',
+    required: true,
+    message,
+  });
+
+  return consent;
+}
 
 export default async function removeEntity(entity: Entity, basePath = '') {
   const entityDir = path.join(basePath, entity.slug);
   const entityPath = path.resolve(path.join(entityDir, ENTITY_FILE));
 
-  const childFileCount = await countChildFiles(path.resolve(entityDir));
+  const fileCount = await countFiles(path.resolve(entityDir));
 
-  const { consent } = await prompt<{ consent: boolean }>({
-    type: 'confirm',
-    initial: false,
-    name: 'consent',
-    required: true,
-    message: `This ${entity.type} has ${childFileCount} child files. Are you sure you want to delete it?`,
-  });
-
-  if (!consent) return console.log('Aborted');
+  if (!(await confirmDeletion(entity.type, fileCount))) return;
 
   try {
     await fs.remove(entityDir);
