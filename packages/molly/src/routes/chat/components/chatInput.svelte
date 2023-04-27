@@ -2,18 +2,20 @@
 	import sendChat from '../logo/paper-plane.svg';
 	export let img: string = sendChat;
 
+
 	interface Message {
 		role: 'user' | 'assistant';
 		content: string;
 	}
 
-	const messages: Message[] = [];
+	export let messages: Message[] = [];
+
 
 	function sendMessage(): void {
 		const textarea: HTMLTextAreaElement | null = document.querySelector('textarea');
 		if (!textarea) return;
 
-		const content: string = textarea.value.trim();
+		let content: string = textarea.value.trim();
 
 		if (content !== '') {
 			const message: Message = {
@@ -23,6 +25,7 @@
 
 			messages.push(message);
 			console.log(messages);
+
 
 			// Call an API or a function to get a response from the assistant
 			// and add it to the messages array with a role of "assistant"
@@ -48,7 +51,7 @@
 
 <div class="chat-input">
 	<form on:submit|preventDefault={sendMessage}>
-		<textarea placeholder="Ask Molly" on:input={resizeOnTyping} />
+		<textarea placeholder="Ask Molly" on:input={resizeOnTyping}/>
 
 		<button><img src={img} alt="send message" /></button>
 	</form>
@@ -69,7 +72,6 @@
 	.chat-input textarea {
 		max-width: 70%;
 		min-width: 70%;
-		/* min-height: 30px; */
 		max-height: 100px;
 		border-radius: 5px;
 		padding: 5px;
