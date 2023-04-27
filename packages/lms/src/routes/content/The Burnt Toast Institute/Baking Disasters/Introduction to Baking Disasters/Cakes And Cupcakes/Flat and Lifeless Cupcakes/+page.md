@@ -1,8 +1,8 @@
 ---
-title: Flat and Lifeless Cupcakes
+title: Flat And Lifeless Cupcakes
 slug: flat-and-lifeless-cupcakes
 type: Lesson
-path: The Burnt Toast Institute/Baking Disasters/Introduction to Baking Disasters/Cakes And Cupcakes/Flat and Lifeless Cupcakes
+path: The Burnt Toast Institute/Baking Disasters/Introduction To Baking Disasters/Cakes And Cupcakes/Flat And Lifeless Cupcakes
 dependency: Lopsided Cakes
 tags:
 ---

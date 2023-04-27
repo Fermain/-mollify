@@ -1,8 +1,8 @@
 ---
-title: Undercooked and Soggy
+title: Undercooked And Soggy
 slug: undercooked-and-soggy
 type: Lesson
-path: The Burnt Toast Institute/Baking Disasters/Introduction to Baking Disasters/Cookies And Brownies/Undercooked And Soggy
+path: The Burnt Toast Institute/Baking Disasters/Introduction To Baking Disasters/Cookies And Brownies/Undercooked And Soggy
 dependency: null
 tags:
 ---
