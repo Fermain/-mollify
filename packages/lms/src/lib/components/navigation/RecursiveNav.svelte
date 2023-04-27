@@ -12,37 +12,45 @@
 	export let currentPath: string;
 </script>
 
-{#each Object.entries(data) as [name, children]}
-	<h3 style="padding-left: {indent}rem" on:click={toggleOpen}>
-		{name}
-	</h3>
-	{#if open}
-		<div transition:slide={{ duration: 300 }}>
-			{#each Object.entries(children) as [childName, child]}
-				{#if childName === 'frontmatter' && Object.keys(children).length === 1}
-					<a href={`${path}${child.title}`} style="padding-left: {indent}rem">Overview</a>
-				{:else if childName === 'frontmatter'}
-					<a href={`${path}${child.title}`} style="padding-left: {indent + 1.5}rem">{child.title}</a
-					>
-				{:else if typeof child === 'object'}
-					{#if Object.entries(child).length === 1 && child.frontmatter}
-						<a href={`${path}${child.title}/${childName}`} style="padding-left: {indent + 1}rem"
-							>{childName}</a
+<div class="wrapper">
+	<h2>Recursive Nav</h2>
+	{#each Object.entries(data) as [name, children]}
+		<h3 style="padding-left: {indent}rem" on:click={toggleOpen}>
+			{name}
+		</h3>
+		{#if open}
+			<div transition:slide={{ duration: 300 }}>
+				{#each Object.entries(children) as [childName, child]}
+					{#if childName === 'frontmatter' && Object.keys(children).length === 1}
+						<a href={`${path}${child.title}`} style="padding-left: {indent}rem">Overview</a>
+					{:else if childName === 'frontmatter'}
+						<a href={`${path}${child.title}`} style="padding-left: {indent + 1.5}rem"
+							>{child.title}</a
 						>
-					{:else}
-						<svelte:self
-							data={{ [childName]: child }}
-							indent={indent + 1}
-							path={`${path}${name}/`}
-						/>
+					{:else if typeof child === 'object'}
+						{#if Object.entries(child).length === 1 && child.frontmatter}
+							<a href={`${path}${child.title}/${childName}`} style="padding-left: {indent + 1}rem"
+								>{childName}</a
+							>
+						{:else}
+							<svelte:self
+								data={{ [childName]: child }}
+								indent={indent + 1}
+								path={`${path}${name}/`}
+							/>
+						{/if}
 					{/if}
-				{/if}
-			{/each}
-		</div>
-	{/if}
-{/each}
+				{/each}
+			</div>
+		{/if}
+	{/each}
+</div>
 
 <style>
+	h2 {
+		margin: 0;
+	}
+
 	h3 {
 		font-weight: 600rem;
 		background-color: var(--primary);
@@ -67,5 +75,9 @@
 
 	.current {
 		text-decoration: underline;
+	}
+
+	.wrapper {
+		margin-bottom: 1.5rem;
 	}
 </style>

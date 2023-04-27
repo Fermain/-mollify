@@ -7,6 +7,7 @@
 </script>
 
 <div>
+	<h2>Course Nav</h2>
 	<h3 style="padding-left: {indent}rem">
 		{data.frontmatter.title}
 	</h3>
@@ -28,6 +29,9 @@
 </div>
 
 <style>
+	h2 {
+		margin: 0;
+	}
 	h3 {
 		font-weight: 600rem;
 		background-color: var(--secondary);
