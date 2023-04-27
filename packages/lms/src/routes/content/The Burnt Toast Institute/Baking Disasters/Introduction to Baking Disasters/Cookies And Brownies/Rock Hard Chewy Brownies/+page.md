@@ -2,7 +2,7 @@
 title: Rock Hard Chewy Brownies
 slug: rock-hard-chewy-brownies
 type: Lesson
-path: The Burnt Toast Institute/Baking Disasters/Introduction to Baking Disasters/Cookies And Brownies/Rock Hard Chewy Brownies
+path: The Burnt Toast Institute/Baking Disasters/Introduction To Baking Disasters/Cookies And Brownies/Rock Hard Chewy Brownies
 dependency: Undercooked and Soggy
 tags:
   - module 1

@@ -2,7 +2,7 @@
 title: Cookies And Brownies
 slug: cookies-and-brownies
 type: Module
-path: The Burnt Toast Institute/Baking Disasters/Introduction to Baking Disasters/Cookies And Brownies
+path: The Burnt Toast Institute/Baking Disasters/Introduction To Baking Disasters/Cookies And Brownies
 tags:
 ---
 
