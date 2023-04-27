@@ -1,7 +1,7 @@
 import { Command } from 'commander';
 import { prompt } from 'enquirer';
 import { EntityType } from '../../types';
-import getEntities from '../../actions/listEntities';
+import listEntities from '../../actions/listEntities';
 import moveEntity from '../../actions/moveEntity';
 
 // TODO: abstract filepaths away by allowing users to move from parent to parent
@@ -13,7 +13,7 @@ async function moveEntityPrompt(
   initialEntitySlug?: string,
   initialDestination?: string,
 ) {
-  const entities = await getEntities(entityType, basePath);
+  const entities = await listEntities(entityType, basePath);
 
   const prompts = [
     {
