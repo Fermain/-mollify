@@ -4,12 +4,23 @@ import glob from 'glob';
 import matter from 'gray-matter';
 import { prompt } from 'enquirer';
 import { Entity, EntityType } from '../types';
-import { ENTITY_FILE } from '../constants';
+import { ENTITY_FILE, INDEX_FILE } from '../constants';
 import { slugger } from '../utilities';
 
 async function getUserInput(
   existingFrontmatter: Partial<Entity>,
+  filePath: string,
 ): Promise<Partial<Entity>> {
+  const parsedPath = path.parse(filePath);
+  const isIndexFile = parsedPath.base === INDEX_FILE;
+
+  const initialSlug = isIndexFile
+    ? slugger(parsedPath.dir.split(path.sep).pop() || '')
+    : slugger(existingFrontmatter.slug || existingFrontmatter.title || '');
+
+  console.log(`Migrating ${filePath}...`);
+  console.log(`Migrating to ${initialSlug}...`);
+
   const { title, slug, type } = await prompt<Entity>([
     {
       type: 'input',
@@ -24,9 +35,8 @@ async function getUserInput(
       type: 'input',
       name: 'slug',
       message: 'Enter the slug:',
-      initial: slugger(
-        existingFrontmatter.slug || existingFrontmatter.title || '',
-      ),
+      initial: initialSlug,
+      skip: () => isIndexFile,
       result: (slug) => slugger(slug),
       validate(input) {
         return input.length > 0;
@@ -53,12 +63,15 @@ async function getUserInput(
 export async function migrateEntity(file: string) {
   const fileContent = await fs.readFile(file, 'utf8');
   const { data: existingFrontmatter, content } = matter(fileContent);
-  const existingSlug = path.parse(file).name;
+  const existingSlug = slugger(path.parse(file).name);
 
-  const userInput = await getUserInput({
-    ...existingFrontmatter,
-    slug: existingSlug,
-  });
+  const userInput = await getUserInput(
+    {
+      ...existingFrontmatter,
+      slug: existingSlug,
+    },
+    file,
+  );
 
   const frontmatter = { ...existingFrontmatter, ...userInput };
   const newFileContent = matter.stringify(content, frontmatter);
