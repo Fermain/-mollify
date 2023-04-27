@@ -4,7 +4,7 @@ import listMarkdown from './listMarkdown';
 import moveEntity from './moveEntity';
 import removeEntity from './removeEntity';
 import updateEntity from './updateEntity';
-import migrateEntity from './migrateEntity';
+import { migrateEntity, migrateEntities } from './migrateEntity';
 
 export default {
   createEntity,
@@ -14,4 +14,5 @@ export default {
   removeEntity,
   updateEntity,
   migrateEntity,
+  migrateEntities
 };
