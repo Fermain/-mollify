@@ -32,16 +32,6 @@
 		}
 	}
 
-	body {
-		font-family: sans-serif;
-		margin: 0;
-		box-sizing: border-box;
-	}
-
-	h1 {
-		margin: 0;
-	}
-
 	.layout-grid {
 		display: grid;
 		grid-template-columns: 3rem calc(80ch + 2rem) 1fr 1fr;
