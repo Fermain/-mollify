@@ -6,7 +6,13 @@
 	}
 </script>
 
-<div class="tag" on:click={handleTagClick}>
+<div
+	class="tag"
+	on:click={handleTagClick}
+	on:keydown={(evt) => {
+		if (evt.key === 'Enter') handleTagClick;
+	}}
+>
 	#{data}
 </div>
 

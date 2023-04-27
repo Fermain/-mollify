@@ -8,6 +8,7 @@
 	import Molly from '$lib/components/molly/Molly.svelte';
 	import Navigation from '$lib/components/navigation/Navigation.svelte';
 	import ContentNav from '$lib/components/navigation/ContentNav.svelte';
+	import IconNav from '$lib/components/navigation/IconNav.svelte';
 </script>
 
 <div class="layout-grid">
@@ -15,7 +16,7 @@
 	<Reader />
 	<Settings />
 	<Molly />
-	<div class="icons" />
+	<IconNav />
 	<Main>
 		<slot />
 	</Main>
@@ -25,27 +26,16 @@
 </div>
 
 <style lang="scss">
-	* {
-		&:before,
-		&:after {
-			box-sizing: inherit;
-		}
-	}
-
 	.layout-grid {
 		display: grid;
 		grid-template-columns: 3rem calc(80ch + 2rem) 1fr 1fr;
 		grid-template-rows: 3rem 1fr 3rem;
 		min-height: 100vh;
 		grid-template-areas:
-			'brand header reader settings'
+			'brand reader reader settings'
 			'icons body nav1 nav2'
-			'footer  footer footer footer';
+			'footer footer footer footer';
 		gap: 0.5rem;
 		padding-right: 1rem;
-	}
-
-	.icons {
-		grid-area: icons;
 	}
 </style>
