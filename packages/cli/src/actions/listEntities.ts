@@ -4,7 +4,10 @@ import fs from 'fs/promises';
 import matter from 'gray-matter';
 import type { EntityType, Entity } from '../types';
 
-export default async function getEntities(entityType: EntityType, basePath = ''): Promise<Entity[]> {
+export default async function listEntities(
+  entityType?: EntityType,
+  basePath = ''
+): Promise<Entity[]> {
   const pattern = path.join(basePath, '**/*', '+page.md');
   const ignorePattern = path.join('src', 'templates', '**/*'); // Ignore pattern for src/templates
   const files = glob.sync(pattern, { ignore: ignorePattern });
@@ -16,14 +19,16 @@ export default async function getEntities(entityType: EntityType, basePath = '')
       const { data: frontmatter } = matter(fileContent);
       const slug = path.dirname(file).split(path.sep).pop();
 
-      if (frontmatter.type === entityType && slug) {
-        return {
-          ...frontmatter,
-          title: frontmatter.title,
-          slug,
-          type: entityType,
-          path: file
-        };
+      if (entityType === undefined || frontmatter.type === entityType) {
+        if (slug) {
+          return {
+            ...frontmatter,
+            title: frontmatter.title,
+            slug,
+            type: frontmatter.type as EntityType,
+            path: file,
+          };
+        }
       }
     } catch (error) {
       console.error(`Error reading file ${file}:`, error);
