@@ -3,6 +3,7 @@
 	import { files } from '$lib/stores/files';
 	import { getCurrent } from '$lib/utils/getCurrent';
 	import { browser } from '$app/environment';
+	import { page } from '$app/stores';
 	import RecursiveNav from './RecursiveNav.svelte';
 	import CourseNav from './CourseNav.svelte';
 
@@ -20,23 +21,26 @@
 	let pathArray: string[];
 	let currentPath: string;
 
-	if (browser) {
-		onMount(async () => {
-			const unsubscribe = files.subscribe((data) => {
-				institutes = data;
-				console.log('institutes', institutes);
-			});
-
-			return () => unsubscribe();
-		});
-
+	function updatePath() {
 		const path = browser ? window.location.pathname.replaceAll(`%20`, ' ') : '';
 		const objectPath = path.replace('/content/', '');
 		pathArray = objectPath.split('/');
 		currentPath = pathArray[pathArray.length - 1];
 	}
 
-	$: {
+	if (browser) {
+		onMount(async () => {
+			const unsubscribe = files.subscribe((data) => {
+				institutes = data;
+			});
+
+			return () => unsubscribe();
+		});
+
+		updatePath();
+	}
+
+	$: page.subscribe((data) => {
 		current = getCurrent(institutes, pathArray);
 		if (
 			current?.frontmatter?.type === 'Course' ||
@@ -47,21 +51,33 @@
 		} else {
 			isCourse = false;
 		}
-	}
+		updatePath();
+	});
 </script>
 
 <nav class="nav1">
 	{#if institutes}
-		<RecursiveNav data={institutes} {currentPath} open={false} path="/content/" />
+		<div class="wrapper">
+			<h2>Recursive Nav</h2>
+			<RecursiveNav data={institutes} {currentPath} open={false} path="/content/" />
+		</div>
 		{#if isCourse}
 			<!-- If current path is to a course/module/lesson -->
+			<h2>Course Nav</h2>
 			<CourseNav data={current} {currentPath} />
 		{/if}
 	{/if}
 </nav>
 
 <style>
+	h2 {
+		margin: 0;
+	}
 	.nav1 {
 		grid-area: nav1;
+	}
+
+	.wrapper {
+		margin-bottom: 1.5rem;
 	}
 </style>

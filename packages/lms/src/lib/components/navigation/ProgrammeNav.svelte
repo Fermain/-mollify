@@ -1,39 +1,9 @@
-<!-- <script lang="ts">
-	export let data: Record<string, any> = {};
-	export let currentPath: string;
-	const path = '/content/';
-	console.log('data', data);
-</script>
-
-{#if Object.entries(data).length === 0}
-	<p>Loading...</p>
-{:else}
-	<div>
-		{#each Object.entries(data) as [moduleName, module]}
-			{#if moduleName === 'frontmatter'}
-				<h3>
-					{data?.frontmatter?.title}
-				</h3>
-				<a href={`${path}${data.frontmatter.path}`}>Overview</a>
-			{:else if moduleName !== 'frontmatter'}
-				<h3>{moduleName}</h3>
-				{#each Object.entries(module) as [lessonName, lesson]}
-					{#if lessonName !== 'frontmatter'}
-						<a href={`${path}${lesson.frontmatter.path}`}>{lessonName}</a>
-					{:else}
-						<a href={`${path}${lesson.path}`}>Overview</a>
-					{/if}
-				{/each}
-			{/if}
-		{/each}
-	</div>
-{/if} -->
-
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { files } from '$lib/stores/files';
 	import { getCurrent } from '$lib/utils/getCurrent';
 	import { browser } from '$app/environment';
+	import { page } from '$app/stores';
 
 	let institutes: {} | null = {};
 	let current = {};
@@ -41,30 +11,30 @@
 	let pathArray: string[];
 	let currentPath: string;
 
-	$: {
-		if (browser) {
-			onMount(async () => {
-				const unsubscribe = files.subscribe((data) => {
-					institutes = data;
-					console.log('institutes', institutes);
-				});
-
-				return () => unsubscribe();
+	if (browser) {
+		onMount(() => {
+			const unsubscribe = files.subscribe((data) => {
+				institutes = data;
+				console.log('institutes', institutes);
 			});
 
-			const path = browser ? window.location.pathname.replaceAll(`%20`, ' ') : '';
-			const objectPath = path.replace('/content/', '');
-			pathArray = objectPath.split('/');
-			currentPath = pathArray[pathArray.length - 1];
-		}
+			return () => unsubscribe();
+		});
+	}
 
+	$: page.subscribe((data) => {
+		const path = browser ? window.location.pathname.replaceAll(`%20`, ' ') : '';
+		const objectPath = path.replace('/content/', '');
+		pathArray = objectPath.split('/');
+		currentPath = pathArray[pathArray.length - 1];
 		current = getCurrent(institutes, pathArray);
+
 		if (current?.frontmatter?.type === 'Institute' || current?.frontmatter?.type === 'Programme') {
 			isProgramme = true;
 		} else {
 			isProgramme = false;
 		}
-	}
+	});
 </script>
 
 <slot />
