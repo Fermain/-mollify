@@ -1,8 +1,8 @@
 import { Command } from 'commander';
 import { prompt } from 'enquirer';
-import slugify from 'slugify';
 import { EntityType, Entity } from '../../types';
 import createEntity from '../../actions/createEntity';
+import { slugger } from '../../utilities';
 
 async function createEntityPrompt(
   entityType?: EntityType,
@@ -51,7 +51,7 @@ async function createEntityPrompt(
             return input.length > 0;
           },
           message: `What is the slug of the ${entityType}?`,
-          initial: slugify(title, { lower: true, strict: true }),
+          initial: slugger(title),
         },
       ])
     ).slug;
