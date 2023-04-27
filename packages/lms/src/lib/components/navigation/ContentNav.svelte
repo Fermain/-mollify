@@ -4,7 +4,6 @@
 	import { getCurrent } from '$lib/utils/getCurrent';
 	import { browser } from '$app/environment';
 	import RecursiveNav from './RecursiveNav.svelte';
-	import ProgrammeNav from './ProgrammeNav.svelte';
 	import CourseNav from './CourseNav.svelte';
 
 	onMount(async () => {
@@ -53,7 +52,7 @@
 
 <nav class="nav1">
 	{#if institutes}
-		<!-- <ProgrammeNav data={institutes} {currentPath} /> -->
+		<RecursiveNav data={institutes} {currentPath} open={false} path="/content/" />
 		{#if isCourse}
 			<!-- If current path is to a course/module/lesson -->
 			<CourseNav data={current} {currentPath} />

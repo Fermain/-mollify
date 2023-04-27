@@ -1,7 +1,11 @@
-<script lang="ts"></script>
+<script lang="ts">
+	import ProgrammeNav from '../navigation/ProgrammeNav.svelte';
+</script>
 
 <main>
-	<slot />
+	<ProgrammeNav>
+		<slot />
+	</ProgrammeNav>
 </main>
 
 <style>
