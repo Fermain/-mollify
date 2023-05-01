@@ -1,7 +1,9 @@
 <script lang="ts">
+	import { createEventDispatcher } from 'svelte';
 	import sendChat from '../logo/paper-plane.svg';
 	export let img: string = sendChat;
 
+	const dispatch = createEventDispatcher();
 
 	interface Message {
 		role: 'user' | 'assistant';
@@ -9,7 +11,6 @@
 	}
 
 	export let messages: Message[] = [];
-
 
 	function sendMessage(): void {
 		const textarea: HTMLTextAreaElement | null = document.querySelector('textarea');
@@ -20,12 +21,11 @@
 		if (content !== '') {
 			const message: Message = {
 				role: 'user',
+				name: 'Eric',
 				content: content
 			};
 
-			messages.push(message);
-			console.log(messages);
-
+			dispatch('message', message);
 
 			// Call an API or a function to get a response from the assistant
 			// and add it to the messages array with a role of "assistant"
@@ -51,7 +51,7 @@
 
 <div class="chat-input">
 	<form on:submit|preventDefault={sendMessage}>
-		<textarea placeholder="Ask Molly" on:input={resizeOnTyping}/>
+		<textarea placeholder="Ask Molly" on:input={resizeOnTyping} />
 
 		<button><img src={img} alt="send message" /></button>
 	</form>
