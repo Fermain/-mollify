@@ -46,7 +46,7 @@
 	h3 {
 		font-weight: 600rem;
 		background-color: var(--primary);
-		color: white;
+		color: var(--text-secondary);
 		padding: 0.25rem;
 		display: block;
 		border: 1px solid var(--primary);
@@ -57,7 +57,7 @@
 	a {
 		font-size: 1.2rem;
 		font-weight: 600rem;
-		color: black;
+		color: var(--text-primary);
 		background-color: var(--secondary);
 		text-decoration: none;
 		padding: 0.25rem;

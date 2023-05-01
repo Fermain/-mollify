@@ -30,7 +30,7 @@
 	h3 {
 		font-weight: 600rem;
 		background-color: var(--primary);
-		color: var(--white);
+		color: var(--text-secondary);
 		padding: 0.25rem;
 		display: block;
 		border: 1px solid black;
@@ -43,7 +43,7 @@
 		font-size: 1.2rem;
 		font-weight: 600rem;
 		background-color: var(--secondary);
-		color: var(--black);
+		color: var(--text-primary);
 		padding: 0.25rem;
 		display: block;
 		border: 1px solid gray;

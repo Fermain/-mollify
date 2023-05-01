@@ -4,8 +4,8 @@
 <div class="wrapper">
 	<nav class="icon-nav">
 		<i class="icon-f">home</i>
-		<i class="icon-f">home</i>
-		<i class="icon-f">home</i>
+		<i class="icon-f">bookmark</i>
+		<i class="icon-f">bookmark_add</i>
 		<i class="icon-f">home</i>
 		<i class="icon-f">home</i>
 		<i class="icon-f">home</i>

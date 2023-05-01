@@ -91,7 +91,7 @@
 		margin-top: 1rem;
 		padding: 0.5rem;
 		background-color: var(--secondary);
-		color: black;
+		color: var(--text-primary);
 		border-radius: 0.5rem;
 		text-decoration: none;
 		font-size: 1.25rem;
