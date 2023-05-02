@@ -17,7 +17,7 @@ export interface MarkdownContentTree {
  * @param dir  The directory to parse
  * @returns A nested object containing the parsed markdown files
  */
-export function parseMarkdownBetter(dir: string) {
+export function parseMarkdown(dir: string) {
 	function sortChildrenByDependency(children: MarkdownContentTree[]): MarkdownContentTree[] {
 		const sortedChildren: MarkdownContentTree[] = children.filter((child) => !child.dependency);
 		const unsortedChildren: MarkdownContentTree[] = children.filter((child) => child.dependency);
