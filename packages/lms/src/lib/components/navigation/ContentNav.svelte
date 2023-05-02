@@ -7,15 +7,11 @@
 	import RecursiveNav from './RecursiveNav.svelte';
 	import CourseNav from './CourseNav.svelte';
 
-	interface Frontmatter {
-		type?: 'Course' | 'Module' | 'Lesson' | 'Institute' | 'Programme';
-		// Add other properties as needed, e.g., title, date, etc.
-	}
-
-	interface ContentObject {
-		frontmatter?: Frontmatter;
-		// Add other properties as needed, e.g., content, slug, etc.
-	}
+	let institutes: [] | null = [];
+	let current: ContentObject = {};
+	let isCourse = false;
+	let pathArray: string[];
+	let currentPath: string;
 
 	onMount(async () => {
 		if ($files === null) {
@@ -25,12 +21,6 @@
 		}
 	});
 
-	let institutes: {} | null = {};
-	let current: ContentObject = {};
-	let isCourse = false;
-	let pathArray: string[];
-	let currentPath: string;
-
 	function updatePath() {
 		const path = browser ? window.location.pathname.replaceAll(`%20`, ' ') : '';
 		const objectPath = path.replace('/content/', '');
@@ -39,37 +29,24 @@
 	}
 
 	if (browser) {
-		onMount(async () => {
-			const unsubscribe = files.subscribe((data) => {
-				institutes = data;
-			});
-
-			return () => unsubscribe();
-		});
-
 		updatePath();
+		current = getCurrent(institutes, pathArray);
 	}
 
+	$: institutes = $files;
+	$: current = getCurrent(institutes, pathArray);
 	$: page.subscribe((data) => {
-		current = getCurrent(institutes, pathArray);
-		if (
-			current?.frontmatter?.type === 'Course' ||
-			current?.frontmatter?.type === 'Module' ||
-			current?.frontmatter?.type === 'Lesson'
-		) {
-			isCourse = true;
-		} else {
-			isCourse = false;
-		}
 		updatePath();
 	});
+
+	$: isCourse = current?.type === 'course';
 </script>
 
 <nav class="nav1">
 	{#if institutes}
 		<div class="wrapper">
 			<h2>Recursive Nav</h2>
-			<RecursiveNav data={institutes} {currentPath} open={false} path="/content/" />
+			<RecursiveNav data={institutes} {currentPath} />
 		</div>
 		{#if isCourse}
 			<!-- If current path is to a course/module/lesson -->
