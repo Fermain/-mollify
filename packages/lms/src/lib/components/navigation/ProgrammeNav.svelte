@@ -26,7 +26,6 @@
 		onMount(() => {
 			const unsubscribe = files.subscribe((data) => {
 				institutes = data;
-				console.log('institutes', institutes);
 			});
 
 			return () => unsubscribe();
