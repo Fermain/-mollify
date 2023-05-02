@@ -33,13 +33,14 @@
 		current = getCurrent(institutes, pathArray);
 	}
 
-	$: institutes = $files;
-	$: current = getCurrent(institutes, pathArray);
-	$: page.subscribe((data) => {
-		updatePath();
-	});
-
-	$: isCourse = current?.type === 'course';
+	$: {
+		institutes = $files;
+		current = getCurrent(institutes, pathArray);
+		page.subscribe((data) => {
+			updatePath();
+		});
+		isCourse = current?.type === 'course';
+	}
 </script>
 
 <nav class="nav1">

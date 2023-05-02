@@ -16,7 +16,7 @@
 		// Add other properties as needed, e.g., content, slug, etc.
 	}
 
-	let institutes: {} | null = {};
+	let institutes: [] | null = [];
 	let current: ContentObject = {};
 	let isProgramme = false;
 	let pathArray: string[];
@@ -39,7 +39,7 @@
 		currentPath = pathArray[pathArray.length - 1];
 		current = getCurrent(institutes, pathArray);
 
-		if (current?.frontmatter?.type === 'Institute' || current?.frontmatter?.type === 'Programme') {
+		if (current?.type === 'institute' || current?.type === 'programme') {
 			isProgramme = true;
 		} else {
 			isProgramme = false;
@@ -51,21 +51,17 @@
 {#if isProgramme}
 	<section>
 		<h2>
-			{current.frontmatter?.title}
-			{current.frontmatter?.type === 'Institute' ? 'Programmes' : 'Courses'}
+			{current?.title}
+			{current?.type === 'institute' ? 'Programmes' : 'Courses'}
 		</h2>
 		<div class="inst-grid">
-			{#each Object.entries(current) as [institute, instituteData]}
-				{#if institute !== 'frontmatter'}
-					<div class="card">
-						{#if instituteData.frontmatter}
-							<h3>{instituteData.frontmatter.title}</h3>
-							<img src={instituteData.frontmatter.url} alt={instituteData.frontmatter.title} />
-							<p>{instituteData.frontmatter.summary}</p>
-							<a href={`/content/${instituteData.frontmatter.path}`}>View Details</a>
-						{/if}
-					</div>
-				{/if}
+			{#each current.children as child}
+				<div class="card">
+					<h3>{child.title}</h3>
+					<img src={child.url} alt={child.title} />
+					<p>{child.summary}</p>
+					<a href={child.browserPath}>View Details</a>
+				</div>
 			{/each}
 		</div>
 	</section>
