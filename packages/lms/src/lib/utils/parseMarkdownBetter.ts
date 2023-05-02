@@ -6,6 +6,8 @@ import matter from 'gray-matter';
 export interface MarkdownContentTree {
 	filePath?: string;
 	folderName?: string;
+	dependency?: string | null;
+	type?: string;
 	children?: MarkdownContentTree[];
 	[key: string]: unknown;
 }
@@ -16,6 +18,29 @@ export interface MarkdownContentTree {
  * @returns A nested object containing the parsed markdown files
  */
 export function parseMarkdownBetter(dir: string) {
+	function sortChildrenByDependency(children: MarkdownContentTree[]): MarkdownContentTree[] {
+		const sortedChildren: MarkdownContentTree[] = children.filter((child) => !child.dependency);
+		const unsortedChildren: MarkdownContentTree[] = children.filter((child) => child.dependency);
+		//guard against infinite loop
+		let i = 0;
+		while (unsortedChildren.length > 0 && i < children.length) {
+			unsortedChildren.forEach((child, index) => {
+				if (sortedChildren.some((sortedChild) => sortedChild.title === child.dependency)) {
+					sortedChildren.push(child);
+					unsortedChildren.splice(index, 1);
+				}
+			});
+			i++;
+		}
+
+		// If there are still unsorted children, add them to the end of the array, not ideal but better than an infinite loop.
+		if (unsortedChildren.length > 0) {
+			sortedChildren.push(...unsortedChildren);
+		}
+
+		return sortedChildren;
+	}
+
 	function walkSync(currentDir: string) {
 		let currentObject: MarkdownContentTree = {};
 		const children: MarkdownContentTree[] = [];
@@ -41,8 +66,8 @@ export function parseMarkdownBetter(dir: string) {
 			}
 		});
 
-		if (children.length > 0) {
-			currentObject.children = children;
+		if (children.length > 0 || currentObject.type !== 'Institution') {
+			currentObject.children = sortChildrenByDependency(children);
 		}
 
 		return currentObject;
