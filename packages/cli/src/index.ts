@@ -1,4 +1,4 @@
-#!/usr/bin/env ts-node
+#!/usr/bin/env node
 
 import { Command } from 'commander';
 import commands from './commands';
@@ -10,6 +10,7 @@ main.addCommand(commands.create);
 main.addCommand(commands.remove);
 main.addCommand(commands.migrate);
 main.addCommand(commands.list);
+main.addCommand(commands.move);
 // main.addCommand(commands.format); not yet implemented
 
 // Object.values(commands).forEach((command) => main.addCommand(command));

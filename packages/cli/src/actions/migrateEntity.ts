@@ -21,7 +21,7 @@ async function getUserInput(
   console.log(`Migrating ${filePath}...`);
   console.log(`Migrating to ${initialSlug}...`);
 
-  const { title, slug, type } = await prompt<Entity>([
+  return await prompt<Entity>([
     {
       type: 'input',
       name: 'title',
@@ -56,41 +56,43 @@ async function getUserInput(
       result: (selectedType) => selectedType,
     },
   ]);
-
-  return { title, slug, type };
 }
 
 export async function migrateEntity(file: string) {
-  const fileContent = await fs.readFile(file, 'utf8');
-  const { data: existingFrontmatter, content } = matter(fileContent);
-  const existingSlug = slugger(path.parse(file).name);
+  try {
+    const fileContent = await fs.readFile(file, 'utf8');
+    const { data: existingFrontmatter, content } = matter(fileContent);
+    const existingSlug = slugger(path.parse(file).name);
 
-  const userInput = await getUserInput(
-    {
-      ...existingFrontmatter,
-      slug: existingSlug,
-    },
-    file,
-  );
-
-  const frontmatter = { ...existingFrontmatter, ...userInput };
-  const newFileContent = matter.stringify(content, frontmatter);
-
-  const newDir = path.join(
-    path.dirname(file),
-    userInput.slug || slugger(userInput.title || ''),
-  );
-  const newFilePath = path.join(newDir, ENTITY_FILE);
-
-  if (!fs.existsSync(newFilePath)) {
-    await fs.ensureDir(newDir);
-    await fs.writeFile(newFilePath, newFileContent);
-    await fs.unlink(file);
-    console.log(`Migrated ${file} -> ${newFilePath}`);
-  } else {
-    console.log(
-      `Skipped ${file} as there's already a ${ENTITY_FILE} file in the folder.`,
+    const userInput = await getUserInput(
+      {
+        ...existingFrontmatter,
+        slug: existingSlug,
+      },
+      file,
     );
+
+    const frontmatter = { ...existingFrontmatter, ...userInput };
+    const newFileContent = matter.stringify(content, frontmatter);
+
+    const newDir = path.join(
+      path.dirname(file),
+      userInput.slug || slugger(userInput.title || ''),
+    );
+    const newFilePath = path.join(newDir, ENTITY_FILE);
+
+    if (!(await fs.pathExists(newFilePath))) {
+      await fs.ensureDir(newDir);
+      await fs.writeFile(newFilePath, newFileContent);
+      await fs.unlink(file);
+      console.log(`Migrated ${file} -> ${newFilePath}`);
+    } else {
+      console.log(
+        `Skipped ${file} as there's already a ${ENTITY_FILE} file in the folder.`,
+      );
+    }
+  } catch (error) {
+    console.error(`Error migrating ${file}: ${error}`);
   }
 }
 
@@ -99,7 +101,14 @@ export async function migrateEntities(basePath: string) {
   const ignorePattern = path.join('src', 'templates', '**/*'); // Ignore pattern for src/templates
   const files = glob.sync(pattern, { ignore: ignorePattern });
 
-  for (const file of files) {
+  console.log('Total files to migrate:', files.length);
+
+  let index = 0;
+  for await (const file of files) {
+    console.log(`Migrating file ${index + 1} of ${files.length}: ${file}`);
     await migrateEntity(file);
+    index++;
   }
+
+  console.log('Migration completed');
 }
