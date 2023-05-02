@@ -3,7 +3,11 @@
 </script>
 
 <div class="reader">
-	<div class="reader-inner">Reader</div>
+	<audio controls class="reader-inner">
+		<source src="https://www.w3schools.com/html/horse.ogg" type="audio/ogg" />
+		<source src="https://www.w3schools.com/html/horse.mp3" type="audio/mpeg" />
+		Your browser does not support the audio element.
+	</audio>
 </div>
 
 <style>
