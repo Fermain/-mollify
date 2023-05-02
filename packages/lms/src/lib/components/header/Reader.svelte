@@ -15,7 +15,6 @@
 	}
 
 	.reader-inner {
-		background-color: var(--background-primary);
 		width: 100%;
 		border-radius: var(--border-radius-xs);
 		margin: 0 auto;
