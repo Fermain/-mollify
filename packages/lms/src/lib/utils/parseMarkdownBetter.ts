@@ -2,21 +2,12 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 
-// Define the Frontmatter interface
-export interface Frontmatter {
-	title: string;
-	tags: string[];
-	type: string;
-	path: string;
-	summary: string;
-	url: string;
-	filePath: string;
-}
-
 // Define the MarkdownNode interface
 export interface MarkdownContentTree {
-	frontmatter?: Frontmatter;
-	[key: string]: MarkdownContentTree | Frontmatter | undefined;
+	filePath?: string;
+	folderName?: string;
+	children?: MarkdownContentTree[];
+	[key: string]: unknown;
 }
 
 /**
@@ -25,7 +16,9 @@ export interface MarkdownContentTree {
  * @returns A nested object containing the parsed markdown files
  */
 export function parseMarkdownBetter(dir: string) {
-	function walkSync(currentDir: string, currentObject: MarkdownContentTree = {}) {
+	function walkSync(currentDir: string) {
+		let currentObject: MarkdownContentTree = {};
+		const children: MarkdownContentTree[] = [];
 		// Get the files in the current directory
 		const files = fs.readdirSync(currentDir);
 		files.forEach((filename) => {
@@ -33,21 +26,33 @@ export function parseMarkdownBetter(dir: string) {
 			const filePath = path.join(currentDir, filename);
 			const stat = fs.statSync(filePath);
 			if (stat.isDirectory()) {
-				if (!currentObject[filename]) {
-					currentObject[filename] = {};
-				}
 				// Recursively call walkSync with the current directory and the current object
-				walkSync(filePath, currentObject[filename] as MarkdownContentTree);
+				children.push(walkSync(filePath));
 			} else if (path.extname(filename) === '.md') {
 				// If the current item is a markdown file, read the file and parse the frontmatter
 				const rawContent = fs.readFileSync(filePath, 'utf-8');
 				const { data } = matter(rawContent);
-				currentObject.frontmatter = { ...data, filePath } as Frontmatter;
+				// browserPath is the path relative to the browser
+				const browserPath = filePath
+					.replaceAll('\\', '/')
+					.replace('src/routes/content', './content')
+					.replace('+page.md', '');
+				currentObject = { ...data, filePath, browserPath, folderName: path.basename(currentDir) };
 			}
 		});
+
+		if (children.length > 0) {
+			currentObject.children = children;
+		}
 
 		return currentObject;
 	}
 
-	return walkSync(dir);
+	const institutes = fs.readdirSync(dir);
+	const data = institutes.map((institute) => {
+		const instituteDir = path.join(dir, institute);
+		return walkSync(instituteDir);
+	});
+
+	return data;
 }
