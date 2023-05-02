@@ -1,8 +1,15 @@
-<h1>Mollify</h1>
+<a href="/"><h1>M</h1></a>
 
 <style>
-	h1 {
+	a {
 		grid-area: brand;
 		margin: 0;
+		color: inherit;
+		text-decoration: none;
+		display: flex;
+	}
+
+	h1 {
+		margin: auto;
 	}
 </style>
