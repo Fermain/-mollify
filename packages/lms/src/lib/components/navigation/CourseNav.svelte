@@ -7,22 +7,16 @@
 
 <div>
 	<h3 style="padding-left: {indent}rem">
-		{data.frontmatter.title}
+		{data.title}
 	</h3>
-	<a href={`${path}${data.frontmatter.path}`} style="padding-left: {indent + 1}rem">Overview</a>
-	{#each Object.entries(data) as [moduleName, module]}
-		{#if moduleName !== 'frontmatter'}
-			<h3>{moduleName}</h3>
-			{#each Object.entries(module) as [lessonName, lesson]}
-				{#if lessonName !== 'frontmatter'}
-					<a href={`${path}${lesson.frontmatter.path}`} style="padding-left: {indent + 1}rem"
-						>{lessonName}</a
-					>
-				{:else}
-					<a href={`${path}${lesson.path}`} style="padding-left: {indent + 1}rem">Overview</a>
-				{/if}
-			{/each}
-		{/if}
+
+	<a href={`${data.browserPath}`} style="padding-left: {indent + 1}rem">Overview</a>
+	{#each data.children as module}
+		<h3>{module.title}</h3>
+		<a href={module.browserPath} style="padding-left: {indent + 1}rem">Overview</a>
+		{#each module.children as lesson}
+			<a href={lesson.browserPath} style="padding-left: {indent + 2}rem">{lesson.title}</a>
+		{/each}
 	{/each}
 </div>
 

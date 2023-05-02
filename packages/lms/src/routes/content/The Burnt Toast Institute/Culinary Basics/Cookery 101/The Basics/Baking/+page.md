@@ -1,7 +1,7 @@
 ---
 title: Baking
 slug: baking
-type: Lesson
+type: lesson
 path: The Burnt Toast Institute/Culinary Basics/Cookery 101/The Basics/Baking
 dependency: Cooking
 tags:

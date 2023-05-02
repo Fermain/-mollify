@@ -1,7 +1,7 @@
 ---
 title: Cookery 101
 slug: cookery-101
-type: Course
+type: course
 path: The Burnt Toast Institute/Culinary Basics/Cookery 101
 dependency: null
 url: https://cdn.discordapp.com/attachments/1075082732482330704/1100040094498431127/Ancalagen_Kitchen_burning_toast_overflowing_pots_on_stove_carto_efb79654-879c-4c22-ad23-7e627ba04c1e.png

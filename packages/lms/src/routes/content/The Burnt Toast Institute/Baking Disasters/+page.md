@@ -1,7 +1,7 @@
 ---
 title: Baking Disasters
 slug: baking-disasters
-type: Programme
+type: programme
 dependency: null
 path: The Burnt Toast Institute/Baking Disasters
 summary: Are you tired of those fancy culinary schools that teach you how to bake like a professional? Look no further than The Burnt Toast Institute's Baking Disasters Programme!
