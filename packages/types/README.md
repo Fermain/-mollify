@@ -1,6 +1,6 @@
 # `types`
 
-> TODO: description
+This package contains all type definitions required across the project.
 
 ## Usage
 
