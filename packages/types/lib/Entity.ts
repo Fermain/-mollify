@@ -50,12 +50,12 @@ export interface EntityMeta extends EntityBase {
  * const testCourse = new Entity('content/courses/test-course');
  */
 export class Entity implements EntityMeta {
-  public readonly slug: string;
-  public readonly children = new Array<EntityMeta>();
-  public readonly type: EntityType;
   public readonly title: string;
+  public readonly slug: string;
+  public readonly type: EntityType;
   public readonly tags = new Array<string>();
   public readonly previous?: string;
+  private _children?: Array<EntityMeta>;
 
   constructor(public readonly address: string) {
     // Assign the slug based on the directory name from the given address
@@ -67,8 +67,10 @@ export class Entity implements EntityMeta {
     this.title = title;
     this.tags = tags;
     this.previous = previous;
+  }
 
-    // Retrieve child entities from disk
-    this.children = getChildrenSync(address);
+  public get children(): Array<EntityMeta> {
+    // Retrieve child entities from disk if not already cached
+    return this._children || (this._children = getChildrenSync(this.address));
   }
 }
