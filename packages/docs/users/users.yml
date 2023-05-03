@@ -1,0 +1,84 @@
+- Name: Jackson "Jax" McKenzie
+  Title: Front-end Development Coach at Noroff
+  Location: South Africa
+  Properties:
+  - Informal writing style
+  - Enjoys recording video
+  - Carpal tunnel syndrome
+  Bio: Hi, my name is Jackson McKenzie, but my friends call me Jax. I'm a Front-end Development Coach at Noroff, and I love sharing my coding knowledge through fun and engaging videos. When I'm not creating content, you can find me playing my favorite video games.
+  Image: Jackson.png
+
+- Name: Trevor Strauss
+  Title: Front-end Development Coach at Noroff
+  Location: South Africa
+  Properties:
+  - Verbose academic writing style
+  - Avoids creating video
+  - Part-time fireman
+  Bio: I'm Trevor Strauss, a Front-end Development Coach at Noroff. I specialize in comprehensive written material and academic-style instruction. Although I love teaching, I also work as a fireman.
+  Image: Trevor.png
+
+- Name: Ole Henrik Johansen
+  Title: Front-end Development Student at Noroff
+  Pace: Full Time
+  Location: Norway
+  Properties:
+  - Visually impaired
+  - Code focused
+  - Enjoys teamwork
+  Bio: I'm Ole Henrik Johansen, a full-time student at Noroff, dedicated to mastering the art of front-end development. I thrive in code-focused projects and love collaborating with my fellow students to create innovative solutions.
+  Image: Ole.png
+
+- Name: Annika Müller
+  Title: Front-end Development Student at Noroff
+  Pace: Part Time
+  Location: Germany
+  Properties:
+  - Design focused
+  - Enjoys teamwork
+  - Less code focused
+  - Prior study in UX
+  Bio: My name is Annika Müller, and I'm a part-time front-end development student at Noroff from Germany. With a background in UX design, I emphasise the importance of aesthetics and enjoy collaborating with my peers on design-focused projects. My coding skills are a work in progress, but my design expertise is invaluable.
+  Image: Annika.png
+
+- Name: Camila Ortega
+  Title: Front-end Development Student at Noroff
+  Pace: Full Time
+  Location: Ecuador
+  Properties:
+  - Enjoys solo work
+  - Intermediate English
+  - Highly self-motivated
+  Bio: I'm Camila Ortega, a full-time front-end development student at Noroff from Ecuador. Known for my strong work ethic and self-motivation, I excel in solo projects. Despite my intermediate English skills, I am dedicated to my studies and eager to improve my language proficiency.
+  Image: Camila.png
+
+- Name: Oliver Harrison
+  Title: Front-end Development Student at Noroff
+  Pace: Full Time
+  Location: UK
+  Properties:
+  - Small business owner
+  - Learning for context
+  - No intention of professional development
+  Bio: I'm Oliver Harrison, a full-time front-end development student at Noroff, based in the UK. As a small business owner, my primary goal is to enhance my understanding of front-end development in order to better manage my business. I have no plans to pursue a career in the field but value the knowledge I gain.
+  Image: Oliver.png
+
+- Name: Ingrid Andersen
+  Title: Content Editor at Noroff
+  Location: Norway
+  Properties:
+  - Punctual
+  - Polylingual
+  - Meticulous
+  Bio: My name is Ingrid Andersen, and I'm a content editor at Noroff. I'm known for my impeccable punctuality and sharp attention to detail. Fluent in multiple languages, I bring a unique perspective to my editing work, ensuring that all content meets the highest standards.
+  Image: Ingrid.png
+
+- Name: Willem de Vries
+  Title: Front-end Development Programme Manager at Noroff
+  Location: Netherlands
+  Properties:
+  - Avid reader
+  - Diplomatic
+  - Very busy
+  Bio: I'm Willem de Vries, the Front-end Development Programme Manager at Noroff, based in the Netherlands. As an avid reader, I'm always exploring new ideas and concepts related to my field. My diplomatic approach has helped me successfully manage a diverse team, even though I'm often very busy juggling multiple responsibilities.
+  Image: Willem.png
