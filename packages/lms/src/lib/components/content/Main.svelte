@@ -11,5 +11,6 @@
 <style>
 	main {
 		grid-area: body;
+		overflow-y: auto;
 	}
 </style>
