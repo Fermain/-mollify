@@ -13,7 +13,7 @@ export interface MarkdownContentTree {
 }
 
 /**
- * Recursively parse markdown files and return a nested object
+ * Recursively parse markdown files and return an array of objects with arrays of children
  * @param dir  The directory to parse
  * @returns A nested object containing the parsed markdown files
  */
