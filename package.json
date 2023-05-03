@@ -5,6 +5,7 @@
     "packages/*"
   ],
   "devDependencies": {
+    "gray-matter": "^4.0.3",
     "lerna": "^6.6.1"
   }
 }

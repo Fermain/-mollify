@@ -1,2 +1,12 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script>
+</script>
+
+<main class="">This is the main from +page</main>
+
+<style lang="scss">
+	main {
+		padding-top: var(--spacing-xl);
+		min-height: 100vh;
+		grid-area: main;
+	}
+</style>

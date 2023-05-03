@@ -1,0 +1,16 @@
+*,
+*:before,
+*:after {
+	box-sizing: inherit;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	background-color: var(--primary-background);
+}

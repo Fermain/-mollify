@@ -22,8 +22,11 @@
 		"eslint": "^8.28.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-svelte3": "^4.0.0",
+		"gray-matter": "^4.0.3",
+		"mdsvex": "^0.10.6",
 		"prettier": "^2.8.0",
 		"prettier-plugin-svelte": "^2.8.1",
+		"sass": "^1.62.0",
 		"svelte": "^3.54.0",
 		"svelte-check": "^3.0.1",
 		"tslib": "^2.4.1",
@@ -31,5 +34,8 @@
 		"vite": "^4.2.0",
 		"vitest": "^0.25.3"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"remark-gfm": "^3.0.1"
+	}
 }
