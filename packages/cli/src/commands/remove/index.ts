@@ -1,10 +1,10 @@
 import { Command } from 'commander';
 import { prompt } from 'enquirer';
-import { EntityType, Entity } from '../../types';
+import { EntityType, EntityMeta } from '@mollify/types';
 import removeEntity from '../../actions/removeEntity';
 import listEntities from '../../actions/listEntities';
 
-async function entityPrompt(entities: Entity[], message: string) {
+async function entityPrompt(entities: EntityMeta[], message: string) {
   const { index } = await prompt<{ index: number }>({
     type: 'autocomplete',
     name: 'index',

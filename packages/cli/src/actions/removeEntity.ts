@@ -1,6 +1,6 @@
 import path from 'path';
 import fs from 'fs-extra';
-import type { Entity } from '../types/Entity';
+import type { EntityMeta } from '@mollify/types';
 import { ENTITY_FILE } from '../constants';
 import { countFiles } from '../utilities';
 import { prompt } from 'enquirer';
@@ -18,7 +18,7 @@ async function confirmDeletion(entityType: string, fileCount: number) {
   return consent;
 }
 
-export default async function removeEntity(entity: Entity, basePath = '') {
+export default async function removeEntityMeta(entity: EntityMeta, basePath = '') {
   const entityDir = path.join(basePath, entity.slug);
   const entityPath = path.resolve(path.join(entityDir, ENTITY_FILE));
 

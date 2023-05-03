@@ -2,7 +2,7 @@ import { Command } from 'commander';
 import { prompt } from 'enquirer';
 import * as path from 'path';
 import moveEntity from '../../actions/moveEntity';
-import { EntityType } from '../../types';
+import { EntityType } from '@mollify/types';
 import { ENTITY_HIERARCHY } from '../../constants';
 
 async function moveEntityPrompt(entityType?: EntityType, entityName?: string) {

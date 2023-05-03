@@ -3,14 +3,14 @@ import path from 'path';
 import glob from 'glob';
 import matter from 'gray-matter';
 import { prompt } from 'enquirer';
-import { Entity, EntityType } from '../types';
+import { EntityMeta, EntityType } from '@mollify/types';
 import { ENTITY_FILE, INDEX_FILE } from '../constants';
 import { slugger } from '../utilities';
 
 async function getUserInput(
-  existingFrontmatter: Partial<Entity>,
+  existingFrontmatter: Partial<EntityMeta>,
   filePath: string,
-): Promise<Partial<Entity>> {
+): Promise<Partial<EntityMeta>> {
   const parsedPath = path.parse(filePath);
   const isIndexFile = parsedPath.base === INDEX_FILE;
 
@@ -21,7 +21,7 @@ async function getUserInput(
   console.log(`Migrating ${filePath}...`);
   console.log(`Migrating to ${initialSlug}...`);
 
-  return await prompt<Entity>([
+  return await prompt<EntityMeta>([
     {
       type: 'input',
       name: 'title',

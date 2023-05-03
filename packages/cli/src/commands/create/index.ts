@@ -1,6 +1,6 @@
 import { Command } from 'commander';
 import { prompt } from 'enquirer';
-import { EntityType, Entity } from '../../types';
+import { EntityType, EntityMeta } from '@mollify/types';
 import createEntity from '../../actions/createEntity';
 import { slugger } from '../../utilities';
 
@@ -56,10 +56,13 @@ async function createEntityPrompt(
       ])
     ).slug;
 
-  const entity: Entity = {
+  const entity: EntityMeta = {
     title,
     slug,
     type: entityType,
+    children: [],
+    address: '',
+    tags: [],
   };
 
   await createEntity(entity, destination);
@@ -76,7 +79,7 @@ export default new Command('create')
       entityType?: EntityType,
     ) => {
       createEntityPrompt(entityType, destination, title, slug)
-        .then(() => console.log('Entity created'))
+        .then(() => console.log('EntityMeta created'))
         .catch((error) => {
           console.error(`Error creating entity: ${error.message}`);
           process.exit(1);

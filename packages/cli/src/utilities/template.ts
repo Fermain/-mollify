@@ -1,7 +1,7 @@
 import path from 'path';
 import fs from 'fs-extra';
 import matter from 'gray-matter';
-import type { Entity } from '../types';
+import type { Entity } from '@mollify/types';
 
 // Get the path to the template file for the specified entity type
 export function getTemplatePath(entityType: string): string {

@@ -1,16 +1,16 @@
 import { Command } from 'commander';
-import { EntityType, Entity } from '../../types';
+import { EntityType, EntityMeta } from '@mollify/types';
 import getEntities from '../../actions/listEntities';
 
 async function listEntities(entityType?: EntityType, basePath = '') {
-  const entities: Entity[] = await getEntities(entityType, basePath);
+  const entities: EntityMeta[] = await getEntities(entityType, basePath);
 
   if (entities.length === 0) {
     console.log(`No entities found.`);
   } else {
     console.log(`Entities:`);
     entities.forEach((entity) => {
-      console.log(`- ${entity.title} (${entity.type}) (${entity.path})`);
+      console.log(`- ${entity.title} (${entity.type}) (${entity.address})`);
     });
   }
 }

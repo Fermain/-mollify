@@ -1,12 +1,12 @@
 import fs from 'fs-extra';
 import path from 'path';
 import matter from 'gray-matter';
-import type { Entity } from '../types/Entity';
+import type { EntityMeta } from '@mollify/types';
 import { ENTITY_FILE } from '../constants';
 
-export default async function updateEntity(
-  entity: Entity,
-  frontmatter: Partial<Entity>,
+export default async function updateEntityMeta(
+  entity: EntityMeta,
+  frontmatter: Partial<EntityMeta>,
   body: string | null = null,
   basePath = '',
 ) {

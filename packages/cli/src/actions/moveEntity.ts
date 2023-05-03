@@ -1,6 +1,6 @@
 import fs from 'fs-extra';
 import path from 'path';
-import { EntityType } from '../types';
+import { EntityType } from '@mollify/types';
 
 async function moveEntity(entityTypeToMove: EntityType, entityToMove: string, destinationType: EntityType, destinationEntity: string) {
   const sourcePath = entityToMove;
