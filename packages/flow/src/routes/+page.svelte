@@ -1,14 +1,15 @@
 <script lang="ts">
 	import DiffDemo from '$lib/components/DiffDemo.svelte';
 	import EditorDemo from '$lib/components/EditorDemo.svelte';
+	import EasyMDEDemo from '$lib/components/EasyMDEDemo.svelte';
 </script>
 
 <!-- <DiffDemo /> -->
 
 <div class="container">
 	<div class="wrapper">
-		<h2>TUI Editor</h2>
-		<EditorDemo />
+		<h2>Easy mde</h2>
+		<EasyMDEDemo />
 	</div>
 
 	<div class="wrapper">
