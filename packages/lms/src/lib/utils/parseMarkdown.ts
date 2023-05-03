@@ -62,7 +62,12 @@ export function parseMarkdown(dir: string) {
 					.replaceAll('\\', '/')
 					.replace('src/routes/content', '/content')
 					.replace('+page.md', '');
-				currentObject = { ...data, filePath, browserPath, folderName: path.basename(currentDir) };
+				currentObject = {
+					...data,
+					filePath,
+					foldername: path.basename(currentDir),
+					browserPath
+				};
 			}
 		});
 
