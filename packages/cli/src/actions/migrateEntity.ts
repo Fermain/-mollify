@@ -6,6 +6,7 @@ import { prompt } from 'enquirer';
 import { EntityMeta, EntityType } from '@mollify/types';
 import { ENTITY_FILE, INDEX_FILE } from '../constants';
 import { slugger } from '../utilities';
+import * as cliProgress from 'cli-progress';
 
 async function getUserInput(
   existingFrontmatter: Partial<EntityMeta>,
@@ -17,9 +18,6 @@ async function getUserInput(
   const initialSlug = isIndexFile
     ? slugger(parsedPath.dir.split(path.sep).pop() || '')
     : slugger(existingFrontmatter.slug || existingFrontmatter.title || '');
-
-  console.log(`Migrating ${filePath}...`);
-  console.log(`Migrating to ${initialSlug}...`);
 
   return await prompt<EntityMeta>([
     {
@@ -85,7 +83,6 @@ export async function migrateEntity(file: string) {
       await fs.ensureDir(newDir);
       await fs.writeFile(newFilePath, newFileContent);
       await fs.unlink(file);
-      console.log(`Migrated ${file} -> ${newFilePath}`);
     } else {
       console.log(
         `Skipped ${file} as there's already a ${ENTITY_FILE} file in the folder.`,
@@ -101,14 +98,27 @@ export async function migrateEntities(basePath: string) {
   const ignorePattern = path.join('src', 'templates', '**/*'); // Ignore pattern for src/templates
   const files = glob.sync(pattern, { ignore: ignorePattern });
 
-  console.log('Total files to migrate:', files.length);
+  const progressBar = new cliProgress.SingleBar(
+    {
+      format: `Migrating ${files.length} files | {bar} | {percentage}% | {value}/{total} Files`,
+    },
+    cliProgress.Presets.shades_classic,
+  );
 
-  let index = 0;
-  for await (const file of files) {
-    console.log(`Migrating file ${index + 1} of ${files.length}: ${file}`);
-    await migrateEntity(file);
-    index++;
+  console.log('------------------------------------');
+
+  progressBar.start(files.length, 0);
+
+  for await (const [index, file] of files.entries()) {
+    progressBar.stop();
+
+    await migrateEntity(file)
+
+    progressBar.start(files.length, index);
+    progressBar.increment(); // Increment the progress bar
   }
+
+  progressBar.stop(); // Stop the progress bar
 
   console.log('Migration completed');
 }
