@@ -10,12 +10,14 @@
 	import ContentNav from '$lib/components/navigation/ContentNav.svelte';
 	import IconNav from '$lib/components/navigation/IconNav.svelte';
 	import Header from '$lib/components/header/Header.svelte';
+	import Ego from '$lib/components/ui/Ego.svelte';
+	import Search from '$lib/components/header/Search.svelte';
 </script>
 
 <div class="layout-grid">
 	<Logo />
 	<Header>
-		<Reader />
+		<Search/>
 		<Settings />
 	</Header>
 	<Molly />
@@ -25,7 +27,10 @@
 	</Main>
 	<Navigation />
 	<ContentNav />
-	<Footer />
+	<Footer>
+		<Ego/>
+		<Reader />
+	</Footer>
 </div>
 
 <style lang="scss">
@@ -39,6 +44,5 @@
 			'icons body nav1 nav2'
 			'footer footer footer footer';
 		gap: 0.5rem;
-		padding-right: 1rem;
 	}
 </style>
