@@ -4,13 +4,11 @@
 	let open = null;
 
 	function toggleOpen(title) {
-		open = open === title ? null : this.title;
+		open = open === title ? null : title;
 	}
 
 	export let indent = 0.125;
 	let currentPath: string;
-
-	console.log('data: ', data);
 </script>
 
 {#each data as { title, browserPath, children }}
@@ -21,7 +19,7 @@
 		<div transition:slide={{ duration: 300 }}>
 			<a href={browserPath} style="padding-left: {indent}rem">Overview</a>
 			{#each children as child}
-				{#if child.children.length === 0 || child.children === undefined}
+				{#if (child.type === 'lesson' && child.children.length === 0) || child.children === undefined}
 					<a
 						href={child.browserPath}
 						class:current={child.browserPath === currentPath}
@@ -30,7 +28,7 @@
 						{child.title}
 					</a>
 				{:else}
-					<svelte:self data={child} indent={indent + 0.125} />
+					<svelte:self data={[child]} indent={indent + 0.125} />
 				{/if}
 			{/each}
 		</div>
@@ -48,6 +46,7 @@
 		margin: 0;
 		font-size: 1.25rem;
 		cursor: pointer;
+		border: 1px solid var(--secondary);
 	}
 	a {
 		font-size: 1.2rem;
