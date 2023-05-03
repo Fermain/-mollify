@@ -8,27 +8,31 @@
 	}
 
 	export let indent = 0.125;
-	let currentPath: string;
+	export let currentPath: string;
 </script>
 
-{#each data as { title, browserPath, children }}
+{#each data as { title, browserPath, children, foldername }}
 	<h3 style="padding-left: {indent}rem" on:click={toggleOpen(title)} key={title}>
 		{title}
 	</h3>
 	{#if open === title}
 		<div transition:slide={{ duration: 300 }}>
-			<a href={browserPath} style="padding-left: {indent}rem">Overview</a>
+			<a
+				href={browserPath}
+				style="padding-left: {indent}rem"
+				class={currentPath === foldername ? 'current' : ''}>Overview</a
+			>
 			{#each children as child}
 				{#if (child.type === 'lesson' && child.children.length === 0) || child.children === undefined}
 					<a
 						href={child.browserPath}
-						class:current={child.browserPath === currentPath}
 						style="padding-left: {indent + 0.125}rem"
+						class={currentPath === child.foldername ? 'current' : ''}
 					>
 						{child.title}
 					</a>
 				{:else}
-					<svelte:self data={[child]} indent={indent + 0.125} />
+					<svelte:self data={[child]} indent={indent + 0.125} {currentPath} />
 				{/if}
 			{/each}
 		</div>
@@ -40,23 +44,23 @@
 		font-weight: 600rem;
 		background-color: var(--primary);
 		color: var(--text-secondary);
-		padding: 0.25rem;
+		padding: var(--spacing-xxs);
 		display: block;
 		border: 1px solid var(--primary);
 		margin: 0;
-		font-size: 1.25rem;
+		font-size: 1.125rem;
 		cursor: pointer;
 		border: 1px solid var(--secondary);
 	}
 	a {
-		font-size: 1.2rem;
+		font-size: 1rem;
 		font-weight: 600rem;
 		color: var(--text-primary);
 		background-color: var(--secondary);
 		text-decoration: none;
-		padding: 0.25rem;
+		padding: var(--spacing-xxs);
 		display: block;
-		border: 1px solid gray;
+		border: 1px solid var(--primary);
 	}
 
 	.current {

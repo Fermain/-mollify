@@ -26,22 +26,19 @@ export function getCurrent(
 
 	// If the current object is a course, module, or lesson, return it
 	if (currentObject[0].type == 'course') {
-		console.log('course');
 		return currentObject[0];
 	}
 
-	if (currentObject[0].title === keys[0] && keys.length !== 1) {
+	if (currentObject[0].foldername === keys[0] && keys.length !== 1) {
 		if (currentObject[0].children) {
 			const rest = keys.slice(1);
 			const child = currentObject[0].children.filter((child) => child.title === rest[0]);
-
 			if (child.length === 0 || child.length > 1) {
 				return undefined;
 			}
-
 			return getCurrent(child, rest);
 		}
-	} else if (currentObject[0].title === keys[0]) {
+	} else if (currentObject[0].foldername === keys[0]) {
 		return currentObject[0];
 	}
 

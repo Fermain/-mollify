@@ -36,6 +36,7 @@
 	$: {
 		institutes = $files;
 		current = getCurrent(institutes, pathArray);
+
 		page.subscribe((data) => {
 			updatePath();
 		});

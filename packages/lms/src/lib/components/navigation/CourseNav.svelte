@@ -12,20 +12,20 @@
 	<a
 		href={`${data.browserPath}`}
 		style="padding-left: {indent + 1}rem"
-		class={currentPath === data.title ? 'current' : ''}>Overview</a
+		class={currentPath === data.foldername ? 'current' : ''}>Overview</a
 	>
 	{#each data.children as module}
 		<h3>{module.title}</h3>
 		<a
 			href={module.browserPath}
 			style="padding-left: {indent + 1}rem"
-			class={currentPath === module.title ? 'current' : ''}>Overview</a
+			class={currentPath === module.foldername ? 'current' : ''}>Overview</a
 		>
 		{#each module.children as lesson}
 			<a
 				href={lesson.browserPath}
 				style="padding-left: {indent + 2}rem"
-				class={currentPath === lesson.title ? 'current' : ''}>{lesson.title}</a
+				class={currentPath === lesson.foldername ? 'current' : ''}>{lesson.title}</a
 			>
 		{/each}
 	{/each}
@@ -36,23 +36,24 @@
 		font-weight: 600rem;
 		background-color: var(--primary);
 		color: var(--text-secondary);
-		padding: 0.25rem;
+		padding: var(--spacing-xxs);
 		display: block;
-		border: 1px solid black;
+		border: 1px solid var(--primary);
 		margin: 0;
-		font-size: 1.25rem;
+		font-size: 1.125rem;
 		cursor: pointer;
+		border: 1px solid var(--secondary);
 	}
 
 	a {
-		font-size: 1.2rem;
+		font-size: 1rem;
 		font-weight: 600rem;
-		background-color: var(--secondary);
 		color: var(--text-primary);
-		padding: 0.25rem;
-		display: block;
-		border: 1px solid gray;
+		background-color: var(--secondary);
 		text-decoration: none;
+		padding: var(--spacing-xxs);
+		display: block;
+		border: 1px solid var(--primary);
 	}
 
 	.current {
