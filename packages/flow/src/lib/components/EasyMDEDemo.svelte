@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
-	import { createTask, createCodeBlock } from '../../utils/easymdeCustomFunctions';
+	import { createTask } from '../../utils/easymdeCustomFunctions';
 
 	let textarea: HTMLTextAreaElement;
 	let editor: EasyMDE;
@@ -53,14 +53,13 @@
 				'|',
 				'horizontal-rule',
 				'quote',
+				'code',
 				'|',
 				'unordered-list',
 				'ordered-list',
 				{
 					name: 'task',
-					action: (editor) => {
-						createTask(editor);
-					},
+					action: createTask,
 					className: 'fa fa-check-square',
 					title: 'Task',
 					attributes: {
@@ -74,20 +73,7 @@
 				'image',
 				'link',
 				'|',
-				'code',
-				{
-					name: 'codeBlock',
-					action: (editor) => {
-						createCodeBlock(editor);
-					},
-					text: 'CB',
-					title: 'codeBlock',
-					attributes: {
-						// for custom attributes
-						id: 'codeBlock',
-						'data-value': 'custom value' // HTML5 data-* attributes need to be enclosed in quotation marks ("") because of the dash (-) in its name.
-					}
-				}
+				'side-by-side'
 			],
 			initialValue:
 				'Owls are nocturnal birds of prey known for their exceptional night vision and silent flight.'

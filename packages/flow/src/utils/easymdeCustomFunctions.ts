@@ -1,7 +1,17 @@
 export function createTask(editor) {
-	console.log(editor);
-}
+	const cm = editor.codemirror;
+	let output = '';
+	const selectedText = cm.getSelection();
+	const text = selectedText;
 
-export function createCodeBlock(editor) {
-	console.log(editor);
+	output = `[] ${text}`;
+	cm.replaceSelection(output);
+
+	/* 	console.log(cm);
+
+	const coords = cm.cursorCoords();
+	console.log(coords);
+
+	const cursor = cm.getCursor();
+	console.log(cursor); */
 }
