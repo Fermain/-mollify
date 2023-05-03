@@ -1,1 +1,8 @@
 node_modules/
+dist/
+bin/
+build/
+.env
+.env.*
+!.env.example
+.DS_Store
