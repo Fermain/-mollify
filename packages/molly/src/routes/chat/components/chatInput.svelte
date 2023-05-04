@@ -2,6 +2,7 @@
 	import { createEventDispatcher } from 'svelte';
 	import sendChat from '../logo/paper-plane.svg';
 	export let img: string = sendChat;
+	let textarea: HTMLTextAreaElement;
 
 	const dispatch = createEventDispatcher();
 
@@ -14,8 +15,7 @@
 	export let messages: Message[] = [];
 
 	function sendMessage(): void {
-		const textarea: HTMLTextAreaElement | null = document.querySelector('textarea');
-		if (!textarea) return;
+		
 
 		let content: string = textarea.value.trim();
 
@@ -52,7 +52,7 @@
 
 <div class="chat-input">
 	<form on:submit|preventDefault={sendMessage}>
-		<textarea placeholder="Ask Molly" on:input={resizeOnTyping} />
+		<textarea placeholder="Ask Molly" on:input={resizeOnTyping} bind:this={textarea}/>
 
 		<button><img src={img} alt="send message" /></button>
 	</form>
