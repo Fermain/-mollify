@@ -16,7 +16,6 @@
 
 	function sendMessage(): void {
 		
-
 		let content: string = textarea.value.trim();
 
 		if (content !== '') {
