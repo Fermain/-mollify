@@ -55,6 +55,7 @@
 	"types": "./dist/index.d.ts",
 	"type": "module",
 	"dependencies": {
-		"easymde": "^2.18.0"
+		"easymde": "^2.18.0",
+		"ink-mde": "^0.25.0-rc.0"
 	}
 }
