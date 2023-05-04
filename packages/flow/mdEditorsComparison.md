@@ -1,7 +1,0 @@
-| Name       | Link                                                                     | Last updated | Git stars | Forks | Releases | Contributors | Pros                        | Cons                        |
-| ---------- | ------------------------------------------------------------------------ | ------------ | --------- | ----- | -------- | ------------ | --------------------------- | --------------------------- |
-| easyMDE    | [documentation](https://github.com/Ionaru/easy-markdown-editor)          | 28 Apr 2023  | 1.9k      | 275   | -        | 11           | - pro <br> - pro <br> - pro | - con <br> - con <br> - con |
-| ink-mde    | [documentation](https://github.com/davidmyersdev/ink-mde)                | 1 Apr 2023   | 122       | 12    | 69       | 3            | - pro <br> - pro <br> - pro | - con <br> - con <br> - con |
-| tui editor | [documentation](https://github.com/nhn/tui.editor)                       | 17 Feb 2023  | 15.9k     | 1.6k  | 134      | 112          | - pro <br> - pro <br> - pro | - con <br> - con <br> - con |
-| remarkable | [documentation](https://github.com/jonschlinkert/remarkable)             | 11 Sep 2021  | 5.5k      | 396   | 1        | 40           | - pro <br> - pro <br> - pro | - con <br> - con <br> - con |
-| simplemde  | [documentation](https://github.com/sparksuite/simplemde-markdown-editor) | 14 Jun 2016  | 9.4k      | 1.1k  | 30       | 29           | - pro <br> - pro <br> - pro | - con <br> - con <br> - con |
