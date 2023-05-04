@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
-	import { createTask } from '../../utils/easymdeCustomFunctions';
 
 	let textarea: HTMLTextAreaElement;
 	let editor: EasyMDE;
@@ -57,17 +56,6 @@
 				'|',
 				'unordered-list',
 				'ordered-list',
-				{
-					name: 'task',
-					action: createTask,
-					className: 'fa fa-check-square',
-					title: 'Task',
-					attributes: {
-						// for custom attributes
-						id: 'task',
-						'data-value': 'custom value' // HTML5 data-* attributes need to be enclosed in quotation marks ("") because of the dash (-) in its name.
-					}
-				},
 				'|',
 				'table',
 				'image',
