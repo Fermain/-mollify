@@ -1,7 +1,7 @@
 import path from 'path';
 
-export default function getEntitySlug(entityPath: string): string {
-  const fullPath = path.resolve(entityPath);
+export default function getEntitySlug(address: string): string {
+  const fullPath = path.resolve(address);
   const pageFileName = '+page.md';
   const contentPath = path.join(fullPath, pageFileName);
 

@@ -7,7 +7,7 @@ export function getEntityFrontmatter(entityPath: string): EntityBase {
   const fileName = '+page.md';
   const contentPath = fs.existsSync(path.join(entityPath, fileName))
     ? path.join(entityPath, fileName)
-    : path.join(entityPath, `${fileName}`);
+    : entityPath;
 
   if (!fs.existsSync(contentPath)) {
     throw new Error(`Content file does not exist: ${contentPath}`);
