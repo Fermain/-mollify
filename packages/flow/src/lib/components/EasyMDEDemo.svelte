@@ -10,42 +10,7 @@
 		editor = new EasyMDE({
 			element: textarea,
 			toolbar: [
-				{
-					name: 'h1',
-					action: EasyMDE.toggleHeading1,
-					text: 'H1',
-					title: 'Heading 1'
-				},
-				{
-					name: 'h2',
-					action: EasyMDE.toggleHeading2,
-					text: 'H2',
-					title: 'Heading 2'
-				},
-				{
-					name: 'h3',
-					action: EasyMDE.toggleHeading3,
-					text: 'H3',
-					title: 'Heading 3'
-				},
-				{
-					name: 'h4',
-					action: EasyMDE.toggleHeading4,
-					text: 'H4',
-					title: 'Heading 4'
-				},
-				{
-					name: 'h5',
-					action: EasyMDE.toggleHeading5,
-					text: 'H5',
-					title: 'Heading 5'
-				},
-				{
-					name: 'h6',
-					action: EasyMDE.toggleHeading6,
-					text: 'H6',
-					title: 'Heading 6'
-				},
+				'heading',
 				'bold',
 				'italic',
 				'strikethrough',
@@ -59,9 +24,7 @@
 				'|',
 				'table',
 				'image',
-				'link',
-				'|',
-				'side-by-side'
+				'link'
 			],
 			initialValue:
 				'Owls are nocturnal birds of prey known for their exceptional night vision and silent flight.'
