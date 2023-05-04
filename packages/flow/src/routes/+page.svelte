@@ -22,11 +22,6 @@
 		<h2>TUI Editor</h2>
 		<EditorDemo />
 	</div>
-
-	<div class="wrapper">
-		<h2>TUI Editor</h2>
-		<EditorDemo />
-	</div>
 </div>
 
 <style lang="scss">
