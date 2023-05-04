@@ -6,7 +6,8 @@ import { prompt } from 'enquirer';
 import { EntityMeta, EntityType } from '@mollify/types';
 import { ENTITY_FILE, INDEX_FILE } from '../constants';
 import { slugger } from '../utilities';
-import * as cliProgress from 'cli-progress';
+import cliProgress from 'cli-progress';
+import { table, log, error } from 'console';
 
 async function getUserInput(
   existingFrontmatter: Partial<EntityMeta>,
@@ -18,6 +19,8 @@ async function getUserInput(
   const initialSlug = isIndexFile
     ? slugger(parsedPath.dir.split(path.sep).pop() || '')
     : slugger(existingFrontmatter.slug || existingFrontmatter.title || '');
+
+  table(existingFrontmatter);
 
   return await prompt<EntityMeta>([
     {
@@ -84,12 +87,12 @@ export async function migrateEntity(file: string) {
       await fs.writeFile(newFilePath, newFileContent);
       await fs.unlink(file);
     } else {
-      console.log(
+      log(
         `Skipped ${file} as there's already a ${ENTITY_FILE} file in the folder.`,
       );
     }
-  } catch (error) {
-    console.error(`Error migrating ${file}: ${error}`);
+  } catch (err) {
+    error(`Error migrating ${file}: ${err}`);
   }
 }
 
@@ -105,14 +108,14 @@ export async function migrateEntities(basePath: string) {
     cliProgress.Presets.shades_classic,
   );
 
-  console.log('------------------------------------');
+  log('------------------------------------');
 
   progressBar.start(files.length, 0);
 
   for await (const [index, file] of files.entries()) {
     progressBar.stop();
 
-    await migrateEntity(file)
+    await migrateEntity(file);
 
     progressBar.start(files.length, index);
     progressBar.increment(); // Increment the progress bar
@@ -120,5 +123,5 @@ export async function migrateEntities(basePath: string) {
 
   progressBar.stop(); // Stop the progress bar
 
-  console.log('Migration completed');
+  log('Migration completed');
 }
