@@ -9,23 +9,6 @@
 		const EasyMDE = easymde.default;
 		editor = new EasyMDE({
 			element: textarea,
-			toolbar: [
-				'heading',
-				'bold',
-				'italic',
-				'strikethrough',
-				'|',
-				'horizontal-rule',
-				'quote',
-				'code',
-				'|',
-				'unordered-list',
-				'ordered-list',
-				'|',
-				'table',
-				'image',
-				'link'
-			],
 			initialValue:
 				'Owls are nocturnal birds of prey known for their exceptional night vision and silent flight.'
 		});
