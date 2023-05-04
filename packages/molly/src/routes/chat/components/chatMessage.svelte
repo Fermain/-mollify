@@ -3,7 +3,8 @@
 </script>
 
 <div class="message-wrapper">
-	<strong>{message.name}</strong>
+	<!-- <img src="" alt="avatar" /> -->
+	<strong>{message.name}</strong> <!--This can be removed and only img used-->
 	<p>{message.content}</p>
 </div>
 
@@ -11,10 +12,11 @@
 	.message-wrapper {
 		display: flex;
 		flex-direction: column;
+		align-items: flex-end;
 		color: white;
 		max-width: 100%;
 		margin: 0;
-		background-color: #323e47e8;
+		background-color: #323e47b8;
 		cursor: default;
 		padding: 10px;
 	}
@@ -23,4 +25,11 @@
 		padding: 0;
 		margin: 0;
 	}
+
+	/*img {
+		width: 30px;
+		height: 30px;
+		border-radius: 50%;
+		margin-right: 10px;
+	}*/
 </style>
