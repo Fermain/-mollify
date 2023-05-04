@@ -13,7 +13,7 @@ async function entityPrompt(entities: EntityMeta[], message: string) {
       name: `${entity.title} (${entity.type})`,
       value: String(index),
     })),
-    initial: 0,
+    initial: 0
   });
 
   return entities[Number(index)];
@@ -22,7 +22,7 @@ async function entityPrompt(entities: EntityMeta[], message: string) {
 async function removeEntityPrompt(entityType?: EntityType, basePath = '') {
   const entities = await listEntities(entityType, basePath);
   const entity = await entityPrompt(entities, entityType ? `Which ${entityType} do you want to remove?` : 'Which entity do you want to remove?');
-  await removeEntity(entity, basePath);
+  await removeEntity(entity);
 }
 
 export default new Command('remove')
