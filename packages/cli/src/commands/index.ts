@@ -1,15 +1,17 @@
 import create from './create';
 import link from './link';
-import remove from './remove';
+import list from './list';
 import migrate from './migrate';
 import move from './move';
-import list from './list';
+import remove from './remove';
+import unlink from './unlink';
 
 export default {
   create,
   link,
-  remove,
+  list,
   migrate,
   move,
-  list
+  remove,
+  unlink,
 };

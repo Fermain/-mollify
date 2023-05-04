@@ -7,6 +7,8 @@ import updateEntity from './updateEntity';
 import { migrateEntity, migrateEntities } from './migrateEntity';
 import linkLocalEntity from './linkLocalEntity';
 import linkRemoteEntity from './linkRemoteEntity';
+import unlinkLocalEntity from './unlinkLocalEntity';
+import unlinkRemoteEntity from './unlinkRemoteEntity';
 
 export default {
   createEntity,
@@ -18,5 +20,7 @@ export default {
   migrateEntity,
   migrateEntities,
   linkLocalEntity,
-  linkRemoteEntity
+  linkRemoteEntity,
+  unlinkLocalEntity,
+  unlinkRemoteEntity
 };
