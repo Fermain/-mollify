@@ -3,6 +3,7 @@
 	import EditorDemo from '$lib/components/EditorDemo.svelte';
 	import EasyMDEDemo from '$lib/components/EasyMDEDemo.svelte';
 	import InkMDEDemo from '$lib/components/InkMDEDemo.svelte';
+	import SimpleMDEDemo from '$lib/components/SimpleMDEDemo.svelte';
 </script>
 
 <!-- <DiffDemo /> -->
@@ -21,6 +22,11 @@
 	<div class="wrapper">
 		<h2>TUI Editor</h2>
 		<EditorDemo />
+	</div>
+
+	<div class="wrapper">
+		<h2>Simple mde</h2>
+		<SimpleMDEDemo />
 	</div>
 </div>
 
