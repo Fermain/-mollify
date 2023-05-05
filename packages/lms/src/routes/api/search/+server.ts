@@ -1,9 +1,10 @@
 import { graphql } from 'graphql';
 import { schema, resolvers } from '$lib/graphql/graphql-schema';
-import { parseMarkdown } from '$lib/utils/parseMarkdown';
+import { parseMarkdownSearch } from '$lib/utils/parseMarkdownSearch';
 
 // Pass the data from the parseMarkdown function to the GraphQL context
-const data = parseMarkdown('src/routes/content');
+const data = parseMarkdownSearch('src/routes/content');
+console.log('data:', data);
 
 export async function POST({ request }) {
 	const { query, variables } = await request.json();
