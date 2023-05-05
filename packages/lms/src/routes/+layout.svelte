@@ -6,7 +6,6 @@
 	import Reader from '$lib/components/header/Reader.svelte';
 	import Settings from '$lib/components/header/Settings.svelte';
 	import Molly from '$lib/components/molly/Molly.svelte';
-	import Navigation from '$lib/components/navigation/Navigation.svelte';
 	import ContentNav from '$lib/components/navigation/ContentNav.svelte';
 	import IconNav from '$lib/components/navigation/IconNav.svelte';
 	import Header from '$lib/components/header/Header.svelte';
