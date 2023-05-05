@@ -3,7 +3,7 @@ title: Burnt To A Crisp
 slug: burnt-to-a-crisp
 type: lesson
 path: The Burnt Toast Institute/Baking Disasters/Introduction To Baking Disasters/Cookies And Brownies/Burnt To A Crisp
-dependency: Rock Hard Chewy Brownies
+previous: Rock Hard Chewy Brownies
 tags:
 ---
 

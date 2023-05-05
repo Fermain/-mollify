@@ -2,7 +2,7 @@
 title: AJAX and APIs
 slug: ajax-and-apis
 summary: Learn how to use AJAX to fetch data from APIs and update your user interfaces dynamically. Master asynchronous programming with JavaScript.
-dependency: DOM Manipulation
+previous: DOM Manipulation
 src:
 type: modules
 tags:

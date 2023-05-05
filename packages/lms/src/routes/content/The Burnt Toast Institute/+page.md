@@ -2,7 +2,7 @@
 title: The Burnt Toast Institute
 slug: the-burnt-toast-institute
 summary: Experience the joy of kitchen chaos with The Burnt Toast Institute's unique cooking courses.
-dependency: null
+previous: null
 url: https://cdn.discordapp.com/attachments/1075082732482330704/1098553676680933449/Ancalagen_vector_logo_of_burnt_toast_for_a_cooking_institute_d3ea6350-c10f-4141-8684-e44599ef0076.png
 type: institute
 path: The Burnt Toast Institute

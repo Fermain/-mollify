@@ -3,7 +3,7 @@ title: Gastronomy
 slug: gastronomy
 type: lesson
 path: The Burnt Toast Institute/Culinary Basics/Cookery 101/The Basics/Gastronomy
-dependency: Baking
+previous: Baking
 tags:
   - module 3
   - gastronomy

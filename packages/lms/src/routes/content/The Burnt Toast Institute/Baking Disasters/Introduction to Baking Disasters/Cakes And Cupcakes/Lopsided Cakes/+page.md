@@ -3,7 +3,7 @@ title: Lopsided Cakes
 slug: lopsided-cakes
 type: lesson
 path: The Burnt Toast Institute/Baking Disasters/Introduction To Baking Disasters/Cakes And Cupcakes/Lopsided Cakes
-dependency: The Science Of Cake Flops
+previous: The Science Of Cake Flops
 tags:
 ---
 

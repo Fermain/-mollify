@@ -2,7 +2,7 @@
 title: JavaScript Fundamentals
 slug: javascript-fundamentals
 summary: Learn the fundamentals of JavaScript, including variables, data types, functions, and control structures. Build a solid foundation for front-end development with JavaScript.
-dependency: null
+previous: null
 src:
 type: course
 tags:

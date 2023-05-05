@@ -2,7 +2,7 @@
 title: React Router
 slug: react-router
 summary: Learn how to use React Router to create navigation and routing in your React applications. Master the basics of React Router with our course.
-dependency: Introduction to React
+previous: Introduction to React
 src:
 type: module
 tags:

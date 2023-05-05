@@ -2,7 +2,7 @@
 title: React with JavaScript
 slug: react-with-javascript
 summary: Learn how to use React, a popular JavaScript library for building user interfaces. Master JSX, components, and state management with our course.
-dependency: JavaScript for User Interfaces
+previous: JavaScript for User Interfaces
 src:
 type: course
 tags:

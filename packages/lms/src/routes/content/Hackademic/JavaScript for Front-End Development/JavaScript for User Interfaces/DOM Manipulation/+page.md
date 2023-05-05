@@ -2,7 +2,7 @@
 title: DOM Manipulation
 slug: dom-manipulation
 summary: Learn how to manipulate the Document Object Model (DOM) with JavaScript to create dynamic user interfaces. Master DOM traversal, manipulation, and events.
-dependency: null
+previous: null
 src:
 type: modules
 tags:
