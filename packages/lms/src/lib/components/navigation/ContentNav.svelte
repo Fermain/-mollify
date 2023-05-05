@@ -44,19 +44,21 @@
 	}
 </script>
 
-<nav class="nav1">
-	{#if institutes}
+{#if institutes}
+	<nav class="nav2">
 		<div class="wrapper">
 			<h2>Recursive Nav</h2>
 			<RecursiveNav data={institutes} {currentPath} />
 		</div>
-		{#if isCourse}
+	</nav>
+	{#if isCourse}
+		<nav class="nav1">
 			<!-- If current path is to a course/module/lesson -->
 			<h2>Course Nav</h2>
 			<CourseNav data={current} {currentPath} />
-		{/if}
+		</nav>
 	{/if}
-</nav>
+{/if}
 
 <style>
 	h2 {
@@ -64,6 +66,10 @@
 	}
 	.nav1 {
 		grid-area: nav1;
+	}
+
+	.nav2 {
+		grid-area: nav2;
 	}
 
 	.wrapper {

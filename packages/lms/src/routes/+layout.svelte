@@ -17,7 +17,7 @@
 <div class="layout-grid">
 	<Logo />
 	<Header>
-		<Search/>
+		<Search />
 		<Settings />
 	</Header>
 	<Molly />
@@ -25,10 +25,9 @@
 	<Main>
 		<slot />
 	</Main>
-	<Navigation />
 	<ContentNav />
 	<Footer>
-		<Ego/>
+		<Ego />
 		<Reader />
 	</Footer>
 </div>
