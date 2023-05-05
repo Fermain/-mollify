@@ -12,5 +12,8 @@
 	main {
 		grid-area: body;
 		overflow-y: auto;
+
+		/*if new suggested layout is accepted uncomment this*/
+		/* max-width: 100ch; */
 	}
 </style>
