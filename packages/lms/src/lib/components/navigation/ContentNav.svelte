@@ -13,6 +13,10 @@
 	let pathArray: string[];
 	let currentPath: string;
 
+	let windowWidth = browser ? window.innerWidth : null;
+	let recNavClicked: boolean = false;
+	let courseNavClicked: boolean = false;
+
 	onMount(async () => {
 		if ($files === null) {
 			const response = await fetch('/api/parseMarkdown');
@@ -42,34 +46,79 @@
 		});
 		isCourse = current?.type === 'course';
 	}
+
+	function handleResize() {
+		windowWidth = browser ? window.innerWidth : null;
+	}
+
+	function toggleRecursiveNav() {
+		recNavClicked = !recNavClicked;
+	}
+
+	function toggleCourseNav() {
+		courseNavClicked = !courseNavClicked;
+	}
 </script>
 
+<svelte:window on:resize={handleResize} />
 {#if institutes}
-	<nav class="nav2">
-		<div class="wrapper">
-			<h2>Recursive Nav</h2>
-			<RecursiveNav data={institutes} {currentPath} />
-		</div>
-	</nav>
-	{#if isCourse}
-		<nav class="nav1">
-			<!-- If current path is to a course/module/lesson -->
-			<h2>Course Nav</h2>
-			<CourseNav data={current} {currentPath} />
+	{#if windowWidth && windowWidth < 935}
+		<nav class="nav2">
+			<div class="wrapper">
+				<button on:click={toggleRecursiveNav}
+					><span class="material-symbols-outlined"> list </span></button
+				>
+				{#if recNavClicked}
+					<RecursiveNav data={institutes} {currentPath} />
+				{/if}
+			</div>
 		</nav>
+	{:else}
+		<nav class="nav2">
+			<div class="wrapper">
+				<h2>Recursive Nav</h2>
+				<RecursiveNav data={institutes} {currentPath} />
+			</div>
+		</nav>
+	{/if}
+	{#if isCourse}
+		{#if windowWidth && windowWidth < 935}
+			<nav class="nav1">
+				<!-- If current path is to a course/module/lesson -->
+				<button on:click={toggleCourseNav}
+					><span class="material-symbols-outlined"> menu_book </span></button
+				>
+				{#if courseNavClicked}
+					<CourseNav data={current} {currentPath} />
+				{/if}
+			</nav>
+		{:else}
+			<nav class="nav1">
+				<h2>Course Nav</h2>
+				<CourseNav data={current} {currentPath} />
+			</nav>
+		{/if}
 	{/if}
 {/if}
 
-<style>
+<style lang="scss">
 	h2 {
 		margin: 0;
 	}
 	.nav1 {
 		grid-area: nav1;
+
+		& button {
+			width: 100%;
+		}
 	}
 
 	.nav2 {
 		grid-area: nav2;
+
+		& button {
+			width: 100%;
+		}
 	}
 
 	.wrapper {

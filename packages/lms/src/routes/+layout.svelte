@@ -43,4 +43,18 @@
 			'footer footer footer footer';
 		gap: 0.5rem;
 	}
+
+	@media screen and (max-width: 935px) {
+		.layout-grid {
+			display: grid;
+			grid-template-columns: repeat(5, 1fr);
+			grid-template-rows: 3rem 1fr 3rem;
+			height: 100vh;
+			grid-template-areas:
+				'brand icons nav1 nav2 header'
+				'body body body body body'
+				'footer footer footer footer footer';
+			gap: 0;
+		}
+	}
 </style>
