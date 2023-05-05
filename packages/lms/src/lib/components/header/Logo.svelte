@@ -12,4 +12,10 @@
 	h1 {
 		margin: auto;
 	}
+
+	@media screen and (max-width: 935px) {
+		a {
+			grid-area: 1 / 1 / 2 / 2;
+		}
+	}
 </style>

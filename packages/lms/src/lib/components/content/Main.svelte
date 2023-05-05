@@ -16,4 +16,11 @@
 		/*if new suggested layout is accepted uncomment this*/
 		/* max-width: 100ch; */
 	}
+
+	@media screen and (max-width: 935px) {
+		main {
+			overflow: inherit;
+			grid-area: 3 / 1 / 4 / 5;
+		}
+	}
 </style>

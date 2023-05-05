@@ -65,9 +65,7 @@
 	{#if windowWidth && windowWidth < 935}
 		<nav class="nav2">
 			<div class="wrapper">
-				<button on:click={toggleRecursiveNav}
-					><span class="material-symbols-outlined"> list </span></button
-				>
+				<button on:click={toggleRecursiveNav}>Recursive Nav</button>
 				{#if recNavClicked}
 					<RecursiveNav data={institutes} {currentPath} />
 				{/if}
@@ -85,9 +83,7 @@
 		{#if windowWidth && windowWidth < 935}
 			<nav class="nav1">
 				<!-- If current path is to a course/module/lesson -->
-				<button on:click={toggleCourseNav}
-					><span class="material-symbols-outlined"> menu_book </span></button
-				>
+				<button on:click={toggleCourseNav}>Course Nav</button>
 				{#if courseNavClicked}
 					<CourseNav data={current} {currentPath} />
 				{/if}
@@ -123,5 +119,23 @@
 
 	.wrapper {
 		margin-bottom: 1.5rem;
+	}
+
+	@media screen and (max-width: 935px) {
+		.nav1 {
+			grid-area: 2 / 2 / 3 / 3;
+
+			& button {
+				height: 3rem;
+			}
+		}
+
+		.nav2 {
+			grid-area: 2 / 3 / 3 / 4;
+
+			& button {
+				height: 3rem;
+			}
+		}
 	}
 </style>

@@ -47,7 +47,7 @@
 
 <style>
 	.wrapper {
-		grid-area: settings;
+		/* grid-area: settings; not doing anything*/
 		position: relative;
 		margin-left: auto;
 		align-self: center;
