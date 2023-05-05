@@ -1,19 +1,11 @@
-interface ContentObject {
-	title: string;
-	children?: ContentObject[];
-	type?: string;
-	[key: string]: unknown;
-}
+import type { EntityMeta } from '@mollify/types';
 
 /**
  * Recursively get the current object from the path
  * @param obj the object to search
  * @param keys the keys to search for
  */
-export function getCurrent(
-	contentArray: ContentObject[],
-	keys: string[]
-): ContentObject | undefined {
+export function getCurrent(contentArray: EntityMeta[], keys: string[]): EntityMeta | undefined {
 	if (!contentArray || !keys || keys.length === 0 || contentArray.length === 0) {
 		return undefined;
 	}

@@ -8,7 +8,7 @@
 	import CourseNav from './CourseNav.svelte';
 
 	let institutes: [] | null = [];
-	let current: ContentObject = {};
+	let current = {};
 	let isCourse = false;
 	let pathArray: string[];
 	let currentPath: string;

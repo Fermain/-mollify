@@ -5,19 +5,8 @@
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
 
-	interface Frontmatter {
-		type?: 'Course' | 'Module' | 'Lesson' | 'Institute' | 'Programme';
-		// Add other properties as needed, e.g., title, date, etc.
-		title: string;
-	}
-
-	interface ContentObject {
-		frontmatter?: Frontmatter;
-		// Add other properties as needed, e.g., content, slug, etc.
-	}
-
 	let institutes: [] | null = [];
-	let current: ContentObject = {};
+	let current = {};
 	let isProgramme = false;
 	let pathArray: string[];
 	let currentPath: string;

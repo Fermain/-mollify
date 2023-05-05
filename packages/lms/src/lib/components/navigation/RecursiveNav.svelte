@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { slide } from 'svelte/transition';
-	export let data: Record<string, any> = {};
+	export let data = {};
 	let open = null;
 
 	function toggleOpen(title) {
