@@ -55,7 +55,7 @@
 
 <style>
 	h3 {
-		font-weight: 600rem;
+		font-weight: 500;
 		background-color: var(--primary);
 		color: var(--text-secondary);
 		padding: var(--spacing-xxs);
@@ -68,7 +68,7 @@
 	}
 	a {
 		font-size: 1rem;
-		font-weight: 600rem;
+		font-weight: 500;
 		color: var(--text-primary);
 		background-color: var(--secondary);
 		text-decoration: none;
