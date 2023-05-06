@@ -43,6 +43,7 @@ export interface EntityBase {
 // These represent dynamic values that must come from disk
 export interface EntityMeta extends EntityBase {
   slug: string;
+  browserPath?: string;
   children: Array<EntityMeta>;
   address: string;
 }
