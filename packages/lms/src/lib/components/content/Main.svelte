@@ -21,6 +21,7 @@
 		main {
 			overflow: inherit;
 			grid-area: 3 / 1 / 4 / 5;
+			padding-bottom: 3rem;
 		}
 	}
 </style>

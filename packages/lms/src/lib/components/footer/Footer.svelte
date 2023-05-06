@@ -15,6 +15,10 @@
 	@media screen and (max-width: 935px) {
 		footer {
 			grid-area: 4 / 1 / 5 / 5;
+			position: fixed;
+			bottom: 0;
+			width: 100%;
+			height: 3rem;
 		}
 	}
 </style>
