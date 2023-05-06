@@ -9,6 +9,10 @@
 	async function loadMessages() {
 		return new Array<Message>();
 	}
+
+	async function onChat({ detail: message }: CustomEvent<{ message: string }>) {
+		console.log(message);
+	}
 </script>
 
 <MollyButton>
@@ -19,5 +23,5 @@
 	{:catch error}
 		<MollyAlert type="danger" message={error.message} />
 	{/await}
-	<MollyInput />
+	<MollyInput on:user={onChat} />
 </MollyButton>
