@@ -2,8 +2,12 @@
 title: Cakes And Cupcakes
 slug: cakes-and-cupcakes
 type: module
-path: The Burnt Toast Institute/Baking Disasters/Introduction To Baking Disasters/Cakes And Cupcakes
 tags:
+  - cakes
+  - cupcakes
+  - baking
+  - burnt toast
+  - baking disasters
 ---
 
 ### Cakes and Cupcakes - The Burnt Toast Institute

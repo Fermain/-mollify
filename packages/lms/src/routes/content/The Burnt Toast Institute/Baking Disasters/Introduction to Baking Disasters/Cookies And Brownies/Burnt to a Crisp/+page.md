@@ -2,9 +2,14 @@
 title: Burnt To A Crisp
 slug: burnt-to-a-crisp
 type: lesson
-path: The Burnt Toast Institute/Baking Disasters/Introduction To Baking Disasters/Cookies And Brownies/Burnt To A Crisp
 previous: Rock Hard Chewy Brownies
 tags:
+  - cookies
+  - brownies
+  - baking
+  - burnt toast
+  - baking disasters
+  - burnt to a crisp
 ---
 
 # Burnt To A Crisp

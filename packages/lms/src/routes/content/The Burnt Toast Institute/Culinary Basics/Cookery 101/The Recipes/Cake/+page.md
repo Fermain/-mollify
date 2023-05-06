@@ -2,7 +2,6 @@
 title: Cake
 slug: example-course-2-mod-1
 type: lesson
-path: The Burnt Toast Institute/Culinary Basics/Cookery 101/The Recipes/Cake
 tags:
   - module 1
   - Cake

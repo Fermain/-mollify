@@ -2,9 +2,13 @@
 title: The Science Of Cake Flops
 slug: the-science-of-cake-flops
 type: lesson
-path: The Burnt Toast Institute/Baking Disasters/Introduction To Baking Disasters/Cakes And Cupcakes/The Science Of Cake Flops
 previous: null
 tags:
+  - cakes
+  - baking
+  - burnt toast
+  - baking disasters
+  - cake flops
 ---
 
 # The Science of Cake Flops

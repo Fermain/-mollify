@@ -2,9 +2,13 @@
 title: Leaky Tarts
 slug: leaky-tarts
 type: lesson
-path: The Burnt Toast Institute/Baking Disasters/Introduction To Baking Disasters/Pies And Tarts/Leaky Tarts
 previous: Overfilled and Sticky Pies
 tags:
+  - tarts
+  - baking
+  - burnt toast
+  - baking disasters
+  - leaky tarts
 ---
 
 # Leaky Tarts

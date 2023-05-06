@@ -6,6 +6,16 @@ summary: Learn the basics of baking disasters and how to fly through them with c
 type: course
 previous: null
 tags:
+  - baking
+  - recipes
+  - beginner cooking
+  - burnt toast
+  - cakes
+  - cupcakes
+  - cookies
+  - pies
+  - tarts
+  - brownies
 ---
 
 # Introduction To Baking Disasters - The Burnt Toast Institute

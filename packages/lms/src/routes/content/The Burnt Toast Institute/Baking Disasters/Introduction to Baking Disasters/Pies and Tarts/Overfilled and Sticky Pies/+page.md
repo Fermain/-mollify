@@ -2,9 +2,13 @@
 title: Overfilled And Sticky Pies
 slug: overfilled-and-sticky-pies
 type: lesson
-path: The Burnt Toast Institute/Baking Disasters/Introduction To Baking Disasters/Pies And Tarts/Overfilled And Sticky Pies
 previous: Burnt Pie Crusts
 tags:
+  - pies
+  - baking
+  - burnt toast
+  - baking disasters
+  - overfilled and sticky pies
 ---
 
 # Overfilled and Sticky Pies
