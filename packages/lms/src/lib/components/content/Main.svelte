@@ -17,8 +17,7 @@
 		scrollbar-color: var(--primary) var(--background-primary);
 		scrollbar-width: thin;
 
-		/*if new suggested layout is accepted uncomment this*/
-		/* max-width: 100ch; */
+		max-width: 100ch;
 	}
 
 	::-webkit-scrollbar {

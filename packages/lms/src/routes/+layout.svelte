@@ -34,17 +34,6 @@
 <style lang="scss">
 	.layout-grid {
 		display: grid;
-		grid-template-columns: 3rem calc(80ch + 2rem) 1fr 1fr;
-		grid-template-rows: 3rem 1fr 3rem;
-		height: 100vh;
-		grid-template-areas:
-			'brand header header header'
-			'icons body nav1 nav2'
-			'footer footer footer footer';
-		gap: 0.5rem;
-
-		/*suggested layout to compress navigation*/
-		/* 	display: grid;
 		grid-template-columns: 3rem 1fr repeat(2, 15rem);
 		grid-template-rows: 3rem 1fr 3rem;
 		height: 100vh;
@@ -52,7 +41,7 @@
 			'brand header header header'
 			'icons body nav1 nav2'
 			'footer footer footer footer';
-		gap: 0.5rem;*/
+		gap: 0.5rem;
 	}
 
 	@media screen and (max-width: 935px) {
