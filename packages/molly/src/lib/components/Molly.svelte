@@ -1,27 +1,95 @@
 <script lang="ts">
-	import type { ChatCompletionRequestMessage as Message } from 'openai';
-	import MollyButton from './MollyButton.svelte';
-	import MollyInput from './MollyInput.svelte';
-	import MollyMessages from './MollyMessages.svelte';
-	import MollyAlert from './MollyAlert.svelte';
-	import MollyLoader from './MollyLoader.svelte';
+	import MollyMessage from '$lib/components/MollyMessage.svelte';
+	import type { ChatCompletionRequestMessage } from 'openai';
+	import { SSE } from 'sse.js';
 
-	async function loadMessages() {
-		return new Array<Message>();
+	let query: string = '';
+	let answer: string = '';
+	let loading: boolean = false;
+	let chatMessages: ChatCompletionRequestMessage[] = [];
+	let scrollToDiv: HTMLDivElement;
+	export let endpoint = '/';
+
+	function scrollToBottom() {
+		setTimeout(function () {
+			scrollToDiv.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
+		}, 100);
 	}
 
-	async function onChat({ detail: message }: CustomEvent<{ message: string }>) {
-		console.log(message);
+	const handleSubmit = async () => {
+		loading = true;
+		chatMessages = [...chatMessages, { role: 'user', content: query }];
+
+		const eventSource = new SSE(endpoint, {
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			payload: JSON.stringify({ messages: chatMessages })
+		});
+
+		query = '';
+
+		eventSource.addEventListener('error', handleError);
+
+		eventSource.addEventListener('message', (e) => {
+			scrollToBottom();
+			try {
+				loading = false;
+				if (e.data === '[DONE]') {
+					chatMessages = [...chatMessages, { role: 'assistant', content: answer }];
+					answer = '';
+					return;
+				}
+
+				const completionResponse = JSON.parse(e.data);
+				const [{ delta }] = completionResponse.choices;
+
+				if (delta.content) {
+					answer = (answer ?? '') + delta.content;
+				}
+			} catch (err) {
+				handleError(err);
+			}
+		});
+		eventSource.stream();
+		scrollToBottom();
+	};
+
+	function handleError<T>(err: T) {
+		loading = false;
+		query = '';
+		answer = '';
+		console.error(err);
 	}
 </script>
 
-<MollyButton>
-	{#await loadMessages()}
-		<MollyLoader />
-	{:then messages}
-		<MollyMessages {messages} />
-	{:catch error}
-		<MollyAlert type="danger" message={error.message} />
-	{/await}
-	<MollyInput on:user={onChat} />
-</MollyButton>
+<div class="molly">
+	<div>
+		<div>
+			{#each chatMessages as message}
+				<MollyMessage type={message.role} message={message.content} />
+			{/each}
+			{#if answer}
+				<MollyMessage type="assistant" message={answer} />
+			{/if}
+			{#if loading}
+				<MollyMessage type="assistant" message="Thinking.." />
+			{/if}
+		</div>
+		<div bind:this={scrollToDiv} />
+	</div>
+	<form on:submit|preventDefault={() => handleSubmit()}>
+		<input type="text" bind:value={query} />
+		<button type="submit"> Send </button>
+	</form>
+</div>
+
+<style>
+	form {
+		display: flex;
+	}
+
+	input {
+		flex: 1;
+	}
+</style>

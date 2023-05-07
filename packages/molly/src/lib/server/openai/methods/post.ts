@@ -1,35 +1,35 @@
-import { OPENAI_TOKEN_LIMIT } from '$env/static/private';
-import type { CreateChatCompletionRequest, ChatCompletionRequestMessage } from 'openai';
-import type { RequestHandler } from './$types';
-import { json } from '@sveltejs/kit';
-import { isWithinTokenLimit } from 'gpt-tokenizer';
-import { flagged } from '$lib/server/openai/moderate';
-import { getChatCompletionResponse, prompts } from '$lib/server/openai';
+import { type RequestHandler, error, json } from "@sveltejs/kit";
+import { isWithinTokenLimit } from "gpt-tokenizer";
+import type { ChatCompletionRequestMessage, CreateChatCompletionRequest } from "openai";
+import { getChatCompletionResponse } from "../chat";
+import { flagged } from "../moderate";
+import prompts from "../prompts";
+import { OPENAI_TOKEN_LIMIT } from "$env/static/private";
 
-const LIMIT = Number(OPENAI_TOKEN_LIMIT);
-
-export const POST: RequestHandler = async ({ request }) => {
+export const chatCompletionPost: RequestHandler = async ({ request }) => {
+  const LIMIT = Number(OPENAI_TOKEN_LIMIT);
+  
 	try {
 		let { messages } = (await request.json()) as { messages: ChatCompletionRequestMessage[] };
 		const tokenCount = isWithinTokenLimit(messages.join('\n'), LIMIT);
 
 		if (!tokenCount) {
-			throw new Error('Query too large');
+			throw error(400, 'Query too large');
 		}
 
 		const lastMessage = messages[messages.length - 1].content;
 		const isFlagged = await flagged(lastMessage);
 
 		if (isFlagged) {
-			throw new Error('Query flagged by openai');
+			throw error(400, 'Query flagged by openai');
 		}
 
 		const role = 'system';
-		const content = prompts.assistant("Test mode, there is no content yet.", "Timmy Tester");
+		const content = prompts.assistant('Test mode, there is no content yet.', 'Timmy Tester');
 		const totalTokenCount = isWithinTokenLimit(content, LIMIT - tokenCount);
 
 		if (!totalTokenCount) {
-			throw new Error('Query too large');
+			throw error(400, 'Query too large');
 		}
 
 		messages = [{ role, content }, ...messages];

@@ -1,9 +1,11 @@
 <script lang="ts">
-  import type { ChatCompletionRequestMessage as Message } from 'openai';
+	import type { ChatCompletionRequestMessageRoleEnum } from 'openai';
+	import SvelteMarkdown from 'svelte-markdown';
 
-  export let message: Message;
+	export let type: ChatCompletionRequestMessageRoleEnum;
+	export let message: string;
 </script>
 
-<div class={`message ${message.role}`}>
-  {message.content}
+<div class="message {type}">
+	<SvelteMarkdown source={message} />
 </div>
