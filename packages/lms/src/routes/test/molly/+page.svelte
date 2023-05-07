@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Molly from '$lib/components/molly/Molly.svelte';
+	import { Molly } from '@mollify/molly';
 </script>
 
 <Molly />

@@ -1,3 +1,3 @@
-import { methods } from '@mollify/molly';
+import { ai } from '@mollify/molly';
 
-export const POST = methods.chat.completion.POST;
+export const POST = ai.methods.chat.completion.POST;
