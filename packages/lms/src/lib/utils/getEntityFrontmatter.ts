@@ -4,16 +4,11 @@ import matter from 'gray-matter';
 import type { EntityBase } from '@mollify/types';
 
 export function getEntityFrontmatter(entityPath: string): EntityBase {
-  const fileName = '+page.md';
-  const contentPath = fs.existsSync(path.join(entityPath, fileName))
-    ? path.join(entityPath, fileName)
-    : entityPath;
-
-  if (!fs.existsSync(contentPath)) {
-    throw new Error(`Content file does not exist: ${contentPath}`);
+  if (!fs.existsSync(entityPath)) {
+    throw new Error(`Content file does not exist: ${entityPath}`);
   }
 
-  const content = fs.readFileSync(contentPath, 'utf-8');
+  const content = fs.readFileSync(entityPath, 'utf-8');
   const { data } = matter(content);
 
   return {
