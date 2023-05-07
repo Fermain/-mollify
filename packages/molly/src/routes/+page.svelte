@@ -1,5 +1,5 @@
-<script>
-	import MollyChat from "./chat/mollyChat.svelte";
-
+<script lang="ts">
+	import Molly from '$lib/components/Molly.svelte';
 </script>
-<MollyChat/>
+
+<Molly />
