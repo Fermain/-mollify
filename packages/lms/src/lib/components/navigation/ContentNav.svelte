@@ -6,16 +6,13 @@
 	import { page } from '$app/stores';
 	import RecursiveNav from './RecursiveNav.svelte';
 	import CourseNav from './CourseNav.svelte';
+	import type { EntityMeta } from '@mollify/types';
 
-	interface Frontmatter {
-		type?: 'Course' | 'Module' | 'Lesson' | 'Institute' | 'Programme';
-		// Add other properties as needed, e.g., title, date, etc.
-	}
-
-	interface ContentObject {
-		frontmatter?: Frontmatter;
-		// Add other properties as needed, e.g., content, slug, etc.
-	}
+	let institutes: EntityMeta[] | null = [];
+	let current: EntityMeta | undefined;
+	let isCourse = false;
+	let pathArray: string[] = [];
+	let currentPath: string;
 
 	onMount(async () => {
 		if ($files === null) {
@@ -25,12 +22,6 @@
 		}
 	});
 
-	let institutes: {} | null = {};
-	let current: ContentObject = {};
-	let isCourse = false;
-	let pathArray: string[];
-	let currentPath: string;
-
 	function updatePath() {
 		const path = browser ? window.location.pathname.replaceAll(`%20`, ' ') : '';
 		const objectPath = path.replace('/content/', '');
@@ -39,45 +30,37 @@
 	}
 
 	if (browser) {
-		onMount(async () => {
-			const unsubscribe = files.subscribe((data) => {
-				institutes = data;
-			});
-
-			return () => unsubscribe();
-		});
-
 		updatePath();
+		current = getCurrent(institutes, pathArray);
 	}
 
-	$: page.subscribe((data) => {
-		current = getCurrent(institutes, pathArray);
-		if (
-			current?.frontmatter?.type === 'Course' ||
-			current?.frontmatter?.type === 'Module' ||
-			current?.frontmatter?.type === 'Lesson'
-		) {
-			isCourse = true;
-		} else {
-			isCourse = false;
+	$: {
+		if ($files) {
+			institutes = $files;
+			current = getCurrent(institutes, pathArray);
 		}
-		updatePath();
-	});
+		page.subscribe((data) => {
+			updatePath();
+		});
+		isCourse = current?.type === 'course';
+	}
 </script>
 
-<nav class="nav1">
-	{#if institutes}
+{#if institutes}
+	<nav class="nav2">
 		<div class="wrapper">
 			<h2>Recursive Nav</h2>
-			<RecursiveNav data={institutes} {currentPath} open={false} path="/content/" />
+			<RecursiveNav data={institutes} {currentPath} />
 		</div>
-		{#if isCourse}
+	</nav>
+	{#if isCourse}
+		<nav class="nav1">
 			<!-- If current path is to a course/module/lesson -->
 			<h2>Course Nav</h2>
 			<CourseNav data={current} {currentPath} />
-		{/if}
+		</nav>
 	{/if}
-</nav>
+{/if}
 
 <style>
 	h2 {
@@ -85,6 +68,10 @@
 	}
 	.nav1 {
 		grid-area: nav1;
+	}
+
+	.nav2 {
+		grid-area: nav2;
 	}
 
 	.wrapper {

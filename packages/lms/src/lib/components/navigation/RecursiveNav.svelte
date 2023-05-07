@@ -1,41 +1,52 @@
 <script lang="ts">
 	import { slide } from 'svelte/transition';
-	export let data: Record<string, any> = {};
-	export let open = false;
+	import type { EntityMeta } from '@mollify/types';
 
-	function toggleOpen() {
-		open = !open;
+	export let data = [] as EntityMeta[];
+	let open: string | null = null;
+
+	function toggleOpen(title: string): void {
+		open = open === title ? null : title;
+	}
+
+	function handleKeydown(event: KeyboardEvent, title: string): void {
+		if (event.key === 'Enter' || event.key === ' ') {
+			toggleOpen(title);
+		}
 	}
 
 	export let indent = 0.125;
-	export let path: string;
 	export let currentPath: string;
 </script>
 
-{#each Object.entries(data) as [name, children]}
-	<h3 style="padding-left: {indent}rem" on:click={toggleOpen}>
-		{name}
+{#each data as { title, browserPath, children, foldername }}
+	<h3
+		style="padding-left: {indent}rem"
+		on:click={() => toggleOpen(title)}
+		on:keydown={(event) => handleKeydown(event, title)}
+		id={title}
+		tabindex="0"
+	>
+		{title}
 	</h3>
-	{#if open}
+	{#if open === title}
 		<div transition:slide={{ duration: 300 }}>
-			{#each Object.entries(children) as [childName, child]}
-				{#if childName === 'frontmatter' && Object.keys(children).length === 1}
-					<a href={`${path}${name}`} style="padding-left: {indent}rem">Overview</a>
-				{:else if childName === 'frontmatter'}
-					<a href={`${path}${child.title}`} style="padding-left: {indent + 1.5}rem">{child.title}</a
+			<a
+				href={browserPath}
+				style="padding-left: {indent}rem"
+				class={currentPath === foldername ? 'current' : ''}>Overview</a
+			>
+			{#each children as child}
+				{#if (child.type === 'lesson' && child.children.length === 0) || child.children === undefined}
+					<a
+						href={child.browserPath}
+						style="padding-left: {indent + 0.125}rem"
+						class={currentPath === child.foldername ? 'current' : ''}
 					>
-				{:else if typeof child === 'object'}
-					{#if Object.entries(child).length === 1 && child.frontmatter}
-						<a href={`${path}${name}/${childName}`} style="padding-left: {indent + 1}rem"
-							>{childName}</a
-						>
-					{:else}
-						<svelte:self
-							data={{ [childName]: child }}
-							indent={indent + 1}
-							path={`${path}${name}/`}
-						/>
-					{/if}
+						{child.title}
+					</a>
+				{:else}
+					<svelte:self data={[child]} indent={indent + 0.125} {currentPath} />
 				{/if}
 			{/each}
 		</div>
@@ -44,25 +55,26 @@
 
 <style>
 	h3 {
-		font-weight: 600rem;
+		font-weight: 500;
 		background-color: var(--primary);
 		color: var(--text-secondary);
-		padding: 0.25rem;
+		padding: var(--spacing-xxs);
 		display: block;
 		border: 1px solid var(--primary);
 		margin: 0;
-		font-size: 1.25rem;
+		font-size: 1.125rem;
 		cursor: pointer;
+		border: 1px solid var(--secondary);
 	}
 	a {
-		font-size: 1.2rem;
-		font-weight: 600rem;
+		font-size: 1rem;
+		font-weight: 500;
 		color: var(--text-primary);
 		background-color: var(--secondary);
 		text-decoration: none;
-		padding: 0.25rem;
+		padding: var(--spacing-xxs);
 		display: block;
-		border: 1px solid gray;
+		border: 1px solid var(--primary);
 	}
 
 	.current {

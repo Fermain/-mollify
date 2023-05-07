@@ -1,24 +1,14 @@
 ---
 title: Rock Hard Chewy Brownies
 slug: rock-hard-chewy-brownies
-type: Lesson
-path: The Burnt Toast Institute/Baking Disasters/Introduction To Baking Disasters/Cookies And Brownies/Rock Hard Chewy Brownies
-dependency: Undercooked and Soggy
+type: lesson
+previous: Undercooked And Soggy
 tags:
-  - module 1
-  - cooking
-  - cooking lessons
-  - beginner cooking
-  - cooking skills
-  - home cook basics
-  - knife skills
-  - seasoning
-  - heat control
-  - sauteing
-  - roasting
-  - boiling
-  - recipes for beginners
-  - meal planning
+  - brownies
+  - baking
+  - burnt toast
+  - baking disasters
+  - rock hard chewy brownies
 ---
 
 # Rock Hard Chewy Brownies

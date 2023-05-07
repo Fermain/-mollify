@@ -1,9 +1,13 @@
 ---
 title: Cookies And Brownies
 slug: cookies-and-brownies
-type: Module
-path: The Burnt Toast Institute/Baking Disasters/Introduction To Baking Disasters/Cookies And Brownies
+type: module
 tags:
+  - cookies
+  - brownies
+  - baking
+  - burnt toast
+  - baking disasters
 ---
 
 ### Cookies And Brownies - The Burnt Toast Institute
