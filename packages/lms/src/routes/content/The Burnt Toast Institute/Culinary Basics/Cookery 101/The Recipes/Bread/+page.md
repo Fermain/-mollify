@@ -1,8 +1,7 @@
 ---
 title: Bread
 slug: example-course-2-mod-2
-type: Lesson
-path: The Burnt Toast Institute/Culinary Basics/Cookery 101/The Recipes/Bread
+type: lesson
 tags:
   - module 2
   - Bread

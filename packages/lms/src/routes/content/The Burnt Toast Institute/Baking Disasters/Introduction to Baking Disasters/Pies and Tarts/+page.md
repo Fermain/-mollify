@@ -1,10 +1,14 @@
 ---
 title: Pies And Tarts
 slug: pies-and-tarts
-type: Module
-path: The Burnt Toast Institute/Baking Disasters/Introduction To Baking Disasters/Pies And Tarts
-dependency: null
+type: module
+previous: null
 tags:
+  - pies
+  - tarts
+  - baking
+  - burnt toast
+  - baking disasters
 ---
 
 ### Recipes 101 - The Burnt Toast Institute

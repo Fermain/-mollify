@@ -17,17 +17,16 @@
 <div class="layout-grid">
 	<Logo />
 	<Header>
-		<Search/>
+		<Search />
 		<Settings />
 	</Header>
 	<IconNav />
 	<Main>
 		<slot />
 	</Main>
-	<Navigation />
 	<ContentNav />
 	<Footer>
-		<Ego/>
+		<Ego />
 		<Reader />
 		<Molly />
 	</Footer>
