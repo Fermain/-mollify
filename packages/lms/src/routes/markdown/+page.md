@@ -24,18 +24,26 @@
 .callout {
   border-radius: 2px;
   padding: 10px;
-  border-left: solid 5px var(--primary-dk);
+  background-image: linear-gradient(to right, var(--background-primary-lt), var(--background-primary-ltr));
   &.👍 {
-    background-color: var(--primary-ltst);
+    border-left: solid 7px var(--secondary);
   }
   &.💡{
-    background: blue;
+    border-left: solid 7px var(--secondary-lt);
   }
   &.⛔{
-    background: red;
+    border-left: solid 7px var(--warning);
   }
   &.✅{
-    background: green;
+    border-left: solid 7px var(--success);
   }
+}
+
+.callout-title {
+  font-size: var(--font-size-m);
+}
+
+.callout p {
+  padding-left: var(--spacing-m)
 }
 </style>
