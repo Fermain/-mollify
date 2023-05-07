@@ -1,9 +1,9 @@
 import { OPENAI_API_KEY } from '$env/static/private';
 import type { CreateChatCompletionRequest } from 'openai';
-import api from './api';
+import api from '../api';
 
 // It's this way for now until I can figure out how to pass the stream nicely
-export async function getChatCompletionResponse(options: CreateChatCompletionRequest) {
+export async function createChatCompletionResponse(options: CreateChatCompletionRequest) {
 	const chatResponse = await fetch('https://api.openai.com/v1/chat/completions', {
 		headers: {
 			Authorization: `Bearer ${OPENAI_API_KEY}`,
@@ -21,6 +21,6 @@ export async function getChatCompletionResponse(options: CreateChatCompletionReq
 	return chatResponse;
 }
 
-export async function getChatCompletion(options: CreateChatCompletionRequest) {
+export async function createChatCompletion(options: CreateChatCompletionRequest) {
 	return (await api.createChatCompletion(options)).data;
 }

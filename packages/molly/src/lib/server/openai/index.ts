@@ -1,6 +1,4 @@
-export * from './chat';
-export * from "./moderate";
-
+import features from './features';
 import prompts from './prompts';
 import methods from './methods';
-export { prompts, methods };
+export { prompts, methods, features };
