@@ -34,6 +34,8 @@ export enum EntityType {
 export interface EntityBase {
   type: EntityType;
   title: string;
+  url?: string;
+  summary?: string;
   tags: Array<string>;
   previous?: string;
   [key: string]: unknown;

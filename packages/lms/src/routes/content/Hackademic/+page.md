@@ -4,7 +4,7 @@ slug: hackademic
 summary: Hackademics offers interactive online courses in coding and web development, featuring project-based learning and expert instructors. Become a skilled software engineer with our program!
 previous: null
 src:
-type: institute
+type: institution
 tags:
   - coding
   - programming
