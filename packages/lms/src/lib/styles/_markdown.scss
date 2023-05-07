@@ -1,7 +1,7 @@
 //Custom callouts
 .callout {
-  border-radius: 2px;
-  padding: 10px;
+  border-radius: var(--border-radius-xs);
+  padding: var(--spacing-s);
   background-image: linear-gradient(to right, var(--background-primary-lt), var(--background-primary-ltr));
   &.👍 {
     border-left: solid 7px var(--secondary);
