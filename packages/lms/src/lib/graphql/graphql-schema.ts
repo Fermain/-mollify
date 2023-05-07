@@ -8,6 +8,7 @@ const typeDefs = `
     type: String
     children: [MarkdownNode]
     title: String
+		tags:[String]
     browserPath: String
   }
 
@@ -30,7 +31,10 @@ export const resolvers = {
 			for (const node of nodes) {
 				if (node.title && node.title.toLowerCase().includes(filter)) {
 					results.push(node);
+				} else if (node.tags && node.tags.some((tag) => tag.toLowerCase().includes(filter))) {
+					results.push(node);
 				}
+
 				if (node.children) {
 					results.push(...search(node.children));
 				}

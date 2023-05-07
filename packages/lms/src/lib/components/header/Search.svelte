@@ -8,6 +8,7 @@
       searchMarkdown(filter: $filter) {
         title
         browserPath
+				type
       }
     }
   `;
