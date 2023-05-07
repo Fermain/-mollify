@@ -39,6 +39,7 @@
 		"eslint": "^8.28.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-svelte3": "^4.0.0",
+		"openai": "^3.2.1",
 		"mdsvex": "^0.10.6",
 		"gpt-tokenizer": "^1.0.4",
 		"prettier": "^2.8.0",

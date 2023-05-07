@@ -62,10 +62,10 @@
 	}
 </script>
 
-<div class="flex flex-col pt-4 w-full px-8 items-center gap-2">
-	<div class="h-[500px] w-full bg-gray-900 rounded-md p-4 overflow-y-auto flex flex-col gap-4">
-    <h1>WHITELABEL MOLLY</h1>
-		<div class="flex flex-col gap-2">
+<div>
+	<div>
+		<h1>WHITELABEL MOLLY</h1>
+		<div>
 			{#each chatMessages as message}
 				<ChatMessage type={message.role} message={message.content} />
 			{/each}
@@ -78,21 +78,18 @@
 		</div>
 		<div class="" bind:this={scrollToDiv} />
 	</div>
-	<form
-		class="flex w-full rounded-md gap-4 bg-gray-900 p-4"
-		on:submit|preventDefault={() => handleSubmit()}
-	>
-		<input type="text" class="input input-bordered w-full" bind:value={query} />
-		<button type="submit" class="btn btn-accent"> Send </button>
+	<form on:submit|preventDefault={() => handleSubmit()}>
+		<input type="text" bind:value={query} />
+		<button type="submit"> Send </button>
 	</form>
 </div>
 
 <style>
-  form {
-    display: flex;
-  }
+	form {
+		display: flex;
+	}
 
-  input {
-    flex: 1;
-  }
+	input {
+		flex: 1;
+	}
 </style>
