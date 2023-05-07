@@ -2,7 +2,7 @@
 title: Testing and Optimization
 slug: testing-and-optimization
 summary: Learn best practices for testing and optimizing your JavaScript code, including unit testing and performance optimization. Build robust and fast applications with our course.
-dependency: Debugging and Error Handling
+previous: Debugging and Error Handling
 src:
 type: module
 tags:

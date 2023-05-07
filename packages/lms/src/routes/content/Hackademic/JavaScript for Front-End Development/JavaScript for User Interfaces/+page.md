@@ -2,7 +2,7 @@
 title: JavaScript for User Interfaces
 slug: javaScript-for-user-interfaces
 summary: Learn how to create dynamic and interactive user interfaces for web applications using JavaScript. Master DOM manipulation, event handling, and AJAX techniques with our course.
-dependency: JavaScript Best Practices
+previous: JavaScript Best Practices
 src:
 type: course
 tags:

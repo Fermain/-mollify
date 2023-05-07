@@ -2,7 +2,7 @@
 title: Functions and Control Structures
 slug: functions-and-control-structures
 summary: Learn how to create functions in JavaScript and use control structures such as if statements and loops. Build your skills in programming with JavaScript.
-dependency: Variables and Data Types
+previous: Variables and Data Types
 src:
 type: module
 tags:

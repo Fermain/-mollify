@@ -24,6 +24,7 @@
     "url": "https://github.com/Fermain/-Mollify/issues"
   },
   "devDependencies": {
+    "@types/unist": "^2.0.6",
     "typescript": "^5.0.4"
   }
 }

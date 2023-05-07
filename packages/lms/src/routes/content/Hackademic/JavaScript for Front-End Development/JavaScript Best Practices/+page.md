@@ -2,7 +2,7 @@
 title: JavaScript Best Practices
 slug: javaScript-best-practices
 summary: Learn best practices for writing clean, efficient, and maintainable JavaScript code. Master code organization, debugging, and testing with our course.
-dependency: JavaScript Fundamentals
+previous: JavaScript Fundamentals
 src:
 type: course
 tags:

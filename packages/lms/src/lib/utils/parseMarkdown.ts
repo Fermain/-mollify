@@ -1,16 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-
-// Define the MarkdownNode interface
-export interface MarkdownContentTree {
-	filePath?: string;
-	folderName?: string;
-	dependency?: string | null;
-	type?: string;
-	children?: MarkdownContentTree[];
-	[key: string]: unknown;
-}
+import { sortChildrenByDependency } from './sortChildrenByDependency';
+import type { EntityMeta } from '@mollify/types';
 
 /**
  * Recursively parse markdown files and return an array of objects with arrays of children
@@ -18,32 +10,9 @@ export interface MarkdownContentTree {
  * @returns A nested object containing the parsed markdown files
  */
 export function parseMarkdown(dir: string) {
-	function sortChildrenByDependency(children: MarkdownContentTree[]): MarkdownContentTree[] {
-		const sortedChildren: MarkdownContentTree[] = children.filter((child) => !child.dependency);
-		const unsortedChildren: MarkdownContentTree[] = children.filter((child) => child.dependency);
-		//guard against infinite loop
-		let i = 0;
-		while (unsortedChildren.length > 0 && i < children.length) {
-			unsortedChildren.forEach((child, index) => {
-				if (sortedChildren.some((sortedChild) => sortedChild.title === child.dependency)) {
-					sortedChildren.push(child);
-					unsortedChildren.splice(index, 1);
-				}
-			});
-			i++;
-		}
-
-		// If there are still unsorted children, add them to the end of the array, not ideal but better than an infinite loop.
-		if (unsortedChildren.length > 0) {
-			sortedChildren.push(...unsortedChildren);
-		}
-
-		return sortedChildren;
-	}
-
 	function walkSync(currentDir: string) {
-		let currentObject: MarkdownContentTree = {};
-		const children: MarkdownContentTree[] = [];
+		let currentObject = {} as EntityMeta;
+		const children: EntityMeta[] = [];
 		// Get the files in the current directory
 		const files = fs.readdirSync(currentDir);
 		files.forEach((filename) => {
@@ -63,10 +32,15 @@ export function parseMarkdown(dir: string) {
 					.replace('src/routes/content', '/content')
 					.replace('+page.md', '');
 				currentObject = {
-					...data,
-					filePath,
+					...(data as Partial<EntityMeta>),
+					slug: data.slug || path.basename(currentDir).replaceAll(' ', '-').toLowerCase(),
+					type: data.type,
+					title: data.title || 'Untitled',
+					tags: data.tags || [],
+					address: filePath,
 					foldername: path.basename(currentDir),
-					browserPath
+					browserPath,
+					children: []
 				};
 			}
 		});
