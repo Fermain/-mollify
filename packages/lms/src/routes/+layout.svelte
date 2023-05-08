@@ -1,6 +1,6 @@
 <script lang="ts">
 	import '../lib/styles/styles.scss';
-	// import { Molly } from '@mollify/molly';
+	import { Molly } from '@mollify/molly';
 	import Main from '$lib/components/content/Main.svelte';
 	import Footer from '$lib/components/footer/Footer.svelte';
 	import Logo from '$lib/components/header/Logo.svelte';
@@ -27,7 +27,7 @@
 	<Footer>
 		<Ego />
 		<Reader />
-		<!-- <Molly /> -->
+		<Molly endpoint="/api/molly" />
 	</Footer>
 </div>
 
