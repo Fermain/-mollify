@@ -3,7 +3,7 @@ import path from "path";
 // Stub implementation for retrieving child entities from disk
 function getChildrenSync(path: string) {
   console.log(`getChildrenSync(${path}) not implemented.`);
-  return new Array<Entity>();
+  return new Array<EntityMeta>();
 }
 
 // Stub implementation for retrieving entity metadata from disk
@@ -30,16 +30,22 @@ export enum EntityType {
 }
 
 // Base interface for entity metadata
+// This is the fundamental information contained in frontmatter
 export interface EntityBase {
   type: EntityType;
   title: string;
+  url?: string;
+  summary?: string;
   tags: Array<string>;
   previous?: string;
+  [key: string]: unknown;
 }
 
 // Extended interface for entity metadata, including slug, children, and address
+// These represent dynamic values that must come from disk
 export interface EntityMeta extends EntityBase {
   slug: string;
+  browserPath?: string;
   children: Array<EntityMeta>;
   address: string;
 }
@@ -56,17 +62,19 @@ export class Entity implements EntityMeta {
   public readonly tags = new Array<string>();
   public readonly previous?: string;
   private _children?: Array<EntityMeta>;
+  readonly [key: string]: unknown;
 
   constructor(public readonly address: string) {
     // Assign the slug based on the directory name from the given address
     this.slug = path.dirname(address);
 
     // Retrieve entity metadata from disk
-    const { type, title, tags, previous } = getEntityMetaSync(address);
+    const { type, title, tags, previous, ...dynamic } = getEntityMetaSync(address);
     this.type = type;
     this.title = title;
     this.tags = tags;
     this.previous = previous;
+    Object.assign(this, dynamic);
   }
 
   public get children(): Array<EntityMeta> {

@@ -1,52 +1,84 @@
 <script lang="ts">
+	import { slide } from 'svelte/transition';
 	export let data: Record<string, any> = {};
 	export let indent = 0.125;
 	const path = '/content/';
 	export let currentPath: string;
+	let open: string | null = null;
+
+	function toggleOpen(title: string): void {
+		open = open === title ? null : title;
+	}
+
+	function handleKeydown(event: KeyboardEvent, title: string): void {
+		if (event.key === 'Enter' || event.key === ' ') {
+			toggleOpen(title);
+		}
+	}
 </script>
 
 <div>
 	<h3 style="padding-left: {indent}rem">
-		{data.frontmatter.title}
+		{data.title}
 	</h3>
-	<a href={`${path}${data.frontmatter.path}`} style="padding-left: {indent + 1}rem">Overview</a>
-	{#each Object.entries(data) as [moduleName, module]}
-		{#if moduleName !== 'frontmatter'}
-			<h3>{moduleName}</h3>
-			{#each Object.entries(module) as [lessonName, lesson]}
-				{#if lessonName !== 'frontmatter'}
-					<a href={`${path}${lesson.frontmatter.path}`} style="padding-left: {indent + 1}rem"
-						>{lessonName}</a
+	<a
+		href={`${data.browserPath}`}
+		style="padding-left: {indent + 1}rem"
+		class={currentPath === data.foldername ? 'current' : ''}>Overview</a
+	>
+	{#each data.children as module}
+		<h3
+			on:click={() => toggleOpen(module.title)}
+			on:keydown={(event) => handleKeydown(event, module.title)}
+			tabindex="0"
+		>
+			{module.title}
+		</h3>
+		{#if open === module.title}
+			<div transition:slide={{ duration: 300 }}>
+				<a
+					href={module.browserPath}
+					style="padding-left: {indent + 1}rem"
+					class={currentPath === module.foldername ? 'current' : ''}>Overview</a
+				>
+				{#each module.children as lesson}
+					<a
+						href={lesson.browserPath}
+						style="padding-left: {indent + 2}rem"
+						class={currentPath === lesson.foldername ? 'current' : ''}>{lesson.title}</a
 					>
-				{:else}
-					<a href={`${path}${lesson.path}`} style="padding-left: {indent + 1}rem">Overview</a>
-				{/if}
-			{/each}
+				{/each}
+			</div>
 		{/if}
 	{/each}
 </div>
 
 <style>
 	h3 {
-		font-weight: 600rem;
+		font-weight: 500;
 		background-color: var(--primary);
 		color: var(--text-secondary);
-		padding: 0.25rem;
+		padding: var(--spacing-xxs);
 		display: block;
-		border: 1px solid black;
+		border: 1px solid var(--primary);
 		margin: 0;
-		font-size: 1.25rem;
+		font-size: 1.125rem;
 		cursor: pointer;
+		border: 1px solid var(--secondary);
 	}
 
 	a {
-		font-size: 1.2rem;
-		font-weight: 600rem;
-		background-color: var(--secondary);
+		font-size: 1rem;
+		font-weight: 500;
 		color: var(--text-primary);
-		padding: 0.25rem;
-		display: block;
-		border: 1px solid gray;
+		background-color: var(--secondary);
 		text-decoration: none;
+		padding: var(--spacing-xxs);
+		display: block;
+		border: 1px solid var(--primary);
+	}
+
+	.current {
+		text-decoration: underline;
 	}
 </style>

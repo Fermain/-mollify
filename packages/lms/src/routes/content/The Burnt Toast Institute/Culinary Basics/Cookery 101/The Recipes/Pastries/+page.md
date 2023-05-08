@@ -1,8 +1,7 @@
 ---
 title: Pastries
 slug: example-course-2-mod-3
-type: Lesson
-path: The Burnt Toast Institute/Culinary Basics/Cookery 101/The Recipes/Pastries
+type: lesson
 tags:
   - module 3
   - Pastries
