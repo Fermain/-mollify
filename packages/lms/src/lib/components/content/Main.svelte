@@ -8,7 +8,7 @@
 	</ProgrammeNav>
 </main>
 
-<style>
+<style lang="scss">
 	main {
 		grid-area: body;
 		overflow-y: auto;
