@@ -1,47 +1,30 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
+	import { search } from '$lib/utils/graphql/getSearchResults';
 	let searchQuery = '';
 	let searchResults = [];
 
-	async function search() {
-		const query = `
-    query SearchMarkdown($filter: String) {
-      searchMarkdown(filter: $filter) {
-        title
-        browserPath
-				type
-      }
-    }
-  `;
+	async function updateSearchResults() {
+		searchResults = await search(searchQuery);
+		console.log(searchQuery);
+		console.log(searchResults);
+	}
 
-		const variables = {
-			filter: searchQuery
-		};
-
-		const response = await fetch('/api/search', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({ query, variables })
-		});
-
-		const data = await response.json();
-		console.log(data);
-		if (errors) {
-			console.log(error);
-			console.error('GraphQL errors:', errors);
-		} else {
-			searchResults = data.searchMarkdown;
-		}
+	function handleSubmit(event: { preventDefault: () => void }) {
+		event.preventDefault();
+		console.log(event);
+		goto(`/search?query=${searchQuery}`);
 	}
 </script>
 
-<form class="search">
+<form class="search" on:submit={handleSubmit}>
 	<input
 		type="search"
 		placeholder="Search markdown content"
 		bind:value={searchQuery}
-		on:input={search}
+		on:input={async () => {
+			updateSearchResults();
+		}}
 	/>
 	<button>Search</button>
 </form>

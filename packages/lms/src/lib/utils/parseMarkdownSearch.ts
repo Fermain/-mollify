@@ -58,7 +58,6 @@ export function parseMarkdownSearch(dir: string) {
 	}
 
 	const institutes = fs.readdirSync(dir);
-	console.log('institutes:', institutes);
 	const data = institutes.map((institute) => {
 		const instituteDir = path.join(dir, institute);
 		return walkSync(instituteDir);

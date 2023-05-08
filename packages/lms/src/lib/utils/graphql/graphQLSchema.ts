@@ -24,6 +24,7 @@ export const resolvers = {
 		// Implement the search logic based on the filter value from 'args.filter'.
 		// Use the data from the parseMarkdown function.
 		const filter = args.filter.toLowerCase();
+		const searchType = args.type || null;
 		const data = context.data;
 
 		function search(nodes) {
