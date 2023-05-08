@@ -1,5 +1,5 @@
 <script lang="ts">
-	export let message: Object;
+	export let message: { name: string; content: string; };
 </script>
 
 <div class="message-wrapper">
