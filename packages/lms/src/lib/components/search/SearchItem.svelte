@@ -13,9 +13,6 @@
 		dispatch('pageChange');
 		goto(data.browserPath);
 	}}
-	on:blur={() => {
-		dispatch('pageChange');
-	}}
 >
 	{data.title}
 </div>
