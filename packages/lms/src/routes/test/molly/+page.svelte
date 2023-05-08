@@ -2,4 +2,4 @@
 	import { Molly } from '@mollify/molly';
 </script>
 
-<Molly />
+<Molly endpoint="/api/molly" />

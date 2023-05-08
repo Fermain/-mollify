@@ -1,3 +1,6 @@
-import { ai } from '@mollify/molly';
+import { OPENAI_API_KEY, OPENAI_TOKEN_LIMIT } from '$env/static/private';
+import { MollyAI } from '@mollify/molly';
 
-export const POST = ai.methods.chat.completion.POST;
+const molly = new MollyAI(OPENAI_API_KEY, OPENAI_TOKEN_LIMIT)
+
+export const POST = molly.handlers.chatCompletion.POST;
