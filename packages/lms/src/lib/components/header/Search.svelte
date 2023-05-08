@@ -6,8 +6,6 @@
 
 	async function updateSearchResults() {
 		searchResults = await search(searchQuery);
-		console.log(searchQuery);
-		console.log(searchResults);
 	}
 
 	function handleSubmit(event: { preventDefault: () => void }) {
