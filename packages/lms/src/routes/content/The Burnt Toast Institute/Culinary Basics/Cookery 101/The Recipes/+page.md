@@ -1,10 +1,14 @@
 ---
 title: The Recipes
 slug: recipes-101
-type: Module
-path: The Burnt Toast Institute/Culinary Basics/Cookery 101/The Recipes
-dependency: null
+type: module
+previous: null
 tags:
+  - recipes
+  - cooking
+  - burnt toast
+  - culinary basics
+  - the recipes
 ---
 
 ### Recipes 101 - The Burnt Toast Institute

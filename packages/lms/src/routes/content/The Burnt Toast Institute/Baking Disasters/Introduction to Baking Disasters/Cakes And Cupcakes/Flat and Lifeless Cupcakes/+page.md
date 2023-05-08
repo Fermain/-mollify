@@ -1,10 +1,13 @@
 ---
 title: Flat And Lifeless Cupcakes
 slug: flat-and-lifeless-cupcakes
-type: Lesson
-path: The Burnt Toast Institute/Baking Disasters/Introduction To Baking Disasters/Cakes And Cupcakes/Flat And Lifeless Cupcakes
-dependency: Lopsided Cakes
+type: lesson
+previous: Lopsided Cakes
 tags:
+  - cupcakes
+  - baking
+  - burnt toast
+  - baking disasters
 ---
 
 # Flat and Lifeless Cupcakes

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import '../lib/styles/styles.scss';
-	import Molly from '@mollify/molly';
+	import { Molly } from '@mollify/molly';
 	import Main from '$lib/components/content/Main.svelte';
 	import Footer from '$lib/components/footer/Footer.svelte';
 	import Logo from '$lib/components/header/Logo.svelte';
@@ -17,19 +17,18 @@
 <div class="layout-grid">
 	<Logo />
 	<Header>
-		<Search/>
+		<Search />
 		<Settings />
 	</Header>
 	<IconNav />
 	<Main>
 		<slot />
 	</Main>
-	<Navigation />
 	<ContentNav />
 	<Footer>
-		<Ego/>
+		<Ego />
 		<Reader />
-		<Molly />
+		<Molly endpoint="/api/molly" />
 	</Footer>
 </div>
 

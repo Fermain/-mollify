@@ -1,9 +1,13 @@
 ---
 title: The Basics
 slug: the-basics
-type: Module
-path: The Burnt Toast Institute/Culinary Basics/Cookery 101/The Basics
+type: module
 tags:
+  - cooking
+  - culinary basics
+  - burnt toast
+  - cookery 101
+  - the basics
 ---
 
 ### The Basics - The Burnt Toast Institute
