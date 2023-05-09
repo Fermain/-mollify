@@ -34,23 +34,13 @@
 <style lang="scss">
 	.layout-grid {
 		display: grid;
-		grid-template-columns: 3rem 1fr repeat(2, 15rem);
+		grid-template-columns: 3rem minmax(calc(80ch + 2rem), 1fr) minmax(10rem, 35rem);
 		grid-template-rows: 3rem 1fr 3rem;
 		height: 100vh;
 		grid-template-areas:
 			'brand header header header'
-			'icons body nav1 nav2'
+			'icons body navs navs'
 			'footer footer footer footer';
 		gap: 0.5rem;
-	}
-
-	@media screen and (max-width: 935px) {
-		.layout-grid {
-			display: grid;
-			grid-template-columns: 3rem repeat(2, 1fr) 3rem;
-			grid-template-rows: repeat(2, 3rem) 1fr 3rem;
-			height: 100vh;
-			gap: 0.2rem;
-		}
 	}
 </style>

@@ -16,8 +16,6 @@
 		/* for firefox users*/
 		scrollbar-color: var(--primary) var(--background-primary);
 		scrollbar-width: thin;
-
-		max-width: 100ch;
 	}
 
 	::-webkit-scrollbar {
@@ -31,13 +29,5 @@
 	::-webkit-scrollbar-thumb {
 		background-color: var(--primary);
 		border-radius: var(--border-radius-xs);
-	}
-
-	@media screen and (max-width: 935px) {
-		main {
-			overflow: inherit;
-			grid-area: 3 / 1 / 4 / 5;
-			padding-bottom: 3rem;
-		}
 	}
 </style>

@@ -32,10 +32,4 @@
 	i {
 		height: min-content;
 	}
-
-	@media screen and (max-width: 935px) {
-		.wrapper {
-			grid-area: 2 / 1 / 3 / 2;
-		}
-	}
 </style>
