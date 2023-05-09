@@ -1,15 +1,13 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { search } from '$lib/utils/graphql/getSearchResults';
+	//import { search } from '$lib/utils/graphql/getSearchResults';
+	import { getSearchResults } from '$lib/utils/fuseSearch/getSearchResults';
+
 	import SearchItem from '../search/SearchItem.svelte';
 
 	let searchQuery = '';
 	let searchResults: String[] = [];
 	let timer;
-
-	async function updateSearchResults() {
-		searchResults = await search(searchQuery);
-	}
 
 	function handleSubmit(event: { preventDefault: () => void }) {
 		event.preventDefault();
@@ -23,7 +21,8 @@
 			await new Promise((resolve) => {
 				timer = setTimeout(async () => {
 					try {
-						searchResults = await search(searchQuery);
+						searchResults = await getSearchResults(searchQuery);
+						console.log(searchResults);
 					} catch (error) {
 						console.log(error);
 					}

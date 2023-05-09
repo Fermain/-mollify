@@ -17,7 +17,7 @@ export interface MarkdownContentTree {
  * @param dir  The directory to parse
  * @returns A nested object containing the parsed markdown files
  */
-export function parseMarkdownSearch(dir: string) {
+export function parseMarkdownSearch(dir: string, content = false) {
 	function walkSync(currentDir: string) {
 		let currentObject: MarkdownContentTree = {};
 		const children: MarkdownContentTree[] = [];
@@ -33,8 +33,7 @@ export function parseMarkdownSearch(dir: string) {
 			} else if (path.extname(filename) === '.md') {
 				// If the current item is a markdown file, read the file and parse the frontmatter
 				const rawContent = fs.readFileSync(filePath, 'utf-8');
-				const { data, content } = matter(rawContent);
-				const contentString = Array.isArray(content) ? content.join('') : content;
+				const { data } = matter(rawContent);
 				// browserPath is the path relative to the browser
 				const browserPath = filePath
 					.replaceAll('\\', '/')
@@ -42,11 +41,16 @@ export function parseMarkdownSearch(dir: string) {
 					.replace('+page.md', '');
 				currentObject = {
 					...data,
-					content: contentString,
 					filePath,
 					foldername: path.basename(currentDir),
 					browserPath
 				};
+
+				if (content) {
+					const { content } = matter(rawContent);
+					const contentString = Array.isArray(content) ? content.join('') : content;
+					currentObject.content = contentString;
+				}
 			}
 		});
 
