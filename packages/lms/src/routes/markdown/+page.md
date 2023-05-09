@@ -19,7 +19,3 @@
 > 👍 Title
 >
 > Is this working?
-
-<style lang="scss">
-
-</style>
