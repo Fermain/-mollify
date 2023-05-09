@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
-	import { search } from '$lib/utils/graphql/getSearchResults';
 	import { files } from '$lib/stores/files';
+	import { getSearchResults } from '$lib/utils/fuseSearch/getSearchResults';
 	import type { EntityMeta } from '@mollify/types';
 	let searchQuery = '';
-	let searchQueryExact = '';
+	let searchQueryExact = false;
 	let searchTypes: String[] = [];
 	let searchResults: EntityMeta[] = [];
 	let selectedInstitution = 'all';
@@ -25,11 +25,13 @@
 	}
 
 	async function updateSearchResults() {
-		searchResults = await search(searchQuery);
-		console.log('Results:', searchResults);
-		console.log('searchQueryExact:', searchResults);
-		console.log('Search Types:', searchTypes);
-		console.log('Selected Institution:', selectedInstitution);
+		const filters = {
+			exact: searchQueryExact,
+			type: searchTypes,
+			institution: selectedInstitution
+		};
+		console.log('Filters:', filters);
+		searchResults = await getSearchResults(searchQuery, filters);
 	}
 
 	$: selectedInstitution;
@@ -52,9 +54,11 @@
 				<div>
 					<label for="search-exact">Exact Match</label>
 					<input
-						type="search"
+						type="checkbox"
 						placeholder="Search markdown content"
-						bind:value={searchQueryExact}
+						value="true"
+						id="search-exact"
+						bind:checked={searchQueryExact}
 					/>
 				</div>
 				{#if $files?.length > 1}
