@@ -1,6 +1,7 @@
 import Fuse from 'fuse.js';
 import { parseMarkdownSearch } from '$lib/utils/parseMarkdownSearch';
 import type { EntityMeta } from '@mollify/types';
+import { stopWords } from './stopWords';
 
 interface FuseItem extends Omit<EntityMeta, 'children'> {
 	parent: string | null;
@@ -38,10 +39,7 @@ const options = {
 	]
 };
 
-// Probably need a more comprehensive list of stop words
-const stopWords = new Set(['a', 'an', 'the', 'in', 'is', 'of', 'or', 'and']);
-
-function removeStopWords(text: string) {
+function removeStopWords(text) {
 	return text
 		.split(' ')
 		.filter((word) => !stopWords.has(word.toLowerCase()))
