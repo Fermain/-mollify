@@ -1,7 +1,7 @@
 import path from 'path';
 import fs from 'fs-extra';
 import matter from 'gray-matter';
-import type { Entity } from '@mollify/types';
+import type { Entity, EntityBase, EntityMeta } from '@mollify/types';
 
 // Get the path to the template file for the specified entity type
 export function getTemplatePath(entityType: string): string {
@@ -13,7 +13,7 @@ export function getTemplatePath(entityType: string): string {
 export async function copyTemplate(
   entityType: string,
   destination: string,
-  entity?: Entity
+  entity?: EntityBase
 ): Promise<void> {
   const templatePath = getTemplatePath(entityType);
   let content = await fs.readFile(templatePath, 'utf-8');
@@ -27,7 +27,7 @@ export async function copyTemplate(
 }
 
 // Replace template variables with data
-function replaceTemplateVariables(content: string, entity: Entity): string {
+function replaceTemplateVariables(content: string, entity: EntityBase): string {
   // Parse the frontmatter
   const { data: frontmatter, content: body } = matter(content);
 
@@ -36,6 +36,10 @@ function replaceTemplateVariables(content: string, entity: Entity): string {
     ...frontmatter,
     ...entity,
   };
+
+  delete updatedFrontmatter.address;
+  delete updatedFrontmatter.slug;
+  delete updatedFrontmatter.children;
 
   // Create the updated content with the updated frontmatter
   return matter.stringify(body, updatedFrontmatter);
