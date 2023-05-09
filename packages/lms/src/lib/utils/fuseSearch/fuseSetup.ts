@@ -21,7 +21,6 @@ export async function search(
 ) {
 	const data = parseMarkdownSearch('src/routes/content', true);
 
-	//console.log(filters.institution);
 	//filter institution
 	let dataInstitutionFilter = data;
 	if (filters.institution !== 'all') {
@@ -33,9 +32,13 @@ export async function search(
 
 	//filter type
 	let dataTypeFilter = flattenedData;
-	console.log(filters.type);
 	if (filters.type?.length > 0) {
 		dataTypeFilter = flattenedData.filter((item) => filters.type.includes(item.type));
+	}
+
+	//exact search
+	if (filters.exact) {
+		options.threshold = 0;
 	}
 
 	const fuse = new Fuse(dataTypeFilter, options);

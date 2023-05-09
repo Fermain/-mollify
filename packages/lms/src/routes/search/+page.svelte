@@ -56,7 +56,7 @@
 					<input
 						type="checkbox"
 						placeholder="Search markdown content"
-						value="true"
+						value={true}
 						id="search-exact"
 						bind:checked={searchQueryExact}
 					/>
