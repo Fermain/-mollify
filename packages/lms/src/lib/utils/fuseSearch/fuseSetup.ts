@@ -45,8 +45,8 @@ export async function search(
 
 	//remove stop words
 	searchQuery = removeStopWords(searchQuery);
-	const searchResults = await fuse.search(searchQuery);
 
+	const searchResults = await fuse.search(searchQuery);
 	//filter stuff
 	const filterStuff = searchResults;
 
