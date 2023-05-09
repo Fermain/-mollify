@@ -13,6 +13,10 @@
 	let pathArray: string[];
 	let currentPath: string;
 
+	let windowWidth = browser ? window.innerWidth : null;
+	let recNavClicked: boolean = false;
+	let courseNavClicked: boolean = false;
+
 	onMount(async () => {
 		if ($files === null) {
 			const response = await fetch('/api/parseMarkdown');
@@ -42,50 +46,96 @@
 		});
 		isCourse = current?.type === 'course';
 	}
+
+	function handleResize() {
+		windowWidth = browser ? window.innerWidth : null;
+	}
+
+	function toggleRecursiveNav() {
+		recNavClicked = !recNavClicked;
+	}
+
+	function toggleCourseNav() {
+		courseNavClicked = !courseNavClicked;
+	}
 </script>
 
-<div class="content-nav-wrapper">
-	{#if institutes}
-		<nav class="nav2 box">
+<svelte:window on:resize={handleResize} />
+{#if institutes}
+	{#if windowWidth && windowWidth < 935}
+		<nav class="nav2">
 			<div class="wrapper">
-				<h2 class="test">Recursive Nav</h2>
+				<button on:click={toggleRecursiveNav}>Recursive Nav</button>
+				{#if recNavClicked}
+					<RecursiveNav data={institutes} {currentPath} />
+				{/if}
+			</div>
+		</nav>
+	{:else}
+		<nav class="nav2">
+			<div class="wrapper">
+				<h2>Recursive Nav</h2>
 				<RecursiveNav data={institutes} {currentPath} />
 			</div>
 		</nav>
 	{/if}
 	{#if isCourse}
-		<!-- If current path is to a course/module/lesson -->
-		<nav class="nav1 box">
-			<h2 class="test">Course Nav</h2>
-			<CourseNav data={current} {currentPath} />
-		</nav>
+		{#if windowWidth && windowWidth < 935}
+			<nav class="nav1">
+				<!-- If current path is to a course/module/lesson -->
+				<button on:click={toggleCourseNav}>Course Nav</button>
+				{#if courseNavClicked}
+					<CourseNav data={current} {currentPath} />
+				{/if}
+			</nav>
+		{:else}
+			<nav class="nav1">
+				<h2>Course Nav</h2>
+				<CourseNav data={current} {currentPath} />
+			</nav>
+		{/if}
 	{/if}
-</div>
+{/if}
 
 <style lang="scss">
-	.content-nav-wrapper {
-		border: 2px solid black;
-		grid-area: navs;
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(8rem, 10rem));
-		gap: 0.5rem;
-	}
-
-	.content-nav-wrapper > .box {
-		container-type: inline-size;
-	}
-
 	h2 {
 		margin: 0;
+	}
+	.nav1 {
+		grid-area: nav1;
+
+		& button {
+			width: 100%;
+		}
+	}
+
+	.nav2 {
+		grid-area: nav2;
+
+		& button {
+			width: 100%;
+		}
 	}
 
 	.wrapper {
 		margin-bottom: 1.5rem;
 	}
 
-	@container (min-width: 500px) {
-		.content-nav-wrapper > .test {
-			color: blue;
+	/* 	@media screen and (max-width: 935px) {
+		.nav1 {
+			grid-area: 2 / 2 / 3 / 3;
+
+			& button {
+				height: 3rem;
+			}
 		}
-	}
+
+		.nav2 {
+			grid-area: 2 / 3 / 3 / 4;
+
+			& button {
+				height: 3rem;
+			}
+		}
+	} */
 </style>
