@@ -5,7 +5,11 @@ import type { EntityMeta } from '@mollify/types';
  * @param obj the object to search
  * @param keys the keys to search for
  */
-export function getCurrent(contentArray: EntityMeta[], keys: string[]): EntityMeta | undefined {
+export function getCurrent(
+	contentArray: EntityMeta[],
+	keys: string[],
+	stopAtCourse = true
+): EntityMeta | undefined {
 	if (!contentArray || !keys || keys.length === 0 || contentArray.length === 0) {
 		return undefined;
 	}
@@ -17,7 +21,7 @@ export function getCurrent(contentArray: EntityMeta[], keys: string[]): EntityMe
 	}
 
 	// If the current object is a course, module, or lesson, return it
-	if (currentObject[0].type == 'course') {
+	if (currentObject[0].type == 'course' && stopAtCourse) {
 		return currentObject[0];
 	}
 

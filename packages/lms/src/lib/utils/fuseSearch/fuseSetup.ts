@@ -1,31 +1,7 @@
 import Fuse from 'fuse.js';
 import { parseMarkdownSearch } from '$lib/utils/parseMarkdownSearch';
-import type { EntityMeta } from '@mollify/types';
-import { stopWords } from './stopWords';
-
-interface FuseItem extends Omit<EntityMeta, 'children'> {
-	parent: string | null;
-	refIndex?: number;
-	score?: number;
-	children?: FuseItem[];
-}
-
-// Flatten the data so that it can be searched
-function flattenData(data: EntityMeta[], parent: string | null = null) {
-	return data.reduce((flatData: FuseItem[], item) => {
-		const { children, ...itemWithoutChildren } = item;
-
-		// Add the current item to the flattened data
-		flatData.push({ ...itemWithoutChildren, parent: parent });
-
-		// If the item has children, recursively flatten them and add them to the flattened data
-		if (Array.isArray(children)) {
-			flatData.push(...flattenData(children, item.title));
-		}
-
-		return flatData;
-	}, []);
-}
+import { removeStopWords } from './removeStopWords';
+import { flattenData, type FuseItem } from './flattenData';
 
 const options = {
 	includeScore: true,
@@ -38,13 +14,6 @@ const options = {
 		{ name: 'content', weight: 0.05 }
 	]
 };
-
-function removeStopWords(text) {
-	return text
-		.split(' ')
-		.filter((word) => !stopWords.has(word.toLowerCase()))
-		.join(' ');
-}
 
 export async function search(
 	searchQuery: string,
