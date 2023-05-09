@@ -5,26 +5,27 @@ import { parseMarkdownSearch } from '$lib/utils/parseMarkdownSearch';
 const data = parseMarkdownSearch('src/routes/content', true);
 const jsonData = JSON.stringify(data);
 
-function findMaxDepth(obj, depth = 0) {
-	if (!obj.children) return depth;
+// function findMaxDepth(obj, depth = 0) {
+// 	if (!obj.children) return depth;
 
-	return Math.max(...obj.children.map((child) => findMaxDepth(child, depth + 1)));
-}
+// 	return Math.max(...obj.children.map((child) => findMaxDepth(child, depth + 1)));
+// }
 
-// Assume that `data` is your array of nested objects
-const maxDepth = Math.max(...data.map((item) => findMaxDepth(item)));
+// // Assume that `data` is your array of nested objects
+// const maxDepth = Math.max(...data.map((item) => findMaxDepth(item)));
 
-const fields = ['title', 'tags', 'content'];
-const keys = fields.flatMap((field) =>
-	Array.from(
-		{ length: maxDepth },
-		(_, i) => Array.from({ length: i + 1 }, () => 'children').join('.') + '.' + field
-	)
-);
+// const fields = ['title', 'tags', 'content'];
+// const keys = fields.flatMap((field) =>
+// 	Array.from(
+// 		{ length: maxDepth },
+// 		(_, i) => Array.from({ length: i + 1 }, () => 'children').join('.') + '.' + field
+// 	)
+// );
 
-console.log(keys);
+// console.log(keys);
 const options = {
-	includeScore: true,
+	includeScore: false,
+	threshold: 0.3,
 	//keys,
 	limit: Infinity,
 	keys: [
@@ -40,7 +41,8 @@ const options = {
 const fuse = new Fuse(data, options);
 
 export async function search(searchQuery: string, filters = {}) {
-	fuse.search(searchQuery);
+	console.log(searchQuery);
+	return await fuse.search(searchQuery);
 
 	//filter stuff
 }
