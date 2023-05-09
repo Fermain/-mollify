@@ -1,5 +1,6 @@
 import Fuse from 'fuse.js';
 import { parseMarkdownSearch } from '$lib/utils/parseMarkdownSearch';
+import { stopWords } from './stopWords';
 
 // Pass the data from the parseMarkdown function to the GraphQL context
 const data = parseMarkdownSearch('src/routes/content', true);
@@ -36,9 +37,6 @@ const options = {
 };
 
 const fuse = new Fuse(flattenedData, options);
-
-// Probably need a more comprehensive list of stop words
-const stopWords = new Set(['a', 'an', 'the', 'in', 'is', 'of', 'or', 'and']);
 
 function removeStopWords(text) {
 	return text
