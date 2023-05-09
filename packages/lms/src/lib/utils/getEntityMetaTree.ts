@@ -1,14 +1,15 @@
 import fs from 'fs';
 import path from 'path';
-import matter from 'gray-matter';
 import type { EntityMeta } from '@mollify/types';
+import { getEntityFrontmatter } from './getEntityFrontmatter';
+import getEntitySlug from './getEntitySlug';
 
 /**
- * Recursively parse markdown files and return an array of objects with arrays of children
+ * Used for Nav and Search, it recursively parse markdown files and return an array of objects with arrays of children
  * @param dir  The directory to parse
  * @returns A nested object containing the parsed markdown files
  */
-export function parseMarkdownSearch(dir: string, content = false) {
+export function getEntityMetaTree(dir: string, content = false) {
 	function walkSync(currentDir: string) {
 		let currentObject = {} as EntityMeta;
 		const children: EntityMeta[] = [];
@@ -23,30 +24,21 @@ export function parseMarkdownSearch(dir: string, content = false) {
 				children.push(walkSync(filePath));
 			} else if (path.extname(filename) === '.md') {
 				// If the current item is a markdown file, read the file and parse the frontmatter
-				const rawContent = fs.readFileSync(filePath, 'utf-8');
-				const { data } = matter(rawContent);
+				const Entity = getEntityFrontmatter(filePath, content);
+				const slug = getEntitySlug(filePath);
 				// browserPath is the path relative to the browser
 				const browserPath = filePath
 					.replaceAll('\\', '/')
 					.replace('src/routes/content', '/content')
 					.replace('+page.md', '');
 				currentObject = {
-					...(data as Partial<EntityMeta>),
-					slug: data.slug || path.basename(currentDir).replaceAll(' ', '-').toLowerCase(),
-					type: data.type,
-					title: data.title || 'Untitled',
-					tags: data.tags || [],
+					...Entity,
+					slug,
 					address: filePath,
 					foldername: path.basename(currentDir),
 					browserPath,
 					children: []
 				};
-
-				if (content) {
-					const { content } = matter(rawContent);
-					const contentString = Array.isArray(content) ? content.join('') : content;
-					currentObject.content = contentString;
-				}
 			}
 		});
 
