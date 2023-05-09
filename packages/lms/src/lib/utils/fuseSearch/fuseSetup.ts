@@ -37,7 +37,7 @@ const options = {
 	]
 };
 
-const fuse = new Fuse(jsonData, options);
+const fuse = new Fuse(data, options);
 
 export async function search(searchQuery: string, filters = {}) {
 	fuse.search(searchQuery);
