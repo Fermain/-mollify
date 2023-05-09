@@ -3,46 +3,65 @@ import { parseMarkdownSearch } from '$lib/utils/parseMarkdownSearch';
 
 // Pass the data from the parseMarkdown function to the GraphQL context
 const data = parseMarkdownSearch('src/routes/content', true);
-const jsonData = JSON.stringify(data);
 
-// function findMaxDepth(obj, depth = 0) {
-// 	if (!obj.children) return depth;
+// Flatten the data so that it can be searched
+function flattenData(data, parent = null) {
+	return data.reduce((flatData, item) => {
+		const { children, ...itemWithoutChildren } = item;
 
-// 	return Math.max(...obj.children.map((child) => findMaxDepth(child, depth + 1)));
-// }
+		// Add the current item to the flattened data
+		flatData.push({ ...itemWithoutChildren, parent: parent });
 
-// // Assume that `data` is your array of nested objects
-// const maxDepth = Math.max(...data.map((item) => findMaxDepth(item)));
+		// If the item has children, recursively flatten them and add them to the flattened data
+		if (Array.isArray(children)) {
+			flatData.push(...flattenData(children, item.title));
+		}
 
-// const fields = ['title', 'tags', 'content'];
-// const keys = fields.flatMap((field) =>
-// 	Array.from(
-// 		{ length: maxDepth },
-// 		(_, i) => Array.from({ length: i + 1 }, () => 'children').join('.') + '.' + field
-// 	)
-// );
+		return flatData;
+	}, []);
+}
 
-// console.log(keys);
+const flattenedData = flattenData(data);
+
 const options = {
 	includeScore: false,
+	// threshold 0 is more strict, 1 is more loose
 	threshold: 0.3,
-	//keys,
 	limit: Infinity,
 	keys: [
-		'title',
-		'children.title',
-		'children.children.title',
-		'children.children.children.title',
-		'children.children.children.children.title'
-		// Add more levels if necessary
+		{ name: 'title', weight: 0.7 },
+		{ name: 'tags', weight: 0.25 },
+		{ name: 'content', weight: 0.05 }
 	]
 };
 
-const fuse = new Fuse(data, options);
+const fuse = new Fuse(flattenedData, options);
+
+// Probably need a more comprehensive list of stop words
+const stopWords = new Set(['a', 'an', 'the', 'in', 'is', 'of', 'or', 'and']);
+
+function removeStopWords(text) {
+	return text
+		.split(' ')
+		.filter((word) => !stopWords.has(word.toLowerCase()))
+		.join(' ');
+}
 
 export async function search(searchQuery: string, filters = {}) {
-	console.log(searchQuery);
-	return await fuse.search(searchQuery);
+	//remove stop words
+	searchQuery = removeStopWords(searchQuery);
+	const searchResults = await fuse.search(searchQuery);
 
 	//filter stuff
+	const filterStuff = searchResults;
+
+	const reducedData = filterStuff.reduce((array, item) => {
+		item.item.refIndex = item.refIndex;
+		delete item.item.content;
+		delete item.item.filePath;
+		array.push(item.item);
+		return array;
+	}, []);
+
+	return reducedData;
 }
