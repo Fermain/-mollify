@@ -61,57 +61,61 @@
 </script>
 
 <svelte:window on:resize={handleResize} />
-{#if institutes}
-	{#if windowWidth && windowWidth < 935}
-		<nav class="nav2">
-			<div class="wrapper">
-				<button on:click={toggleRecursiveNav}>Recursive Nav</button>
-				{#if recNavClicked}
-					<RecursiveNav data={institutes} {currentPath} />
+
+<div class="outer-wrapper">
+	<div class="inner-wrapper">
+		{#if institutes}
+			{#if windowWidth && windowWidth <= 870}
+				<nav class="nav2">
+					<div class="wrapper">
+						<button on:click={toggleRecursiveNav}>Recursive Nav</button>
+						{#if recNavClicked}
+							<RecursiveNav data={institutes} {currentPath} />
+						{/if}
+					</div>
+				</nav>
+			{:else}
+				<nav class="nav2">
+					<div class="wrapper">
+						<h2>Recursive Nav</h2>
+						<RecursiveNav data={institutes} {currentPath} />
+					</div>
+				</nav>
+			{/if}
+			{#if isCourse}
+				{#if windowWidth && windowWidth <= 870}
+					<nav class="nav1">
+						<!-- If current path is to a course/module/lesson -->
+						<button on:click={toggleCourseNav}>Course Nav</button>
+						{#if courseNavClicked}
+							<CourseNav data={current} {currentPath} />
+						{/if}
+					</nav>
+				{:else}
+					<nav class="nav1">
+						<h2>Course Nav</h2>
+						<CourseNav data={current} {currentPath} />
+					</nav>
 				{/if}
-			</div>
-		</nav>
-	{:else}
-		<nav class="nav2">
-			<div class="wrapper">
-				<h2>Recursive Nav</h2>
-				<RecursiveNav data={institutes} {currentPath} />
-			</div>
-		</nav>
-	{/if}
-	{#if isCourse}
-		{#if windowWidth && windowWidth < 935}
-			<nav class="nav1">
-				<!-- If current path is to a course/module/lesson -->
-				<button on:click={toggleCourseNav}>Course Nav</button>
-				{#if courseNavClicked}
-					<CourseNav data={current} {currentPath} />
-				{/if}
-			</nav>
-		{:else}
-			<nav class="nav1">
-				<h2>Course Nav</h2>
-				<CourseNav data={current} {currentPath} />
-			</nav>
+			{/if}
 		{/if}
-	{/if}
-{/if}
+	</div>
+</div>
 
 <style lang="scss">
+	.outer-wrapper {
+		grid-area: contentNavs;
+		container-type: inline-size;
+	}
+
+	.inner-wrapper {
+		height: 100%;
+	}
 	h2 {
 		margin: 0;
 	}
-	.nav1 {
-		grid-area: nav1;
-
-		& button {
-			width: 100%;
-		}
-	}
-
+	.nav1,
 	.nav2 {
-		grid-area: nav2;
-
 		& button {
 			width: 100%;
 		}
@@ -121,21 +125,26 @@
 		margin-bottom: 1.5rem;
 	}
 
-	/* 	@media screen and (max-width: 935px) {
-		.nav1 {
-			grid-area: 2 / 2 / 3 / 3;
+	@container (min-width: 300px) {
+		.outer-wrapper {
+			.inner-wrapper {
+				display: flex;
+				gap: var(--spacing-m);
 
-			& button {
-				height: 3rem;
+				.nav1,
+				.nav2 {
+					flex: 0 0 30%;
+
+					button {
+						padding: 0;
+						height: 100%;
+					}
+				}
+
+				.wrapper {
+					height: 100%;
+				}
 			}
 		}
-
-		.nav2 {
-			grid-area: 2 / 3 / 3 / 4;
-
-			& button {
-				height: 3rem;
-			}
-		}
-	} */
+	}
 </style>
