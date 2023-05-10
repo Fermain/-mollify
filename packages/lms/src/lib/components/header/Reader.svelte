@@ -5,10 +5,9 @@
 	import { audio } from '$lib/stores/audio';
 
 	let audioSrc;
-
 	let path = '';
 	let content = '';
-
+	let slug = '';
 	function updatePath() {
 		path = browser ? window.location.pathname.replaceAll(`%20`, ' ') : '';
 	}
@@ -27,6 +26,7 @@
 			});
 			const matter = await response.json();
 			content = matter.content;
+			slug = matter.slug.replaceAll(' ', '-').toLocaleLowerCase();
 		});
 	});
 
@@ -39,7 +39,7 @@
 					headers: {
 						'Content-Type': 'application/json'
 					},
-					body: JSON.stringify({ text: content })
+					body: JSON.stringify({ text: content, slug })
 				});
 				const data = await response.json();
 				audio.set(data);
