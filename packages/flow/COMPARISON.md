@@ -1,6 +1,6 @@
-This table provides a comparison of the open source packages available for editing markdown. Pros and cons are based on my experience installing and rendering them as svelte components (except for TUI Editor, that was rendered by Oliver), so please open the `md-editor-discovery` branch in your local environment and play a bit with the editors to make yourself a good idea of each.
-
 If you get a 500 Internal Error when running the `dev server` do `npm i` inside the `packages/flow` directory.
+
+This table provides a comparison of the open source packages available for editing markdown. Pros and cons are based on my experience installing and rendering them as svelte components (except for TUI Editor, that was rendered by Oliver), so please open the `md-editor-discovery` branch in your local environment and play a bit with the editors to make yourself a good idea of each.
 
 NB: last updated, git stars, forks, and releases are up-to-date as of 04/05/2023
 
