@@ -3,9 +3,11 @@
 </script>
 
 <main>
-	<ProgrammeNav>
-		<slot />
-	</ProgrammeNav>
+	<div class="wrapper">
+		<ProgrammeNav>
+			<slot />
+		</ProgrammeNav>
+	</div>
 </main>
 
 <style lang="scss">
@@ -31,5 +33,13 @@
 	::-webkit-scrollbar-thumb {
 		background-color: var(--primary);
 		border-radius: var(--border-radius-xs);
+	}
+
+	@container (max-width: 870px) {
+		main {
+			.wrapper {
+				padding-left: var(--spacing-s);
+			}
+		}
 	}
 </style>
