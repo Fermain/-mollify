@@ -44,6 +44,7 @@
 				const data = await response.json();
 				audio.set(data);
 				console.log(data);
+				audioSrc = data.url;
 			})();
 		}
 	}

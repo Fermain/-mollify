@@ -21,16 +21,20 @@ export async function generateAudio(content: string) {
 				}
 			})
 		});
-
+		console.log(response);
 		const arrayBuffer = await response.arrayBuffer();
 		const buffer = Buffer.from(arrayBuffer);
 		const file = Math.random().toString(36).substring(7);
 
-		fs.writeFile(path.join('public', 'audio', `${file}.mp3`), buffer, () => {
-			console.log('File written successfully');
-		});
+		const audioDir = path.join('public', 'audio');
+		if (!fs.existsSync(audioDir)) {
+			fs.mkdirSync(audioDir, { recursive: true });
+		}
 
-		return JSON.stringify({ file: `${file}.mp3` });
+		await fs.promises.writeFile(path.join('public', 'audio', `${file}.mp3`), buffer);
+		console.log('File written successfully', path.join('public', 'audio', `${file}.mp3`));
+
+		return JSON.stringify({ file: `${file}.mp3`, url: `/public/audio/${file}.mp3` });
 	} catch (error) {
 		console.error('Error generating audio:', error);
 	}
