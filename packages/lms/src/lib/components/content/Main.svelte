@@ -38,7 +38,7 @@
 	@container (max-width: 870px) {
 		main {
 			.wrapper {
-				padding-left: var(--spacing-s);
+				padding: 0 var(--spacing-s);
 			}
 		}
 	}
