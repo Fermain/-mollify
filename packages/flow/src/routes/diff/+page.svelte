@@ -1,8 +1,6 @@
 <script lang="ts">
 	import DiffDemo from '$lib/components/diff/DiffDemo.svelte';
 	import JsdiffDemo from '$lib/components/diff/jsdiffDemo.svelte';
-
-	console.log(JsdiffDemo);
 </script>
 
 <div class="container">
@@ -14,14 +12,6 @@
 	<div class="wrapper">
 		<h2>JsdiffDemo</h2>
 		<JsdiffDemo />
-	</div>
-
-	<div class="wrapper">
-		<h2>TUI Editor</h2>
-	</div>
-
-	<div class="wrapper">
-		<h2>Simple mde</h2>
 	</div>
 </div>
 
