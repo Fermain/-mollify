@@ -64,4 +64,22 @@ $$
 \int_0^\infty e^{-x^2} dx = \frac{\sqrt{\pi}}{2}
 $$
 
+<!-- Custom callout examples -->
+
+> ⛔ Title
+>
+> Is this working?
+
+> ✅ Title
+>
+> Is this working?
+
+> 💡 Title
+>
+> Is this working?
+
+> 👍 Title
+>
+> Is this working?
+
 That's all for now!
