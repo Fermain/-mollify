@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
-	import { search } from '$lib/utils/graphql/getSearchResults';
 	import { files } from '$lib/stores/files';
+	import { getSearchResults } from '$lib/utils/fuseSearch/getSearchResults';
 	import type { EntityMeta } from '@mollify/types';
 	let searchQuery = '';
-	let searchQueryExact = '';
+	let searchQueryExact = false;
 	let searchTypes: String[] = [];
 	let searchResults: EntityMeta[] = [];
 	let selectedInstitution = 'all';
@@ -25,11 +25,13 @@
 	}
 
 	async function updateSearchResults() {
-		searchResults = await search(searchQuery);
-		console.log('Results:', searchResults);
-		console.log('searchQueryExact:', searchResults);
-		console.log('Search Types:', searchTypes);
-		console.log('Selected Institution:', selectedInstitution);
+		const filters = {
+			exact: searchQueryExact,
+			type: searchTypes,
+			institution: selectedInstitution
+		};
+		console.log('Filters:', filters);
+		searchResults = await getSearchResults(searchQuery, filters);
 	}
 
 	$: selectedInstitution;
@@ -52,9 +54,11 @@
 				<div>
 					<label for="search-exact">Exact Match</label>
 					<input
-						type="search"
+						type="checkbox"
 						placeholder="Search markdown content"
-						bind:value={searchQueryExact}
+						value={true}
+						id="search-exact"
+						bind:checked={searchQueryExact}
 					/>
 				</div>
 				{#if $files?.length > 1}
@@ -117,7 +121,9 @@
 			{#each searchResults as result}
 				<div class="result">
 					<h3>{result.title}</h3>
-					<a href={result.browserPath}>View Details</a>
+					<p>Search Score:{Math.round(result.score * 10000) / 10000}</p>
+					<p>Type: {result.type}</p>
+					<a class="result-btn" href={result.browserPath}>View Details</a>
 				</div>
 			{/each}
 		{/if}
@@ -136,6 +142,7 @@
 		flex-direction: column;
 		padding: var(--spacing-m);
 	}
+	.result-btn,
 	.search-btn {
 		background-color: var(--secondary);
 		color: var(--text-primary);
@@ -145,6 +152,15 @@
 			background-color: var(--text-primary);
 			color: var(--secondary);
 		}
+	}
+
+	.result-btn {
+		display: block;
+		padding: var(--spacing-s) var(--spacing-m);
+		border-radius: var(--spacing-s);
+		align-self: center;
+		margin: auto;
+		width: fit-content;
 	}
 
 	.show-option-btn {
@@ -157,5 +173,19 @@
 	.search > div,
 	.search-options > div {
 		margin-bottom: var(--spacing-m);
+	}
+
+	.result {
+		background-color: var(--primary);
+		color: var(--text-secondary);
+		padding: var(--spacing-m);
+		border-radius: var(--spacing-m);
+	}
+
+	.results-container {
+		padding: 0.5rem;
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+		grid-gap: 1rem;
 	}
 </style>

@@ -11,6 +11,31 @@
 	import Header from '$lib/components/header/Header.svelte';
 	import Ego from '$lib/components/ui/Ego.svelte';
 	import Search from '$lib/components/header/Search.svelte';
+	import { onMount } from 'svelte';
+	import { browser } from '$app/environment';
+	import { page } from '$app/stores';
+
+	let path = '';
+	function updatePath() {
+		path = browser ? window.location.pathname.replaceAll(`%20`, ' ') : '';
+	}
+
+	onMount(async () => {
+		updatePath();
+	});
+
+	page.subscribe(async (data) => {
+		updatePath();
+		const response = await fetch('/api/getCurrentPage', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ url: path })
+		});
+		const matter = await response.json();
+		console.log(matter);
+	});
 </script>
 
 <div class="layout-grid">

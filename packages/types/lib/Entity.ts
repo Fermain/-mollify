@@ -38,6 +38,7 @@ export interface EntityBase {
   summary?: string;
   tags: Array<string>;
   previous?: string;
+  content?: string;
   [key: string]: unknown;
 }
 

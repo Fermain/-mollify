@@ -1,26 +1,18 @@
 import fs from 'fs';
 import path from 'path';
-import matter from 'gray-matter';
-
-// Define the MarkdownNode interface
-export interface MarkdownContentTree {
-	filePath?: string;
-	folderName?: string;
-	dependency?: string | null;
-	type?: string;
-	children?: MarkdownContentTree[];
-	[key: string]: unknown;
-}
+import type { EntityMeta } from '@mollify/types';
+import { getEntityFrontmatter } from './getEntityFrontmatter';
+import getEntitySlug from './getEntitySlug';
 
 /**
- * Recursively parse markdown files and return an array of objects with arrays of children
+ * Used for Nav and Search, it recursively parse markdown files and return an array of objects with arrays of children
  * @param dir  The directory to parse
  * @returns A nested object containing the parsed markdown files
  */
-export function parseMarkdownSearch(dir: string, content = false) {
+export function getEntityMetaTree(dir: string, content = false) {
 	function walkSync(currentDir: string) {
-		let currentObject: MarkdownContentTree = {};
-		const children: MarkdownContentTree[] = [];
+		let currentObject = {} as EntityMeta;
+		const children: EntityMeta[] = [];
 		// Get the files in the current directory
 		const files = fs.readdirSync(currentDir);
 		files.forEach((filename) => {
@@ -32,25 +24,21 @@ export function parseMarkdownSearch(dir: string, content = false) {
 				children.push(walkSync(filePath));
 			} else if (path.extname(filename) === '.md') {
 				// If the current item is a markdown file, read the file and parse the frontmatter
-				const rawContent = fs.readFileSync(filePath, 'utf-8');
-				const { data } = matter(rawContent);
+				const Entity = getEntityFrontmatter(filePath, content);
+				const slug = getEntitySlug(filePath);
 				// browserPath is the path relative to the browser
 				const browserPath = filePath
 					.replaceAll('\\', '/')
 					.replace('src/routes/content', '/content')
 					.replace('+page.md', '');
 				currentObject = {
-					...data,
-					filePath,
+					...Entity,
+					slug,
+					address: filePath,
 					foldername: path.basename(currentDir),
-					browserPath
+					browserPath,
+					children: []
 				};
-
-				if (content) {
-					const { content } = matter(rawContent);
-					const contentString = Array.isArray(content) ? content.join('') : content;
-					currentObject.content = contentString;
-				}
 			}
 		});
 
