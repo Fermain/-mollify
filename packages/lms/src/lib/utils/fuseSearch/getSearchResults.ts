@@ -1,6 +1,6 @@
 export async function getSearchResults(
 	searchQuery: string,
-	filters = { institution: 'all', type: [], exact: null }
+	filters = { institution: 'all', programme: 'all', type: [], exact: false, exclusions: [] }
 ) {
 	const response = await fetch('/api/search', {
 		method: 'POST',

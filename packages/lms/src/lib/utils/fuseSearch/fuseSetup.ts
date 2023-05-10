@@ -17,7 +17,7 @@ const options = {
 
 export async function search(
 	searchQuery: string,
-	filters = { institution: 'all', type: [], exact: null }
+	filters = { institution: 'all', programme: 'all', type: [], exact: false, exclusions: [] }
 ) {
 	const data = parseMarkdownSearch('src/routes/content', true);
 
@@ -48,9 +48,8 @@ export async function search(
 
 	const searchResults = await fuse.search(searchQuery);
 	//filter stuff
-	const filterStuff = searchResults;
 
-	const reducedData = filterStuff.reduce((array, item) => {
+	const reducedData = searchResults.reduce((array, item) => {
 		item.item.refIndex = item.refIndex;
 		item.item.score = item.score;
 		delete item.item.content;
@@ -59,5 +58,23 @@ export async function search(
 		return array;
 	}, []);
 
-	return reducedData;
+	let filterExclusions = reducedData;
+	if (filters.exclusions?.length > 0) {
+		filterExclusions = reducedData.filter((item) => {
+			// Check for any excluded words in the title
+			const titleWords = item.title.split(' ');
+			if (titleWords.some((word) => filters.exclusions.includes(word))) {
+				return false;
+			}
+
+			// Check for any excluded tags
+			if (item.tags?.some((tag) => filters.exclusions.includes(tag))) {
+				return false;
+			}
+
+			return true;
+		});
+	}
+
+	return filterExclusions;
 }

@@ -4,15 +4,41 @@
 	import { files } from '$lib/stores/files';
 	import { getSearchResults } from '$lib/utils/fuseSearch/getSearchResults';
 	import type { EntityMeta } from '@mollify/types';
+	import { slide } from 'svelte/transition';
+
 	let searchQuery = '';
+	let rawSearchQuery = '';
 	let searchQueryExact = false;
 	let searchTypes: String[] = [];
+	let searchExclusions: String = '';
 	let searchResults: EntityMeta[] = [];
 	let selectedInstitution = 'all';
+	let open = true;
+
+	function generateRawSearchQuery() {
+		rawSearchQuery = searchQuery;
+		if (searchExclusions.split(' ').length > 0) {
+			searchExclusions.split(' ').forEach((exclusion) => {
+				rawSearchQuery += ` !${exclusion}`;
+			});
+		}
+
+		if (searchQueryExact) {
+			rawSearchQuery = `"${rawSearchQuery}"`;
+		}
+
+		if (searchTypes.length > 0) {
+			rawSearchQuery += ` type:(${searchTypes.join(',')})`;
+		}
+
+		console.log(rawSearchQuery);
+		return rawSearchQuery;
+	}
 
 	const query = $page.url.searchParams.get('query');
 	onMount(() => {
 		if (query) {
+			rawSearchQuery = query;
 			searchQuery = query;
 
 			updateSearchResults();
@@ -22,16 +48,23 @@
 	function handleSubmit(event: { preventDefault: () => void }) {
 		event.preventDefault();
 		updateSearchResults();
+		generateRawSearchQuery();
 	}
 
 	async function updateSearchResults() {
 		const filters = {
 			exact: searchQueryExact,
 			type: searchTypes,
-			institution: selectedInstitution
+			institution: selectedInstitution,
+			exclusions: searchExclusions.trim() !== '' ? searchExclusions.split(' ') : [],
+			programme: 'all'
 		};
-		console.log('Filters:', filters);
+		console.log(filters);
 		searchResults = await getSearchResults(searchQuery, filters);
+	}
+
+	function toggleOpen(): void {
+		open = !open;
 	}
 
 	$: selectedInstitution;
@@ -48,70 +81,83 @@
 		<form class="search" on:submit={handleSubmit}>
 			<div>
 				<label for="search">Search Query</label>
-				<input type="search" placeholder="Search markdown content" bind:value={searchQuery} />
+				<input type="search" placeholder="Search Terms" bind:value={searchQuery} />
 			</div>
-			<div class="search-options">
-				<div>
-					<label for="search-exact">Exact Match</label>
-					<input
-						type="checkbox"
-						placeholder="Search markdown content"
-						value={true}
-						id="search-exact"
-						bind:checked={searchQueryExact}
-					/>
-				</div>
-				{#if $files?.length > 1}
+			{#if open}
+				<div class="search-options" transition:slide={{ duration: 300 }}>
 					<div>
-						<label>Institution</label>
-						<select bind:value={selectedInstitution}>
-							<option value="all">All</option>
-							{#each $files as file}
-								<option value={file.foldername}>{file.title}</option>
-							{/each}
-						</select>
+						<label for="search-exact">Exact Match</label>
+						<input
+							type="checkbox"
+							placeholder="Search markdown content"
+							value={true}
+							id="search-exact"
+							bind:checked={searchQueryExact}
+						/>
 					</div>
-				{/if}
-				<div>
-					<fieldset>
-						<legend>Search Type</legend>
-						<label for="programme">Programmes</label>
+					<div>
+						<label for="search-exclusions">Excluded Terms</label>
 						<input
-							type="checkbox"
-							name="type"
-							value="programme"
-							id="programme"
-							bind:group={searchTypes}
+							type="search"
+							placeholder="Exclude terms, eg: term1 term2"
+							bind:value={searchExclusions}
+							id="search-exclusions"
 						/>
-						<label for="course">Courses</label>
-						<input
-							type="checkbox"
-							name="type"
-							value="course"
-							id="course"
-							bind:group={searchTypes}
-						/>
-						<label for="module">Modules</label>
-						<input
-							type="checkbox"
-							name="type"
-							value="module"
-							id="module"
-							bind:group={searchTypes}
-						/>
-						<label for="lesson">Lessons</label>
-						<input
-							type="checkbox"
-							name="type"
-							value="lesson"
-							id="lesson"
-							bind:group={searchTypes}
-						/>
-					</fieldset>
+					</div>
+					{#if $files?.length > 1}
+						<div>
+							<label for="select-institution">Institution</label>
+							<select bind:value={selectedInstitution} id="select-institution">
+								<option value="all">All</option>
+								{#each $files as file}
+									<option value={file.foldername}>{file.title}</option>
+								{/each}
+							</select>
+						</div>
+					{/if}
+					<div>
+						<fieldset>
+							<legend>Search Type</legend>
+							<label for="programme">Programmes</label>
+							<input
+								type="checkbox"
+								name="type"
+								value="programme"
+								id="programme"
+								bind:group={searchTypes}
+							/>
+							<label for="course">Courses</label>
+							<input
+								type="checkbox"
+								name="type"
+								value="course"
+								id="course"
+								bind:group={searchTypes}
+							/>
+							<label for="module">Modules</label>
+							<input
+								type="checkbox"
+								name="type"
+								value="module"
+								id="module"
+								bind:group={searchTypes}
+							/>
+							<label for="lesson">Lessons</label>
+							<input
+								type="checkbox"
+								name="type"
+								value="lesson"
+								id="lesson"
+								bind:group={searchTypes}
+							/>
+						</fieldset>
+					</div>
 				</div>
-			</div>
+			{/if}
 			<div>
-				<button class="show-option-btn" type="button">Advanced Search Options</button>
+				<button class="show-option-btn" type="button" on:click={toggleOpen}
+					>Advanced Search Options</button
+				>
 			</div>
 			<button type="submit" class="search-btn">Search</button>
 		</form>
@@ -131,12 +177,6 @@
 </section>
 
 <style lang="scss">
-	main {
-		padding-top: var(--spacing-xl);
-		min-height: 100vh;
-		grid-area: main;
-	}
-
 	.search-wrapper {
 		display: flex;
 		flex-direction: column;
@@ -147,11 +187,12 @@
 		background-color: var(--secondary);
 		color: var(--text-primary);
 		margin: auto;
+	}
 
-		:hover {
-			background-color: var(--text-primary);
-			color: var(--secondary);
-		}
+	.result-btn:hover,
+	.search-btn:hover {
+		background-color: var(--text-primary);
+		color: var(--secondary);
 	}
 
 	.result-btn {
