@@ -9,6 +9,7 @@ export function getEntityFrontmatter(entityPath: string, textBody = false): Enti
 
 	const rawContent = fs.readFileSync(entityPath, 'utf-8');
 	const { data, content } = matter(rawContent);
+	const contentString = Array.isArray(content) ? content.join('') : content;
 
 	const Entity: EntityBase = {
 		...data,
@@ -16,7 +17,7 @@ export function getEntityFrontmatter(entityPath: string, textBody = false): Enti
 		type: data.type,
 		tags: data.tags,
 		previous: data.previous,
-		content: content
+		content: contentString
 	};
 
 	if (textBody) {
