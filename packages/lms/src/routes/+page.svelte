@@ -1,5 +1,4 @@
-<script>
-</script>
+<script></script>
 
 <main class="">This is the main from +page</main>
 
