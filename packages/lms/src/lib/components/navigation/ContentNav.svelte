@@ -147,4 +147,15 @@
 			}
 		}
 	}
+
+	@container (min-width: 600px) {
+		.outer-wrapper {
+			.inner-wrapper {
+				.nav1,
+				.nav2 {
+					flex: 0 0 20%;
+				}
+			}
+		}
+	}
 </style>

@@ -34,7 +34,7 @@
 <style lang="scss">
 	.layout-grid {
 		display: grid;
-		grid-template-columns: 3rem minmax(calc(80ch + 2rem), 1fr) minmax(10rem, 35rem);
+		grid-template-columns: 3rem calc(80ch + 2rem) minmax(10rem, 30rem);
 		grid-template-rows: 3rem 1fr 3rem;
 		height: 100vh;
 		grid-template-areas:
