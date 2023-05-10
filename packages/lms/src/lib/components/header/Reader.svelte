@@ -1,62 +1,46 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { files } from '$lib/stores/files';
-	import { getCurrent } from '$lib/utils/getCurrent';
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
-	import type { EntityMeta } from '@mollify/types';
 	import { audio } from '$lib/stores/audio';
 
-	let institutes: EntityMeta[] | null = [];
-	let current: EntityMeta | undefined;
-	let isCourse = false;
-	let pathArray: string[] = [];
-	let currentPath: string;
-
 	let audioSrc;
-	let parsedText;
 
-	onMount(async () => {
-		if ($files === null) {
-			const response = await fetch('/api/parseMarkdown');
-			const data = await response.json();
-			files.set(data);
-		}
-
-		if ($audio === null) {
-			const response = await fetch(`/api/tts/${currentPath}`);
-			const data = await response.json();
-			audio.set(data);
-		}
-	});
+	let path = '';
+	let content = '';
 
 	function updatePath() {
-		const path = browser ? window.location.pathname.replaceAll(`%20`, ' ') : '';
-		const objectPath = path.replace('/content/', '');
-		pathArray = objectPath.split('/');
-		currentPath = pathArray[pathArray.length - 1];
+		path = browser ? window.location.pathname.replaceAll(`%20`, ' ') : '';
 	}
 
-	if (browser) {
+	onMount(async () => {
 		updatePath();
-		current = getCurrent(institutes, pathArray, false);
-	}
+
+		page.subscribe(async (data) => {
+			updatePath();
+			const response = await fetch('/api/getCurrentPage', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ url: path })
+			});
+			const matter = await response.json();
+			content = matter.content;
+		});
+	});
 
 	$: {
-		if ($files) {
-			institutes = $files;
-			current = getCurrent(institutes, pathArray, false);
-		}
-		page.subscribe((data) => {
-			updatePath();
-		});
-		isCourse = current?.type === 'course';
-
-		// Fetch the audio reactively whenever `currentPath` changes
-		if (currentPath && $audio === null) {
-			currentPath = decodeURIComponent(currentPath);
+		// Fetch the audio reactively whenever `content` changes
+		if (content) {
 			(async () => {
-				const response = await fetch(`/api/tts/${currentPath}`);
+				const response = await fetch(`/api/tts`, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({ text: content })
+				});
 				const data = await response.json();
 				audio.set(data);
 				console.log(data);
