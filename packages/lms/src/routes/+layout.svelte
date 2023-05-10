@@ -34,24 +34,24 @@
 <style lang="scss">
 	.layout-grid {
 		display: grid;
-		grid-template-columns: 3rem 1fr repeat(2, 15rem);
+		grid-template-columns: 3rem minmax(calc(80ch + 2rem), 1fr) minmax(10rem, 35rem);
 		grid-template-rows: 3rem 1fr 3rem;
 		height: 100vh;
 		grid-template-areas:
 			'brand header header header'
-			'icons body nav1 nav2'
+			'icons body contentNavs contentNavs'
 			'footer footer footer footer';
 		gap: 0.5rem;
 	}
 
-	@media screen and (max-width: 935px) {
+	@media screen and (max-width: 870px) {
 		.layout-grid {
 			grid-template-columns: 3rem repeat(2, 1fr) 3rem;
 			grid-template-rows: repeat(3, 3rem) 1fr 3rem;
 			grid-template-areas:
 				'brand header header header'
 				'icons icons icons icons'
-				'nav1 nav1 nav2 nav2'
+				'contentNavs contentNavs contentNavs contentNavs'
 				'body body body body'
 				'footer footer footer footer';
 			gap: 0.2rem;
