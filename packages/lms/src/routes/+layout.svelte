@@ -47,7 +47,7 @@
 	@media screen and (max-width: 870px) {
 		.layout-grid {
 			grid-template-columns: 3rem repeat(2, 1fr) 3rem;
-			grid-template-rows: repeat(3, 3rem) 1fr 3rem;
+			grid-template-rows: repeat(2, 3rem) 6rem 1fr 3rem;
 			grid-template-areas:
 				'brand header header header'
 				'icons icons icons icons'

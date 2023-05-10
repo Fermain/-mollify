@@ -137,7 +137,7 @@
 
 					button {
 						padding: 0;
-						height: 100%;
+						height: 2rem;
 					}
 				}
 
@@ -156,6 +156,12 @@
 					flex: 0 0 20%;
 				}
 			}
+		}
+	}
+
+	@media (max-width: 870px) {
+		.inner-wrapper {
+			overflow-y: scroll;
 		}
 	}
 </style>
