@@ -1,5 +1,4 @@
 <script lang="ts">
-	import DiffDemo from '$lib/components/DiffDemo.svelte';
 	import EditorDemo from '$lib/components/EditorDemo.svelte';
 	import EasyMDEDemo from '$lib/components/EasyMDEDemo.svelte';
 	import InkMDEDemo from '$lib/components/InkMDEDemo.svelte';
