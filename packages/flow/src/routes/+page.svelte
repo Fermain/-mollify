@@ -6,8 +6,6 @@
 	import SimpleMDEDemo from '$lib/components/SimpleMDEDemo.svelte';
 </script>
 
-<!-- <DiffDemo /> -->
-
 <div class="container">
 	<div class="wrapper">
 		<h2>Easy mde</h2>
