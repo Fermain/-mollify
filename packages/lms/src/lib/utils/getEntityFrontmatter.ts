@@ -20,7 +20,7 @@ export function getEntityFrontmatter(entityPath: string, textBody = false): Enti
 		content: contentString
 	};
 
-	if (textBody) {
+	if (!textBody) {
 		delete Entity.content;
 	}
 

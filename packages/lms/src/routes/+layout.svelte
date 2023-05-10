@@ -11,6 +11,19 @@
 	import Header from '$lib/components/header/Header.svelte';
 	import Ego from '$lib/components/ui/Ego.svelte';
 	import Search from '$lib/components/header/Search.svelte';
+	import { onMount } from 'svelte';
+
+	onMount(async () => {
+		const response = await fetch('/api/getCurrentPage', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ url: '/content/Hackademic' })
+		});
+		const data = await response.json();
+		console.log(data);
+	});
 </script>
 
 <div class="layout-grid">
