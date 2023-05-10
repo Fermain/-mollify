@@ -2,7 +2,7 @@ import { generateAudio } from '$lib/utils/generateAudio.js';
 
 export async function POST({ request }): Promise<object> {
 	console.log(request);
-	const { text } = await request.body.json();
+	const { text } = await request.json();
 
 	try {
 		// Convert text to audio using ElevenLabs API
