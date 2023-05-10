@@ -1,3 +1,5 @@
+import { ELEVENLABS_API_KEY } from "$env/static/private";
+
 export async function generateAudio(content: string) {
 	const VOICE_ID = '21m00Tcm4TlvDq8ikWAM';
 	try {
@@ -6,7 +8,7 @@ export async function generateAudio(content: string) {
 			headers: {
 				accept: 'audio/mpeg',
 				'content-type': 'application/json',
-				'xi-api-key': ''
+				'xi-api-key': ELEVENLABS_API_KEY
 			},
 			body: content
 		});
