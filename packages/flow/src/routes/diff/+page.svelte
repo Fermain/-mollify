@@ -2,6 +2,7 @@
 	import DiffDemo from '$lib/components/diff/DiffDemo.svelte';
 	import JsdiffDemo from '$lib/components/diff/jsdiffDemo.svelte';
 	import SimpleTextDiffDemo from '$lib/components/diff/SimpleTextDiffDemo.svelte';
+	import PrettyDiffDemo from '$lib/components/diff/PrettyDiffDemo.svelte';
 </script>
 
 <div class="container">
@@ -18,6 +19,11 @@
 	<div class="wrapper">
 		<h2>SimpleTextDiff</h2>
 		<SimpleTextDiffDemo />
+	</div>
+
+	<div class="wrapper">
+		<h2>PrettyDiffDemo</h2>
+		<PrettyDiffDemo />
 	</div>
 </div>
 

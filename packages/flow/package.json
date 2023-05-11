@@ -60,6 +60,8 @@
 	"types": "./dist/index.d.ts",
 	"type": "module",
 	"dependencies": {
+		"ansi-to-html": "^0.7.2",
+		"prettydiff": "^101.2.6",
 		"simple-text-diff": "^1.7.0"
 	}
 }
