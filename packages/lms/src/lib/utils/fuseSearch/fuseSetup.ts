@@ -62,13 +62,13 @@ export async function search(
 	if (filters.exclusions?.length > 0) {
 		filterExclusions = reducedData.filter((item) => {
 			// Check for any excluded words in the title
-			const titleWords = item.title.split(' ');
-			if (titleWords.some((word) => filters.exclusions.includes(word))) {
+			const titleWords = item.title.toLowerCase().split(' ');
+			if (titleWords.some((word) => filters.exclusions.includes(word.toLowerCase()))) {
 				return false;
 			}
 
 			// Check for any excluded tags
-			if (item.tags?.some((tag) => filters.exclusions.includes(tag))) {
+			if (item.tags?.some((tag) => filters.exclusions.includes(tag.toLowerCase()))) {
 				return false;
 			}
 

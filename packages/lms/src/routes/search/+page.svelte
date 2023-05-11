@@ -18,11 +18,15 @@
 	let searchResults: EntityMeta[] = [];
 	let selectedInstitution = 'all';
 	let query = '';
+	let isMatch = false;
 
 	const queryParam = $page.url.searchParams.get('query');
 	if (typeof queryParam === 'string') {
 		query = decodeURIComponent(queryParam);
+		console.log(query);
 	}
+
+	$: queryParam;
 
 	let filter = {
 		exact: searchQueryExact,
@@ -58,8 +62,12 @@
 			searchQuery = processedQuery.query;
 			searchQueryExact = processedQuery.filters.exact;
 			searchTypes = processedQuery.filters.types;
-			selectedInstitution =
-				processedQuery.filters.institution !== '' ? processedQuery.filters.institution : 'all';
+			isMatch = $files.some(
+				(file) => file.title.toLowerCase() === processedQuery.filters.institution.toLowerCase()
+			);
+
+			selectedInstitution = isMatch ? processedQuery.filters.institution : 'all';
+
 			searchExclusions = processedQuery.filters.exclusions.join(' ');
 			updateSearchResults();
 		}
@@ -78,6 +86,7 @@
 				searchQueryExact
 			)
 		});
+		toggleOpen();
 	}
 
 	//kitchen sink
@@ -85,6 +94,7 @@
 	$: query;
 	$: $files;
 	$: filter;
+	$: isMatch;
 
 	// open/close advanced search options
 	let open = true;
@@ -180,6 +190,37 @@
 			<button type="submit" class="search-btn">Search</button>
 		</form>
 	</div>
+	<div>
+		{#if searchQuery.trim() !== ''}
+			<div class="bubble term">
+				<div class="key">Fuzzy:</div>
+				<div>{searchQuery}</div>
+			</div>
+		{/if}
+		{#if searchExclusions.trim() !== ''}
+			<div class="bubble exclusion">
+				<div class="key">Excludes:</div>
+				<div>{searchExclusions}</div>
+			</div>
+		{/if}
+		{#if searchTypes.length > 0}
+			<div class="bubble type">
+				<div class="key">Types:</div>
+				<div>{searchTypes.join(', ')}</div>
+			</div>
+		{/if}
+		{#if selectedInstitution !== 'all'}
+			<div class="bubble institution">
+				<div class="key">Institution:</div>
+				<div>{selectedInstitution}</div>
+			</div>
+		{/if}
+	</div>
+	{#if searchResults.length > 0}
+		<h2>Search Results</h2>
+	{:else}
+		<h2>No Results</h2>
+	{/if}
 	<div class="results-container">
 		{#if searchResults}
 			{#each searchResults as result}
@@ -195,6 +236,35 @@
 </section>
 
 <style lang="scss">
+	.term {
+		background-color: rgb(114, 223, 181);
+	}
+
+	.exclusion {
+		background-color: rgb(216, 122, 127);
+	}
+
+	.type {
+		background-color: rgb(139, 139, 206);
+	}
+
+	.institution {
+		background-color: rgb(202, 201, 152);
+	}
+
+	.bubble {
+		display: inline-block;
+		padding: 8px 10px;
+		margin: 4px;
+		border-radius: 16px;
+		color: black;
+		font-weight: 600;
+	}
+	.key {
+		text-align: center;
+		margin-bottom: 8px;
+		font-weight: 500;
+	}
 	.search-wrapper {
 		display: flex;
 		flex-direction: column;
