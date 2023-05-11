@@ -1,9 +1,15 @@
 <script lang="ts">
+	import type { EntityMeta } from '@mollify/types';
 	import { slide } from 'svelte/transition';
-	export let data: Record<string, any> = {};
-	let open = null;
+	export let data = new Array<{
+		title: string;
+		browserPath: string;
+		children: EntityMeta[];
+		foldername: string;
+	}>;
+	let open: string | null = null;
 
-	function toggleOpen(title) {
+	function toggleOpen(title: string) {
 		open = open === title ? null : title;
 	}
 
@@ -12,7 +18,7 @@
 </script>
 
 {#each data as { title, browserPath, children, foldername }}
-	<h3 style="padding-left: {indent}rem" on:click={toggleOpen(title)} key={title}>
+	<h3 style="padding-left: {indent}rem" on:click={() => toggleOpen(title)}>
 		{title}
 	</h3>
 	{#if open === title}
