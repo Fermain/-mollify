@@ -1,13 +1,17 @@
 import fs from 'fs';
 import path from 'path';
 import type { EntityMeta } from '@mollify/types';
-import getEntityMeta from './getEntity';
+import getEntityMeta from './getEntityMeta';
 
 export default function getEntityChildren(entityPath: string): EntityMeta[] {
-  const fullPath = path.resolve(entityPath);
+  let fullPath = path.resolve(entityPath);
 
-  if (!fs.existsSync(fullPath) || !fs.lstatSync(fullPath).isDirectory()) {
-    throw new Error(`Path does not exist or is not a directory: ${fullPath}`);
+  if (!fs.existsSync(fullPath)) {
+    throw new Error(`Path does not exist`);
+  }
+
+  if (!fs.lstatSync(fullPath).isDirectory()) {
+    fullPath = path.dirname(fullPath);
   }
 
   const childPaths = fs.readdirSync(fullPath);
