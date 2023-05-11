@@ -4,34 +4,19 @@
   
 	export let img: string = sendChat;
   
-	let textarea: HTMLTextAreaElement;
 
-  const dispatch = createEventDispatcher();
-
-  function onInput(event: Event) {
-    const textarea = event.target as HTMLTextAreaElement;
-
-		//sets initial height to prevent expanding when typing starts
-		textarea.style.height = '20px';
-
-		//adjusts height as needed until reaching max-height specified in css class
-		textarea.style.height = `${textarea.scrollHeight}px`;
-  }
-
-  function onSubmit(event: Event) {
-    const form = event.target as HTMLFormElement;
-    const textarea = form.querySelector("textarea")!;
-    const message = textarea.value.trim();
-    dispatch("user", message);
-  }
+	let query: string;
+	const dispatch = createEventDispatcher();
+	function handleSubmit() {
+		dispatch('userSubmit', query);
+	}
 	
 </script>
 
-<form on:submit|preventDefault={onSubmit}>
-  <textarea on:input={onInput} cols="30" rows="10" bind:this={textarea}></textarea>
-  <button><img src={img} alt="send message"/></button>
+<form on:submit|preventDefault={() => handleSubmit()}>
+	<textarea bind:value={query} />
+	<button type="submit"> Send </button>
 </form>
-
 <style>
 
 	form {

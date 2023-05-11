@@ -1,3 +1,7 @@
+<!--
+  THIS IS NOT IN USE RIGHT NOW
+-->
+
 <script lang="ts">
 import Logo from './MollyIcon.svelte';
 import closeButton from './icons/angle-small-down.svg'
@@ -18,13 +22,19 @@ function onClick() {
   </div>
   <button on:click={onClick}><img src={closeButton} alt="close chat"></button>
 </div>
+
+
+
+
 <style>
+
 .container {
-  height: 50px;
-  width: 100%; 
  display: flex; 
  justify-content: space-between;
  align-content: center;
+ background-color: #323d47;
+ margin: 0px;
+ padding: 10px;
 }
 
 .assistant-molly{
