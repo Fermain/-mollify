@@ -1,16 +1,19 @@
 <script lang="ts">
 	import type { EntityMeta } from '@mollify/types';
 	import { slide } from 'svelte/transition';
-	export let data = new Array<{
-		title: string;
-		browserPath: string;
-		children: EntityMeta[];
-		foldername: string;
-	}>;
+	import type { EntityMeta } from '@mollify/types';
+
+	export let data = [] as EntityMeta[];
 	let open: string | null = null;
 
-	function toggleOpen(title: string) {
+	function toggleOpen(title: string): void {
 		open = open === title ? null : title;
+	}
+
+	function handleKeydown(event: KeyboardEvent, title: string): void {
+		if (event.key === 'Enter' || event.key === ' ') {
+			toggleOpen(title);
+		}
 	}
 
 	export let indent = 0.125;
@@ -18,7 +21,13 @@
 </script>
 
 {#each data as { title, browserPath, children, foldername }}
-	<h3 style="padding-left: {indent}rem" on:click={() => toggleOpen(title)}>
+	<h3
+		style="padding-left: {indent}rem"
+		on:click={() => toggleOpen(title)}
+		on:keydown={(event) => handleKeydown(event, title)}
+		id={title}
+		tabindex="0"
+	>
 		{title}
 	</h3>
 	{#if open === title}
@@ -47,7 +56,7 @@
 
 <style>
 	h3 {
-		font-weight: 600rem;
+		font-weight: 500;
 		background-color: var(--primary);
 		color: var(--text-secondary);
 		padding: var(--spacing-xxs);
@@ -60,7 +69,7 @@
 	}
 	a {
 		font-size: 1rem;
-		font-weight: 600rem;
+		font-weight: 500;
 		color: var(--text-primary);
 		background-color: var(--secondary);
 		text-decoration: none;

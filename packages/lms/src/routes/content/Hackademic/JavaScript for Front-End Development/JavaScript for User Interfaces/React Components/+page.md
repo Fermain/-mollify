@@ -2,7 +2,7 @@
 title: React Components
 slug: react-components
 summary: Learn how to create React components with JavaScript and JSX, and manage state with React. Build reusable and scalable user interfaces with React.
-dependency: AJAX and APIs
+previous: AJAX and APIs
 src:
 type: modules
 tags:

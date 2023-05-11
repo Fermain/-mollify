@@ -2,7 +2,7 @@
 title: The Document Object Model (DOM)
 slug: the-document-object-model-dom
 summary: Learn how to manipulate the Document Object Model (DOM) with JavaScript, including creating and modifying HTML elements. Build interactive web pages with JavaScript.
-dependency: Functions and Control Structures
+previous: Functions and Control Structures
 src:
 type: module
 tags:

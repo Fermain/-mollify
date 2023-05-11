@@ -4,23 +4,11 @@
 	import { getCurrent } from '$lib/utils/getCurrent';
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
-
-	interface Frontmatter {
-		type?: 'Course' | 'Module' | 'Lesson' | 'Institute' | 'Programme';
-		// Add other properties as needed, e.g., title, date, etc.
-		title: string;
-	}
-
-	interface ContentObject {
-		frontmatter?: Frontmatter;
-		// Add other properties as needed, e.g., content, slug, etc.
-	}
-
-	let institutes: [] | null = [];
-	let current: ContentObject = {};
+	import type { EntityMeta } from '@mollify/types';
+	let institutes: EntityMeta[] | null = [];
+	let current: EntityMeta = {} as EntityMeta;
 	let isProgramme = false;
 	let pathArray: string[];
-	let currentPath: string;
 
 	if (browser) {
 		onMount(() => {
@@ -36,10 +24,10 @@
 		const path = browser ? window.location.pathname.replaceAll(`%20`, ' ') : '';
 		const objectPath = path.replace('/content/', '');
 		pathArray = objectPath.split('/');
-		currentPath = pathArray[pathArray.length - 1];
-		current = getCurrent(institutes, pathArray);
+		let currentPath = pathArray[pathArray.length - 1];
+		current = getCurrent(institutes || [], pathArray) || ({} as EntityMeta);
 
-		if (current?.type === 'institute' || current?.type === 'programme') {
+		if (current?.type === 'institution' || current?.type === 'programme') {
 			isProgramme = true;
 		} else {
 			isProgramme = false;
@@ -52,7 +40,7 @@
 	<section>
 		<h2>
 			{current?.title}
-			{current?.type === 'institute' ? 'Programmes' : 'Courses'}
+			{current?.type === 'institution' ? 'Programmes' : 'Courses'}
 		</h2>
 		<div class="inst-grid">
 			{#each current.children as child}

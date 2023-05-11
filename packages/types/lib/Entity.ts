@@ -34,6 +34,8 @@ export enum EntityType {
 export interface EntityBase {
   type: EntityType;
   title: string;
+  url?: string;
+  summary?: string;
   tags: Array<string>;
   previous?: string;
   [key: string]: unknown;
@@ -43,6 +45,7 @@ export interface EntityBase {
 // These represent dynamic values that must come from disk
 export interface EntityMeta extends EntityBase {
   slug: string;
+  browserPath?: string;
   children: Array<EntityMeta>;
   address: string;
 }

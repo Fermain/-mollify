@@ -1,5 +1,6 @@
 <script lang="ts">
 	import '../lib/styles/styles.scss';
+	import callouts from "remark-emoji-callout";
 	import Main from '$lib/components/content/Main.svelte';
 	import Footer from '$lib/components/footer/Footer.svelte';
 	import Logo from '$lib/components/header/Logo.svelte';

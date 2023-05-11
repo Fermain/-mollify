@@ -6,11 +6,12 @@
 	import { page } from '$app/stores';
 	import RecursiveNav from './RecursiveNav.svelte';
 	import CourseNav from './CourseNav.svelte';
+	import type { EntityMeta } from '@mollify/types';
 
-	let institutes: [] | null = [];
-	let current: ContentObject = {};
+	let institutes: EntityMeta[] | null = [];
+	let current: EntityMeta | undefined;
 	let isCourse = false;
-	let pathArray: string[];
+	let pathArray: string[] = [];
 	let currentPath: string;
 
 	let windowWidth = browser ? window.innerWidth : null;
@@ -38,9 +39,10 @@
 	}
 
 	$: {
-		institutes = $files;
-		current = getCurrent(institutes, pathArray);
-
+		if ($files) {
+			institutes = $files;
+			current = getCurrent(institutes, pathArray);
+		}
 		page.subscribe((data) => {
 			updatePath();
 		});
