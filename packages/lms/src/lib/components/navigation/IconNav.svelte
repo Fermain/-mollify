@@ -6,10 +6,6 @@
 		<i class="icon-f">home</i>
 		<i class="icon-f">bookmark</i>
 		<i class="icon-f">bookmark_add</i>
-		<i class="icon-f">home</i>
-		<i class="icon-f">home</i>
-		<i class="icon-f">home</i>
-		<i class="icon-f">home</i>
 	</nav>
 </div>
 
