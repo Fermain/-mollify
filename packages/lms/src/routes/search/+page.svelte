@@ -5,9 +5,12 @@
 	import { getSearchResults } from '$lib/utils/fuseSearch/getSearchResults';
 	import type { EntityMeta } from '@mollify/types';
 	import { slide } from 'svelte/transition';
+	import { generateRawSearchQuery } from '$lib/utils/fuseSearch/generateRawSearchQuery';
+	import { reverseRawSearchQuery } from '$lib/utils/fuseSearch/generateSearchFilterObject';
 
 	let searchQuery = '';
 	let rawSearchQuery = '';
+	let reversedSearchQuery = {};
 	let searchQueryExact = false;
 	let searchTypes: String[] = [];
 	let searchExclusions: String = '';
@@ -15,31 +18,42 @@
 	let selectedInstitution = 'all';
 	let open = true;
 
-	function generateRawSearchQuery() {
-		rawSearchQuery = searchQuery;
-		if (searchExclusions.split(' ').length > 0) {
-			searchExclusions.split(' ').forEach((exclusion) => {
-				rawSearchQuery += ` !${exclusion}`;
-			});
-		}
+	let filter = {
+		exact: searchQueryExact,
+		type: searchTypes,
+		institution: selectedInstitution,
+		exclusions: searchExclusions.trim() !== '' ? searchExclusions.split(' ') : [],
+		programme: 'all'
+	};
 
-		if (searchQueryExact) {
-			rawSearchQuery = `"${rawSearchQuery}"`;
-		}
+	function updateFilterUI(filter) {
+		searchQuery = filter.query;
+		searchQueryExact = filter.exact;
+		searchTypes = filter.type;
+		console.log(filter);
 
-		if (searchTypes.length > 0) {
-			rawSearchQuery += ` type:(${searchTypes.join(',')})`;
-		}
-
-		console.log(rawSearchQuery);
-		return rawSearchQuery;
+		searchExclusions = filter.exclusions;
+		selectedInstitution = filter.institution === '' ? 'all' : filter.institution;
 	}
 
 	const query = $page.url.searchParams.get('query');
+	console.log(query);
 	onMount(() => {
 		if (query) {
 			rawSearchQuery = query;
-			searchQuery = query;
+			let processedQuery = reverseRawSearchQuery(rawSearchQuery);
+			rawSearchQuery = generateRawSearchQuery(
+				searchQuery,
+				searchExclusions,
+				searchTypes,
+				selectedInstitution,
+				searchQueryExact
+			);
+			reversedSearchQuery = reverseRawSearchQuery(rawSearchQuery);
+			console.log('reversed:', reversedSearchQuery);
+			console.log('raw:', rawSearchQuery);
+			console.log('processed:', processedQuery);
+			updateFilterUI(reversedSearchQuery);
 
 			updateSearchResults();
 		}
@@ -48,30 +62,35 @@
 	function handleSubmit(event: { preventDefault: () => void }) {
 		event.preventDefault();
 		updateSearchResults();
-		generateRawSearchQuery();
+		generateRawSearchQuery(
+			searchQuery,
+			searchExclusions,
+			searchTypes,
+			selectedInstitution,
+			searchQueryExact
+		);
 	}
 
 	async function updateSearchResults() {
-		const filters = {
+		filter = {
 			exact: searchQueryExact,
 			type: searchTypes,
 			institution: selectedInstitution,
 			exclusions: searchExclusions.trim() !== '' ? searchExclusions.split(' ') : [],
 			programme: 'all'
 		};
-		console.log(filters);
-		searchResults = await getSearchResults(searchQuery, filters);
+		searchResults = await getSearchResults(searchQuery, filter);
 	}
 
 	function toggleOpen(): void {
 		open = !open;
 	}
-
+	$: $page.url.searchParams.get('query');
+	$: rawSearchQuery;
 	$: selectedInstitution;
 	$: searchTypes;
 	$: searchResults;
 	$: query;
-	$: $page.url.searchParams.get('query');
 	$: $files;
 </script>
 
