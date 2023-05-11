@@ -7,6 +7,7 @@
 	import { slide } from 'svelte/transition';
 	import { generateRawSearchQuery } from '$lib/utils/fuseSearch/generateRawSearchQuery';
 	import { reverseRawSearchQuery } from '$lib/utils/fuseSearch/generateSearchFilterObject';
+	import { updateQueryString } from '$lib/utils/fuseSearch/updateQueryString';
 
 	let searchQuery = '';
 	let rawSearchQuery = '';
@@ -16,7 +17,12 @@
 	let searchExclusions: String = '';
 	let searchResults: EntityMeta[] = [];
 	let selectedInstitution = 'all';
-	let open = true;
+	let query = '';
+
+	const queryParam = $page.url.searchParams.get('query');
+	if (typeof queryParam === 'string') {
+		query = decodeURIComponent(queryParam);
+	}
 
 	let filter = {
 		exact: searchQueryExact,
@@ -25,51 +31,6 @@
 		exclusions: searchExclusions.trim() !== '' ? searchExclusions.split(' ') : [],
 		programme: 'all'
 	};
-
-	function updateFilterUI(filter) {
-		searchQuery = filter.query;
-		searchQueryExact = filter.exact;
-		searchTypes = filter.type;
-		console.log(filter);
-
-		searchExclusions = filter.exclusions;
-		selectedInstitution = filter.institution === '' ? 'all' : filter.institution;
-	}
-
-	const query = $page.url.searchParams.get('query');
-	console.log(query);
-	onMount(() => {
-		if (query) {
-			rawSearchQuery = query;
-			let processedQuery = reverseRawSearchQuery(rawSearchQuery);
-			rawSearchQuery = generateRawSearchQuery(
-				searchQuery,
-				searchExclusions,
-				searchTypes,
-				selectedInstitution,
-				searchQueryExact
-			);
-			reversedSearchQuery = reverseRawSearchQuery(rawSearchQuery);
-			console.log('reversed:', reversedSearchQuery);
-			console.log('raw:', rawSearchQuery);
-			console.log('processed:', processedQuery);
-			updateFilterUI(reversedSearchQuery);
-
-			updateSearchResults();
-		}
-	});
-
-	function handleSubmit(event: { preventDefault: () => void }) {
-		event.preventDefault();
-		updateSearchResults();
-		generateRawSearchQuery(
-			searchQuery,
-			searchExclusions,
-			searchTypes,
-			selectedInstitution,
-			searchQueryExact
-		);
-	}
 
 	async function updateSearchResults() {
 		filter = {
@@ -82,16 +43,54 @@
 		searchResults = await getSearchResults(searchQuery, filter);
 	}
 
-	function toggleOpen(): void {
-		open = !open;
+	onMount(async () => {
+		if (query) {
+			rawSearchQuery = query;
+			let processedQuery = reverseRawSearchQuery(rawSearchQuery);
+			rawSearchQuery = generateRawSearchQuery(
+				searchQuery,
+				searchExclusions,
+				searchTypes,
+				selectedInstitution,
+				searchQueryExact
+			);
+			reversedSearchQuery = reverseRawSearchQuery(rawSearchQuery);
+			searchQuery = processedQuery.query;
+			searchQueryExact = processedQuery.filters.exact;
+			searchTypes = processedQuery.filters.types;
+			selectedInstitution =
+				processedQuery.filters.institution !== '' ? processedQuery.filters.institution : 'all';
+			searchExclusions = processedQuery.filters.exclusions.join(' ');
+			updateSearchResults();
+		}
+	});
+
+	// update search results on submit
+	function handleSubmit(event: { preventDefault: () => void }) {
+		event.preventDefault();
+		updateSearchResults();
+		updateQueryString({
+			query: generateRawSearchQuery(
+				searchQuery,
+				searchExclusions,
+				searchTypes,
+				selectedInstitution,
+				searchQueryExact
+			)
+		});
 	}
-	$: $page.url.searchParams.get('query');
-	$: rawSearchQuery;
-	$: selectedInstitution;
-	$: searchTypes;
+
+	//kitchen sink
 	$: searchResults;
 	$: query;
 	$: $files;
+	$: filter;
+
+	// open/close advanced search options
+	let open = true;
+	function toggleOpen(): void {
+		open = !open;
+	}
 </script>
 
 <section>
