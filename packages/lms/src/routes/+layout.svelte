@@ -41,7 +41,7 @@
 			'brand header header header'
 			'icons body contentNavs contentNavs'
 			'footer footer footer footer';
-		gap: 0.5rem;
+		gap: 1px;
 	}
 
 	@media screen and (max-width: 870px) {
@@ -54,7 +54,6 @@
 				'contentNavs contentNavs contentNavs contentNavs'
 				'body body body body'
 				'footer footer footer footer';
-			gap: 0.2rem;
 		}
 	}
 </style>
