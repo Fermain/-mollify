@@ -42,10 +42,8 @@
 					body: JSON.stringify({ text: content, slug })
 				});
 				const data = await response.json();
-				console.log(data);
 				
 				audio.set(data);
-				console.log(data);
 				audioSrc = data.url;
 			})();
 		}
