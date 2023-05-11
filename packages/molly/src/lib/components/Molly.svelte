@@ -3,6 +3,7 @@
 	import type { ChatCompletionRequestMessage } from 'openai';
 	import { SSE } from 'sse.js';
 	import MollyButton from './MollyButton.svelte';
+	import MollyForm from './MollyForm.svelte';
 
 	let query: string = '';
 	let answer: string = '';
@@ -80,20 +81,14 @@
 			</div>
 			<div bind:this={scrollToDiv} />
 		</div>
-		<form on:submit|preventDefault={() => handleSubmit()}>
-			<input type="text" bind:value={query} />
-			<button type="submit"> Send </button>
-		</form>
+		<MollyForm
+			on:userSubmit={(e) => {
+				query = e.detail;
+				handleSubmit();
+			}}
+		/>
 	</div>
 </MollyButton>
 
-
 <style>
-	form {
-		display: flex;
-	}
-
-	input {
-		flex: 1;
-	}
 </style>
