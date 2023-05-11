@@ -1,17 +1,23 @@
 <script lang="ts">
 	import DiffDemo from '$lib/components/diff/DiffDemo.svelte';
 	import JsdiffDemo from '$lib/components/diff/jsdiffDemo.svelte';
+	import SimpleTextDiffDemo from '$lib/components/diff/SimpleTextDiffDemo.svelte';
 </script>
 
 <div class="container">
 	<div class="wrapper">
-		<h2>DiffDemo</h2>
+		<h2>Diff</h2>
 		<DiffDemo />
 	</div>
 
 	<div class="wrapper">
-		<h2>JsdiffDemo</h2>
+		<h2>jsdiff</h2>
 		<JsdiffDemo />
+	</div>
+
+	<div class="wrapper">
+		<h2>SimpleTextDiff</h2>
+		<SimpleTextDiffDemo />
 	</div>
 </div>
 

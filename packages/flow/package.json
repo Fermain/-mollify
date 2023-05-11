@@ -58,5 +58,8 @@
 	},
 	"svelte": "./dist/index.js",
 	"types": "./dist/index.d.ts",
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"simple-text-diff": "^1.7.0"
+	}
 }
