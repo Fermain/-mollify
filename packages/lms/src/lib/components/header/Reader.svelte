@@ -4,7 +4,7 @@
 	import { page } from '$app/stores';
 	import { audio } from '$lib/stores/audio';
 
-	let audioSrc;
+	let audioSrc: string | null = null;
 	let path = '';
 	let content = '';
 	let slug = '';
@@ -42,6 +42,8 @@
 					body: JSON.stringify({ text: content, slug })
 				});
 				const data = await response.json();
+				console.log(data);
+				
 				audio.set(data);
 				console.log(data);
 				audioSrc = data.url;
