@@ -1,18 +1,17 @@
-import { generateAudio } from '$lib/utils/generateAudio.js';
+import tts from '$lib/tts/index.js';
+import { error } from '@sveltejs/kit';
+import type { RequestHandler } from './$types';
 
-export async function POST({ request }): Promise<object> {
+export const POST: RequestHandler = async ({ request }) => {
 	const { text, slug } = await request.json();
 
 	try {
 		// Convert text to audio using ElevenLabs API
-		const audio = await generateAudio(text, slug);
+		const audio = await tts.generateAudio(text, slug);		
 
 		return new Response(audio);
-	} catch (error) {
-		console.error('Error converting text to speech:', error);
-
-		return new Response(JSON.stringify({ error: 'Failed to convert text to speech' }), {
-			status: 500
-		});
+	} catch (err) {
+		console.error('Error converting text to speech:', err);
+		throw error(500, String(err))
 	}
 }
