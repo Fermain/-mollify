@@ -2,6 +2,7 @@
 	import MollyMessage from '$lib/components/MollyMessage.svelte';
 	import type { ChatCompletionRequestMessage } from 'openai';
 	import { SSE } from 'sse.js';
+	import MollyButton from './MollyButton.svelte';
 
 	let query: string = '';
 	let answer: string = '';
@@ -63,26 +64,29 @@
 	}
 </script>
 
-<div class="molly">
-	<div>
+<MollyButton>
+	<div class="molly">
 		<div>
-			{#each chatMessages as message}
-				<MollyMessage type={message.role} message={message.content} />
-			{/each}
-			{#if answer}
-				<MollyMessage type="assistant" message={answer} />
-			{/if}
-			{#if loading}
-				<MollyMessage type="assistant" message="Thinking.." />
-			{/if}
+			<div>
+				{#each chatMessages as message}
+					<MollyMessage type={message.role} message={message.content} />
+				{/each}
+				{#if answer}
+					<MollyMessage type="assistant" message={answer} />
+				{/if}
+				{#if loading}
+					<MollyMessage type="assistant" message="Thinking.." />
+				{/if}
+			</div>
+			<div bind:this={scrollToDiv} />
 		</div>
-		<div bind:this={scrollToDiv} />
+		<form on:submit|preventDefault={() => handleSubmit()}>
+			<input type="text" bind:value={query} />
+			<button type="submit"> Send </button>
+		</form>
 	</div>
-	<form on:submit|preventDefault={() => handleSubmit()}>
-		<input type="text" bind:value={query} />
-		<button type="submit"> Send </button>
-	</form>
-</div>
+</MollyButton>
+
 
 <style>
 	form {

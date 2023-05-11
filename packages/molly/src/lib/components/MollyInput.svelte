@@ -1,8 +1,10 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
   import sendChat from './icons/paper-plane.svg'
-  export let img: string = sendChat;
-  let textarea: HTMLTextAreaElement;
+  
+	export let img: string = sendChat;
+  
+	let textarea: HTMLTextAreaElement;
 
   const dispatch = createEventDispatcher();
 
@@ -22,6 +24,7 @@
     const message = textarea.value.trim();
     dispatch("user", message);
   }
+	
 </script>
 
 <form on:submit|preventDefault={onSubmit}>
