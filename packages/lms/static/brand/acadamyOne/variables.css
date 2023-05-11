@@ -1,4 +1,11 @@
 :root {
   --primary: #088B8C;
   --secondary: #69467D;
+  --background-primary: #f2f2f2;
+	--background-secondary: #7f8c8d;
+	--background-highlight: #fff;
+	--background-input: #0fcece;
+	--text-primary: #333;
+	--text-secondary: #fff;
+	--text-input: #b5f9e8;
 }
