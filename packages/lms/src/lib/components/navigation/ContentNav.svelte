@@ -133,7 +133,7 @@
 
 				.nav1,
 				.nav2 {
-					flex: 0 0 30%;
+					flex: 1 1 auto;
 
 					button {
 						padding: 0;
@@ -143,17 +143,6 @@
 
 				.wrapper {
 					height: 100%;
-				}
-			}
-		}
-	}
-
-	@container (min-width: 600px) {
-		.outer-wrapper {
-			.inner-wrapper {
-				.nav1,
-				.nav2 {
-					flex: 0 0 20%;
 				}
 			}
 		}
