@@ -4,6 +4,8 @@ import * as path from 'path';
 import moveEntity from '../../actions/moveEntity';
 import { EntityType } from '@mollify/types';
 import { ENTITY_HIERARCHY } from '../../constants';
+import { validParents } from '../../utilities/validParents';
+import listEntities from '../../actions/listEntities';
 
 async function moveEntityPrompt(entityType?: EntityType, entityName?: string) {
   const { entityTypeToMove } = entityType
@@ -15,18 +17,20 @@ async function moveEntityPrompt(entityType?: EntityType, entityName?: string) {
         choices: ENTITY_HIERARCHY.map((entity) => entity.name),
       });
 
-  const entityTypeHierarchy = ENTITY_HIERARCHY.find(
-    (entity) => entity.name === entityTypeToMove,
-  );
+  const parentTypes = validParents(entityTypeToMove)
+
+  const choices = await listEntities(entityTypeToMove)
+
+    console.log(parentTypes, choices);
+    
+
   const { entityToMove } = entityName
     ? { entityToMove: entityName }
     : await prompt<{ entityToMove: string }>({
         type: 'select',
         name: 'entityToMove',
         message: 'Select the entity to move:',
-        choices: entityTypeHierarchy
-          ? entityTypeHierarchy.children.map((entity) => path.dirname(entity))
-          : [],
+        choices: choices.map((entity) => entity.title),
       });
 
   const destinationTypeHierarchy = ENTITY_HIERARCHY.find(
