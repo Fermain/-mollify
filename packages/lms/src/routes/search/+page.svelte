@@ -19,6 +19,15 @@
 	let selectedInstitution = 'all';
 	let query = '';
 	let isMatch = false;
+	let processedQuery = {
+		query: '',
+		filters: {
+			exact: false,
+			types: [],
+			institution: '',
+			exclusions: []
+		}
+	};
 
 	const queryParam = $page.url.searchParams.get('query');
 	if (typeof queryParam === 'string') {
@@ -48,9 +57,15 @@
 	}
 
 	onMount(async () => {
+		if ($files === null) {
+			const response = await fetch('/api/parseMarkdown');
+			const data = await response.json();
+			files.set(data);
+		}
+
 		if (query) {
 			rawSearchQuery = query;
-			let processedQuery = reverseRawSearchQuery(rawSearchQuery);
+			processedQuery = reverseRawSearchQuery(rawSearchQuery);
 			rawSearchQuery = generateRawSearchQuery(
 				searchQuery,
 				searchExclusions,
@@ -65,11 +80,9 @@
 			isMatch = $files.some(
 				(file) => file.title.toLowerCase() === processedQuery.filters.institution.toLowerCase()
 			);
-
 			selectedInstitution = isMatch ? processedQuery.filters.institution : 'all';
-
 			searchExclusions = processedQuery.filters.exclusions.join(' ');
-			updateSearchResults();
+			await updateSearchResults();
 		}
 	});
 
@@ -95,6 +108,7 @@
 	$: $files;
 	$: filter;
 	$: isMatch;
+	$: selectedInstitution = isMatch ? processedQuery.filters.institution : 'all';
 
 	// open/close advanced search options
 	let open = true;
