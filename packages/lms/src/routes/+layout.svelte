@@ -13,7 +13,9 @@
 	import Ego from '$lib/components/ui/Ego.svelte';
 	import Search from '$lib/components/header/Search.svelte';
 
-  import '../../static/brand/acadamyOne/variables.css'
+	import OptionalLogo from '$lib/components/header/OptionalLogo.svelte';
+
+  import '../../static/brand/variables.css'
 
 </script>
 
