@@ -21,6 +21,10 @@ export function reverseRawSearchQuery(rawSearchQuery: string) {
 		rawSearchQuery = rawSearchQuery.replace(/institution:"([^"]*)"/, '');
 	}
 
+	if (filters.institution === '') {
+		filters.institution = 'all';
+	}
+
 	// Remove quotes if they exist
 	if (rawSearchQuery[0] === '"' && rawSearchQuery[rawSearchQuery.length - 1] === '"') {
 		rawSearchQuery = rawSearchQuery.slice(1, -1);

@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { getSearchResults } from '$lib/utils/fuseSearch/getSearchResults';
-
 	import SearchItem from '../search/SearchItem.svelte';
+	import { reverseRawSearchQuery } from '$lib/utils/fuseSearch/generateSearchFilterObject';
 
 	let searchQuery = '';
 	let searchResults: String[] = [];
@@ -12,6 +12,7 @@
 		event.preventDefault();
 		console.log(event);
 		goto(`/search?query=${encodeURIComponent(searchQuery)}`);
+		searchQuery = '';
 	}
 
 	const debounceSearch = async () => {
@@ -20,7 +21,8 @@
 			await new Promise((resolve) => {
 				timer = setTimeout(async () => {
 					try {
-						searchResults = await getSearchResults(searchQuery);
+						const { query, filters } = await reverseRawSearchQuery(searchQuery);
+						searchResults = await getSearchResults(query, filters);
 					} catch (error) {
 						console.log(error);
 					}

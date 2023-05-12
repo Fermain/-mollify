@@ -47,8 +47,8 @@ export async function search(
 	searchQuery = removeStopWords(searchQuery);
 
 	const searchResults = await fuse.search(searchQuery);
-	//filter stuff
 
+	//filter stuff
 	const reducedData = searchResults.reduce((array, item) => {
 		item.item.refIndex = item.refIndex;
 		item.item.score = item.score;
