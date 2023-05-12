@@ -28,7 +28,7 @@ export default async function removeEntity(entity: EntityMeta) {
   if (!(await confirmDeletion(entity.type, fileCount))) return;
 
   try {
-    await fs.remove(entity.address);
+    await fs.remove(path.dirname(entity.address));
     console.log(
       `Successfully removed ${entity.type}${fileCount > 1 ? ' and its child entities' : ''} at ${entityPath}`,
     );

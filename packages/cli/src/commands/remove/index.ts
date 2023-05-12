@@ -28,7 +28,7 @@ async function removeEntityPrompt(entityType?: EntityType, basePath = '') {
 export default new Command('remove')
   .arguments('[entity-type] [basePath]')
   .description('Remove an entity or list all entities')
-  .action(async (entityType?: EntityType, basePath?: string) => {
+  .action(async (entityType?: EntityType, basePath?: string) => {    
     if (entityType && !Object.values(EntityType).includes(entityType)) {
       console.error(`Invalid entity type: ${entityType}`);
       process.exit(1);
