@@ -14,6 +14,7 @@
 		"format": "prettier --plugin-search-dir . --write ."
 	},
 	"devDependencies": {
+		"@mollify/types": "^0.0.1",
 		"@playwright/test": "^1.28.1",
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/kit": "^1.5.0",
@@ -26,14 +27,14 @@
 		"mdsvex": "^0.10.6",
 		"prettier": "^2.8.0",
 		"prettier-plugin-svelte": "^2.8.1",
+		"remark-emoji-callout": "^1.0.0",
 		"sass": "^1.62.0",
 		"svelte": "^3.54.0",
 		"svelte-check": "^3.0.1",
 		"tslib": "^2.4.1",
 		"typescript": "^5.0.0",
 		"vite": "^4.2.0",
-		"vitest": "^0.25.3",
-		"@mollify/types": "^0.0.1"
+		"vitest": "^0.25.3"
 	},
 	"type": "module",
 	"dependencies": {
