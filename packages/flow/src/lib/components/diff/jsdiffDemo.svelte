@@ -80,7 +80,7 @@
 </script>
 
 {#if output}
-	<div class="demo pull-request">
+	<div class="demo">
 		<div>
 			<h3>File name:</h3>
 			<span class="old">{output.oldFileName}</span>
@@ -94,9 +94,9 @@
 					{#each hunk.lines as line}
 						{#if !line.startsWith('\\')}
 							{#if line.startsWith('+')}
-								<span style="background-color: rgba(151, 242, 149, 0.5)">{line}</span>
+								<span class="old-text">{line}</span>
 							{:else}
-								<span style="background-color: rgba(255, 182, 186, 0.5)">{line}</span>
+								<span class="new-text">{line}</span>
 							{/if}
 						{/if}
 					{/each}
@@ -114,6 +114,14 @@
 
 	.old {
 		text-decoration-line: line-through;
+	}
+
+	.old-text {
+		background-color: rgba(151, 242, 149, 0.5);
+	}
+
+	.new-text {
+		background-color: rgba(255, 182, 186, 0.5);
 	}
 
 	.diff-wrapper {

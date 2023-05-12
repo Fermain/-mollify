@@ -16,6 +16,7 @@
 		const options = prettydiff.options;
 		options.source = text1;
 		options.diff = text2;
+		options.diff_view = 'sidebyside';
 		output = prettydiff();
 		output = toHtml.toHtml(output);
 	});
