@@ -1,7 +1,6 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import { sortChildrenByDependency } from './sortChildrenByDependency';
 import type { EntityMeta } from '@mollify/types';
 
 /**
@@ -9,7 +8,7 @@ import type { EntityMeta } from '@mollify/types';
  * @param dir  The directory to parse
  * @returns A nested object containing the parsed markdown files
  */
-export function parseMarkdown(dir: string) {
+export function parseMarkdownSearch(dir: string, content = false) {
 	function walkSync(currentDir: string) {
 		let currentObject = {} as EntityMeta;
 		const children: EntityMeta[] = [];
@@ -42,11 +41,17 @@ export function parseMarkdown(dir: string) {
 					browserPath,
 					children: []
 				};
+
+				if (content) {
+					const { content } = matter(rawContent);
+					const contentString = Array.isArray(content) ? content.join('') : content;
+					currentObject.content = contentString;
+				}
 			}
 		});
 
 		if (children.length > 0 || currentObject.type != 'institution') {
-			currentObject.children = sortChildrenByDependency(children);
+			currentObject.children = children;
 		}
 
 		return currentObject;
