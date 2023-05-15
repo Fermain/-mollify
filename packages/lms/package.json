@@ -1,5 +1,5 @@
 {
-	"name": "lms",
+	"name": "@mollify/lms",
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
@@ -14,6 +14,7 @@
 		"format": "prettier --plugin-search-dir . --write ."
 	},
 	"devDependencies": {
+		"@mollify/types": "^0.0.1",
 		"@playwright/test": "^1.28.1",
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/kit": "^1.5.0",
@@ -22,8 +23,12 @@
 		"eslint": "^8.28.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-svelte3": "^4.0.0",
+		"gray-matter": "^4.0.3",
+		"mdsvex": "^0.10.6",
 		"prettier": "^2.8.0",
 		"prettier-plugin-svelte": "^2.8.1",
+		"remark-emoji-callout": "^1.0.0",
+		"sass": "^1.62.0",
 		"svelte": "^3.54.0",
 		"svelte-check": "^3.0.1",
 		"tslib": "^2.4.1",
@@ -31,5 +36,10 @@
 		"vite": "^4.2.0",
 		"vitest": "^0.25.3"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"fuse.js": "^6.6.2",
+		"graphql": "^16.6.0",
+		"remark-gfm": "^3.0.1"
+	}
 }
