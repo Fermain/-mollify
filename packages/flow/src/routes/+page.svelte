@@ -1,44 +1,6 @@
 <script lang="ts">
-	import EditorDemo from '$lib/components/EditorDemo.svelte';
-	import EasyMDEDemo from '$lib/components/EasyMDEDemo.svelte';
 	import InkMDEDemo from '$lib/components/InkMDEDemo.svelte';
-	import SimpleMDEDemo from '$lib/components/SimpleMDEDemo.svelte';
 </script>
 
-<div class="container">
-	<div class="wrapper">
-		<h2>Easy mde</h2>
-		<EasyMDEDemo />
-	</div>
-
-	<div class="wrapper">
-		<h2>Ink MDE</h2>
-		<InkMDEDemo />
-	</div>
-
-	<div class="wrapper">
-		<h2>TUI Editor</h2>
-		<EditorDemo />
-	</div>
-
-	<div class="wrapper">
-		<h2>Simple mde</h2>
-		<SimpleMDEDemo />
-	</div>
-</div>
-
-<style lang="scss">
-	.container {
-		background-color: #ccc;
-		padding: 1rem 0.5rem;
-	}
-
-	.wrapper {
-		margin: 3rem 0;
-		background-color: #fff;
-		padding: 0.5rem;
-		& h2 {
-			text-align: center;
-		}
-	}
-</style>
+<h1>Ink MDE</h1>
+<InkMDEDemo />
