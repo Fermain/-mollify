@@ -1,18 +1,11 @@
-<div class="ego">
-  <img src="https://i.imgur.com/8Km9tLL.jpg" alt="Profile image" />
-</div>
+<script lang="ts">
+	import { Avatar } from '@skeletonlabs/skeleton';
+</script>
 
-<style>
-  .ego {
-    aspect-ratio: 1;
-    height: 100%;
-    overflow: hidden;
-    padding: 0.25rem;
-  }
-
-  img {
-    max-width: 100%;
-    border-radius: 50%;
-    margin: auto;
-  }
-</style>
+<Avatar
+	src="https://i.imgur.com/8Km9tLL.jpg"
+	width="w-12"
+	rounded="rounded-full"
+	initials="MZ"
+	background="bg-primary-500"
+/>
