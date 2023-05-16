@@ -35,7 +35,7 @@ export async function search(
 	if (filters.types?.length > 0) {
 		dataTypeFilter = flattenedData.filter((item) => filters.types.includes(item.type));
 	}
-	console.log(filters.types);
+
 	//exact search
 	if (filters.exact) {
 		options.threshold = 0;
@@ -76,11 +76,9 @@ export async function search(
 
 	let filterTags = filterExclusions;
 	if (filters.tags?.length > 0) {
-		filterTags = filterExclusions.filter((item) => {
-			if (item.tags.some((tag) => filters.tags.includes(tag.toLowerCase()))) {
-				return true;
-			}
-		});
+		filterTags = filterExclusions.filter((item) =>
+			item.tags?.some((tag) => filters.tags.includes(tag.toLowerCase()))
+		);
 	}
 
 	return filterTags;
