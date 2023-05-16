@@ -17,7 +17,13 @@ const options = {
 
 export async function search(
 	searchQuery: string,
-	filters = { institution: 'all', tags: [], types: [], exact: false, exclusions: [] }
+	filters: {
+		institution?: string;
+		tags: string[];
+		types: string[];
+		exact: boolean;
+		exclusions: string[];
+	} = { institution: 'all', tags: [], types: [], exact: false, exclusions: [] }
 ) {
 	const data = parseMarkdownSearch('src/routes/content', true);
 
@@ -33,7 +39,7 @@ export async function search(
 	//filter type
 	let dataTypeFilter = flattenedData;
 	if (filters.types?.length > 0) {
-		dataTypeFilter = flattenedData.filter((item) => filters.types.includes(item.type));
+		dataTypeFilter = flattenedData.filter((item: FuseItem) => filters.types.includes(item.type));
 	}
 
 	//exact search
@@ -49,7 +55,7 @@ export async function search(
 	const searchResults = await fuse.search(searchQuery);
 
 	//filter stuff
-	const reducedData = searchResults.reduce((array, item) => {
+	const reducedData = searchResults.reduce((array: FuseItem[], item: Fuse.FuseResult<FuseItem>) => {
 		item.item.refIndex = item.refIndex;
 		item.item.score = item.score;
 		delete item.item.content;
@@ -60,14 +66,14 @@ export async function search(
 
 	let filterExclusions = reducedData;
 	if (filters.exclusions?.length > 0) {
-		filterExclusions = reducedData.filter((item) => {
+		filterExclusions = reducedData.filter((item: FuseItem) => {
 			// Check for any excluded words in the title
 			const titleWords = item.title.toLowerCase().split(' ');
-			if (titleWords.some((word) => filters.exclusions.includes(word.toLowerCase()))) {
+			if (titleWords.some((word: string) => filters.exclusions.includes(word.toLowerCase()))) {
 				return false;
 			}
 			// Check for any excluded tags
-			if (item.tags?.some((tag) => filters.exclusions.includes(tag.toLowerCase()))) {
+			if (item.tags?.some((tag: string) => filters.exclusions.includes(tag.toLowerCase()))) {
 				return false;
 			}
 			return true;
@@ -77,7 +83,7 @@ export async function search(
 	let filterTags = filterExclusions;
 	if (filters.tags?.length > 0) {
 		filterTags = filterExclusions.filter((item) =>
-			item.tags?.some((tag) => filters.tags.includes(tag.toLowerCase()))
+			item.tags?.some((tag: string) => filters.tags.includes(tag.toLowerCase()))
 		);
 	}
 

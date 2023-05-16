@@ -1,6 +1,14 @@
+export type FiltersType = {
+	institution: string;
+	types: string[];
+	tags: string[];
+	exact: boolean;
+	exclusions: string[];
+};
+
 export async function getSearchResults(
 	searchQuery: string,
-	filters = { institution: 'all', types: [], tags: [], exact: false, exclusions: [] }
+	filters: FiltersType = { institution: 'all', types: [], tags: [], exact: false, exclusions: [] }
 ) {
 	try {
 		const response = await fetch('/api/search', {

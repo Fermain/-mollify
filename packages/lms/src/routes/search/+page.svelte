@@ -2,12 +2,17 @@
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
 	import { files } from '$lib/stores/files';
-	import { getSearchResults } from '$lib/utils/fuseSearch/getSearchResults';
+	import { getSearchResults, type FiltersType } from '$lib/utils/fuseSearch/getSearchResults';
 	import type { EntityMeta } from '@mollify/types';
 	import { slide } from 'svelte/transition';
 	import { generateRawSearchQuery } from '$lib/utils/fuseSearch/generateRawSearchQuery';
 	import { parseRawSearchQuery } from '$lib/utils/fuseSearch/parseRawSearchQuery';
 	import { updateQueryString } from '$lib/utils/fuseSearch/updateQueryString';
+
+	type QueryType = {
+		query: string;
+		filters: FiltersType;
+	};
 
 	let searchQuery = '';
 	let rawSearchQuery = '';
@@ -21,11 +26,12 @@
 	let selectedInstitution = 'all';
 	let query = '';
 	let isMatch = false;
-	let processedQuery = {
+	let processedQuery: QueryType = {
 		query: '',
 		filters: {
 			exact: false,
 			types: [],
+			tags: [],
 			institution: '',
 			exclusions: []
 		}
@@ -36,11 +42,12 @@
 		query = decodeURIComponent(queryParam);
 	}
 
-	let filter = {
+	let filter: FiltersType = {
 		exact: searchQueryExact,
 		types: searchTypes,
 		institution: selectedInstitution,
-		exclusions: searchExclusions.trim() !== '' ? searchExclusions.split(' ') : []
+		exclusions: searchExclusions.trim() !== '' ? searchExclusions.split(' ') : [],
+		tags: searchTags
 	};
 
 	async function updateSearchResults() {
@@ -49,8 +56,7 @@
 			types: searchTypes,
 			tags: searchTags,
 			institution: selectedInstitution,
-			exclusions: searchExclusions.trim() !== '' ? searchExclusions.split(' ') : [],
-			programme: 'all'
+			exclusions: searchExclusions.trim() !== '' ? searchExclusions.split(' ') : []
 		};
 		searchResults = await getSearchResults(searchQuery, filter);
 	}
@@ -73,7 +79,7 @@
 			searchTags = processedQuery.filters.tags;
 			searchTagsString = searchTags.join(', ');
 			console.log(searchTags);
-			if ($files) {
+			if ($files !== null) {
 				// check if institution exists
 				isMatch = $files.some(
 					(file: EntityMeta) =>
@@ -81,10 +87,13 @@
 				);
 				// if it does, update the value to the correct character case
 				if (isMatch) {
-					processedQuery.filters.institution = $files.find(
+					const fileMatch = $files.find(
 						(file: EntityMeta) =>
 							file.title.toLowerCase() === processedQuery.filters.institution.toLowerCase()
-					).title;
+					);
+					if (fileMatch) {
+						processedQuery.filters.institution = fileMatch.title;
+					}
 				}
 			}
 			selectedInstitution = isMatch ? processedQuery.filters.institution : 'all';
