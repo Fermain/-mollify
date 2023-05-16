@@ -35,13 +35,26 @@
 <style lang="scss">
 	.layout-grid {
 		display: grid;
-		grid-template-columns: 3rem calc(80ch + 2rem) 1fr 1fr;
+		grid-template-columns: 3rem calc(80ch + 2rem) minmax(10rem, 30rem);
 		grid-template-rows: 3rem 1fr 3rem;
 		height: 100vh;
 		grid-template-areas:
 			'brand header header header'
-			'icons body nav1 nav2'
+			'icons body contentNavs contentNavs'
 			'footer footer footer footer';
-		gap: 0.5rem;
+		gap: 1px;
+	}
+
+	@media screen and (max-width: 870px) {
+		.layout-grid {
+			grid-template-columns: 3rem repeat(2, 1fr) 3rem;
+			grid-template-rows: repeat(2, 3rem) 6rem 1fr 3rem;
+			grid-template-areas:
+				'brand header header header'
+				'icons icons icons icons'
+				'contentNavs contentNavs contentNavs contentNavs'
+				'body body body body'
+				'footer footer footer footer';
+		}
 	}
 </style>

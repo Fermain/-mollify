@@ -1,7 +1,6 @@
 <script lang="ts">
-	import DiffDemo from "$lib/components/DiffDemo.svelte";
-	import EditorDemo from "$lib/components/EditorDemo.svelte";
-
+	import InkMDEDemo from '$lib/components/InkMDEDemo.svelte';
 </script>
-<DiffDemo />
-<EditorDemo />
+
+<h1>Ink MDE</h1>
+<InkMDEDemo />

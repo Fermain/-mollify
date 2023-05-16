@@ -71,10 +71,6 @@
 		position: relative;
 		width: 100%;
 	}
-	.search {
-		display: flex;
-		flex: 1;
-	}
 
 	.search-items {
 		position: absolute;
