@@ -73,9 +73,7 @@
 					<div class="wrapper">
 						<button on:click={toggleRecursiveNav}>Recursive Nav</button>
 						{#if recNavClicked}
-							<Accordion>
-								<RecursiveNav data={institutes} {currentPath} />
-							</Accordion>
+							<RecursiveNav data={institutes} {currentPath} />
 						{/if}
 					</div>
 				</nav>

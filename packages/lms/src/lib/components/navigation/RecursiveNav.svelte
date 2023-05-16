@@ -29,15 +29,16 @@
 					{#if (child.type === 'lesson' && child.children.length === 0) || child.children === undefined}
 						<Accordion>
 							<AccordionItem>
-								<svelte:fragment slot="summary">{child.title}</svelte:fragment>
+								<svelte:fragment slot="summary"
+									><a
+										href={child.browserPath}
+										class={currentPath === child.foldername ? 'current' : ''}>{child.title}</a
+									></svelte:fragment
+								>
 							</AccordionItem>
 						</Accordion>
 					{:else}
-						<Accordion>
-							<AccordionItem>
-								<svelte:self data={[child]} indent={indent + 0.125} {currentPath} />
-							</AccordionItem>
-						</Accordion>
+						<svelte:self data={[child]} indent={indent + 0.125} {currentPath} />
 					{/if}
 				{/each}
 			</svelte:fragment>
