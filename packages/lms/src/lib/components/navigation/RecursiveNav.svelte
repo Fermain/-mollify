@@ -24,23 +24,24 @@
 	{#each data as { title, browserPath, children, foldername }}
 		<AccordionItem>
 			<svelte:fragment slot="summary">{title}</svelte:fragment>
-			<svelte:fragment slot="content">
+			<div slot="content">
+				<a href={browserPath} style="padding-left: {indent}rem" class={currentPath === foldername ? 'current' : ''}
+					>Overview</a
+				>
 				{#each children as child}
 					{#if (child.type === 'lesson' && child.children.length === 0) || child.children === undefined}
-						<Accordion>
-							<AccordionItem>
-								<svelte:fragment slot="summary"
-									><a href={child.browserPath} class={currentPath === child.foldername ? 'current' : ''}
-										>{child.title}</a
-									></svelte:fragment
-								>
-							</AccordionItem>
-						</Accordion>
+						<a
+							href={child.browserPath}
+							style="padding-left: {indent + 0.125}rem"
+							class={currentPath === child.foldername ? 'current' : ''}
+						>
+							{child.title}
+						</a>
 					{:else}
 						<svelte:self data={[child]} indent={indent + 0.125} {currentPath} />
 					{/if}
 				{/each}
-			</svelte:fragment>
+			</div>
 		</AccordionItem>
 	{/each}
 </Accordion>
