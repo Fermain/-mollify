@@ -2,7 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { getSearchResults } from '$lib/utils/fuseSearch/getSearchResults';
 	import SearchItem from '../search/SearchItem.svelte';
-	import { reverseRawSearchQuery } from '$lib/utils/fuseSearch/generateSearchFilterObject';
+	import { parseRawSearchQuery } from '$lib/utils/fuseSearch/parseRawSearchQuery';
 
 	let searchQuery = '';
 	let searchResults: String[] = [];
@@ -21,7 +21,7 @@
 			await new Promise((resolve) => {
 				timer = setTimeout(async () => {
 					try {
-						const { query, filters } = await reverseRawSearchQuery(searchQuery);
+						const { query, filters } = await parseRawSearchQuery(searchQuery);
 						searchResults = await getSearchResults(query, filters);
 					} catch (error) {
 						console.log(error);

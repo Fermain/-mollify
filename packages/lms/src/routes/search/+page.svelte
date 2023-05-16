@@ -6,7 +6,7 @@
 	import type { EntityMeta } from '@mollify/types';
 	import { slide } from 'svelte/transition';
 	import { generateRawSearchQuery } from '$lib/utils/fuseSearch/generateRawSearchQuery';
-	import { reverseRawSearchQuery } from '$lib/utils/fuseSearch/generateSearchFilterObject';
+	import { parseRawSearchQuery } from '$lib/utils/fuseSearch/parseRawSearchQuery';
 	import { updateQueryString } from '$lib/utils/fuseSearch/updateQueryString';
 
 	let searchQuery = '';
@@ -14,6 +14,8 @@
 	let reversedSearchQuery = {};
 	let searchQueryExact = false;
 	let searchTypes: String[] = [];
+	let searchTags: string[];
+	let searchTitle: string;
 	let searchExclusions: String = '';
 	let searchResults: EntityMeta[] = [];
 	let selectedInstitution = 'all';
@@ -65,15 +67,17 @@
 
 		if (query) {
 			rawSearchQuery = query;
-			processedQuery = reverseRawSearchQuery(rawSearchQuery);
+			processedQuery = parseRawSearchQuery(rawSearchQuery);
 			rawSearchQuery = generateRawSearchQuery(
 				searchQuery,
 				searchExclusions,
 				searchTypes,
+				searchTags,
+				searchTitle,
 				selectedInstitution,
 				searchQueryExact
 			);
-			reversedSearchQuery = reverseRawSearchQuery(rawSearchQuery);
+			reversedSearchQuery = parseRawSearchQuery(rawSearchQuery);
 			searchQuery = processedQuery.query;
 			searchQueryExact = processedQuery.filters.exact;
 			searchTypes = processedQuery.filters.types;
@@ -95,6 +99,8 @@
 				searchQuery,
 				searchExclusions,
 				searchTypes,
+				searchTags,
+				searchTitle,
 				selectedInstitution,
 				searchQueryExact
 			)
@@ -211,7 +217,7 @@
 				<div>{searchQuery}</div>
 			</div>
 		{/if}
-		{#if searchExclusions.trim() !== ''}
+		{#if searchExclusions.length !== 0}
 			<div class="bubble exclusion">
 				<div class="key">Excludes:</div>
 				<div>{searchExclusions}</div>
