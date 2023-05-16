@@ -20,7 +20,7 @@
 	export let currentPath: string;
 </script>
 
-<Accordion autocollapse>
+<Accordion>
 	{#each data as { title, browserPath, children, foldername }}
 		<AccordionItem>
 			<svelte:fragment slot="summary">{title}</svelte:fragment>
