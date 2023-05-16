@@ -1,7 +1,8 @@
 import adapter from '@sveltejs/adapter-auto';
 import { vitePreprocess } from '@sveltejs/kit/vite';
 import { mdsvex } from 'mdsvex';
-// import gfm from 'remark-gfm';
+import callouts from "remark-emoji-callout";
+import gfm from 'remark-gfm';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -11,8 +12,15 @@ const config = {
 		vitePreprocess(),
 		mdsvex({
 			highlight: {},
-			extensions: ['.md'],
-			remarkPlugins: []
+			extensions: ['.md', '.svx'],
+			remarkPlugins: [gfm, 
+				callouts,
+				{
+          dataAttribute: "custom-callout",
+          titleTextTagName: "span",
+          iconTagName: "span",
+          // ...
+        } ]
 		})
 	],
 	extensions: ['.svelte', '.md'],

@@ -1,7 +1,7 @@
 <script lang="ts"></script>
 
 <footer>
-	<slot/>
+	<slot />
 </footer>
 
 <style>
