@@ -57,3 +57,17 @@ Here an example of a search query for the institution "Hackademic":
 ```
 query institution:"Hackademic"
 ```
+
+### Combining Filters
+
+All of these filters can be combined to create a more specific search. Here is an example;
+
+`javascript !react types:"course, module, lesson" tags:"javascript" institution:"Hackademic"`
+
+We enter this into the search bar and should get a dropwdown of results like so:
+
+![entering long search query](./documentation/example_query.jpg)
+
+If we press enter we will get taken to the search page with the results filtered and the UI updated like so:
+
+![search page ui](./documentation/example_query_in_ui.jpg)
