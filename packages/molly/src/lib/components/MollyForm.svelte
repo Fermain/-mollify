@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 
-	let query;
+	let query: string | null = null;
 	const dispatch = createEventDispatcher();
 	function handleSubmit() {
 		dispatch('userSubmit', query);

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
-	import sendChat from '../logo/paper-plane.svg';
+	import sendChat from './icons/paper-plane.svg';
 	export let img: string = sendChat;
 	let textarea: HTMLTextAreaElement;
 

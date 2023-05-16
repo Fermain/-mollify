@@ -1,23 +1,25 @@
 <script lang="ts">
-	import MollyMessage from '$lib/components/MollyMessage.svelte';
-	import type { ChatCompletionRequestMessage } from 'openai';
+	import AskMolly from './chatHeading.svelte';
+	import ChatInput from './chatInput.svelte';
+	import ChatFeed from './chatFeed.svelte';
+	import ChatButton from './chatButton.svelte';
+	import ChatBubble from './chatBubble.svelte';
+	import type { ChatCompletionRequestMessage as Message } from 'openai';
 	import { SSE } from 'sse.js';
-	import MollyButton from './MollyButton.svelte';
-	import MollyWindow from './MollyWindow.svelte';
-	import sendChat from './icons/paper-plane.svg';
-	export let img: string = sendChat;
+	import MollyIcon from './MollyIcon.svelte';
+
+	export let expanded: boolean = false;
+	export let endpoint = '/';
 
 	let query: string = '';
 	let answer: string = '';
 	let loading: boolean = false;
-	let chatMessages: ChatCompletionRequestMessage[] = [];
-	let scrollToDiv: HTMLDivElement;
-	export let endpoint = '/';
+	let chatMessages: Message[] = [];
 
-	function scrollToBottom() {
-		setTimeout(function () {
-			scrollToDiv.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
-		}, 100);
+	function handleChatInputMessage(event: CustomEvent<Message>) {
+		// Add the message payload to the messages array
+		query = event.detail.content;
+		handleSubmit();
 	}
 
 	const handleSubmit = async () => {
@@ -35,8 +37,7 @@
 
 		eventSource.addEventListener('error', handleError);
 
-		eventSource.addEventListener('message', (e) => {
-			scrollToBottom();
+		eventSource.addEventListener('message', (e: { data: string }) => {
 			try {
 				loading = false;
 				if (e.data === '[DONE]') {
@@ -56,7 +57,6 @@
 			}
 		});
 		eventSource.stream();
-		scrollToBottom();
 	};
 
 	function handleError<T>(err: T) {
@@ -67,73 +67,52 @@
 	}
 </script>
 
-<MollyButton>
-	<MollyWindow>
-			<div class="messages-container">
-				{#each chatMessages as message}
-					<MollyMessage type={message.role} message={message.content} />
-				{/each}
-				{#if answer}
-					<MollyMessage type="assistant" message={answer} />
-				{/if}
-				{#if loading}
-					<MollyMessage type="assistant" message="Thinking.." />
-				{/if}
-			</div>
-			<div bind:this={scrollToDiv} />
-		<form on:submit|preventDefault={() => handleSubmit()}>
-			<textarea bind:value={query} />
-			<button type="submit"> <img src={img} alt="Send message"> </button>
-		</form>
-		
-		<!--<MollyForm
-			on:userSubmit={(e) => {
-				query = e.detail;
-				handleSubmit();
-			}}
-		/>-->
-		</MollyWindow>
-</MollyButton>
+<ChatBubble expandButton={() => (expanded = !expanded)} />
 
-<style lang="scss">
-	.messages-container {
+{#if expanded}
+	<div class="container">
+		<div class="chat-header">
+			<div class="chat-molly">
+				<MollyIcon />
+
+				<AskMolly />
+			</div>
+
+			<div class="right-side-header">
+				<ChatButton expandButton={() => (expanded = !expanded)} />
+			</div>
+		</div>
+
+		<ChatFeed data={chatMessages} />
+
+		<!-- Add the "on:message" event listener to the ChatInput component -->
+		<ChatInput on:message={handleChatInputMessage} />
+	</div>
+{/if}
+
+<style>
+	.container {
+		position: fixed;
+		bottom: 0;
+		right: 0;
+		width: 300px;
+		height: 400px;
+		background-color: #d9d9d9;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 		display: flex;
 		flex-direction: column;
-		justify-content: flex-end;
-		height: 100%;
-		overflow-y: scroll; /*scrolls the content if it overflows the viewport IT'S NOT WORKING*/
 	}
 
-	form {
-		background-color: #323d47;
+	.chat-header {
+		background-color: #323e47;
 		padding: 10px;
 		display: flex;
-		align-items: center;
-		justify-content: space-evenly;
-		bottom: 0;
+		flex-direction: row;
+		justify-content: space-between;
 	}
 
-	textarea {
-		max-width: 70%;
-		min-width: 70%;
-		max-height: 100px;
-		border-radius: 5px;
-		padding: 5px;
-		resize: none; /*prevents the user from manually resizing the field*/
-	}
-
-	button {
-		padding: 10px;
-		width: 50px;
-		border: none;
-		border-radius: 10px;
-		background-color: #21a299;
-		color: white;
-		cursor: pointer;
-	}
-
-	img {
-		width: 20px;
-		height: 20px;
+	.chat-molly {
+		display: flex;
+		flex-direction: row;
 	}
 </style>

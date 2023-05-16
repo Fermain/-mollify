@@ -1,5 +1,5 @@
 <script lang=ts>
-import closeChat from "../logo/angle-small-down.svg";
+import closeChat from "./icons/angle-small-down.svg";
 export let expanded: boolean = false;
 export let img: string = closeChat;
 

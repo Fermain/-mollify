@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import Logo from './chatLogo.svelte';
 	import ChatMessage from './chatMessage.svelte';
+	import MollyIcon from './MollyIcon.svelte';
 
 	export let data: Array<Object>;
 
@@ -26,7 +26,7 @@
 
 <div bind:this={chatWindow} class="chat-content">
 	<div class="greeting">
-		<Logo />
+		<MollyIcon />
 		<span>Hello, what can I do for you?</span>
 	</div>
 	<div class="messages-feed">
