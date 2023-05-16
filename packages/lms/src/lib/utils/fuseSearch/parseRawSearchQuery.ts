@@ -19,24 +19,16 @@ export function parseRawSearchQuery(rawSearchQuery: string) {
 		types: string[];
 		tags: string[];
 		institution: string;
-		title: string;
 		exact: boolean;
 	} = {
 		exclusions: [],
 		types: [],
 		tags: [],
 		institution: '',
-		title: '',
 		exact: false
 	};
 
 	// carve out the various filters
-	const titleMatch = rawSearchQuery.match(/title:"([^"]*)"/);
-	if (titleMatch) {
-		filters.title = titleMatch[1];
-		rawSearchQuery = rawSearchQuery.replace(/title:"([^"]*)"/, '');
-	}
-
 	const institutionMatch = rawSearchQuery.match(/institution:"([^"]*)"/);
 	if (institutionMatch) {
 		filters.institution = institutionMatch[1];

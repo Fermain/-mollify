@@ -13,10 +13,10 @@
 	let rawSearchQuery = '';
 	let reversedSearchQuery = {};
 	let searchQueryExact = false;
-	let searchTypes: String[] = [];
-	let searchTags: string[];
-	let searchTitle: string;
-	let searchExclusions: String = '';
+	let searchTypes: string[] = [];
+	let searchTagsString: string = '';
+	let searchTags: string[] = [];
+	let searchExclusions: string = '';
 	let searchResults: EntityMeta[] = [];
 	let selectedInstitution = 'all';
 	let query = '';
@@ -34,10 +34,7 @@
 	const queryParam = $page.url.searchParams.get('query');
 	if (typeof queryParam === 'string') {
 		query = decodeURIComponent(queryParam);
-		console.log(query);
 	}
-
-	$: queryParam;
 
 	let filter = {
 		exact: searchQueryExact,
@@ -51,6 +48,7 @@
 		filter = {
 			exact: searchQueryExact,
 			type: searchTypes,
+			tags: searchTags,
 			institution: selectedInstitution,
 			exclusions: searchExclusions.trim() !== '' ? searchExclusions.split(' ') : [],
 			programme: 'all'
@@ -65,25 +63,21 @@
 			files.set(data);
 		}
 
-		if (query) {
+		if (query.trim() !== '') {
 			rawSearchQuery = query;
 			processedQuery = parseRawSearchQuery(rawSearchQuery);
-			rawSearchQuery = generateRawSearchQuery(
-				searchQuery,
-				searchExclusions,
-				searchTypes,
-				searchTags,
-				searchTitle,
-				selectedInstitution,
-				searchQueryExact
-			);
-			reversedSearchQuery = parseRawSearchQuery(rawSearchQuery);
 			searchQuery = processedQuery.query;
 			searchQueryExact = processedQuery.filters.exact;
 			searchTypes = processedQuery.filters.types;
-			isMatch = $files.some(
-				(file) => file.title.toLowerCase() === processedQuery.filters.institution.toLowerCase()
-			);
+			searchTags = processedQuery.filters.tags;
+			searchTagsString = searchTags.join(' ');
+			console.log(searchTags);
+			if ($files) {
+				isMatch = $files.some(
+					(file) => file.title.toLowerCase() === processedQuery.filters.institution.toLowerCase()
+				);
+			}
+
 			selectedInstitution = isMatch ? processedQuery.filters.institution : 'all';
 			searchExclusions = processedQuery.filters.exclusions.join(' ');
 			await updateSearchResults();
@@ -94,27 +88,27 @@
 	function handleSubmit(event: { preventDefault: () => void }) {
 		event.preventDefault();
 		updateSearchResults();
+		searchTags = searchTagsString.split(' ');
+		const rawSearchQuery = generateRawSearchQuery(
+			searchQuery,
+			searchExclusions,
+			searchTypes,
+			searchTags,
+			selectedInstitution,
+			searchQueryExact
+		);
+		console.log(rawSearchQuery);
 		updateQueryString({
-			query: generateRawSearchQuery(
-				searchQuery,
-				searchExclusions,
-				searchTypes,
-				searchTags,
-				searchTitle,
-				selectedInstitution,
-				searchQueryExact
-			)
+			query: rawSearchQuery
 		});
 		toggleOpen();
 	}
 
 	//kitchen sink
-	$: searchResults;
-	$: query;
-	$: $files;
-	$: filter;
-	$: isMatch;
-	$: selectedInstitution = isMatch ? processedQuery.filters.institution : 'all';
+	// $: searchResults;
+	// $: $files;
+	// $: filter;
+	// $: isMatch;
 
 	// open/close advanced search options
 	let open = true;
@@ -146,10 +140,19 @@
 					<div>
 						<label for="search-exclusions">Excluded Terms</label>
 						<input
-							type="search"
+							type="text"
 							placeholder="Exclude terms, eg: term1 term2"
 							bind:value={searchExclusions}
 							id="search-exclusions"
+						/>
+					</div>
+					<div>
+						<label for="search-tags">Included Tags</label>
+						<input
+							type="text"
+							placeholder="Include these tags, eg: tag1 tag2"
+							bind:value={searchTagsString}
+							id="search-tags"
 						/>
 					</div>
 					{#if $files?.length > 1}
@@ -213,7 +216,7 @@
 	<div>
 		{#if searchQuery.trim() !== ''}
 			<div class="bubble term">
-				<div class="key">Fuzzy:</div>
+				<div class="key">{searchQueryExact ? 'Exact' : 'Fuzzy'}</div>
 				<div>{searchQuery}</div>
 			</div>
 		{/if}
@@ -221,6 +224,12 @@
 			<div class="bubble exclusion">
 				<div class="key">Excludes:</div>
 				<div>{searchExclusions}</div>
+			</div>
+		{/if}
+		{#if searchTags.length !== 0}
+			<div class="bubble tags">
+				<div class="key">Tags:</div>
+				<div>{searchTags.join(', ')}</div>
 			</div>
 		{/if}
 		{#if searchTypes.length > 0}
@@ -266,6 +275,10 @@
 
 	.type {
 		background-color: rgb(139, 139, 206);
+	}
+
+	.tags {
+		background-color: rgb(139, 204, 206);
 	}
 
 	.institution {
