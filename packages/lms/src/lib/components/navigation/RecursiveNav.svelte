@@ -1,7 +1,7 @@
 <script lang="ts">
+	import { Accordion, AccordionItem } from '@skeletonlabs/skeleton';
 	import type { EntityMeta } from '@mollify/types';
 	import { slide } from 'svelte/transition';
-	import type { EntityMeta } from '@mollify/types';
 
 	export let data = [] as EntityMeta[];
 	let open: string | null = null;
@@ -20,7 +20,32 @@
 	export let currentPath: string;
 </script>
 
-{#each data as { title, browserPath, children, foldername }}
+<Accordion autocollapse>
+	{#each data as { title, browserPath, children, foldername }}
+		<AccordionItem>
+			<svelte:fragment slot="summary">{title}</svelte:fragment>
+			<svelte:fragment slot="content">
+				{#each children as child}
+					{#if (child.type === 'lesson' && child.children.length === 0) || child.children === undefined}
+						<Accordion>
+							<AccordionItem>
+								<svelte:fragment slot="summary">{child.title}</svelte:fragment>
+							</AccordionItem>
+						</Accordion>
+					{:else}
+						<Accordion>
+							<AccordionItem>
+								<svelte:self data={[child]} indent={indent + 0.125} {currentPath} />
+							</AccordionItem>
+						</Accordion>
+					{/if}
+				{/each}
+			</svelte:fragment>
+		</AccordionItem>
+	{/each}
+</Accordion>
+
+<!-- {#each data as { title, browserPath, children, foldername }}
 	<h3
 		style="padding-left: {indent}rem"
 		on:click={() => toggleOpen(title)}
@@ -52,7 +77,7 @@
 			{/each}
 		</div>
 	{/if}
-{/each}
+{/each} -->
 
 <style>
 	h3 {

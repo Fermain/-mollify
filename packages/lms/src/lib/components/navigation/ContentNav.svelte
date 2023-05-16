@@ -7,6 +7,7 @@
 	import RecursiveNav from './RecursiveNav.svelte';
 	import CourseNav from './CourseNav.svelte';
 	import type { EntityMeta } from '@mollify/types';
+	import { Accordion } from '@skeletonlabs/skeleton';
 
 	let institutes: EntityMeta[] | null = [];
 	let current: EntityMeta | undefined;
@@ -72,7 +73,9 @@
 					<div class="wrapper">
 						<button on:click={toggleRecursiveNav}>Recursive Nav</button>
 						{#if recNavClicked}
-							<RecursiveNav data={institutes} {currentPath} />
+							<Accordion>
+								<RecursiveNav data={institutes} {currentPath} />
+							</Accordion>
 						{/if}
 					</div>
 				</nav>
