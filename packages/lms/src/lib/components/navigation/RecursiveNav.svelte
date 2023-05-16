@@ -30,9 +30,8 @@
 						<Accordion>
 							<AccordionItem>
 								<svelte:fragment slot="summary"
-									><a
-										href={child.browserPath}
-										class={currentPath === child.foldername ? 'current' : ''}>{child.title}</a
+									><a href={child.browserPath} class={currentPath === child.foldername ? 'current' : ''}
+										>{child.title}</a
 									></svelte:fragment
 								>
 							</AccordionItem>
