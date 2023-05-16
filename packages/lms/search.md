@@ -28,14 +28,14 @@ Here is an example of excluding the tag "javascript":
 query !javascript
 ```
 
-### Type
+### Types
 
 On the search UI the type has a selection of checkboxes to select the desired types. This can also be achieved by typing the types into the search bar like so and the drop down will filter the result or pressing enter will take you to the search page with the results filtered and UI updated.
 
 Here an example of a search for courses and modules:
 
 ```
-query type:"course, module"
+query types:"course, module"
 ```
 
 ### Tags
