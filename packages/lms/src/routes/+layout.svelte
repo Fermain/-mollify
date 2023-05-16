@@ -1,4 +1,6 @@
 <script lang="ts">
+	import '@skeletonlabs/skeleton/themes/theme-skeleton.css';
+	import '@skeletonlabs/skeleton/styles/skeleton.css';
 	import '../app.postcss';
 	import callouts from 'remark-emoji-callout';
 	import Main from '$lib/components/content/Main.svelte';
@@ -23,6 +25,7 @@
 	<Molly />
 	<IconNav />
 	<Main>
+		<button class="btn variant-filled-primary">Hello world</button>
 		<slot />
 	</Main>
 	<ContentNav />
