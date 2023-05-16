@@ -17,7 +17,7 @@ const options = {
 
 export async function search(
 	searchQuery: string,
-	filters = { institution: 'all', tags: [], type: [], exact: false, exclusions: [] }
+	filters = { institution: 'all', tags: [], types: [], exact: false, exclusions: [] }
 ) {
 	const data = parseMarkdownSearch('src/routes/content', true);
 
@@ -32,10 +32,10 @@ export async function search(
 
 	//filter type
 	let dataTypeFilter = flattenedData;
-	if (filters.type?.length > 0) {
-		dataTypeFilter = flattenedData.filter((item) => filters.type.includes(item.type));
+	if (filters.types?.length > 0) {
+		dataTypeFilter = flattenedData.filter((item) => filters.types.includes(item.type));
 	}
-
+	console.log(filters.types);
 	//exact search
 	if (filters.exact) {
 		options.threshold = 0;

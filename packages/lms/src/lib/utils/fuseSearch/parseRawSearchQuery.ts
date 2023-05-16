@@ -39,10 +39,10 @@ export function parseRawSearchQuery(rawSearchQuery: string) {
 		filters.institution = 'all';
 	}
 
-	const typeMatch = rawSearchQuery.match(/type:"([^"]*)"/);
+	const typeMatch = rawSearchQuery.match(/types:"([^"]*)"/);
 	if (typeMatch) {
 		filters.types = typeMatch[1].split(', ');
-		rawSearchQuery = rawSearchQuery.replace(/type:"([^"]*)"/, '');
+		rawSearchQuery = rawSearchQuery.replace(/types:"([^"]*)"/, '');
 	}
 
 	const tagsMatch = rawSearchQuery.match(/tags:"([^"]*)"/);

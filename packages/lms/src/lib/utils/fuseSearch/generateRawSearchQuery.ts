@@ -32,7 +32,7 @@ export function generateRawSearchQuery(
 	}
 
 	if (searchTypes.length > 0) {
-		rawSearchQuery += ` type:"${searchTypes.join(', ')}"`;
+		rawSearchQuery += ` types:"${searchTypes.join(', ')}"`;
 	}
 
 	if (searchTags.length > 0) {

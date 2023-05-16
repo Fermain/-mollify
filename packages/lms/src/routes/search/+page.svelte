@@ -38,7 +38,7 @@
 
 	let filter = {
 		exact: searchQueryExact,
-		type: searchTypes,
+		types: searchTypes,
 		institution: selectedInstitution,
 		exclusions: searchExclusions.trim() !== '' ? searchExclusions.split(' ') : []
 	};
@@ -46,7 +46,7 @@
 	async function updateSearchResults() {
 		filter = {
 			exact: searchQueryExact,
-			type: searchTypes,
+			types: searchTypes,
 			tags: searchTags,
 			institution: selectedInstitution,
 			exclusions: searchExclusions.trim() !== '' ? searchExclusions.split(' ') : [],

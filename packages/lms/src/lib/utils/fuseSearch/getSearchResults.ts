@@ -1,6 +1,6 @@
 export async function getSearchResults(
 	searchQuery: string,
-	filters = { institution: 'all', programme: 'all', type: [], exact: false, exclusions: [] }
+	filters = { institution: 'all', types: [], tags: [], exact: false, exclusions: [] }
 ) {
 	try {
 		const response = await fetch('/api/search', {
