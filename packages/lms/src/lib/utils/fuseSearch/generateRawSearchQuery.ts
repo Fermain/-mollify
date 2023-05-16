@@ -25,8 +25,8 @@ export function generateRawSearchQuery(
 		rawSearchQuery = `"${rawSearchQuery}"`;
 	}
 
-	if (searchExclusions.split(' ').length > 0 && searchExclusions.trim() !== '') {
-		searchExclusions.split(' ').forEach((exclusion) => {
+	if (searchExclusions.split(', ').length > 0 && searchExclusions.trim() !== '') {
+		searchExclusions.split(', ').forEach((exclusion) => {
 			rawSearchQuery += ` !${exclusion}`;
 		});
 	}

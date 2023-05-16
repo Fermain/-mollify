@@ -17,7 +17,7 @@ const options = {
 
 export async function search(
 	searchQuery: string,
-	filters = { institution: 'all', programme: 'all', type: [], exact: false, exclusions: [] }
+	filters = { institution: 'all', tags: [], type: [], exact: false, exclusions: [] }
 ) {
 	const data = parseMarkdownSearch('src/routes/content', true);
 
@@ -66,15 +66,22 @@ export async function search(
 			if (titleWords.some((word) => filters.exclusions.includes(word.toLowerCase()))) {
 				return false;
 			}
-
 			// Check for any excluded tags
 			if (item.tags?.some((tag) => filters.exclusions.includes(tag.toLowerCase()))) {
 				return false;
 			}
-
 			return true;
 		});
 	}
 
-	return filterExclusions;
+	let filterTags = filterExclusions;
+	if (filters.tags?.length > 0) {
+		filterTags = filterExclusions.filter((item) => {
+			if (item.tags.some((tag) => filters.tags.includes(tag.toLowerCase()))) {
+				return true;
+			}
+		});
+	}
+
+	return filterTags;
 }

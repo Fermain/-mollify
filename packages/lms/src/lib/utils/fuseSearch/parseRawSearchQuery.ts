@@ -47,7 +47,7 @@ export function parseRawSearchQuery(rawSearchQuery: string) {
 
 	const tagsMatch = rawSearchQuery.match(/tags:"([^"]*)"/);
 	if (tagsMatch) {
-		filters.tags = tagsMatch[1].split(' ');
+		filters.tags = tagsMatch[1].split(', ');
 		rawSearchQuery = rawSearchQuery.replace(/tags:"([^"]*)"/, '');
 	}
 

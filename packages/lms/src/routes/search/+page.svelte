@@ -40,8 +40,7 @@
 		exact: searchQueryExact,
 		type: searchTypes,
 		institution: selectedInstitution,
-		exclusions: searchExclusions.trim() !== '' ? searchExclusions.split(' ') : [],
-		programme: 'all'
+		exclusions: searchExclusions.trim() !== '' ? searchExclusions.split(' ') : []
 	};
 
 	async function updateSearchResults() {
@@ -57,12 +56,14 @@
 	}
 
 	onMount(async () => {
+		// fetch files if not already fetched
 		if ($files === null) {
 			const response = await fetch('/api/parseMarkdown');
 			const data = await response.json();
 			files.set(data);
 		}
 
+		// Parse query string if present, update values and get search results
 		if (query.trim() !== '') {
 			rawSearchQuery = query;
 			processedQuery = parseRawSearchQuery(rawSearchQuery);
@@ -70,16 +71,24 @@
 			searchQueryExact = processedQuery.filters.exact;
 			searchTypes = processedQuery.filters.types;
 			searchTags = processedQuery.filters.tags;
-			searchTagsString = searchTags.join(' ');
+			searchTagsString = searchTags.join(', ');
 			console.log(searchTags);
 			if ($files) {
+				// check if institution exists
 				isMatch = $files.some(
-					(file) => file.title.toLowerCase() === processedQuery.filters.institution.toLowerCase()
+					(file: EntityMeta) =>
+						file.title.toLowerCase() === processedQuery.filters.institution.toLowerCase()
 				);
+				// if it does, update the value to the correct character case
+				if (isMatch) {
+					processedQuery.filters.institution = $files.find(
+						(file: EntityMeta) =>
+							file.title.toLowerCase() === processedQuery.filters.institution.toLowerCase()
+					).title;
+				}
 			}
-
 			selectedInstitution = isMatch ? processedQuery.filters.institution : 'all';
-			searchExclusions = processedQuery.filters.exclusions.join(' ');
+			searchExclusions = processedQuery.filters.exclusions.join(', ');
 			await updateSearchResults();
 		}
 	});
@@ -88,7 +97,7 @@
 	function handleSubmit(event: { preventDefault: () => void }) {
 		event.preventDefault();
 		updateSearchResults();
-		searchTags = searchTagsString.split(' ');
+		searchTags = searchTagsString.split(', ');
 		const rawSearchQuery = generateRawSearchQuery(
 			searchQuery,
 			searchExclusions,
@@ -141,7 +150,7 @@
 						<label for="search-exclusions">Excluded Terms</label>
 						<input
 							type="text"
-							placeholder="Exclude terms, eg: term1 term2"
+							placeholder="Exclude terms, eg: term1, term2"
 							bind:value={searchExclusions}
 							id="search-exclusions"
 						/>
@@ -150,7 +159,7 @@
 						<label for="search-tags">Included Tags</label>
 						<input
 							type="text"
-							placeholder="Include these tags, eg: tag1 tag2"
+							placeholder="Include these tags, eg: tag1, tag2"
 							bind:value={searchTagsString}
 							id="search-tags"
 						/>
@@ -257,6 +266,7 @@
 					<h3>{result.title}</h3>
 					<p>Search Score:{Math.round(result.score * 10000) / 10000}</p>
 					<p>Type: {result.type}</p>
+					<p>Tags: {result.tags}</p>
 					<a class="result-btn" href={result.browserPath}>View Details</a>
 				</div>
 			{/each}
