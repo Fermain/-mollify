@@ -62,29 +62,3 @@
 		</div>
 	{/if}
 </div>
-
-<style>
-	.wrapper {
-		position: relative;
-		width: 100%;
-	}
-
-	.search-items {
-		position: absolute;
-		display: flex;
-		flex-direction: column;
-		gap: var(--spacing-s);
-		top: 100%;
-		border: 1px solid var(--primary);
-		border-top: 0;
-		width: 100%;
-		left: 0;
-		z-index: 4;
-		background-color: var(--background-secondary);
-		color: var(--text-primary);
-		border-radius: var(--border-radius-s);
-		padding: var(--spacing-s);
-		transition: max-height 0.1s ease-in-out;
-		overflow-x: hidden;
-	}
-</style>

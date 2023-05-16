@@ -44,27 +44,3 @@
 		</div>
 	{/if}
 </div>
-
-<style>
-	.wrapper {
-		position: relative;
-		margin-left: auto;
-		align-self: center;
-	}
-
-	.settings {
-		position: absolute;
-		background-color: var(--primary);
-		color: white;
-		right: 0;
-		padding: var(--spacing-m);
-		border-radius: var(--border-radius-xs);
-	}
-
-	.settings,
-	.font-size-selector {
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		gap: 1rem;
-	}
-</style>
