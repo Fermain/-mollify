@@ -13,7 +13,7 @@
 </script>
 
 <div>
-	<button class="btn" use:popup={settings}
+	<button class="btn hover:bg-primary-hover-token" use:popup={settings}
 		><span class="material-symbols-outlined"> settings </span></button
 	>
 
@@ -25,10 +25,14 @@
 			<LightSwitch />
 		</div>
 		<div class="flex justify-between my-5">
-			<span>Text</span>
+			<span class="p-1">Text</span>
 			<div class="flex gap-4">
-				<button><span class="material-symbols-outlined"> text_increase </span></button>
-				<button><span class="material-symbols-outlined"> text_decrease </span></button>
+				<button class="btn hover:bg-primary-hover-token p-1"
+					><span class="material-symbols-outlined"> text_increase </span></button
+				>
+				<button class="btn hover:bg-primary-hover-token p-1"
+					><span class="material-symbols-outlined"> text_decrease </span></button
+				>
 			</div>
 		</div>
 	</div>
