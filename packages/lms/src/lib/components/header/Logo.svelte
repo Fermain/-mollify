@@ -1,1 +1,1 @@
-<a href="/"><h1>M</h1></a>
+<a href="/"><h1 class="h1 hidden sm:block">M</h1></a>
