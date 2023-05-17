@@ -60,7 +60,7 @@
 	</form>
 	<div class="absolute">
 		{#if searchResults.length > 0}
-			<div class="card p-4 w-72 shadow-xl">
+			<div class="card p-4 w-60 shadow-xl">
 				{#each searchResults as item, i}
 					<SearchItem data={item} on:pageChange={handlePageChange} />
 				{/each}
