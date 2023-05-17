@@ -1,4 +1,40 @@
 <script lang="ts">
+	import { LightSwitch, popup, storePopup } from '@skeletonlabs/skeleton';
+	import type { PopupSettings } from '@skeletonlabs/skeleton';
+	import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
+
+	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
+
+	const settings: PopupSettings = {
+		event: 'click',
+		target: 'settings',
+		placement: 'bottom'
+	};
+</script>
+
+<div>
+	<button class="btn" use:popup={settings}
+		><span class="material-symbols-outlined"> settings </span></button
+	>
+
+	<div class="card p-4 w-60 shadow-xl" data-popup="settings">
+		<h3 class="h3 mb-3">Settings</h3>
+		<hr />
+		<div class="flex justify-between my-5">
+			<span>Theme</span>
+			<LightSwitch />
+		</div>
+		<div class="flex justify-between my-5">
+			<span>Text</span>
+			<div class="flex gap-4">
+				<button><span class="material-symbols-outlined"> text_increase </span></button>
+				<button><span class="material-symbols-outlined"> text_decrease </span></button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- <script lang="ts">
 	let fontSize: number = 16;
 	let themeChoice: string;
 	let isActive: Boolean = false;
@@ -44,3 +80,4 @@
 		</div>
 	{/if}
 </div>
+ -->
