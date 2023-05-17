@@ -32,6 +32,7 @@
 
 	function handlePageChange() {
 		searchResults = [];
+		searchQuery = '';
 	}
 
 	function handleClickOutside(event) {
@@ -42,7 +43,7 @@
 </script>
 
 <svelte:window on:click={handleClickOutside} />
-<div class="relative">
+<div class="wrapper relative">
 	<form class="flex" on:submit={handleSubmit}>
 		<input
 			class="focus:outline-none focus:ring focus:ring-primary-300/50 hidden sm:block rounded-sm w-60 pl-1"
@@ -60,7 +61,7 @@
 	</form>
 	<div class="absolute">
 		{#if searchResults.length > 0}
-			<div class="card p-4 w-60 shadow-xl">
+			<div class="search-items card p-4 w-60 shadow-xl">
 				{#each searchResults as item, i}
 					<SearchItem data={item} on:pageChange={handlePageChange} />
 				{/each}
