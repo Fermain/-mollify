@@ -4,9 +4,8 @@
 
 <style>
 	.molly-wrapper {
-		grid-area: molly;
 		position: absolute;
-		bottom: var(--spacing-xl);
-		right: var(--spacing-xl);
+		bottom: 1rem;
+		right: 1rem;
 	}
 </style>

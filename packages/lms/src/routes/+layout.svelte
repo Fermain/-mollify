@@ -26,9 +26,12 @@
 	<svelte:fragment slot="sidebarLeft">
 		<IconNav />
 	</svelte:fragment>
-	<Main>
-		<slot />
-	</Main>
+	<div class="content">
+		<Main>
+			<slot />
+		</Main>
+		<Molly />
+	</div>
 	<svelte:fragment slot="footer"
 		><Footer>
 			<Ego />
@@ -36,3 +39,9 @@
 		</Footer>
 	</svelte:fragment>
 </AppShell>
+
+<style>
+	.content {
+		position: relative;
+	}
+</style>
