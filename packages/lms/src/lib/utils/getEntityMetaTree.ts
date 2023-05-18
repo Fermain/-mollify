@@ -1,15 +1,15 @@
 import fs from 'fs';
 import path from 'path';
-import matter from 'gray-matter';
-import { sortChildrenByDependency } from './sortChildrenByDependency';
 import type { EntityMeta } from '@mollify/types';
+import { getEntityFrontmatter } from './getEntityFrontmatter';
+import getEntitySlug from './getEntitySlug';
 
 /**
- * Recursively parse markdown files and return an array of objects with arrays of children
+ * Used for Nav and Search, it recursively parse markdown files and return an array of objects with arrays of children
  * @param dir  The directory to parse
  * @returns A nested object containing the parsed markdown files
  */
-export function parseMarkdown(dir: string) {
+export function getEntityMetaTree(dir: string, content = false) {
 	function walkSync(currentDir: string) {
 		let currentObject = {} as EntityMeta;
 		const children: EntityMeta[] = [];
@@ -24,19 +24,16 @@ export function parseMarkdown(dir: string) {
 				children.push(walkSync(filePath));
 			} else if (path.extname(filename) === '.md') {
 				// If the current item is a markdown file, read the file and parse the frontmatter
-				const rawContent = fs.readFileSync(filePath, 'utf-8');
-				const { data } = matter(rawContent);
+				const Entity = getEntityFrontmatter(filePath, content);
+				const slug = getEntitySlug(filePath);
 				// browserPath is the path relative to the browser
 				const browserPath = filePath
 					.replaceAll('\\', '/')
 					.replace('src/routes/content', '/content')
 					.replace('+page.md', '');
 				currentObject = {
-					...(data as Partial<EntityMeta>),
-					slug: data.slug || path.basename(currentDir).replaceAll(' ', '-').toLowerCase(),
-					type: data.type,
-					title: data.title || 'Untitled',
-					tags: data.tags || [],
+					...Entity,
+					slug,
 					address: filePath,
 					foldername: path.basename(currentDir),
 					browserPath,
@@ -46,14 +43,13 @@ export function parseMarkdown(dir: string) {
 		});
 
 		if (children.length > 0 || currentObject.type != 'institution') {
-			currentObject.children = sortChildrenByDependency(children);
+			currentObject.children = children;
 		}
 
 		return currentObject;
 	}
 
 	const institutes = fs.readdirSync(dir);
-	console.log('institutes:', institutes);
 	const data = institutes.map((institute) => {
 		const instituteDir = path.join(dir, institute);
 		return walkSync(instituteDir);

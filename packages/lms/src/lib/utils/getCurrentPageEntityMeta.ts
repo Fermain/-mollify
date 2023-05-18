@@ -4,8 +4,13 @@ import type { EntityMeta } from '@mollify/types';
  * Recursively get the current object from the path
  * @param obj the object to search
  * @param keys the keys to search for
+ * @param stopAtCourse whether to stop at type course or not
  */
-export function getCurrent(contentArray: EntityMeta[], keys: string[]): EntityMeta | undefined {
+export function getCurrentPageEntityMeta(
+	contentArray: EntityMeta[],
+	keys: string[],
+	stopAtCourse = true
+): EntityMeta | undefined {
 	if (!contentArray || !keys || keys.length === 0 || contentArray.length === 0) {
 		return undefined;
 	}
@@ -17,7 +22,7 @@ export function getCurrent(contentArray: EntityMeta[], keys: string[]): EntityMe
 	}
 
 	// If the current object is a course, module, or lesson, return it
-	if (currentObject[0].type == 'course') {
+	if (currentObject[0].type == 'course' && stopAtCourse) {
 		return currentObject[0];
 	}
 
@@ -28,7 +33,7 @@ export function getCurrent(contentArray: EntityMeta[], keys: string[]): EntityMe
 			if (child.length === 0 || child.length > 1) {
 				return undefined;
 			}
-			return getCurrent(child, rest);
+			return getCurrentPageEntityMeta(child, rest);
 		}
 	} else if (currentObject[0].foldername === keys[0]) {
 		return currentObject[0];

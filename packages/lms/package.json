@@ -38,6 +38,9 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@mollify/molly": "^0.0.1",
+		"fuse.js": "^6.6.2",
+		"graphql": "^16.6.0",
 		"remark-gfm": "^3.0.1"
 	}
 }
