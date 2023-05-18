@@ -26,7 +26,7 @@
 	<svelte:fragment slot="sidebarLeft">
 		<IconNav />
 	</svelte:fragment>
-	<div class="content">
+	<div class="relative">
 		<Main>
 			<slot />
 		</Main>
@@ -39,9 +39,3 @@
 		</Footer>
 	</svelte:fragment>
 </AppShell>
-
-<style>
-	.content {
-		position: relative;
-	}
-</style>
