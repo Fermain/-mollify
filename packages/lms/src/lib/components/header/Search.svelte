@@ -66,7 +66,7 @@
 		<button class="variant-filled-primary">Submit</button>
 	</form>
 	{#if searchResults.length > 0}
-		<div class="card w-full max-w-sm max-h-48 p-4 overflow-y-auto">
+		<div class="card w-full max-w-sm max-h-48 p-4 overflow-y-auto absolute">
 			<Autocomplete bind:input={searchQuery} options={searchResults} on:selection={handleSearchSelection} />
 		</div>
 	{/if}
