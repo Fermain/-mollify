@@ -2,10 +2,11 @@ import { Command } from 'commander';
 import { prompt } from 'enquirer';
 import * as path from 'path';
 import moveEntity from '../../actions/moveEntity';
-import { EntityType } from '@mollify/types';
+import { EntityMeta, EntityType } from '@mollify/types';
 import { ENTITY_HIERARCHY } from '../../constants';
 import { validParents } from '../../utilities/validParents';
 import listEntities from '../../actions/listEntities';
+import { log } from 'console';
 
 async function moveEntityPrompt(entityType?: EntityType, entityName?: string) {
   const { entityTypeToMove } = entityType
@@ -17,12 +18,7 @@ async function moveEntityPrompt(entityType?: EntityType, entityName?: string) {
         choices: ENTITY_HIERARCHY.map((entity) => entity.name),
       });
 
-  const parentTypes = validParents(entityTypeToMove)
-
-  const choices = await listEntities(entityTypeToMove)
-
-    console.log(parentTypes, choices);
-    
+  const choices = await listEntities(entityTypeToMove);
 
   const { entityToMove } = entityName
     ? { entityToMove: entityName }
@@ -30,34 +26,48 @@ async function moveEntityPrompt(entityType?: EntityType, entityName?: string) {
         type: 'select',
         name: 'entityToMove',
         message: 'Select the entity to move:',
-        choices: choices.map((entity) => entity.title),
+        choices: choices.map((entity) => entity.address),
       });
 
-  const destinationTypeHierarchy = ENTITY_HIERARCHY.find(
-    (entity) => entity.name !== entityTypeToMove,
-  );
-  const destinationType = destinationTypeHierarchy?.name;
+  const sourcePath = path.dirname(entityToMove);
 
-  const { destinationEntity } = await prompt<{ destinationEntity: string }>({
+  const parentTypes = validParents(entityTypeToMove);
+
+  if (!parentTypes || !parentTypes.length) {
+    throw new Error('No valid parent types found');
+  }
+
+  const validParentEntities = (
+    await Promise.all(parentTypes.map((type) => listEntities(type)))
+  ).flatMap((entities) => entities);
+
+  if (!validParentEntities.length) {
+    throw new Error('No valid parent entities found');
+  }
+
+  const { newParentEntity } = await prompt<{ newParentEntity: string }>({
     type: 'select',
-    name: 'destinationEntity',
+    name: 'newParentEntity',
     message: 'Select the destination entity:',
-    choices: destinationTypeHierarchy
-      ? destinationTypeHierarchy.children.map((entity) => path.dirname(entity))
-      : [],
+    choices: validParentEntities.map((entity) => entity.address),
   });
 
-  if (destinationType && destinationEntity) {
-    await moveEntity(
-      entityTypeToMove,
-      entityToMove,
-      destinationType,
-      destinationEntity,
-    );
-  } else {
-    console.error('Error moving entity: Invalid destination');
-    process.exit(1);
+  const destinationPath = path.dirname(newParentEntity);
+
+  console.table({
+    source: sourcePath,
+    destination: destinationPath,
+  })
+
+  if (await prompt<{ confirm: boolean }>({
+    type: 'confirm',
+    name: 'confirm',
+    message: 'Are you sure you want to move this entity?',
+    }).then(({ confirm }) => !confirm)) {
+      throw new Error('Move cancelled');
   }
+
+  await moveEntity(sourcePath, destinationPath);
 }
 
 export default new Command('move')

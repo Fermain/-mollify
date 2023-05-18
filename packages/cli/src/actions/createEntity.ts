@@ -1,15 +1,37 @@
 import path from 'path';
-import type { EntityMeta } from '@mollify/types';
+import fs from 'fs-extra';
 import { copyTemplate } from '../utilities';
-import { ENTITY_FILE } from '../constants';
+import { EntityBase, EntityMeta } from '@mollify/types';
 
-export default async function createEntity(entity: EntityMeta, destination = '') {
-  const templateName = entity.type.toLowerCase();
-  const fileName = path.join(entity.slug, ENTITY_FILE);
-  const destinationPath = path.join(destination, fileName);
+export default async function createEntity(
+  entityMeta: EntityBase & { slug: string },
+): Promise<EntityMeta> {
 
-  await copyTemplate(templateName, destinationPath, entity);
-  console.log(
-    `Successfully created a new ${entity.type} at ${destinationPath}`,
-  );
+  console.log(entityMeta);
+  
+  // Ensure type exists
+  if (!entityMeta.type) {
+    throw new Error("Entity type cannot be undefined");
+  }
+
+  // Get the entity type in lowercase
+  const templateName = entityMeta.type.toLowerCase();
+
+  // Build the destination path
+  const destinationDir = path.join(process.cwd(), entityMeta.slug);
+
+  // Ensure the destination directory exists
+  await fs.ensureDir(destinationDir);
+
+  // Copy the template file to the destination
+  await copyTemplate(templateName, destinationDir, entityMeta);
+
+  return {
+    type: entityMeta.type,
+    title: entityMeta.title,
+    slug: entityMeta.slug,
+    address: destinationDir,
+    children: [],
+    tags: [],
+  };
 }

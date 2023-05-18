@@ -1,88 +1,71 @@
+// @mollify/cli/src/commands/create/index.ts
 import { Command } from 'commander';
 import { prompt } from 'enquirer';
-import { EntityType, EntityMeta } from '@mollify/types';
 import createEntity from '../../actions/createEntity';
+import { EntityType } from '@mollify/types';
 import { slugger } from '../../utilities';
 
-async function createEntityPrompt(
-  entityType?: EntityType,
-  destination = '',
-  passedTitle?: string,
-  passedSlug?: string,
-) {
-  entityType =
-    entityType ??
-    (
-      await prompt<{ entityType: EntityType }>([
-        {
+export default new Command('create')
+  .arguments('[entity-type] [entity-name] [entity-slug]')
+  .description('Create a new entity')
+  .action(
+    async (
+      entityType?: EntityType,
+      entityTitle?: string,
+      entitySlug?: string,
+    ) => {
+      // If entityType is not provided, prompt for it
+      if (!entityType) {
+        const response = await prompt<{ entityType: EntityType }>({
           type: 'select',
           name: 'entityType',
-          message: 'Which entity type do you want to create?',
-          choices: Object.values(EntityType),
-        },
-      ])
-    ).entityType;
+          message: 'Select the type of entity you want to create:',
+          choices: Object.keys(EntityType),
+        });
+        entityType = response.entityType;
+      }
 
-  const title =
-    passedTitle ??
-    (
-      await prompt<{ title: string }>([
-        {
+      // If entityName is not provided, prompt for it
+      if (!entityTitle) {
+        const response = await prompt<{ entityName: string }>({
           type: 'input',
-          name: 'title',
-          message: `What is the name of the ${entityType}?`,
-          required: true,
-          validate(input) {
-            return input.length > 0;
-          },
-        },
-      ])
-    ).title;
+          name: 'entityName',
+          message: 'What is the name of the entity?',
+        });
+        entityTitle = response.entityName;
+      }
 
-  const slug =
-    passedSlug ??
-    (
-      await prompt<{ slug: string }>([
-        {
+      if (!entitySlug) {
+        const slugPrompt = {
           type: 'input',
           name: 'slug',
           required: true,
-          validate(input) {
+          validate(input: string) {
             return input.length > 0;
           },
           message: `What is the slug of the ${entityType}?`,
-          initial: slugger(title),
-        },
-      ])
-    ).slug;
+          initial: slugger(entityTitle),
+        };
 
-  const entity: EntityMeta = {
-    title,
-    slug,
-    type: entityType,
-    children: [],
-    address: '',
-    tags: [],
-  };
+        const { slug: promptedSlug } = await prompt<{ slug: string }>(
+          slugPrompt,
+        );
+        entitySlug = promptedSlug;
+      }
 
-  await createEntity(entity, destination);
-}
-
-export default new Command('create')
-  .arguments('[destination] [title] [slug] [entity-type]')
-  .description('Create a new entity')
-  .action(
-    (
-      destination: string,
-      title?: string,
-      slug?: string,
-      entityType?: EntityType,
-    ) => {
-      createEntityPrompt(entityType, destination, title, slug)
-        .then(() => console.log('EntityMeta created'))
-        .catch((error) => {
-          console.error(`Error creating entity: ${error.message}`);
-          process.exit(1);
+      try {
+        const entity = await createEntity({
+          type: entityType,
+          title: entityTitle,
+          slug: entitySlug!,
+          tags: [],
         });
+        console.log(
+          `Successfully created a new ${entity.type} at ${entity.slug}`,
+        );
+      } catch (error) {
+        console.error(`Error creating entity: ${error}`);
+        process.exit(1);
+      }
     },
   );

@@ -1,29 +1,62 @@
 import path from 'path';
 import fs from 'fs-extra';
 import matter from 'gray-matter';
-import type { Entity, EntityBase, EntityMeta } from '@mollify/types';
+import type { EntityBase } from '@mollify/types';
 
 // Get the path to the template file for the specified entity type
 export function getTemplatePath(entityType: string): string {
-  return path.join(__dirname, '../../', 'src/templates', entityType, '+page.md');
+  return path.join(__dirname, '../../', 'src/templates', entityType);
 }
 
 // Copy the template file for the specified entity type to the destination directory
 // and optionally replace template variables with data
 export async function copyTemplate(
-  entityType: string,
-  destination: string,
-  entity?: EntityBase
+  templatePath: string,
+  destinationDir: string,
+  entity?: EntityBase,
 ): Promise<void> {
-  const templatePath = getTemplatePath(entityType);
-  let content = await fs.readFile(templatePath, 'utf-8');
+  templatePath = getTemplatePath(templatePath);
+  console.log(`Copying from ${templatePath} to ${destinationDir}`);
 
-  if (entity) {
-    content = replaceTemplateVariables(content, entity);
+  // Ensure the destination directory exists
+  await fs.ensureDir(destinationDir);
+
+  // Read the template directory and get the files
+  const files = await fs.readdir(templatePath);
+
+  // Iterate over each file
+  for (const file of files) {
+    const sourcePath = path.join(templatePath, file);
+
+    // Form the destination path as a file in the destination directory
+    // Use the original filename instead of replacing with '+page.md'
+    let destPath = path.join(destinationDir, file);
+
+    // Check if this is a directory
+    if (fs.lstatSync(sourcePath).isDirectory()) {
+      console.log(`${sourcePath} is a directory`);
+
+      // If so, recursively call this function
+      await copyTemplate(sourcePath, destPath, entity);
+    } else {
+      console.log(`${sourcePath} is a file`);
+
+      // If it's a file, read it
+      let content = await fs.readFile(sourcePath, 'utf-8');
+
+      // Replace variables if entity is provided
+      if (entity && file === '+page.md') {
+        content = replaceTemplateVariables(content, entity);
+      }
+
+      console.log(`Source: ${sourcePath}`);
+      console.log(`Dest: ${destPath}`);
+
+      // Ensure the destination file will exist and write the content to it
+      await fs.ensureFile(destPath);
+      await fs.writeFile(destPath, content, 'utf-8');
+    }
   }
-
-  await fs.ensureFile(destination);
-  await fs.writeFile(destination, content, 'utf-8');
 }
 
 // Replace template variables with data
