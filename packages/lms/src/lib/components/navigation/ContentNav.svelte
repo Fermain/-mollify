@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { files } from '$lib/stores/files';
-	import { getCurrent } from '$lib/utils/getCurrent';
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
 	import RecursiveNav from './RecursiveNav.svelte';
 	import CourseNav from './CourseNav.svelte';
+	import { getCurrentPageEntityMeta } from '$lib/utils/getCurrentPageEntityMeta';
 	import type { EntityMeta } from '@mollify/types';
 	import { Accordion, AccordionItem } from '@skeletonlabs/skeleton';
 
@@ -17,7 +17,7 @@
 
 	onMount(async () => {
 		if ($files === null) {
-			const response = await fetch('/api/parseMarkdown');
+			const response = await fetch('/api/getEntityMetaTree');
 			const data = await response.json();
 			files.set(data);
 		}
@@ -32,13 +32,13 @@
 
 	if (browser) {
 		updatePath();
-		current = getCurrent(institutes, pathArray);
+		current = getCurrentPageEntityMeta(institutes, pathArray);
 	}
 
 	$: {
 		if ($files) {
 			institutes = $files;
-			current = getCurrent(institutes, pathArray);
+			current = getCurrentPageEntityMeta(institutes, pathArray);
 		}
 		page.subscribe((data) => {
 			updatePath();
