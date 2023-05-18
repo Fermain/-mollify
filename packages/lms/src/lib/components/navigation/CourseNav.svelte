@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { slide } from 'svelte/transition';
+	import { Accordion, AccordionItem } from '@skeletonlabs/skeleton';
 	export let data: Record<string, any> = {};
 	export let indent = 0.125;
 	const path = '/content/';
@@ -17,41 +18,39 @@
 	}
 </script>
 
-<div>
-	<h3 style="padding-left: {indent}rem">
-		{data.title}
-	</h3>
-	<a
-		href={`${data.browserPath}`}
-		style="padding-left: {indent + 1}rem"
-		class={currentPath === data.foldername ? 'current' : ''}>Overview</a
-	>
-	{#each data.children as module}
-		<h3
-			on:click={() => toggleOpen(module.title)}
-			on:keydown={(event) => handleKeydown(event, module.title)}
-			tabindex="0"
-		>
-			{module.title}
-		</h3>
-		{#if open === module.title}
-			<div transition:slide={{ duration: 300 }}>
-				<a
-					href={module.browserPath}
-					style="padding-left: {indent + 1}rem"
-					class={currentPath === module.foldername ? 'current' : ''}>Overview</a
-				>
-				{#each module.children as lesson}
-					<a
-						href={lesson.browserPath}
-						style="padding-left: {indent + 2}rem"
-						class={currentPath === lesson.foldername ? 'current' : ''}>{lesson.title}</a
-					>
-				{/each}
-			</div>
-		{/if}
-	{/each}
-</div>
+<Accordion>
+	<AccordionItem>
+		<svelte:fragment slot="summary">{data.title}</svelte:fragment>
+		<div slot="content">
+			<a
+				href={`${data.browserPath}`}
+				style="padding-left: {indent + 1}rem"
+				class={currentPath === data.foldername ? 'current' : ''}>Overview</a
+			>
+			{#each data.children as module}
+				<Accordion>
+					<AccordionItem>
+						<svelte:fragment slot="summary">{module.title}</svelte:fragment>
+						<div slot="content">
+							<a
+								href={module.browserPath}
+								style="padding-left: {indent + 1}rem"
+								class={currentPath === module.foldername ? 'current' : ''}>Overview</a
+							>
+							{#each module.children as lesson}
+								<a
+									href={lesson.browserPath}
+									style="padding-left: {indent + 2}rem"
+									class={currentPath === lesson.foldername ? 'current' : ''}>{lesson.title}</a
+								>
+							{/each}
+						</div>
+					</AccordionItem>
+				</Accordion>
+			{/each}
+		</div>
+	</AccordionItem>
+</Accordion>
 
 <style>
 	h3 {
