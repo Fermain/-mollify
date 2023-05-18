@@ -2,7 +2,7 @@
 	import '@skeletonlabs/skeleton/themes/theme-skeleton.css';
 	import '@skeletonlabs/skeleton/styles/skeleton.css';
 	import '../app.postcss';
-	import { AppShell, Drawer } from '@skeletonlabs/skeleton';
+	import { AppShell, Drawer, Toast } from '@skeletonlabs/skeleton';
 	import callouts from 'remark-emoji-callout';
 	import Main from '$lib/components/content/Main.svelte';
 	import Footer from '$lib/components/footer/Footer.svelte';
@@ -38,4 +38,5 @@
 			<Reader />
 		</Footer>
 	</svelte:fragment>
+	<Toast position="t" />
 </AppShell>
