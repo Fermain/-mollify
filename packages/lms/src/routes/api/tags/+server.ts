@@ -1,8 +1,8 @@
-import { parseMarkdown } from '$lib/utils/parseMarkdown';
+import { getEntityMetaTree } from '$lib/utils/getEntityMetaTree';
 import { flattenData } from '$lib/utils/fuseSearch/flattenData';
 
 export async function POST({ request }): Promise<object> {
-	const files = parseMarkdown('src/routes/content');
+	const files = getEntityMetaTree('src/routes/content');
 	if (!files) return new Response(JSON.stringify({ error: 'No files found' }));
 	const flatFiles = flattenData(files);
 	const req = await request.json();
