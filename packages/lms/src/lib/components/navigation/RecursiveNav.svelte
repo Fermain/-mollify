@@ -1,4 +1,5 @@
 <script lang="ts">
+	import type { EntityMeta } from '@mollify/types';
 	import { slide } from 'svelte/transition';
 	import type { EntityMeta } from '@mollify/types';
 

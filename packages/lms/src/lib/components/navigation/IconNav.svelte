@@ -14,18 +14,28 @@
 		height: 100%;
 		background-color: var(--primary);
 		color: var(--text-secondary);
-		padding: var(--spacing-m) 0;
+		grid-area: icons;
+
+		container-name: wrapper;
+		container-type: inline-size;
 	}
 
 	.icon-nav {
-		grid-area: icons;
 		display: grid;
 		justify-items: center;
 		gap: var(--spacing-m);
+		padding: var(--spacing-m) 0;
 		height: min-content;
 	}
 
-	i {
-		height: min-content;
+	@container (min-width: 100px) {
+		.wrapper {
+			.icon-nav {
+				display: flex;
+				align-items: center;
+				justify-content: space-evenly;
+				height: 100%;
+			}
+		}
 	}
 </style>
