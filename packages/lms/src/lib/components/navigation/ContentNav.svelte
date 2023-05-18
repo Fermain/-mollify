@@ -7,7 +7,7 @@
 	import RecursiveNav from './RecursiveNav.svelte';
 	import CourseNav from './CourseNav.svelte';
 	import type { EntityMeta } from '@mollify/types';
-	import { Accordion } from '@skeletonlabs/skeleton';
+	import { Accordion, AccordionItem } from '@skeletonlabs/skeleton';
 
 	let institutes: EntityMeta[] | null = [];
 	let current: EntityMeta | undefined;
@@ -48,21 +48,23 @@
 </script>
 
 <div class="outer-wrapper">
-	<div class="inner-wrapper">
+	<Accordion>
 		{#if institutes}
-			<nav class="nav2">
-				<div class="wrapper">
-					<h2>Recursive Nav</h2>
+			<AccordionItem>
+				<svelte:fragment slot="summary">Recursive Nav</svelte:fragment>
+				<div slot="content">
 					<RecursiveNav data={institutes} {currentPath} />
 				</div>
-			</nav>
+			</AccordionItem>
 		{/if}
 		{#if isCourse}
-			<nav class="nav1">
+			<AccordionItem>
 				<!-- If current path is to a course/module/lesson -->
-				<h2>Course Nav</h2>
-				<CourseNav data={current} {currentPath} />
-			</nav>
+				<svelte:fragment slot="summary">Course Nav</svelte:fragment>
+				<div slot="content">
+					<CourseNav data={current} {currentPath} />
+				</div>
+			</AccordionItem>
 		{/if}
-	</div>
+	</Accordion>
 </div>
