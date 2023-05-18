@@ -5,7 +5,6 @@ export async function POST({ request }): Promise<object> {
 	const files = parseMarkdown('src/routes/content');
 	if (!files) return new Response(JSON.stringify({ error: 'No files found' }));
 	const flatFiles = flattenData(files);
-	console.log(flatFiles);
 	const req = await request.json();
 	const { tag } = req;
 	const filteredFiles = flatFiles.filter((file) =>
