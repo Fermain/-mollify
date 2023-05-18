@@ -78,7 +78,7 @@
 		container.classList.add('text-base');
 		container.setAttribute('data-font-size-index', '2');
 		const userFeedback: ToastSettings = {
-			message: 'Font size reseted',
+			message: 'Font size reset successfully',
 			background: 'variant-filled-success',
 			autohide: false
 		};
