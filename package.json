@@ -5,6 +5,7 @@
     "packages/*"
   ],
   "devDependencies": {
+    "@tailwindcss/forms": "^0.5.3",
     "lerna": "^6.6.1"
   }
 }
