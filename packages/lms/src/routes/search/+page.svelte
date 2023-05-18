@@ -78,7 +78,6 @@
 			searchTypes = processedQuery.filters.types;
 			searchTags = processedQuery.filters.tags;
 			searchTagsString = searchTags.join(', ');
-			console.log(searchTags);
 			if ($files !== null) {
 				// check if institution exists
 				isMatch = $files.some(
@@ -115,7 +114,6 @@
 			selectedInstitution,
 			searchQueryExact
 		);
-		console.log(rawSearchQuery);
 		updateQueryString({
 			query: rawSearchQuery
 		});

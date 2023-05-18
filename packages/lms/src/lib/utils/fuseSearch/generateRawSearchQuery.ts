@@ -42,6 +42,5 @@ export function generateRawSearchQuery(
 	if (selectedInstitution !== 'all') {
 		rawSearchQuery += ` institution:"${selectedInstitution}"`;
 	}
-	console.log(rawSearchQuery);
 	return rawSearchQuery;
 }
