@@ -34,7 +34,7 @@
 		searchResults = [];
 	}
 
-	function handleClickOutside(event) {
+	function handleClickOutside(event: object) {
 		if (!event.target.closest('.wrapper') && !event.target.closest('.search-items')) {
 			handlePageChange();
 		}

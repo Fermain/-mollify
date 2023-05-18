@@ -1,5 +1,5 @@
 import Fuse from 'fuse.js';
-import { parseMarkdownSearch } from '$lib/utils/parseMarkdownSearch';
+import { getEntityMetaTree } from '$lib/utils/getEntityMetaTree';
 import { removeStopWords } from './removeStopWords';
 import { flattenData, type FuseItem } from './flattenData';
 
@@ -19,7 +19,7 @@ export async function search(
 	searchQuery: string,
 	filters = { institution: 'all', type: [], exact: null }
 ) {
-	const data = parseMarkdownSearch('src/routes/content', true);
+	const data = getEntityMetaTree('src/routes/content', true);
 
 	//filter institution
 	let dataInstitutionFilter = data;
