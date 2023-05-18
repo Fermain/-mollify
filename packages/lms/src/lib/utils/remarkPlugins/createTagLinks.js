@@ -16,7 +16,10 @@ export function createTagLinks() {
 				if (h1Index !== -1) {
 					// Convert tags to markdown links and insert them after the h1
 					tags.forEach((tag, i) => {
-						const tagLinkNode = u('html', `<a href="/tags/${tag}">${tag}</a>`);
+						const tagLinkNode = u(
+							'html',
+							`<a href="/tags/${tag}" style="text-decoration: none; color: black; line-height: 2.1; padding: 0.25rem; background-color: lightblue; border-radius: 0.25rem;" >${tag}</a>`
+						);
 						tree.children.splice(h1Index + 1 + i, 0, tagLinkNode);
 					});
 				}
