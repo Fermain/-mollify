@@ -8,6 +8,7 @@
 	let searchResults: String[] = [];
 	let timer: string | number | NodeJS.Timeout | undefined;
 	let inputFocused = false;
+	let returnedResults = false;
 
 	function handleSubmit(event: { preventDefault: () => void }) {
 		event.preventDefault();
@@ -18,12 +19,14 @@
 
 	const debounceSearch = async () => {
 		clearTimeout(timer);
+		returnedResults = false;
 		if (searchQuery.length >= 3) {
 			await new Promise((resolve) => {
 				timer = setTimeout(async () => {
 					try {
 						const { query, filters } = await parseRawSearchQuery(searchQuery);
 						searchResults = await getSearchResults(query, filters);
+						returnedResults = true;
 					} catch (error) {
 						console.log(error);
 					}
@@ -71,7 +74,7 @@
 			{/each}
 		</div>
 	{/if}
-	{#if searchResults.length === 0 && inputFocused && searchQuery.length >= 3}
+	{#if searchResults.length === 0 && inputFocused && searchQuery.length >= 3 && returnedResults}
 		<div class="search-items">
 			<p class="no-results">No Results Found</p>
 		</div>
