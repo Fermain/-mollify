@@ -13,6 +13,12 @@
 		dispatch('pageChange');
 		goto(data.browserPath);
 	}}
+	on:keydown={(evt) => {
+		if (evt.key === 'Enter') {
+			dispatch('pageChange');
+			goto(data.browserPath);
+		}
+	}}
 >
 	{data.title}
 </div>

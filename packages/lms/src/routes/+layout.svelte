@@ -1,12 +1,12 @@
 <script lang="ts">
 	import '../lib/styles/styles.scss';
+	import { Molly } from '@mollify/molly';
 	import callouts from "remark-emoji-callout";
 	import Main from '$lib/components/content/Main.svelte';
 	import Footer from '$lib/components/footer/Footer.svelte';
 	import Logo from '$lib/components/header/Logo.svelte';
 	import Reader from '$lib/components/header/Reader.svelte';
 	import Settings from '$lib/components/header/Settings.svelte';
-	import Molly from '$lib/components/molly/Molly.svelte';
 	import ContentNav from '$lib/components/navigation/ContentNav.svelte';
 	import IconNav from '$lib/components/navigation/IconNav.svelte';
 	import Header from '$lib/components/header/Header.svelte';
@@ -20,7 +20,6 @@
 		<Search />
 		<Settings />
 	</Header>
-	<Molly />
 	<IconNav />
 	<Main>
 		<slot />
@@ -29,6 +28,7 @@
 	<Footer>
 		<Ego />
 		<Reader />
+		<Molly endpoint="/api/molly" />
 	</Footer>
 </div>
 

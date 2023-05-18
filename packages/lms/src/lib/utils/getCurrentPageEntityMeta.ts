@@ -4,8 +4,9 @@ import type { EntityMeta } from '@mollify/types';
  * Recursively get the current object from the path
  * @param obj the object to search
  * @param keys the keys to search for
+ * @param stopAtCourse whether to stop at type course or not
  */
-export function getCurrent(
+export function getCurrentPageEntityMeta(
 	contentArray: EntityMeta[],
 	keys: string[],
 	stopAtCourse = true
@@ -32,7 +33,7 @@ export function getCurrent(
 			if (child.length === 0 || child.length > 1) {
 				return undefined;
 			}
-			return getCurrent(child, rest);
+			return getCurrentPageEntityMeta(child, rest);
 		}
 	} else if (currentObject[0].foldername === keys[0]) {
 		return currentObject[0];
