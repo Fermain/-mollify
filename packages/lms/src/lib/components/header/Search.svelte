@@ -11,7 +11,6 @@
 	let returnedResults = false;
 
 	function handleSubmit(event: { preventDefault: () => void }) {
-		event.preventDefault();
 		goto(`/search?query=${encodeURIComponent(searchQuery)}`);
 		searchQuery = '';
 	}
@@ -49,7 +48,7 @@
 
 <svelte:window on:click={handleClickOutside} />
 <div class="wrapper">
-	<form class="search" on:submit={handleSubmit}>
+	<form class="search" on:submit|preventDefault={handleSubmit}>
 		<input
 			type="search"
 			placeholder="Search markdown content"
