@@ -7,6 +7,8 @@
 	let searchQuery = '';
 	let searchResults: String[] = [];
 	let timer: string | number | NodeJS.Timeout | undefined;
+	let inputFocused = false;
+	let returnedResults = false;
 
 	function handleSubmit(event: { preventDefault: () => void }) {
 		event.preventDefault();
@@ -17,12 +19,14 @@
 
 	const debounceSearch = async () => {
 		clearTimeout(timer);
+		returnedResults = false;
 		if (searchQuery.length >= 3) {
 			await new Promise((resolve) => {
 				timer = setTimeout(async () => {
 					try {
 						const { query, filters } = await parseRawSearchQuery(searchQuery);
 						searchResults = await getSearchResults(query, filters);
+						returnedResults = true;
 					} catch (error) {
 						console.log(error);
 					}
@@ -54,14 +58,25 @@
 			on:input={async () => {
 				debounceSearch();
 			}}
+			on:focus={() => {
+				inputFocused = true;
+			}}
+			on:blur={() => {
+				inputFocused = false;
+			}}
 		/>
 		<button>Search</button>
 	</form>
-	{#if searchResults.length > 0}
+	{#if searchResults.length > 0 && inputFocused}
 		<div class="search-items">
 			{#each searchResults as item, i}
 				<SearchItem data={item} on:pageChange={handlePageChange} />
 			{/each}
+		</div>
+	{/if}
+	{#if searchResults.length === 0 && inputFocused && searchQuery.length >= 3 && returnedResults}
+		<div class="search-items">
+			<p class="no-results">No Results Found</p>
 		</div>
 	{/if}
 </div>
@@ -89,5 +104,11 @@
 		padding: var(--spacing-s);
 		transition: max-height 0.1s ease-in-out;
 		overflow-x: hidden;
+	}
+
+	.no-results {
+		padding: var(--spacing-s) var(--spacing-xxs);
+		background-color: var(--background-primary);
+		border-radius: var(--spacing-xxs);
 	}
 </style>

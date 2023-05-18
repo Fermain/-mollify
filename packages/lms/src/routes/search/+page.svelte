@@ -78,7 +78,6 @@
 			searchTypes = processedQuery.filters.types;
 			searchTags = processedQuery.filters.tags;
 			searchTagsString = searchTags.join(', ');
-			console.log(searchTags);
 			if ($files !== null) {
 				// check if institution exists
 				isMatch = $files.some(
@@ -106,7 +105,10 @@
 	function handleSubmit(event: { preventDefault: () => void }) {
 		event.preventDefault();
 		updateSearchResults();
-		searchTags = searchTagsString.split(', ');
+		searchTagsString.trim() === ''
+			? (searchTags = [])
+			: (searchTags = searchTagsString.split(', '));
+
 		const rawSearchQuery = generateRawSearchQuery(
 			searchQuery,
 			searchExclusions,
@@ -115,24 +117,21 @@
 			selectedInstitution,
 			searchQueryExact
 		);
-		console.log(rawSearchQuery);
 		updateQueryString({
 			query: rawSearchQuery
 		});
 		toggleOpen();
 	}
 
-	//kitchen sink
-	// $: searchResults;
-	// $: $files;
-	// $: filter;
-	// $: isMatch;
-
 	// open/close advanced search options
 	let open = true;
 	function toggleOpen(): void {
 		open = !open;
 	}
+
+	$: searchTagsString.trim() === ''
+		? (searchTags = [])
+		: (searchTags = searchTagsString.split(', '));
 </script>
 
 <section>
