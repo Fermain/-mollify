@@ -44,13 +44,13 @@
 		</h2>
 		<div class="inst-grid">
 			{#each current.children as child}
-				<div class="block card p-4">
+				<div class="card p-4">
 					<h3 class="card-header">{child.title}</h3>
 					{#if child.url}
 						<img src={child.url} alt={child.title} />
 					{/if}
 					<p class="p-4">{child.summary}</p>
-					<a class="card-footer btn variant-filled bg-primary-500" href={child.browserPath}>View Details</a>
+					<a class="card-footer btn variant-filled bg-primary-500 p-2" href={child.browserPath}>View Details</a>
 				</div>
 			{/each}
 		</div>

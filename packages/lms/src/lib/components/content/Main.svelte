@@ -3,7 +3,7 @@
 </script>
 
 <main>
-	<div class="wrapper">
+	<div class="prose">
 		<ProgrammeNav>
 			<slot />
 		</ProgrammeNav>
@@ -16,6 +16,7 @@
 		overflow-y: auto;
 		max-width: 110ch;
 		container-type: inline-size;
+		padding: 0 3rem;
 
 		/* for firefox users*/
 		scrollbar-color: var(--primary) var(--background-primary);
