@@ -12,7 +12,6 @@
 
 	function handleSubmit(event: { preventDefault: () => void }) {
 		event.preventDefault();
-		console.log(event);
 		goto(`/search?query=${encodeURIComponent(searchQuery)}`);
 		searchQuery = '';
 	}
