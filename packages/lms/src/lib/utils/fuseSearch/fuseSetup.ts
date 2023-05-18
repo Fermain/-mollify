@@ -30,7 +30,9 @@ export async function search(
 	//filter institution
 	let dataInstitutionFilter = data;
 	if (filters.institution !== 'all') {
-		dataInstitutionFilter = data.filter((item) => item.title === filters.institution);
+		dataInstitutionFilter = data.filter(
+			(item) => item.title.toLowerCase() === filters.institution?.toLowerCase()
+		);
 	}
 
 	//flatten data
@@ -68,6 +70,7 @@ export async function search(
 	if (filters.exclusions?.length > 0) {
 		filterExclusions = reducedData.filter((item: FuseItem) => {
 			// Check for any excluded words in the title
+			filters.exclusions = filters.exclusions.map((word: string) => word.toLowerCase());
 			const titleWords = item.title.toLowerCase().split(' ');
 			if (titleWords.some((word: string) => filters.exclusions.includes(word.toLowerCase()))) {
 				return false;
@@ -82,6 +85,13 @@ export async function search(
 
 	let filterTags = filterExclusions;
 	if (filters.tags?.length > 0) {
+		filterExclusions = filterExclusions.map((item) => ({
+			...item,
+			tags: item.tags?.map((tag: string) => tag.toLowerCase())
+		}));
+		filters.tags = filters.tags.map((tag: string) => tag.toLowerCase());
+
+		console.log(filterExclusions[0]?.tags);
 		filterTags = filterExclusions.filter((item) =>
 			item.tags?.some((tag: string) => filters.tags.includes(tag.toLowerCase()))
 		);
