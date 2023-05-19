@@ -1,12 +1,3 @@
 <script lang="ts"></script>
 
-<div class="molly-wrapper">MOLLY</div>
-
-<style>
-	.molly-wrapper {
-		grid-area: molly;
-		position: absolute;
-		bottom: var(--spacing-xl);
-		right: var(--spacing-xl);
-	}
-</style>
+<div class="absolute bottom-5 right-5">MOLLY</div>

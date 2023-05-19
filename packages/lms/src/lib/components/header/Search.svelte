@@ -37,6 +37,7 @@
 
 	function handlePageChange() {
 		searchResults = [];
+		searchQuery = '';
 	}
 
 	function handleClickOutside(event: object) {
@@ -57,6 +58,7 @@
 		<input
 			class="input"
 			type="search"
+			name="autocomplete-search"
 			placeholder="Search markdown content"
 			bind:value={searchQuery}
 			on:input={async () => {
