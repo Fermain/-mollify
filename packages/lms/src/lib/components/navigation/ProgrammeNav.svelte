@@ -38,29 +38,22 @@
 <slot />
 {#if isProgramme}
 	<section>
-		<h2>
+		<h2 class="h2 mb-8">
 			{current?.title}
 			{current?.type === 'institution' ? 'Programmes' : 'Courses'}
 		</h2>
-		<div class="inst-grid">
+		<div class="grid sm:grid-cols-2 gap-4">
 			{#each current.children as child}
-				<div class="block card p-4">
-					<h3 class="card-header">{child.title}</h3>
-					{#if child.url}
-						<img src={child.url} alt={child.title} />
-					{/if}
-					<p class="p-4">{child.summary}</p>
-					<a class="card-footer btn variant-filled bg-primary-500" href={child.browserPath}>View Details</a>
-				</div>
+				<a class="card p-4 variant-ghost-surface" href={child.browserPath}>
+					<header class="card-header border-b pb-2"><h3 class="h3">{child.title}</h3></header>
+					<section>
+						{#if child.url}
+							<img src={child.url} alt={child.title} />
+						{/if}
+						<p class="p-4">{child.summary}</p>
+					</section>
+				</a>
 			{/each}
 		</div>
 	</section>
 {/if}
-
-<style>
-	.inst-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-		grid-gap: 1rem;
-	}
-</style>
