@@ -1,4 +1,4 @@
-import { EntityType } from './types';
+import { EntityType } from '@mollify/types';
 
 export const SYMLINK_DIR = 'content';
 export const ENTITY_FILE = '+page.md';
