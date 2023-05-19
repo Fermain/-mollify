@@ -1,12 +1,39 @@
-import { Command } from 'commander';
+import yargs from 'yargs';
 import { prompt } from 'enquirer';
 import * as path from 'path';
 import moveEntity from '../../actions/moveEntity';
-import { EntityMeta, EntityType } from '@mollify/types';
+import { EntityType } from '@mollify/types';
 import { ENTITY_HIERARCHY } from '../../constants';
 import { validParents } from '../../utilities/validParents';
 import listEntities from '../../actions/listEntities';
 import { log } from 'console';
+
+const moveCommand: yargs.CommandModule = {
+  command: 'move [entity-type] [entity-name]',
+  describe: 'Move an entity to a new location',
+  builder: (yargs) =>
+    yargs
+      .positional('entity-type', {
+        describe: 'Type of the entity',
+        type: 'string',
+      })
+      .positional('entity-name', {
+        describe: 'Name of the entity',
+        type: 'string',
+      }),
+  handler: async (argv) => {
+    const entityType = argv['entity-type'] as EntityType | undefined;
+    const entityName = argv['entity-name'] as string | undefined;
+
+    try {
+      await moveEntityPrompt(entityType, entityName);
+      console.log('Entity moved');
+    } catch (error) {
+      console.error(`Error moving entity: ${(error as Error).message}`);
+      process.exit(1);
+    }
+  },
+};
 
 async function moveEntityPrompt(entityType?: EntityType, entityName?: string) {
   const { entityTypeToMove } = entityType
@@ -17,6 +44,8 @@ async function moveEntityPrompt(entityType?: EntityType, entityName?: string) {
         message: 'Select the type of entity you want to move:',
         choices: ENTITY_HIERARCHY.map((entity) => entity.name),
       });
+
+      log(entityTypeToMove);
 
   const choices = await listEntities(entityTypeToMove);
 
@@ -57,27 +86,19 @@ async function moveEntityPrompt(entityType?: EntityType, entityName?: string) {
   console.table({
     source: sourcePath,
     destination: destinationPath,
-  })
+  });
 
-  if (await prompt<{ confirm: boolean }>({
-    type: 'confirm',
-    name: 'confirm',
-    message: 'Are you sure you want to move this entity?',
-    }).then(({ confirm }) => !confirm)) {
-      throw new Error('Move cancelled');
+  if (
+    await prompt<{ confirm: boolean }>({
+      type: 'confirm',
+      name: 'confirm',
+      message: 'Are you sure you want to move this entity?',
+    }).then(({ confirm }) => !confirm)
+  ) {
+    throw new Error('Move cancelled');
   }
 
   await moveEntity(sourcePath, destinationPath);
 }
 
-export default new Command('move')
-  .arguments('[entity-type] [entity-name]')
-  .description('Move an entity to a new location')
-  .action((entityType?: EntityType, entityName?: string) => {
-    moveEntityPrompt(entityType, entityName)
-      .then(() => console.log('Entity moved'))
-      .catch((error) => {
-        console.error(`Error moving entity: ${error.message}`);
-        process.exit(1);
-      });
-  });
+export default moveCommand;

@@ -1,13 +1,17 @@
 import path from 'path';
 import fs from 'fs-extra';
-import { copyTemplate } from '../utilities';
-import { EntityBase, EntityMeta } from '@mollify/types';
+import { copyTemplate, slugger } from '../utilities';
+import { EntityBase } from '@mollify/types';
 
 export default async function createEntity(
-  entityMeta: EntityBase & { slug: string },
-): Promise<EntityMeta> {
+  entityMeta: EntityBase,
+  location = process.cwd()
+) {
 
   console.log(entityMeta);
+  
+
+  const slug = slugger(entityMeta.title);
   
   // Ensure type exists
   if (!entityMeta.type) {
@@ -18,20 +22,11 @@ export default async function createEntity(
   const templateName = entityMeta.type.toLowerCase();
 
   // Build the destination path
-  const destinationDir = path.join(process.cwd(), entityMeta.slug);
+  const destinationDir = path.join(location, slug);
 
   // Ensure the destination directory exists
   await fs.ensureDir(destinationDir);
 
   // Copy the template file to the destination
   await copyTemplate(templateName, destinationDir, entityMeta);
-
-  return {
-    type: entityMeta.type,
-    title: entityMeta.title,
-    slug: entityMeta.slug,
-    address: destinationDir,
-    children: [],
-    tags: [],
-  };
 }

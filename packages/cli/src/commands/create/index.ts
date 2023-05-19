@@ -1,71 +1,78 @@
-// @mollify/cli/src/commands/create/index.ts
-import { Command } from 'commander';
+import yargs from 'yargs';
 import { prompt } from 'enquirer';
 import createEntity from '../../actions/createEntity';
-import { EntityType } from '@mollify/types';
-import { slugger } from '../../utilities';
+import { EntityBase, EntityType } from '@mollify/types';
 
-export default new Command('create')
-  .arguments('[entity-type] [entity-name] [entity-slug]')
-  .description('Create a new entity')
-  .action(
-    async (
-      entityType?: EntityType,
-      entityTitle?: string,
-      entitySlug?: string,
-    ) => {
-      // If entityType is not provided, prompt for it
-      if (!entityType) {
-        const response = await prompt<{ entityType: EntityType }>({
-          type: 'select',
-          name: 'entityType',
-          message: 'Select the type of entity you want to create:',
-          choices: Object.keys(EntityType),
-        });
-        entityType = response.entityType;
-      }
+const createCommand: yargs.CommandModule = {
+  command: 'create [location]',
+  describe: 'Create a new entity',
+  builder: (yargs) =>
+    yargs
+      .positional('location', {
+        describe: 'Location to create the entity',
+        type: 'string',
+        default: process.cwd(),
+      })
+      .option('type', {
+        alias: 'y',
+        describe: 'Type of the entity',
+        type: 'string',
+        choices: Object.values(EntityType),
+      })
+      .option('title', {
+        alias: 't',
+        describe: 'Title of the entity',
+        type: 'string',
+      })
+      .option('tags', {
+        alias: 'g',
+        describe: 'Tags for the entity',
+        type: 'array',
+        default: [],
+      }),
+  handler: async (argv) => {
+    const {
+      location: locationInput,
+      type: typeInput,
+      title: titleInput,
+      tags: tagsInput,
+    } = argv;
 
-      // If entityName is not provided, prompt for it
-      if (!entityTitle) {
-        const response = await prompt<{ entityName: string }>({
-          type: 'input',
-          name: 'entityName',
-          message: 'What is the name of the entity?',
-        });
-        entityTitle = response.entityName;
-      }
+    const entitySpec: EntityBase = {
+      type: typeInput as EntityType,
+      title: titleInput as string,
+      tags: tagsInput as string[],
+    };
 
-      if (!entitySlug) {
-        const slugPrompt = {
-          type: 'input',
-          name: 'slug',
-          required: true,
-          validate(input: string) {
-            return input.length > 0;
-          },
-          message: `What is the slug of the ${entityType}?`,
-          initial: slugger(entityTitle),
-        };
+    if (!typeInput) {
+      const { type } = await prompt<{ type: EntityType }>({
+        type: 'select',
+        name: 'type',
+        message: 'Select the type of entity you want to create:',
+        choices: Object.keys(EntityType),
+      });
+      entitySpec.type = type;
+    }
 
-        const { slug: promptedSlug } = await prompt<{ slug: string }>(
-          slugPrompt,
-        );
-        entitySlug = promptedSlug;
-      }
+    if (!titleInput) {
+      const { title } = await prompt<{ title: string }>({
+        type: 'input',
+        name: 'title',
+        message: 'What is the name of the entity?',
+      });
+      entitySpec.title = title;
+    }
 
-      try {
-        const entity = await createEntity({
-          type: entityType,
-          title: entityTitle,
-          slug: entitySlug!,
-          tags: [],
-        });
-        console.log(
-          `Successfully created a new ${entity.type} at ${entity.slug}`,
-        );
-      } catch (error) {
-        console.error(`Error creating entity: ${error}`);
-        process.exit(1);
-      }
-    },
-  );
+    try {
+      await createEntity(
+        entitySpec satisfies EntityBase,
+        String(locationInput),
+      );
+    } catch (error) {
+      console.error(`Error creating entity: ${error}`);
+      process.exit(1);
+    }
+  },
+};
+
+export default createCommand;

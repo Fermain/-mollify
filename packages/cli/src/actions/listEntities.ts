@@ -2,7 +2,7 @@ import * as glob from 'glob';
 import path from 'path';
 import fs from 'fs/promises';
 import matter from 'gray-matter';
-import type { EntityType, EntityMeta } from '@mollify/types';
+import type { EntityType, EntityMeta, EntityBase } from '@mollify/types';
 
 export default async function listEntities(
   entityType?: EntityType,
@@ -18,11 +18,12 @@ export default async function listEntities(
       const fileContent = await fs.readFile(file, 'utf8');
       const { data: frontmatter } = matter(fileContent);
       const slug = path.dirname(file).split(path.sep).pop();
+      const base = frontmatter as EntityBase;
 
-      if (entityType === undefined || frontmatter.type === entityType) {
+      if (entityType === undefined || base.type.toLocaleLowerCase() === entityType) {
         if (slug) {
           return {
-            tags: [],
+            tags: frontmatter.title,
             children: [],
             ...frontmatter,
             title: frontmatter.title,
