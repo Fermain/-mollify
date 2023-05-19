@@ -1,6 +1,7 @@
 <script lang="ts">
 	import '@skeletonlabs/skeleton/themes/theme-skeleton.css';
 	import '@skeletonlabs/skeleton/styles/skeleton.css';
+	import '../lib/styles/styles.scss';
 	import '../app.postcss';
 	import { AppShell, Drawer, Toast } from '@skeletonlabs/skeleton';
 	import callouts from 'remark-emoji-callout';

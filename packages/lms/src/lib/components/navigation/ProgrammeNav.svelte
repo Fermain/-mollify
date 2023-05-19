@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { files } from '$lib/stores/files';
-	import { getCurrent } from '$lib/utils/getCurrent';
+	import { getCurrentPageEntityMeta } from '$lib/utils/getCurrentPageEntityMeta';
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
 	import type { EntityMeta } from '@mollify/types';
@@ -25,7 +25,7 @@
 		const objectPath = path.replace('/content/', '');
 		pathArray = objectPath.split('/');
 		let currentPath = pathArray[pathArray.length - 1];
-		current = getCurrent(institutes || [], pathArray) || ({} as EntityMeta);
+		current = getCurrentPageEntityMeta(institutes || [], pathArray) || ({} as EntityMeta);
 
 		if (current?.type === 'institution' || current?.type === 'programme') {
 			isProgramme = true;

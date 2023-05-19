@@ -30,7 +30,6 @@
 			type: searchTypes,
 			institution: selectedInstitution
 		};
-		console.log('Filters:', filters);
 		searchResults = await getSearchResults(searchQuery, filters);
 	}
 

@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { getSearchResults } from '$lib/utils/fuseSearch/getSearchResults';
-
-	import SearchItem from '../search/SearchItem.svelte';
+	import { Autocomplete } from '@skeletonlabs/skeleton';
+	import type { AutocompleteOption } from '@skeletonlabs/skeleton';
 
 	let searchQuery = '';
 	let searchResults: String[] = [];
@@ -19,7 +19,12 @@
 			await new Promise((resolve) => {
 				timer = setTimeout(async () => {
 					try {
-						searchResults = await getSearchResults(searchQuery);
+						let results = await getSearchResults(searchQuery);
+						searchResults = results.map((result: AutocompleteOption[]) => {
+							const { title, slug, ...other } = result;
+							return { label: title, value: slug, ...other };
+						});
+						console.log(searchResults);
 					} catch (error) {
 						console.log(error);
 					}
@@ -35,18 +40,23 @@
 		searchQuery = '';
 	}
 
-	function handleClickOutside(event) {
+	function handleClickOutside(event: object) {
 		if (!event.target.closest('.wrapper') && !event.target.closest('.search-items')) {
 			handlePageChange();
 		}
 	}
+
+	function handleSearchSelection(event) {
+		goto(event.detail.browserPath);
+	}
 </script>
 
 <svelte:window on:click={handleClickOutside} />
-<div class="wrapper relative">
-	<form class="flex" on:submit={handleSubmit}>
+<div class="wrapper">
+	<form class="input-group input-group-divider grid-cols-[auto_1fr_auto]" on:submit={handleSubmit}>
+		<div class="input-group-shim"><i class="icon-f">search</i></div>
 		<input
-			class="focus:outline-none focus:ring focus:ring-primary-300/50 hidden sm:block rounded-sm w-60 pl-1"
+			class="input"
 			type="search"
 			name="autocomplete-search"
 			placeholder="Search markdown content"
@@ -55,17 +65,11 @@
 				debounceSearch();
 			}}
 		/>
-		<button class="btn hover:bg-primary-hover-token"
-			><span class="material-symbols-outlined"> search </span></button
-		>
+		<button class="variant-filled-primary">Submit</button>
 	</form>
-	<div class="absolute">
-		{#if searchResults.length > 0}
-			<div class="search-items card p-4 w-60 h-60 overflow-y-auto shadow-xl">
-				{#each searchResults as item, i}
-					<SearchItem data={item} on:pageChange={handlePageChange} />
-				{/each}
-			</div>
-		{/if}
-	</div>
+	{#if searchResults.length > 0}
+		<div class="card w-full max-w-sm max-h-48 p-4 overflow-y-auto absolute">
+			<Autocomplete bind:input={searchQuery} options={searchResults} on:selection={handleSearchSelection} />
+		</div>
+	{/if}
 </div>
