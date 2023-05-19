@@ -34,13 +34,9 @@ export async function copyTemplate(
 
     // Check if this is a directory
     if (fs.lstatSync(sourcePath).isDirectory()) {
-      console.log(`${sourcePath} is a directory`);
-
       // If so, recursively call this function
       await copyTemplate(sourcePath, destPath, entity);
     } else {
-      console.log(`${sourcePath} is a file`);
-
       // If it's a file, read it
       let content = await fs.readFile(sourcePath, 'utf-8');
 
@@ -48,9 +44,6 @@ export async function copyTemplate(
       if (entity && file === '+page.md') {
         content = replaceTemplateVariables(content, entity);
       }
-
-      console.log(`Source: ${sourcePath}`);
-      console.log(`Dest: ${destPath}`);
 
       // Ensure the destination file will exist and write the content to it
       await fs.ensureFile(destPath);

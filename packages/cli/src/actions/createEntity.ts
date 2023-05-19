@@ -7,10 +7,6 @@ export default async function createEntity(
   entityMeta: EntityBase,
   location = process.cwd()
 ) {
-
-  console.log(entityMeta);
-  
-
   const slug = slugger(entityMeta.title);
   
   // Ensure type exists
