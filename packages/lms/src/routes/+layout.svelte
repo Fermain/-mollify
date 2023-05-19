@@ -1,7 +1,7 @@
 <script lang="ts">
 	import '../lib/styles/styles.scss';
-	import { Molly } from '@mollify/molly';
-	import callouts from "remark-emoji-callout";
+	// import { Molly } from '@mollify/molly';
+	import callouts from 'remark-emoji-callout';
 	import Main from '$lib/components/content/Main.svelte';
 	import Footer from '$lib/components/footer/Footer.svelte';
 	import Logo from '$lib/components/header/Logo.svelte';
@@ -28,7 +28,7 @@
 	<Footer>
 		<Ego />
 		<Reader />
-		<Molly endpoint="/api/molly" />
+		<!-- <Molly endpoint="/api/molly" /> -->
 	</Footer>
 </div>
 
