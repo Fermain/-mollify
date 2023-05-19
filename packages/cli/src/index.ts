@@ -1,14 +1,15 @@
 #!/usr/bin/env node
 import yargs from 'yargs';
-import createCommand from './commands/create';
-import moveCommand from './commands/move';
-import migrateCommand from './commands/migrate';
+import commands from './commands';
 
 yargs
-  .scriptName("mollify")
+  .scriptName('mollify')
   .usage('$0 <cmd> [args]')
-  .command(createCommand)
-  .command(moveCommand)
-  .command(migrateCommand)
-  .help()
-  .argv;
+  .command(commands.create)
+  .command(commands.move)
+  .command(commands.remove)
+  .command(commands.list)
+  .command(commands.migrate)
+  .command(commands.link)
+  // .command(commands.unlink)
+  .help().argv;

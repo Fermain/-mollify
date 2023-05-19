@@ -1,23 +1,41 @@
-import { Command } from 'commander';
-import actions from '../../actions';
+import git from '../../actions/git';
+import symlink from '../../actions/symlink';
+import yargs from 'yargs';
 
-export default new Command('link')
-  .arguments('<mode> <destination> [targetDir]')
-  .description('Link a remote or local entity as a submodule or symlink.')
-  .action(async (mode, destination, targetDir = 'src/routes') => {
+export default {
+  command: 'link <mode> <destination> <source>',
+  desc: 'Link a remote or local entity as a submodule or symlink.',
+  builder: (yargs: yargs.Argv) => {
+    return yargs
+      .positional('mode', {
+        describe: 'Mode for the linking operation (remote or local)',
+        type: 'string',
+        demandOption: true,
+      })
+      .positional('destination', {
+        describe: 'Location in this project where you want to link the entity',
+        type: 'string',
+        default: process.cwd(),
+        demandOption: true,
+      })
+      .positional('source', {
+        describe: 'URL or path for the entity you want to link',
+        type: 'string',
+        demandOption: true,
+      })
+  },
+  handler: async (argv: any) => {
+    const mode = argv.mode;
+    const destination = argv.destination;
+    const source = argv.source;
+
     try {
-      if (!destination) {
-        throw new Error(
-          'Please provide a URL or path for the entity you want to link.',
-        );
-      }
-
       switch (mode) {
         case 'remote':
-          await actions.linkRemoteEntity(destination);
+          await git.submodule.register(destination, source);
           break;
         case 'local':
-          await actions.linkLocalEntity(destination, targetDir);
+          await symlink.create(destination, source);
           break;
         default:
           throw new Error(
@@ -27,4 +45,5 @@ export default new Command('link')
     } catch (error) {
       console.error(`Error: ${error}`);
     }
-  });
+  },
+};

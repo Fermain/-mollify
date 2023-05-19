@@ -1,30 +1,28 @@
 import yargs from 'yargs';
-import { prompt } from 'enquirer';
 import * as path from 'path';
-import moveEntity from '../../actions/moveEntity';
 import { EntityType } from '@mollify/types';
 import { validParents } from '../../utilities/validParents';
-import listEntities from '../../actions/listEntities';
+import entity from '../../actions/entity';
+import prompts from '../../prompts';
+import {
+  PROMPT_ENTITY_MOVE,
+  PROMPT_ENTITY_MOVE_TO,
+  PROMPT_ENTITY_TYPE_MOVE,
+} from '../../localisation';
 
 const moveCommand: yargs.CommandModule = {
-  command: 'move [entity-type] [entity-name]',
+  command: 'move [entity-type]',
   describe: 'Move an entity to a new location',
   builder: (yargs) =>
-    yargs
-      .positional('entity-type', {
-        describe: 'Type of the entity',
-        type: 'string',
-      })
-      .positional('entity-name', {
-        describe: 'Name of the entity',
-        type: 'string',
-      }),
+    yargs.positional('entity-type', {
+      describe: 'Type of the entity',
+      type: 'string',
+    }),
   handler: async (argv) => {
     const entityType = argv['entity-type'] as EntityType | undefined;
-    const entityName = argv['entity-name'] as string | undefined;
 
     try {
-      await moveEntityPrompt(entityType, entityName);
+      await moveEntityPrompt(entityType);
       console.log('Entity moved');
     } catch (error) {
       console.error(`Error moving entity: ${(error as Error).message}`);
@@ -33,31 +31,19 @@ const moveCommand: yargs.CommandModule = {
   },
 };
 
-async function moveEntityPrompt(entityType?: EntityType, entityName?: string) {
-  const all = await listEntities();
+async function moveEntityPrompt(entityType?: EntityType) {
+  const all = await entity.list();
   const typeChoices = [...new Set(all.map((entity) => entity.type))];
 
-  const { entityTypeToMove } = entityType
-    ? { entityTypeToMove: entityType }
-    : await prompt<{ entityTypeToMove: EntityType }>({
-        type: 'select',
-        name: 'entityTypeToMove',
-        message: 'Select the type of entity you want to move:',
-        choices: typeChoices,
-      });
+  const entityTypeToMove =
+    entityType ||
+    (await prompts.entity.type.select(typeChoices, PROMPT_ENTITY_TYPE_MOVE));
 
   const choices = all.filter((entity) => entity.type === entityTypeToMove);
 
-  const { entityToMove } = entityName
-    ? { entityToMove: entityName }
-    : await prompt<{ entityToMove: string }>({
-        type: 'select',
-        name: 'entityToMove',
-        message: 'Select the entity to move:',
-        choices: choices.map((entity) => entity.address),
-      });
+  const entityToMove = await prompts.entity.select(choices, PROMPT_ENTITY_MOVE);
 
-  const sourcePath = path.dirname(entityToMove);
+  const sourcePath = path.dirname(entityToMove.address);
 
   const parentTypes = validParents(entityTypeToMove);
 
@@ -75,32 +61,23 @@ async function moveEntityPrompt(entityType?: EntityType, entityName?: string) {
     throw new Error('There is no valid location to move this entity.');
   }
 
-  const { newParentEntity } = await prompt<{ newParentEntity: string }>({
-    type: 'select',
-    name: 'newParentEntity',
-    message: 'Select the destination entity:',
-    choices: validParentEntities.map((entity) => entity.address),
-  });
+  const newParentEntity = await prompts.entity.select(
+    validParentEntities,
+    PROMPT_ENTITY_MOVE_TO,
+  );
 
-  const destinationPath = path.dirname(newParentEntity);
+  const destinationPath = path.dirname(newParentEntity.address);
 
   console.table({
     source: sourcePath,
     destination: destinationPath,
   });
 
-  if (
-    await prompt<{ confirm: boolean }>({
-      type: 'confirm',
-      name: 'confirm',
-      message: 'Are you sure you want to move this entity?',
-      initial: true,
-    }).then(({ confirm }) => !confirm)
-  ) {
+  if (await prompts.consent()) {
     throw new Error('Move cancelled');
   }
 
-  await moveEntity(sourcePath, destinationPath);
+  await entity.move(sourcePath, destinationPath);
 }
 
 export default moveCommand;

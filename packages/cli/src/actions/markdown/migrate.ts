@@ -4,8 +4,8 @@ import * as glob from 'glob';
 import matter from 'gray-matter';
 import { prompt } from 'enquirer';
 import { EntityBase, EntityMeta, EntityType } from '@mollify/types';
-import { ENTITY_FILE, INDEX_FILE } from '../constants';
-import { slugger } from '../utilities';
+import { ENTITY_FILE } from '../../constants';
+import { slugger } from '../../utilities';
 import cliProgress from 'cli-progress';
 import { table, log, error } from 'console';
 
@@ -46,7 +46,7 @@ async function getUserInput(
   ]);
 }
 
-export async function migrateEntity(file: string) {
+export async function migrateMarkdownFile(file: string) {
   try {
     const fileContent = await fs.readFile(file, 'utf8');
     const { data: existingFrontmatter, content } = matter(fileContent);
@@ -75,7 +75,7 @@ export async function migrateEntity(file: string) {
   }
 }
 
-export async function migrateEntities(basePath: string) {
+export async function migrateMarkdownFiles(basePath: string) {
   const pattern = path.join(basePath, '**/!(*+page).md');
   const ignorePattern = path.join('src', 'templates', '**/*'); // Ignore pattern for src/templates
   const files = glob.sync(pattern, { ignore: ignorePattern });
@@ -94,7 +94,7 @@ export async function migrateEntities(basePath: string) {
   for await (const [index, file] of files.entries()) {
     progressBar.stop();
 
-    await migrateEntity(file);
+    await migrateMarkdownFile(file);
 
     progressBar.start(files.length, index);
     progressBar.increment(); // Increment the progress bar

@@ -1,7 +1,7 @@
 import fs from 'fs-extra';
 import path from 'path';
 
-export default async function linkLocalEntity(localPath = "", targetDir = 'src/routes') {
+export async function createSymlink(localPath = "", targetDir = 'src/routes') {
   const srcPath = path.resolve(localPath);
   const destPath = path.join(process.cwd(), targetDir, path.basename(localPath));
 

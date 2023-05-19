@@ -1,9 +1,9 @@
 import path from 'path';
 import fs from 'fs-extra';
-import { copyTemplate, slugger } from '../utilities';
+import { copyTemplate, slugger } from '../../utilities';
 import { EntityBase } from '@mollify/types';
 
-export default async function createEntity(
+export async function createEntity(
   entityMeta: EntityBase,
   location = process.cwd()
 ) {

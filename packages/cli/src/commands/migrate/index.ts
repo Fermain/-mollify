@@ -1,5 +1,5 @@
 import yargs from 'yargs';
-import { migrateEntities } from '../../actions/migrateEntity';
+import markdown from '../../actions/markdown';
 
 const migrateCommand: yargs.CommandModule = {
   command: 'migrate [location]',
@@ -13,8 +13,8 @@ const migrateCommand: yargs.CommandModule = {
   handler: async (argv) => {
     const { location: locationInput } = argv;
 
-    await migrateEntities(locationInput as string);
-  }
+    await markdown.migrate.files(locationInput as string);
+  },
 };
 
 export default migrateCommand;

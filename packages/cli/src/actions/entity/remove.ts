@@ -1,12 +1,15 @@
 import path from 'path';
 import fs from 'fs-extra';
 import type { EntityMeta } from '@mollify/types';
-import { countFiles } from '../utilities';
+import { countFiles } from '../../utilities';
 import { prompt } from 'enquirer';
 import { table } from 'console';
 
 async function confirmDeletion(entityType: string, fileCount: number) {
-  const message = fileCount > 1 ? `In total ${fileCount} files will be removed. ` : '' + `Are you sure you want to remove this ${entityType}?`;
+  const message =
+    fileCount > 1
+      ? `In total ${fileCount} files will be removed. `
+      : '' + `Are you sure you want to remove this ${entityType}?`;
 
   const { consent } = await prompt<{ consent: boolean }>({
     type: 'confirm',
@@ -18,7 +21,7 @@ async function confirmDeletion(entityType: string, fileCount: number) {
   return consent;
 }
 
-export default async function removeEntity(entity: EntityMeta) {
+export async function removeEntity(entity: EntityMeta) {
   const entityPath = path.dirname(entity.address);
 
   table(entity);
@@ -30,12 +33,11 @@ export default async function removeEntity(entity: EntityMeta) {
   try {
     await fs.remove(path.dirname(entity.address));
     console.log(
-      `Successfully removed ${entity.type}${fileCount > 1 ? ' and its child entities' : ''} at ${entityPath}`,
+      `Successfully removed ${entity.type}${
+        fileCount > 1 ? ' and its child entities' : ''
+      } at ${entityPath}`,
     );
   } catch (error) {
-    console.error(
-      `Error removing ${entity.type} at ${entityPath}:`,
-      error,
-    );
+    console.error(`Error removing ${entity.type} at ${entityPath}:`, error);
   }
 }

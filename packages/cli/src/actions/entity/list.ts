@@ -4,7 +4,7 @@ import fs from 'fs/promises';
 import matter from 'gray-matter';
 import type { EntityType, EntityMeta, EntityBase } from '@mollify/types';
 
-export default async function listEntities(
+export async function listEntities(
   entityType?: EntityType,
   basePath = ''
 ): Promise<EntityMeta[]> {
