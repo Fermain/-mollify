@@ -3,10 +3,8 @@ import { prompt } from 'enquirer';
 import * as path from 'path';
 import moveEntity from '../../actions/moveEntity';
 import { EntityType } from '@mollify/types';
-import { ENTITY_HIERARCHY } from '../../constants';
 import { validParents } from '../../utilities/validParents';
 import listEntities from '../../actions/listEntities';
-import { log } from 'console';
 
 const moveCommand: yargs.CommandModule = {
   command: 'move [entity-type] [entity-name]',
@@ -36,18 +34,19 @@ const moveCommand: yargs.CommandModule = {
 };
 
 async function moveEntityPrompt(entityType?: EntityType, entityName?: string) {
+  const all = await listEntities();
+  const typeChoices = [...new Set(all.map((entity) => entity.type))];
+
   const { entityTypeToMove } = entityType
     ? { entityTypeToMove: entityType }
     : await prompt<{ entityTypeToMove: EntityType }>({
         type: 'select',
         name: 'entityTypeToMove',
         message: 'Select the type of entity you want to move:',
-        choices: ENTITY_HIERARCHY.map((entity) => entity.name),
+        choices: typeChoices,
       });
 
-      log(entityTypeToMove);
-
-  const choices = await listEntities(entityTypeToMove);
+  const choices = all.filter((entity) => entity.type === entityTypeToMove);
 
   const { entityToMove } = entityName
     ? { entityToMove: entityName }
@@ -63,15 +62,17 @@ async function moveEntityPrompt(entityType?: EntityType, entityName?: string) {
   const parentTypes = validParents(entityTypeToMove);
 
   if (!parentTypes || !parentTypes.length) {
-    throw new Error('No valid parent types found');
+    throw new Error(
+      'This is a root level entity (or the entity type is misconfigured)',
+    );
   }
 
-  const validParentEntities = (
-    await Promise.all(parentTypes.map((type) => listEntities(type)))
-  ).flatMap((entities) => entities);
+  const validParentEntities = all.filter((entity) =>
+    parentTypes.includes(entity.type as EntityType),
+  );
 
   if (!validParentEntities.length) {
-    throw new Error('No valid parent entities found');
+    throw new Error('There is no valid location to move this entity.');
   }
 
   const { newParentEntity } = await prompt<{ newParentEntity: string }>({
@@ -93,6 +94,7 @@ async function moveEntityPrompt(entityType?: EntityType, entityName?: string) {
       type: 'confirm',
       name: 'confirm',
       message: 'Are you sure you want to move this entity?',
+      initial: true,
     }).then(({ confirm }) => !confirm)
   ) {
     throw new Error('Move cancelled');

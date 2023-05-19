@@ -2,6 +2,7 @@ import yargs from 'yargs';
 import { prompt } from 'enquirer';
 import createEntity from '../../actions/createEntity';
 import { EntityBase, EntityType } from '@mollify/types';
+import { table } from 'console';
 
 const createCommand: yargs.CommandModule = {
   command: 'create [location]',
@@ -64,6 +65,20 @@ const createCommand: yargs.CommandModule = {
     }
 
     try {
+      table(entitySpec);
+
+      if (
+        (await prompt<{ confirm: boolean }>({
+          type: 'confirm',
+          name: 'confirm',
+          message: 'Does this look correct?',
+          initial: true,
+        }).then(({ confirm }) => !confirm))
+      ) {
+        console.log('Aborting');
+        process.exit(0);
+      }
+
       await createEntity(
         entitySpec satisfies EntityBase,
         String(locationInput),
