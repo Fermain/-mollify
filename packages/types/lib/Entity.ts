@@ -21,12 +21,12 @@ function getEntityMetaSync(path: string): EntityMeta {
 
 // Enumeration of entity types
 export enum EntityType {
-  Institution = "institution",
-  Programme = "programme",
-  Course = "course",
-  Module = "module",
-  Lesson = "lesson",
-  Assessment = "assessment",
+  Institution = "Institution",
+  Programme = "Programme",
+  Course = "Course",
+  Module = "Module",
+  Lesson = "Lesson",
+  Assessment = "Assessment",
 }
 
 // Base interface for entity metadata
@@ -70,7 +70,8 @@ export class Entity implements EntityMeta {
     this.slug = path.dirname(address);
 
     // Retrieve entity metadata from disk
-    const { type, title, tags, previous, ...dynamic } = getEntityMetaSync(address);
+    const { type, title, tags, previous, ...dynamic } =
+      getEntityMetaSync(address);
     this.type = type;
     this.title = title;
     this.tags = tags;
