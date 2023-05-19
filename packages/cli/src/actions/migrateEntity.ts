@@ -1,9 +1,9 @@
 import fs from 'fs-extra';
 import path from 'path';
-import glob from 'glob';
+import * as glob from 'glob';
 import matter from 'gray-matter';
 import { prompt } from 'enquirer';
-import { EntityMeta, EntityType } from '@mollify/types';
+import { EntityBase, EntityMeta, EntityType } from '@mollify/types';
 import { ENTITY_FILE, INDEX_FILE } from '../constants';
 import { slugger } from '../utilities';
 import cliProgress from 'cli-progress';
@@ -11,34 +11,15 @@ import { table, log, error } from 'console';
 
 async function getUserInput(
   existingFrontmatter: Partial<EntityMeta>,
-  filePath: string,
 ): Promise<Partial<EntityMeta>> {
-  const parsedPath = path.parse(filePath);
-  const isIndexFile = parsedPath.base === INDEX_FILE;
-
-  const initialSlug = isIndexFile
-    ? slugger(parsedPath.dir.split(path.sep).pop() || '')
-    : slugger(existingFrontmatter.slug || existingFrontmatter.title || '');
-
   table(existingFrontmatter);
 
-  return await prompt<EntityMeta>([
+  return await prompt<EntityBase>([
     {
       type: 'input',
       name: 'title',
       message: 'Enter the title:',
       initial: existingFrontmatter.title || '',
-      validate(input) {
-        return input.length > 0;
-      },
-    },
-    {
-      type: 'input',
-      name: 'slug',
-      message: 'Enter the slug:',
-      initial: initialSlug,
-      skip: () => isIndexFile,
-      result: (slug) => slugger(slug),
       validate(input) {
         return input.length > 0;
       },
@@ -56,6 +37,12 @@ async function getUserInput(
       ),
       result: (selectedType) => selectedType,
     },
+    {
+      type: 'list',
+      name: 'tags',
+      message: 'Enter tags for the entity:',
+      initial: existingFrontmatter.tags || [],
+    },
   ]);
 }
 
@@ -63,23 +50,15 @@ export async function migrateEntity(file: string) {
   try {
     const fileContent = await fs.readFile(file, 'utf8');
     const { data: existingFrontmatter, content } = matter(fileContent);
-    const existingSlug = slugger(path.parse(file).name);
+    let slug = slugger(path.parse(file).name);
+    slug = slug === 'index' ? '' : slug;
 
-    const userInput = await getUserInput(
-      {
-        ...existingFrontmatter,
-        slug: existingSlug,
-      },
-      file,
-    );
+    const userInput = await getUserInput(existingFrontmatter);
 
     const frontmatter = { ...existingFrontmatter, ...userInput };
     const newFileContent = matter.stringify(content, frontmatter);
 
-    const newDir = path.join(
-      path.dirname(file),
-      userInput.slug || slugger(userInput.title || ''),
-    );
+    const newDir = path.join(path.dirname(file), slug);
     const newFilePath = path.join(newDir, ENTITY_FILE);
 
     if (!(await fs.pathExists(newFilePath))) {

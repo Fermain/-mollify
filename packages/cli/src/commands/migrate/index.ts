@@ -1,11 +1,20 @@
-import { Command } from 'commander';
-import glob from 'glob';
-import path from 'path';
+import yargs from 'yargs';
 import { migrateEntities } from '../../actions/migrateEntity';
 
-export default new Command('migrate')
-  .arguments('[basePath]')
-  .description('Migrate markdown files to the desired structure')
-  .action(async (basePath = '') => {
-    await migrateEntities(basePath);
-  });
+const migrateCommand: yargs.CommandModule = {
+  command: 'migrate [location]',
+  describe: 'Migrate markdown content files to Mollify structure',
+  builder: (yargs) =>
+    yargs.positional('location', {
+      describe: 'Location to create the entity',
+      type: 'string',
+      default: process.cwd(),
+    }),
+  handler: async (argv) => {
+    const { location: locationInput } = argv;
+
+    await migrateEntities(locationInput as string);
+  }
+};
+
+export default migrateCommand;
