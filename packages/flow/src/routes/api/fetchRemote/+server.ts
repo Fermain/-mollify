@@ -1,15 +1,11 @@
-import { compile } from 'mdsvex';
-
 export async function GET(): Promise<Response> {
 	const res = await fetch(
-		'https://rawgithubusercontent.com/Melisa-Zorraindo/auction-house-website/main/README.md'
+		'https://raw.githubusercontent.com/Melisa-Zorraindo/auction-house-website/main/README.md'
 	);
 
 	const item = await res.text();
 
-	const { code: compiledResponse } = await compile(item);
-
-	return new Response(compiledResponse, {
+	return new Response(item, {
 		headers: {
 			'Content-type': 'text/html'
 		}
