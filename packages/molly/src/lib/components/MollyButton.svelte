@@ -8,7 +8,7 @@
 	}
 </script>
 
-<button on:click={onClick}>
+<button on:click={onClick} class="btn-icon btn-icon-xl fixed bottom-0 right-0 variant-filled-primary">
 	<MollyIcon />
 </button>
 
@@ -16,15 +16,3 @@
   <slot />
 {/if}
 
-<style>
-  button {
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  padding: 10px;
-  border-radius: 50px;
-  background-color: #323E47;
-  color: white;
-  cursor: pointer;
-  }
-</style>

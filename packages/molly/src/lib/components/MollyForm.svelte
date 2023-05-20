@@ -12,11 +12,22 @@
 	}
 </script>
 
-<form on:submit|preventDefault={() => handleSubmit()}>
-	<textarea  bind:value={query} />
-	<button type="submit"><img src={img} alt="send message"/></button>
-</form>
+<div class="bg-primary-500/30 p-4">
+<form on:submit|preventDefault={() => handleSubmit()} 
+	class="input-group input-group-divider grid-cols-[1fr_auto] 
+	rounded-container-token">
+	<textarea  bind:value={query} class="bg-transparent border-0 ring-0"/>
+	<button type="submit" class="variant-filled-primary"><img src={img} alt="send message"/></button>
+</form></div>
 
+<style lang="scss">
+	img {
+		width: 20px;
+		height: 20px;
+	}
+</style>
+
+<!--
 <style>
 
 form {
@@ -52,3 +63,4 @@ form {
 	}
 	
 </style>
+-->

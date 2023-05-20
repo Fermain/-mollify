@@ -10,6 +10,7 @@
 	let answer: string = '';
 	let loading: boolean = false;
 	let chatMessages: ChatCompletionRequestMessage[] = [];
+	let elemChat: HTMLElement; 
 	export let endpoint = '/';
 
 	const handleSubmit = async () => {
@@ -45,6 +46,7 @@
 			}
 		});
 		eventSource.stream();
+		scrollChatBottom('smooth');
 	};
 
 	function handleError<T>(err: T) {
@@ -53,30 +55,54 @@
 		answer = '';
 		console.error(err);
 	}
+
+	
+function scrollChatBottom(behavior?: ScrollBehavior): void {
+	elemChat.scrollTo({ top: elemChat.scrollHeight, behavior });
+}
+				
+
+
 </script>
 
 <MollyButton>
-	<MollyWindow>
-			<div class="messages-container">
-				{#each chatMessages as message}
-					<MollyMessage type={message.role} message={message.content} />
-				{/each}
-				{#if answer}
-					<MollyMessage type="assistant" message={answer} />
-				{/if}
-				{#if loading}
-					<MollyMessage type="assistant" message="Thinking.." />
-				{/if}
-			</div>
-		<MollyForm
-			on:userSubmit={(e) => {
-				query = e.detail;
-				handleSubmit();
-			}}
-		/>
-		</MollyWindow>
+	<div class="chat-container">
+		<MollyWindow/>
+			<div class=" h-full grid grid-rows-[1fr_auto] gap-1 h-96 p-0">
+					<div bind:this={elemChat} class="messages-container bg-surface-500/30 overflow-y-auto overflow-x-wrap">
+						{#each chatMessages as message}
+							<MollyMessage type={message.role} message={message.content} />
+						{/each}
+						{#if answer}
+							<MollyMessage type="assistant" message={answer} />
+						{/if}
+						{#if loading}
+							<MollyMessage type="assistant" message="Thinking.." />
+						{/if}
+					</div>
+				<MollyForm
+				on:userSubmit={(e) => {
+					query = e.detail;
+					handleSubmit();
+				}}
+			/>
+		</div>
+</div>
 </MollyButton>
 
+
+<style lang="scss">
+	.chat-container {
+		position: fixed;
+		bottom: 0;
+		right: 0;
+    width: 300px;
+		margin: 0;
+		background-color: #d9d9d9;
+  }
+	
+</style>
+<!--
 <style lang="scss">
 	.messages-container {
 		display: flex;
@@ -91,3 +117,4 @@
 		color: #21a299;
 	}
 </style>
+-->

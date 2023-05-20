@@ -31,34 +31,16 @@
 	}
 </script>
 
-<div bind:this={chatWindow} class="chat-content">
 	<div class="container-header">
 		<div class="assistant-molly">
 			<Logo/>
 			<h4>Ask Molly</h4>
 		</div>
-		<button on:click={onClick}><img src={img} alt="close chat"></button>
+		<button on:click={onClick} class="btn variant-filled-primary"><img src={img} alt="close chat"></button>
 	</div>
 	
-	
- <slot></slot>
-</div>
 
 <style>
-  .chat-content {
-		position: fixed;
-		bottom: 0;
-		right: 0;
-    height: 400px;
-    width: 300px;
-		overflow-y: auto;
-		margin: 0;
-		background-color: #d9d9d9;
-		display: flex;
-		flex-direction: column;
-		align-content: space-between;
-  }
-
 	.container-header {
 		display: flex; 
 		justify-content: space-between;
@@ -66,6 +48,7 @@
 		background-color: #323d47;
 		margin: 0px;
 		padding: 10px;
+		height: 50px;
 	}
 
 	.assistant-molly{
@@ -80,14 +63,7 @@
 		cursor: default;
 	}
 
-	button {
-		background-color: #21A299;
-		border-radius: 10px;
-		width: 50px;
-		border: none;
-		color: white; 
-		cursor: pointer;
-		}
+
 
 	img {
 		padding: 0;
