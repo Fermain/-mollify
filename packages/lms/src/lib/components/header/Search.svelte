@@ -53,10 +53,9 @@
 
 <svelte:window on:click={handleClickOutside} />
 <div class="wrapper">
-	<form class="input-group input-group-divider grid-cols-[auto_1fr_auto]" on:submit={handleSubmit}>
-		<div class="input-group-shim"><i class="icon-f">search</i></div>
+	<form class="flex sm:input-group sm:input-group-divider sm:grid-cols-[auto_1fr_auto]" on:submit={handleSubmit}>
 		<input
-			class="input"
+			class="input hidden sm:block w-60"
 			type="search"
 			name="autocomplete-search"
 			placeholder="Search markdown content"
@@ -65,7 +64,10 @@
 				debounceSearch();
 			}}
 		/>
-		<button class="variant-filled-primary">Submit</button>
+		<button
+			class="btn hover:bg-primary-hover-token sm:variant-filled-primary sm:rounded-l-none sm:hover:bg-primary-active-token"
+			><i class="icon-f">search</i></button
+		>
 	</form>
 	{#if searchResults.length > 0}
 		<div class="card w-full max-w-sm max-h-48 p-4 overflow-y-auto absolute">
