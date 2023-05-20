@@ -1,10 +1,15 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, afterUpdate } from 'svelte';
 	import InkMde from 'ink-mde/svelte';
+	import diff from 'simple-text-diff';
+	import { marked } from 'marked';
 
 	let apiCall: string = '/api/fetchRemote';
 	let oldText: string = '';
 	let value: string = '';
+
+	let beforeText = '';
+	let afterText = '';
 
 	onMount(async () => {
 		const response = await fetch(apiCall);
@@ -14,13 +19,28 @@
 	});
 
 	function displayContents(): void {
-		console.log(value);
+		const { before, after } = diff.diffPatch(oldText, value);
+		beforeText = marked(before);
+		afterText = marked(after);
 	}
+
+	afterUpdate(() => {
+		const delElements = document.querySelectorAll('del');
+		for (const el of delElements) {
+			el.style.backgroundColor = 'rgba(255, 182, 186, 0.5)';
+		}
+		const insElements = document.querySelectorAll('ins');
+		for (const el of insElements) {
+			el.style.backgroundColor = 'rgba(151, 242, 149, 0.5)';
+		}
+	});
 </script>
 
 <div>
 	<h1>Editor</h1>
-	<button class="primary-btn" on:click={displayContents}>Compare changes</button>
+	<div class="btn-wrapper">
+		<a href="/#demo" class="primary-btn" on:click={displayContents}>Compare changes</a>
+	</div>
 	<InkMde
 		bind:value
 		options={{
@@ -45,15 +65,33 @@
 			}
 		}}
 	/>
-	<button class="primary-btn" on:click={displayContents}>Compare changes</button>
+	<div class="btn-wrapper">
+		<a href="/#demo" class="primary-btn" on:click={displayContents}>Compare changes</a>
+	</div>
+
+	{#if beforeText !== ''}
+		<h2>File comparison</h2>
+		<div id="demo" class="demo">
+			<div class="container">
+				{@html beforeText}
+			</div>
+			<div class="container">
+				{@html afterText}
+			</div>
+		</div>
+	{/if}
 </div>
 
 <style lang="scss">
+	.btn-wrapper {
+		margin: 3rem 0;
+	}
+
 	.primary-btn {
 		background-color: rgb(255, 47, 2);
 		color: white;
 		border: none;
-		margin: 3rem 0;
+		text-decoration: none;
 		padding: 0.5rem 1rem;
 		font-size: 16px;
 		border-radius: 4px;
@@ -62,5 +100,17 @@
 		&:hover {
 			opacity: 0.9;
 		}
+	}
+
+	.demo {
+		display: flex;
+		gap: 0.5rem;
+		padding: 1rem;
+	}
+
+	.container {
+		border: 1px solid #eee;
+		padding: 0.5rem;
+		flex: 0 0 45%;
 	}
 </style>
