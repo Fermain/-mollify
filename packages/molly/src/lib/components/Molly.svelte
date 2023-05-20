@@ -66,10 +66,10 @@ function scrollChatBottom(behavior?: ScrollBehavior): void {
 </script>
 
 <MollyButton>
-	<div class="chat-container">
+	<div class="chat-container fixed bottom-0 right-0 w-80 bg-slate-200 dark:bg-slate-600">
 		<MollyWindow/>
-			<div class=" h-full grid grid-rows-[1fr_auto] gap-1 h-96 p-0">
-					<div bind:this={elemChat} class="messages-container bg-surface-500/30 overflow-y-auto overflow-x-wrap">
+			<div class="h-full grid grid-rows-[1fr_auto]">
+					<div bind:this={elemChat} class="messages-container h-80 bg-surface-500/30 overflow-y-auto">
 						{#each chatMessages as message}
 							<MollyMessage type={message.role} message={message.content} />
 						{/each}
@@ -91,17 +91,6 @@ function scrollChatBottom(behavior?: ScrollBehavior): void {
 </MollyButton>
 
 
-<style lang="scss">
-	.chat-container {
-		position: fixed;
-		bottom: 0;
-		right: 0;
-    width: 300px;
-		margin: 0;
-		background-color: #d9d9d9;
-  }
-	
-</style>
 <!--
 <style lang="scss">
 	.messages-container {
