@@ -42,7 +42,7 @@
 					body: JSON.stringify({ text: content, slug })
 				});
 				const data = await response.json();
-				
+
 				audio.set(data);
 				audioSrc = data.url;
 			})();
@@ -50,24 +50,8 @@
 	}
 </script>
 
-<div class="reader">
+<div class="w-full">
 	{#if audioSrc}
-		<audio src={audioSrc} controls class="reader-inner" />
+		<audio src={audioSrc} controls class="w-full h-full" />
 	{/if}
 </div>
-
-<style>
-	.reader {
-		grid-area: reader;
-		width: 100%;
-		margin: 0 auto;
-		text-align: center;
-	}
-
-	.reader-inner {
-		width: 100%;
-		border-radius: var(--border-radius-xs);
-		margin: 0 auto;
-		height: 100%;
-	}
-</style>
