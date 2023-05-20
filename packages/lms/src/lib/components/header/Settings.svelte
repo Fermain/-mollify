@@ -3,6 +3,8 @@
 	import type { PopupSettings } from '@skeletonlabs/skeleton';
 	import type { ToastSettings } from '@skeletonlabs/skeleton';
 	import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
+	import * as storage from '../../utils/storage/index';
+	import { onMount } from 'svelte';
 
 	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
 
@@ -24,11 +26,26 @@
 		'text-5xl'
 	];
 
+	// Has to be done onMount because of how the font-size is set in the main HTML file
+	onMount(() => {
+		// Get the current index
+		const container = document.querySelector('#container') as HTMLDivElement;
+		const currentIndex = parseInt(container.getAttribute('data-font-size-index') as string, 10) || 0;
+
+		// Get user's saved index
+		const storedFontSize = Number(storage.load('fontSize'));
+
+		// Apply the saved index
+		const increasedFontSizeClass = tailwindFontSizes[storedFontSize];
+		container.classList.remove(tailwindFontSizes[currentIndex]);
+		container.classList.add(increasedFontSizeClass);
+		container.setAttribute('data-font-size-index', storedFontSize.toString());
+	});
+
 	function increaseFontSize(): void {
 		const container = document.querySelector('#container') as HTMLDivElement;
 
-		const currentIndex =
-			parseInt(container.getAttribute('data-font-size-index') as string, 10) || 0;
+		const currentIndex = parseInt(container.getAttribute('data-font-size-index') as string, 10) || 0;
 		const increasedFontSizeIndex = currentIndex + 1;
 
 		if (increasedFontSizeIndex < tailwindFontSizes.length) {
@@ -36,6 +53,7 @@
 			container.classList.remove(tailwindFontSizes[currentIndex]);
 			container.classList.add(increasedFontSizeClass);
 			container.setAttribute('data-font-size-index', increasedFontSizeIndex.toString());
+			storage.save('fontSize', increasedFontSizeIndex);
 		} else {
 			console.log('Maximum font size reached.');
 			const userFeedback: ToastSettings = {
@@ -50,8 +68,7 @@
 	function decreaseFontSize(): void {
 		const container = document.querySelector('#container') as HTMLDivElement;
 
-		const currentIndex =
-			parseInt(container.getAttribute('data-font-size-index') as string, 10) || 0;
+		const currentIndex = parseInt(container.getAttribute('data-font-size-index') as string, 10) || 0;
 		const decreasedFontSizeIndex = currentIndex - 1;
 
 		if (decreasedFontSizeIndex >= 0) {
@@ -59,6 +76,7 @@
 			container.classList.remove(tailwindFontSizes[currentIndex]);
 			container.classList.add(increasedFontSizeClass);
 			container.setAttribute('data-font-size-index', decreasedFontSizeIndex.toString());
+			storage.save('fontSize', decreasedFontSizeIndex);
 		} else {
 			console.log('Minimum font size reached.');
 			const userFeedback: ToastSettings = {
@@ -72,11 +90,11 @@
 
 	function resetFontSize(): void {
 		const container = document.querySelector('#container') as HTMLDivElement;
-		const currentIndex =
-			parseInt(container.getAttribute('data-font-size-index') as string, 10) || 0;
+		const currentIndex = parseInt(container.getAttribute('data-font-size-index') as string, 10) || 0;
 		container.classList.remove(tailwindFontSizes[currentIndex]);
 		container.classList.add('text-base');
 		container.setAttribute('data-font-size-index', '2');
+		storage.save('fontSize', 2);
 		const userFeedback: ToastSettings = {
 			message: 'Font size reset successfully',
 			background: 'variant-filled-success',
