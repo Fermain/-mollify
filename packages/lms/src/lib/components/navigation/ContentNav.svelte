@@ -53,7 +53,7 @@
 			<AccordionItem>
 				<svelte:fragment slot="summary">Recursive Nav</svelte:fragment>
 				<div slot="content">
-					<RecursiveNav data={institutes} {currentPath} />
+					<RecursiveNav data={institutes} />
 				</div>
 			</AccordionItem>
 		{/if}
@@ -62,7 +62,7 @@
 				<!-- If current path is to a course/module/lesson -->
 				<svelte:fragment slot="summary">Course Nav</svelte:fragment>
 				<div slot="content">
-					<CourseNav data={current} {currentPath} />
+					<CourseNav data={current} />
 				</div>
 			</AccordionItem>
 		{/if}
