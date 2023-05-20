@@ -2,6 +2,7 @@
 	import MollyMessage from '$lib/components/MollyMessage.svelte';
 	import type { ChatCompletionRequestMessage } from 'openai';
 	import { SSE } from 'sse.js';
+	import { onMount } from 'svelte';
 	import MollyButton from './MollyButton.svelte';
 	import MollyWindow from './MollyWindow.svelte';
 	import MollyForm from './MollyForm.svelte';
@@ -46,7 +47,6 @@
 			}
 		});
 		eventSource.stream();
-		scrollChatBottom('smooth');
 	};
 
 	function handleError<T>(err: T) {
@@ -56,11 +56,24 @@
 		console.error(err);
 	}
 
-	
-function scrollChatBottom(behavior?: ScrollBehavior): void {
-	elemChat.scrollTo({ top: elemChat.scrollHeight, behavior });
-}
-				
+
+	let chatWindow: HTMLElement | null;
+
+	onMount(() => {
+		//Scroll to the bottom of the chat window
+		
+		if (chatWindow) {
+			chatWindow.scrollTop = chatWindow.scrollHeight;
+		}
+	});
+
+	//Watch for changes in the messages array and scroll to the bottom of the chat window
+	$: {
+		
+		if (chatWindow) {
+			chatWindow.scrollTop = chatWindow.scrollHeight;
+		}
+	}	
 
 
 </script>
@@ -69,7 +82,7 @@ function scrollChatBottom(behavior?: ScrollBehavior): void {
 	<div class="chat-container fixed bottom-0 right-0 w-80 bg-slate-200 dark:bg-slate-600">
 		<MollyWindow/>
 			<div class="h-full grid grid-rows-[1fr_auto]">
-					<div bind:this={elemChat} class="messages-container h-80 bg-surface-500/30 overflow-y-auto">
+					<div bind:this={chatWindow} class="messages-container h-80 bg-surface-500/30 overflow-y-auto">
 						{#each chatMessages as message}
 							<MollyMessage type={message.role} message={message.content} />
 						{/each}
@@ -80,30 +93,12 @@ function scrollChatBottom(behavior?: ScrollBehavior): void {
 							<MollyMessage type="assistant" message="Thinking.." />
 						{/if}
 					</div>
-				<MollyForm
-				on:userSubmit={(e) => {
-					query = e.detail;
-					handleSubmit();
-				}}
-			/>
-		</div>
-</div>
+					<MollyForm
+					on:userSubmit={(e) => {
+						query = e.detail;
+						handleSubmit();
+					}}
+					/>
+			</div>
+	</div>
 </MollyButton>
-
-
-<!--
-<style lang="scss">
-	.messages-container {
-		display: flex;
-		flex-direction: column;
-		justify-content: flex-end;
-		height: 300%;
-		overflow-y: scroll; /*scrolls the content if it overflows the viewport IT'S NOT WORKING*/
-	}
-
-	.messages-container::-webkit-scrollbar {
-		width: 0.5rem;
-		color: #21a299;
-	}
-</style>
--->

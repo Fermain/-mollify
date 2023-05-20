@@ -1,6 +1,5 @@
 
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import Logo from './MollyIcon.svelte';
 	import closeButton from './icons/angle-small-down.svg'
 	let img: string = closeButton;
@@ -11,24 +10,6 @@
 		isOpen = !isOpen;
 	}
 
-
-	let chatWindow: HTMLElement | null;
-
-	onMount(() => {
-		//Scroll to the bottom of the chat window
-		
-		if (chatWindow) {
-			chatWindow.scrollTop = chatWindow.scrollHeight;
-		}
-	});
-
-	//Watch for changes in the messages array and scroll to the bottom of the chat window
-	$: {
-		
-		if (chatWindow) {
-			chatWindow.scrollTop = chatWindow.scrollHeight;
-		}
-	}
 </script>
 
 	<div class="container-header">
