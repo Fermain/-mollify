@@ -2,13 +2,5 @@
   import img from './icons/molly_logo.png'
 </script>
 
-<img src={img} alt="Molly logo"/>
+<img src={img} alt="Molly logo" class="h-9 w-9 rounded-full"/>
 
-<style>
-  img {
-  width: 35px;
-  height: 35px;
-  border-radius: 50px;
-}
-
-</style>

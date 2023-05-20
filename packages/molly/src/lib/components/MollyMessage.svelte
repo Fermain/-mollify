@@ -6,22 +6,16 @@
 	export let message: string;
 </script>
 
-<div class="message {type}">
+<div class="message {type} max-w-full m-0 bg-slate-400 dark:bg-slate-800 py-2.5 px-1">
 	<SvelteMarkdown source={message} />
 </div>
 
 <style lang="scss">
-	.message {
-		color: white;
-		max-width: 100%;
-		margin: 0;
-		background-color: #323e47b8;
-		cursor: default;
-		padding: 5px 10px;
-	}
+
 
 	.assistant {
-		background-color: #323d47;
+		background-color: #748BA7;
+		color: black;
 	}
 
 	.user {

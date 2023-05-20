@@ -2,7 +2,7 @@
 	import type { ChatCompletionRequestMessage as Message } from 'openai';
 	import MollyMessage from './MollyMessage.svelte';
 	import MollyAlert from './MollyAlert.svelte';
-	import MollyWindow from './MollyWindow.svelte';
+	import MollyWindow from './MollyHeader.svelte';
 
 	export const messages = new Array<Message>();
 </script>
