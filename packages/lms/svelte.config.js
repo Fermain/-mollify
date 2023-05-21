@@ -4,6 +4,7 @@ import { vitePreprocess } from '@sveltejs/kit/vite';
 import { mdsvex } from 'mdsvex';
 import callouts from 'remark-emoji-callout';
 import gfm from 'remark-gfm';
+import { createTagLinks } from './src/lib/utils/remarkPlugins/createTagLinks.js';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -16,6 +17,7 @@ const config = {
 			extensions: ['.md', '.svx'],
 			remarkPlugins: [
 				gfm,
+				createTagLinks,
 				callouts,
 				{
 					dataAttribute: 'custom-callout',
