@@ -12,6 +12,13 @@
 	let loading: boolean = false;
 	let chatMessages: ChatCompletionRequestMessage[] = []; 
 	export let endpoint = '/';
+	let chatWindow: HTMLElement | null;
+
+	onMount(() => scrollToBottom(chatWindow))
+
+	const scrollToBottom = async (node) => {
+		node.scroll({ top: node.scrollHeight, behavior: 'smooth' });
+	}; 
 
 	const handleSubmit = async () => {
 		loading = true;
@@ -40,6 +47,8 @@
 
 				if (delta.content) {
 					answer = (answer ?? '') + delta.content;
+					
+				scrollToBottom(chatWindow);
 				}
 			} catch (err) {
 				handleError(err);
@@ -55,28 +64,10 @@
 		console.error(err);
 	}
 
-
-	let chatWindow: HTMLElement | null;
-
-	onMount(() => {
-		//Scroll to the bottom of the chat window
-		
-		if (chatWindow) {
-			chatWindow.scrollTop = chatWindow.scrollHeight;
-		}
-	});
-
-	//Watch for changes in the messages array and scroll to the bottom of the chat window
-	$: {
-		
-		if (chatWindow) {
-			chatWindow.scrollTop = chatWindow.scrollHeight;
-		}
-	}	
 </script>
 
 <MollyButton>
-			<div class="h-full grid grid-rows-[1fr_auto]">
+			<div  class="h-full grid grid-rows-[1fr_auto]">
 					<div bind:this={chatWindow} class="messages-container h-80 bg-surface-500/30 overflow-y-auto">
 						{#each chatMessages as message}
 							<MollyMessage type={message.role} message={message.content} />

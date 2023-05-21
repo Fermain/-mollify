@@ -8,7 +8,6 @@
 
 	export function onClick() {
 		isOpen = !isOpen;
-    console.log('clicked');
 	}
 </script>
 
