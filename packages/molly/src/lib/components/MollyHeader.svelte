@@ -1,7 +1,15 @@
 
 <script lang="ts">
 	import Logo from './MollyIcon.svelte';
-	import MollyCloseButton from './MollyCloseButton.svelte';
+	import closeButton from './icons/angle-small-down.svg'
+	let img: string = closeButton;
+
+	export let isOpen = false;
+
+	export function onClick() {
+		isOpen = !isOpen;
+    console.log('clicked');
+	}
 </script>
 
 	<div class="flex p-2 h-13 bg-slate-500 dark:bg-slate-800">
@@ -9,6 +17,8 @@
 			<Logo/>
 			<h4 class="self-center text-lg font-medium">Ask Molly</h4>
 		</div>
-		<MollyCloseButton on:click{onClick}/>
+		<button on:click={onClick} class="btn-icon btn-icon-xl rounded h-8 w-8 variant-filled-primary">
+			<img src={img} alt="close chat" class="h-8 w-8"/>
+		</button>
 	</div>
 	

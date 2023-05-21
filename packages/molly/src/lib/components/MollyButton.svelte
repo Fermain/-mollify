@@ -1,4 +1,5 @@
 <script>
+	import MollyHeader from './MollyHeader.svelte';
 	import MollyIcon from './MollyIcon.svelte';
 
 	export let isOpen = false;
@@ -13,6 +14,9 @@
 </button>
 
 {#if isOpen}
-  <slot />
+	<div class="chat-container fixed bottom-0 right-0 w-80 bg-slate-200 dark:bg-slate-600">
+		<MollyHeader bind:isOpen />
+		<slot />
+	</div>
 {/if}
 

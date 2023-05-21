@@ -18,5 +18,7 @@
 	<textarea  bind:value={query} 
 		class="textarea hidden sm:block bg-slate-200 dark:bg-slate-500 rounded-none p-1"
 		placeholder="Write here..." />
-	<button type="submit" class="btn variant-filled-primary rounded-none"><img src={img} alt="send message" class="h-6 w-6"/></button>
+	<button type="submit" class="btn variant-filled-primary rounded-none">
+		<img src={img} alt="send message" class="h-6 w-6"/>
+	</button>
 </form></div>
