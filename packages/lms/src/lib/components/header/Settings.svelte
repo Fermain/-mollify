@@ -36,9 +36,9 @@
 		const storedFontSize = Number(storage.load('fontSize'));
 
 		// Apply the saved index
-		const increasedFontSizeClass = tailwindFontSizes[storedFontSize];
+		const savedFontSizeClass = tailwindFontSizes[storedFontSize];
 		container.classList.remove(tailwindFontSizes[currentIndex]);
-		container.classList.add(increasedFontSizeClass);
+		container.classList.add(savedFontSizeClass);
 		container.setAttribute('data-font-size-index', storedFontSize.toString());
 	});
 
@@ -53,7 +53,7 @@
 			container.classList.remove(tailwindFontSizes[currentIndex]);
 			container.classList.add(increasedFontSizeClass);
 			container.setAttribute('data-font-size-index', increasedFontSizeIndex.toString());
-			storage.save('fontSize', increasedFontSizeIndex);
+			storage.save('fontSize', increasedFontSizeIndex.toString());
 		} else {
 			console.log('Maximum font size reached.');
 			const userFeedback: ToastSettings = {
@@ -76,7 +76,7 @@
 			container.classList.remove(tailwindFontSizes[currentIndex]);
 			container.classList.add(increasedFontSizeClass);
 			container.setAttribute('data-font-size-index', decreasedFontSizeIndex.toString());
-			storage.save('fontSize', decreasedFontSizeIndex);
+			storage.save('fontSize', decreasedFontSizeIndex.toString());
 		} else {
 			console.log('Minimum font size reached.');
 			const userFeedback: ToastSettings = {
@@ -94,7 +94,7 @@
 		container.classList.remove(tailwindFontSizes[currentIndex]);
 		container.classList.add('text-base');
 		container.setAttribute('data-font-size-index', '2');
-		storage.save('fontSize', 2);
+		storage.save('fontSize', '2');
 		const userFeedback: ToastSettings = {
 			message: 'Font size reset successfully',
 			background: 'variant-filled-success',
