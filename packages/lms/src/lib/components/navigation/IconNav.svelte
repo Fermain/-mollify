@@ -1,45 +1,9 @@
 <script lang="ts">
+	import { AppRail, AppRailTile } from '@skeletonlabs/skeleton';
 </script>
 
-<div class="wrapper">
-	<nav class="icon-nav">
-		<i class="icon-f">home</i>
-		<i class="icon-f">bookmark</i>
-		<i class="icon-f">bookmark_add</i>
-		<i class="icon-f">home</i>
-		<i class="icon-f">home</i>
-		<i class="icon-f">home</i>
-		<i class="icon-f">home</i>
-	</nav>
-</div>
-
-<style lang="scss">
-	.wrapper {
-		height: 100%;
-		background-color: var(--primary);
-		color: var(--text-secondary);
-		grid-area: icons;
-
-		container-name: wrapper;
-		container-type: inline-size;
-	}
-
-	.icon-nav {
-		display: grid;
-		justify-items: center;
-		gap: var(--spacing-m);
-		padding: var(--spacing-m) 0;
-		height: min-content;
-	}
-
-	@container (min-width: 100px) {
-		.wrapper {
-			.icon-nav {
-				display: flex;
-				align-items: center;
-				justify-content: space-evenly;
-				height: 100%;
-			}
-		}
-	}
-</style>
+<AppRail width="w-[3rem] sm:w-20" background="bg-surface-100-800-token">
+	<AppRailTile value={0}><span class="material-symbols-outlined"> home </span></AppRailTile>
+	<AppRailTile value={1}><span class="material-symbols-outlined"> bookmark </span></AppRailTile>
+	<AppRailTile value={2}><span class="material-symbols-outlined"> bookmark_add </span></AppRailTile>
+</AppRail>
