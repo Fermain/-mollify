@@ -3,7 +3,7 @@
 
 	export let isOpen = false;
 
-	function onClick() {
+	export function onClick() {
 		isOpen = !isOpen;
 	}
 </script>

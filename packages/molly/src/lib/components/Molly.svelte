@@ -10,8 +10,7 @@
 	let query: string = '';
 	let answer: string = '';
 	let loading: boolean = false;
-	let chatMessages: ChatCompletionRequestMessage[] = [];
-	let elemChat: HTMLElement; 
+	let chatMessages: ChatCompletionRequestMessage[] = []; 
 	export let endpoint = '/';
 
 	const handleSubmit = async () => {
@@ -74,13 +73,11 @@
 			chatWindow.scrollTop = chatWindow.scrollHeight;
 		}
 	}	
-
-
 </script>
 
 <MollyButton>
 	<div class="chat-container fixed bottom-0 right-0 w-80 bg-slate-200 dark:bg-slate-600">
-		<MollyHeader/>
+		<MollyHeader />
 			<div class="h-full grid grid-rows-[1fr_auto]">
 					<div bind:this={chatWindow} class="messages-container h-80 bg-surface-500/30 overflow-y-auto">
 						{#each chatMessages as message}
