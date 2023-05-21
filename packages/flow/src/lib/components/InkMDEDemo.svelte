@@ -540,11 +540,14 @@
 
 	function applyAddedWordsFormatting(text: string): string {
 		let formattedText = text;
-
+		let colorAdded = 'rgba(151, 242, 149, 0.5)';
 		differences.forEach((diff) => {
 			if (diff.added) {
 				const regex = new RegExp(`\\b${escapeRegExp(diff.value)}\\b`, 'g');
-				formattedText = formattedText.replace(regex, `<ins>${diff.value}</ins>`);
+				formattedText = formattedText.replace(
+					regex,
+					`<ins style='background-color: ${colorAdded}'>${diff.value}</ins>`
+				);
 			}
 		});
 		return formattedText;
@@ -558,10 +561,6 @@
 		const delElements = document.querySelectorAll('del');
 		for (const el of delElements) {
 			el.style.backgroundColor = 'rgba(255, 182, 186, 0.5)';
-		}
-		const insElements = document.querySelectorAll('ins');
-		for (const el of insElements) {
-			el.style.backgroundColor = 'rgba(151, 242, 149, 0.5)';
 		}
 	});
 </script>
@@ -613,5 +612,9 @@
 <style>
 	.demo {
 		display: flex;
+	}
+
+	.demo > div {
+		flex: 0 0 45%;
 	}
 </style>
