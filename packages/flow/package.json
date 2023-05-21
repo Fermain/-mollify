@@ -56,6 +56,7 @@
 	"types": "./dist/index.d.ts",
 	"type": "module",
 	"dependencies": {
+		"diff": "^5.1.0",
 		"simple-text-diff": "^1.7.0"
 	}
 }
