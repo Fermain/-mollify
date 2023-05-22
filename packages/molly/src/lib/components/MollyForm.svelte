@@ -16,7 +16,7 @@
 <form on:submit|preventDefault={() => handleSubmit()} 
 	class="flex input-group sm:input-group-divider sm:grid-cols-[1fr_auto] rounded">
 	<textarea  bind:value={query} 
-		class="textarea hidden sm:block bg-slate-200 dark:bg-slate-300 rounded-none p-1"
+		class="textarea hidden sm:block bg-slate-100 dark:bg-slate-200 rounded-none p-1 text-black"
 		placeholder="Write here..." />
 	<button type="submit" class="btn variant-filled-primary rounded-none">
 		<img src={img} alt="send message" class="h-6 w-6"/>
