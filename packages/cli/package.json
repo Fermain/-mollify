@@ -18,7 +18,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "GPL",
   "devDependencies": {
     "@types/cli-progress": "^3.11.0",
     "@types/fs-extra": "^11.0.1",

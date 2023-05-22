@@ -4,7 +4,7 @@
   "description": "Global type definitions for @mollify",
   "author": "Fermain <Fermain@users.noreply.github.com>",
   "homepage": "https://github.com/Fermain/-Mollify#readme",
-  "license": "ISC",
+  "license": "GPL",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "directories": {

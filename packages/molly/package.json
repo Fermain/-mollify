@@ -1,6 +1,7 @@
 {
 	"name": "@mollify/molly",
 	"version": "0.1.1",
+	"license": "GPL",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && npm run package",
