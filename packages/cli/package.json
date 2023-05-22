@@ -65,5 +65,6 @@
       "jest --findRelatedTests",
       "tsc --noEmit"
     ]
-  }
+  },
+  "gitHead": "d6554543a8e3b882389cc2c69ac26f97baa924bf"
 }

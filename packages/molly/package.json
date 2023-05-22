@@ -58,5 +58,6 @@
 	"type": "module",
 	"dependencies": {
 		"svelte-markdown": "^0.2.3"
-	}
+	},
+	"gitHead": "d6554543a8e3b882389cc2c69ac26f97baa924bf"
 }

@@ -28,5 +28,6 @@
     "@babel/types": "^7.21.5",
     "@types/unist": "^2.0.6",
     "typescript": "^5.0.4"
-  }
+  },
+  "gitHead": "d6554543a8e3b882389cc2c69ac26f97baa924bf"
 }
