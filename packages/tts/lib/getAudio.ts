@@ -3,7 +3,6 @@ import path from "path";
 
 //might request the full path to the file
 export async function getAudio(slug: string) {
-  console.log("getAudio", slug);
   const filePath = path.join("public", "audio", `${slug}.mp3`);
   // Check if file already exists
   if (fs.existsSync(filePath)) {

@@ -61,13 +61,13 @@
 		const filepath = path;
 		const data = await createAudio(content, slug, filepath, true);
 		audio.set(data);
-		if (data.exists) {
-			hasAudio = true;
-		} else {
-			hasAudio = false;
-		}
-		audio.set(data);
 		audioSrc = data.url;
+		if (data.error) {
+			alert(data.error);
+			console.log(data);
+		} else {
+			alert('Success!, audio file created.');
+		}
 	}
 
 	let isOpen = true;
