@@ -27,8 +27,7 @@
 	function increaseFontSize(): void {
 		const container = document.querySelector('#container') as HTMLDivElement;
 
-		const currentIndex =
-			parseInt(container.getAttribute('data-font-size-index') as string, 10) || 0;
+		const currentIndex = parseInt(container.getAttribute('data-font-size-index') as string, 10) || 0;
 		const increasedFontSizeIndex = currentIndex + 1;
 
 		if (increasedFontSizeIndex < tailwindFontSizes.length) {
@@ -50,8 +49,7 @@
 	function decreaseFontSize(): void {
 		const container = document.querySelector('#container') as HTMLDivElement;
 
-		const currentIndex =
-			parseInt(container.getAttribute('data-font-size-index') as string, 10) || 0;
+		const currentIndex = parseInt(container.getAttribute('data-font-size-index') as string, 10) || 0;
 		const decreasedFontSizeIndex = currentIndex - 1;
 
 		if (decreasedFontSizeIndex >= 0) {
@@ -72,8 +70,7 @@
 
 	function resetFontSize(): void {
 		const container = document.querySelector('#container') as HTMLDivElement;
-		const currentIndex =
-			parseInt(container.getAttribute('data-font-size-index') as string, 10) || 0;
+		const currentIndex = parseInt(container.getAttribute('data-font-size-index') as string, 10) || 0;
 		container.classList.remove(tailwindFontSizes[currentIndex]);
 		container.classList.add('text-base');
 		container.setAttribute('data-font-size-index', '2');
@@ -87,9 +84,7 @@
 </script>
 
 <div>
-	<button class="btn hover:bg-primary-hover-token" use:popup={settings}
-		><span class="material-symbols-outlined"> settings </span></button
-	>
+	<button class="btn hover:bg-primary-hover-token" use:popup={settings}> <i class="icon-f">settings</i></button>
 
 	<div class="card p-4 w-60 shadow-xl" data-popup="settings" id="settings-card">
 		<h3 class="h3 mb-3">Settings</h3>
@@ -102,13 +97,13 @@
 			<span class="p-1">Text</span>
 			<div class="flex gap-4">
 				<button class="btn hover:bg-primary-hover-token p-1" on:click={increaseFontSize}
-					><span class="material-symbols-outlined"> text_increase </span></button
+					><i class="icon-f">text_increase</i></button
 				>
 				<button class="btn hover:bg-primary-hover-token p-1" on:click={decreaseFontSize}
-					><span class="material-symbols-outlined"> text_decrease </span></button
+					><i class="icon-f">text_decrease</i></button
 				>
-				<button class="btn hover:bg-primary-hover-token p-1" on:click={resetFontSize}
-					><span class="material-symbols-outlined"> refresh </span></button
+				<button class="btn hover:bg-primary-hover-token p-1" on:click={resetFontSize}>
+					<i class="icon-f">refresh</i></button
 				>
 			</div>
 		</div>
