@@ -1,4 +1,4 @@
-import generateAudio from '@mollify/tts';
+import tts from '@mollify/tts';
 import { ELEVENLABS_API_KEY } from '$env/static/private';
 // import tts from '$lib/tts/index.js';
 import { error } from '@sveltejs/kit';
@@ -9,7 +9,7 @@ export const POST: RequestHandler = async ({ request }) => {
 
 	try {
 		// Convert text to audio using ElevenLabs API
-		const audio = await generateAudio(text, slug, ELEVENLABS_API_KEY);
+		const audio = await tts.generateAudio(text, slug, ELEVENLABS_API_KEY);
 
 		return new Response(audio);
 	} catch (err) {
