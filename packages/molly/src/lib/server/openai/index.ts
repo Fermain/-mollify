@@ -49,7 +49,7 @@ export default class MollyAI {
 
 				try {
 					let { messages } = (await request.json()) as { messages: ChatCompletionRequestMessage[] };
-					const tokenCount = isWithinTokenLimit(messages.join('\n'), this.tokenLimit);
+					const tokenCount = isWithinTokenLimit(messages.join('\n'), Number(this.tokenLimit));
 
 					if (!tokenCount) {
 						throw error(400, 'Query too large');
@@ -63,7 +63,7 @@ export default class MollyAI {
 					}
 
 					const role = 'system';
-					const content = prompts.assistant('Test mode, there is no content yet.', 'Timmy Tester');
+					const content = prompts.assistant('Test mode, there is no content yet.', 'Ask users name');
 					const totalTokenCount = isWithinTokenLimit(content, LIMIT - tokenCount);
 
 					if (!totalTokenCount) {
