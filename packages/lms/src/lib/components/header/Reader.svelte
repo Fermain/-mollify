@@ -27,41 +27,97 @@
 			const matter = await response.json();
 			content = matter.content;
 			slug = matter.slug.replaceAll(' ', '-').toLocaleLowerCase();
+			console.log(matter);
 		});
 	});
 
-	$: {
-		// Fetch the audio reactively whenever `content` changes
-		if (content) {
-			(async () => {
-				const response = await fetch(`/api/tts`, {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json'
-					},
-					body: JSON.stringify({ text: content, slug })
-				});
-				const data = await response.json();
-				
-				audio.set(data);
-				audioSrc = data.url;
-			})();
-		}
+	// $: {
+	// 	// Fetch the audio reactively whenever `content` changes
+	// 	if (content) {
+	// 		(async () => {
+	// 			const response = await fetch(`/api/tts`, {
+	// 				method: 'POST',
+	// 				headers: {
+	// 					'Content-Type': 'application/json'
+	// 				},
+	// 				body: JSON.stringify({ text: content, slug })
+	// 			});
+	// 			const data = await response.json();
+
+	// 			audio.set(data);
+	// 			audioSrc = data.url;
+	// 		})();
+	// 	}
+	// }
+
+	let isOpen = true;
+
+	function toggleSettings() {
+		isOpen = !isOpen;
+	}
+
+	let scream: HTMLAudioElement;
+	function playAudio() {
+		scream.play();
 	}
 </script>
 
 <div class="reader">
+	<div class="reader-settings">
+		<i class="icon-f reader-settings" role="button" on:click={toggleSettings}>Settings</i>
+		{#if isOpen}
+			<div class="settings-options">
+				<button>Regenerate Audio File</button>
+				<button>Create Audio</button>
+				<button on:click={playAudio}>Scream For Help!</button>
+				<audio bind:this={scream}>
+					<source src="/public/audio/silly_stuff/female_scream.wav" type="audio/wav" />
+					Your browser does not support the audio element.
+				</audio>
+			</div>
+		{/if}
+	</div>
+
 	{#if audioSrc}
 		<audio src={audioSrc} controls class="reader-inner" />
 	{/if}
 </div>
 
 <style>
+	.reader-settings {
+		padding: 0.25rem;
+		color: azure;
+		width: fit-content;
+		position: relative;
+	}
+
+	.settings-options {
+		position: absolute;
+		background-color: var(--primary);
+		color: var(--text-secondary);
+		padding: var(--spacing-m);
+		border-radius: var(--spacing-m);
+		left: 50%;
+		bottom: 100%;
+		border: 1px solid var(--secondary);
+	}
+
+	.settings-options button {
+		display: block;
+		width: 100%;
+		padding: var(--spacing-s);
+		border-radius: var(--spacing-s);
+		background-color: var(--secondary);
+		color: var(--text-primary);
+		margin-bottom: var(--spacing-s);
+		border: none;
+	}
 	.reader {
 		grid-area: reader;
 		width: 100%;
 		margin: 0 auto;
 		text-align: center;
+		display: flex;
 	}
 
 	.reader-inner {
