@@ -44,14 +44,19 @@
 		</h2>
 		<div class="inst-grid">
 			{#each current.children as child}
-				<div class="card p-4">
-					<h3 class="card-header">{child.title}</h3>
-					{#if child.url}
-						<img src={child.url} alt={child.title} />
-					{/if}
-					<p class="p-4">{child.summary}</p>
-					<a class="card-footer btn variant-filled bg-primary-500 p-2" href={child.browserPath}>View Details</a>
-				</div>
+				<div class="grid sm:grid-cols-2 gap-4">
+			                {#each current.children as child}
+				                <a class="card p-3 variant-ghost-surface no-underline" href={child.browserPath}>
+					                 <header class="card-header border-b p-0">
+						                 <h3 class="h3">{child.title}</h3>
+					                  </header>
+					                  {#if child.url}
+						                <img src={child.url} alt={child.title} />
+					                  {/if}
+					                  <p class="font-normal">{child.summary}</p>
+				                 </a>
+			                   {/each}
+		                  </div>
 			{/each}
 		</div>
 	</section>
