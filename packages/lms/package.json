@@ -38,6 +38,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@mollify/cli": "^0.0.1",
 		"@mollify/molly": "^0.0.1",
 		"fuse.js": "^6.6.2",
 		"graphql": "^16.6.0",
