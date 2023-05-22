@@ -2,7 +2,7 @@
 	import '@skeletonlabs/skeleton/themes/theme-skeleton.css';
 	import '@skeletonlabs/skeleton/styles/skeleton.css';
 	import '../lib/styles/styles.scss';
-	// import { Molly } from '@mollify/molly';
+	import { Molly } from '@mollify/molly';
 	import '../app.postcss';
 	import { AppShell, Drawer, Toast } from '@skeletonlabs/skeleton';
 	import callouts from 'remark-emoji-callout';
@@ -37,9 +37,8 @@
 		><Footer>
 			<Ego />
 			<Reader />
-			<!-- <Molly endpoint="/api/molly" /> -->
+			<Molly endpoint="/api/molly" />
 		</Footer>
 	</svelte:fragment>
 	<Toast position="t" />
 </AppShell>
-
