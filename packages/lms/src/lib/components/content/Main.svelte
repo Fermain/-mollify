@@ -2,7 +2,7 @@
 	import ProgrammeNav from '../navigation/ProgrammeNav.svelte';
 </script>
 
-<main>
+<main class="p-3">
 	<div class="prose">
 		<ProgrammeNav>
 			<slot />
