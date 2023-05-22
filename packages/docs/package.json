@@ -1,6 +1,6 @@
 {
   "name": "@mollify/docs",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -12,5 +12,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "6775f752212ebca6a4cd1e0f490cad1c69348090"
+  "gitHead": "0a29dcf29a683a419c86413b941811523763ea47"
 }

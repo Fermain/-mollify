@@ -1,6 +1,6 @@
 {
   "name": "@mollify/cli",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "",
   "main": "bin/index.js",
   "bin": {
@@ -39,7 +39,7 @@
     "ts-node-dev": "^2.0.0"
   },
   "dependencies": {
-    "@mollify/types": "^0.1.5",
+    "@mollify/types": "^0.1.6",
     "cli-progress": "^3.12.0",
     "commander": "^10.0.0",
     "enquirer": "^2.3.6",
@@ -69,5 +69,5 @@
       "tsc --noEmit"
     ]
   },
-  "gitHead": "6775f752212ebca6a4cd1e0f490cad1c69348090"
+  "gitHead": "0a29dcf29a683a419c86413b941811523763ea47"
 }
