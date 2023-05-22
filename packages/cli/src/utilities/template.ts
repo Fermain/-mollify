@@ -16,7 +16,6 @@ export async function copyTemplate(
   entity?: EntityBase,
 ): Promise<void> {
   templatePath = getTemplatePath(templatePath);
-  console.log(`Copying from ${templatePath} to ${destinationDir}`);
 
   // Ensure the destination directory exists
   await fs.ensureDir(destinationDir);

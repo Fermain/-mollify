@@ -1,8 +1,8 @@
 import yargs from 'yargs';
-import { prompt } from 'enquirer';
 import { EntityBase, EntityType } from '@mollify/types';
 import { table } from 'console';
 import entity from '../../actions/entity';
+import prompts from '../../prompts';
 
 const createCommand: yargs.CommandModule = {
   command: 'create [location]',
@@ -39,42 +39,19 @@ const createCommand: yargs.CommandModule = {
       tags: tagsInput,
     } = argv;
 
-    const entitySpec: EntityBase = {
+    const entitySpec = await prompts.entity.define({
       type: typeInput as EntityType,
       title: titleInput as string,
       tags: tagsInput as string[],
-    };
-
-    if (!typeInput) {
-      const { type } = await prompt<{ type: EntityType }>({
-        type: 'select',
-        name: 'type',
-        message: 'Select the type of entity you want to create:',
-        choices: Object.keys(EntityType),
-      });
-      entitySpec.type = type;
-    }
-
-    if (!titleInput) {
-      const { title } = await prompt<{ title: string }>({
-        type: 'input',
-        name: 'title',
-        message: 'What is the name of the entity?',
-      });
-      entitySpec.title = title;
-    }
+    });
 
     try {
-      table(entitySpec);
+      table({
+        ...entitySpec,
+        tags: entitySpec.tags?.join(', '),
+      });
 
-      if (
-        await prompt<{ confirm: boolean }>({
-          type: 'confirm',
-          name: 'confirm',
-          message: 'Does this look correct?',
-          initial: true,
-        }).then(({ confirm }) => !confirm)
-      ) {
+      if (!(await prompts.consent())) {
         console.log('Aborting');
         process.exit(0);
       }
@@ -83,6 +60,8 @@ const createCommand: yargs.CommandModule = {
         entitySpec satisfies EntityBase,
         String(locationInput),
       );
+
+      console.log('Entity created!');
     } catch (error) {
       console.error(`Error creating entity: ${error}`);
       process.exit(1);

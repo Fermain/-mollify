@@ -1,10 +1,18 @@
 
+import { defineEntityPrompt } from './define';
 import { selectEntity } from './select';
-import { selectEntityType } from './type';
+import { setEntityTagsPrompt } from './tags';
+import { setEntityTitlePrompt } from './title';
+import { selectEntityTypePrompt } from './type';
 
 export default {
+  define: defineEntityPrompt,
   select: selectEntity,
   type: {
-    select: selectEntityType
+    select: selectEntityTypePrompt
+  },
+  set: {
+    title: setEntityTitlePrompt,
+    tags: setEntityTagsPrompt
   }
 };

@@ -5,6 +5,7 @@ import commands from './commands';
 yargs
   .scriptName('mollify')
   .usage('$0 <cmd> [args]')
+  .command(commands.init)
   .command(commands.create)
   .command(commands.move)
   .command(commands.remove)
