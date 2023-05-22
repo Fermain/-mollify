@@ -4,11 +4,9 @@
 	import '../lib/styles/styles.scss';
 	import '../app.postcss';
 	import { AppShell, Drawer, Toast } from '@skeletonlabs/skeleton';
-	import callouts from 'remark-emoji-callout';
 	import Main from '$lib/components/content/Main.svelte';
 	import Footer from '$lib/components/footer/Footer.svelte';
 	import Reader from '$lib/components/header/Reader.svelte';
-	import Settings from '$lib/components/header/Settings.svelte';
 	import { Molly } from '@mollify/molly';
 	import ContentNav from '$lib/components/navigation/ContentNav.svelte';
 	import IconNav from '$lib/components/navigation/IconNav.svelte';
