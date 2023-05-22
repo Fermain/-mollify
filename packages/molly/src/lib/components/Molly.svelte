@@ -4,7 +4,6 @@
 	import { SSE } from 'sse.js';
 	import { onMount } from 'svelte';
 	import MollyButton from './MollyButton.svelte';
-	import MollyHeader from './MollyHeader.svelte';
 	import MollyForm from './MollyForm.svelte';
 
 	let query: string = '';
@@ -67,8 +66,8 @@
 </script>
 
 <MollyButton>
-			<div  class="h-full grid grid-rows-[1fr_auto]">
-					<div bind:this={chatWindow} class="messages-container h-80 bg-surface-500/30 overflow-y-auto">
+			<div  class="h-full grid grid-rows-[1fr_auto] border border-slate-400">
+					<div bind:this={chatWindow} class="messages-container h-80 bg-slate-200 dark:bg-slate-300 overflow-y-auto">
 						{#each chatMessages as message}
 							<MollyMessage type={message.role} message={message.content} />
 						{/each}
@@ -76,7 +75,7 @@
 							<MollyMessage type="assistant" message={answer} />
 						{/if}
 						{#if loading}
-							<MollyMessage type="assistant" message="Thinking.." />
+							<MollyMessage type="assistant" message="Thinking..." />
 						{/if}
 					</div>
 					<MollyForm

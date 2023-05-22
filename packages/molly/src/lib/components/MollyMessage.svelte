@@ -6,7 +6,7 @@
 	export let message: string;
 </script>
 
-<div class="message {type} max-w-full m-0 bg-slate-400 dark:bg-slate-800 py-2.5 px-1">
+<div class="message {type} max-w-full m-0 bg-slate-200 dark:bg-slate-400 py-2.5 px-1 m-3 rounded rounded-1">
 	<SvelteMarkdown source={message} />
 </div>
 
@@ -14,7 +14,7 @@
 
 
 	.assistant {
-		background-color: #748BA7;
+		background-color: rgb(173, 183, 194);
 		color: black;
 	}
 

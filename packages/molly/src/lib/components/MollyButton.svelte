@@ -9,12 +9,12 @@
 	}
 </script>
 
-<button on:click={onClick} class="btn-icon btn-icon-xl fixed bottom-0 right-0 variant-filled-primary">
+<button on:click={onClick} class="btn-icon btn-icon-xl fixed bottom-0 right-0 variant-filled-primary drop-shadow-md">
 	<MollyIcon />
 </button>
 
 {#if isOpen}
-	<div class="chat-container fixed bottom-0 right-0 w-80 bg-slate-200 dark:bg-slate-600">
+	<div class="chat-container fixed bottom-0 right-0 w-80 drop-shadow-md">
 		<MollyHeader bind:isOpen />
 		<slot />
 	</div>
