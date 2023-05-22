@@ -4,6 +4,7 @@
 	import { page } from '$app/stores';
 	import { audio } from '$lib/stores/audio';
 	import { fetchAudio } from '$lib/utils/tts/fetchAudio';
+	import { createAudio } from '$lib/utils/tts/createAudio';
 
 	let hasAudio = false;
 	let isContent = false;
@@ -20,6 +21,10 @@
 
 		page.subscribe(async (data) => {
 			updatePath();
+			audioSrc = null;
+			content = '';
+			slug = '';
+			isContent = false;
 			const response = await fetch('/api/getCurrentPage', {
 				method: 'POST',
 				headers: {
@@ -32,11 +37,6 @@
 				content = matter.content;
 				slug = matter.slug.replaceAll(' ', '-').toLocaleLowerCase();
 				isContent = true;
-			} else {
-				audioSrc = null;
-				content = '';
-				slug = '';
-				isContent = false;
 			}
 		});
 	});
@@ -44,7 +44,6 @@
 	$: {
 		// Fetch the audio reactively whenever `content` changes
 		if (content) {
-			console.log('fetching audio');
 			(async () => {
 				const data = await fetchAudio(slug);
 				audio.set(data);
@@ -56,6 +55,18 @@
 				audioSrc = data.url;
 			})();
 		}
+	}
+
+	async function regenerateAudio() {
+		const data = await createAudio(content, slug, path, true);
+		audio.set(data);
+		if (data.exists) {
+			hasAudio = true;
+		} else {
+			hasAudio = false;
+		}
+		audio.set(data);
+		audioSrc = data.url;
 	}
 
 	let isOpen = true;
@@ -75,10 +86,10 @@
 		{#if isOpen}
 			<div class="settings-options">
 				{#if hasAudio}
-					<button>Regenerate Audio File</button>
+					<button on:click={regenerateAudio}>Regenerate Audio File</button>
 				{/if}
 				{#if !hasAudio && isContent}
-					<button>Create Audio</button>
+					<button on:click={regenerateAudio}>Create Audio</button>
 				{/if}
 				<button on:click={playAudio}>Scream For Help!</button>
 				<audio bind:this={scream}>

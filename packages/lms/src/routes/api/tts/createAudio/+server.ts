@@ -10,7 +10,6 @@ export const POST: RequestHandler = async ({ request }) => {
 	try {
 		// Convert text to audio using ElevenLabs API
 		const audio = await tts.generateAudio(text, slug, ELEVENLABS_API_KEY);
-
 		return new Response(audio);
 	} catch (err) {
 		console.error('Error converting text to speech:', err);
