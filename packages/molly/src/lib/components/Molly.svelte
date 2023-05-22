@@ -1,7 +1,7 @@
 <script lang="ts">
 	import MollyMessage from '$lib/components/MollyMessage.svelte';
 	import type { ChatCompletionRequestMessage } from 'openai';
-	import { SSE } from 'sse.js';
+	import { SSE } from 'sse-ts';
 	import MollyButton from './MollyButton.svelte';
 	import MollyWindow from './MollyWindow.svelte';
 	import MollyForm from './MollyForm.svelte';
