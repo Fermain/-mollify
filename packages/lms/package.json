@@ -1,6 +1,6 @@
 {
 	"name": "@mollify/lms",
-	"version": "0.1.3",
+	"version": "0.1.4",
 	"license": "GPL",
 	"publishConfig": {
 		"access": "public"
@@ -17,7 +17,7 @@
 		"format": "prettier --plugin-search-dir . --write ."
 	},
 	"devDependencies": {
-		"@mollify/types": "^0.1.3",
+		"@mollify/types": "^0.1.4",
 		"@playwright/test": "^1.28.1",
 		"@skeletonlabs/skeleton": "^1.5.1",
 		"@sveltejs/adapter-auto": "^2.0.0",
@@ -50,8 +50,8 @@
 	"type": "module",
 	"dependencies": {
 		"@floating-ui/dom": "^1.2.8",
-		"@mollify/cli": "^0.1.3",
-		"@mollify/molly": "^0.1.3",
+		"@mollify/cli": "^0.1.4",
+		"@mollify/molly": "^0.1.4",
 		"fuse.js": "^6.6.2",
 		"graphql": "^16.6.0",
 		"js-yaml": "^4.1.0",
