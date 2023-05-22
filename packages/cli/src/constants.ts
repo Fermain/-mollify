@@ -3,6 +3,8 @@ import { EntityType } from '@mollify/types';
 export const SYMLINK_DIR = 'content';
 export const ENTITY_FILE = '+page.md';
 export const INDEX_FILE = 'index.md';
+export const IGNORE_FILE = '.gitignore';
+export const IGNORE_TEMPLATE = '/src/templates/gitignore';
 
 export const ENTITY_HIERARCHY = [
   {
@@ -35,5 +37,7 @@ export const ENTITY_HIERARCHY = [
     parents: [EntityType.Course, EntityType.Module, EntityType.Lesson],
   },
 ];
+
+export const ROOT_ENTITIES = [EntityType.Institution, EntityType.Programme, EntityType.Course];
 
 export const PACKAGE_INVENTORY = ['@mollify/lms', '@mollify/cli', '@mollify/molly', '@mollify/flow', '@mollify/docs', '@mollify/types'];
