@@ -132,101 +132,173 @@
 	<h1 class="h1 mb-8">Search</h1>
 	<div class="search-wrapper">
 		<form class="search" on:submit={handleSubmit}>
-			<div>
-				<label for="search">Search Query</label>
-				<input type="search" placeholder="Search markdown content" bind:value={searchQuery} />
-			</div>
-			<div class="search-options">
-				<div>
-					<label for="search-exact">Exact Match</label>
-					<input
-						type="checkbox"
-						placeholder="Search markdown content"
-						value={true}
-						id="search-exact"
-						bind:checked={searchQueryExact}
-					/>
-				</div>
-				{#if $files?.length > 1}
-					<div>
-						<label>Institution</label>
-						<select bind:value={selectedInstitution}>
+			<label class="label flex flex-col" for="search">
+				<span class="font-medium">Search query</span>
+				<input
+					class="input sm:w-2/4"
+					type="search"
+					id="search"
+					placeholder="Search markdown content"
+					bind:value={searchQuery}
+				/>
+			</label>
+			{#if open}
+				<div class="search-options" transition:slide={{ duration: 300 }}>
+					<label class="flex items-center space-x-2 mt-1 mb-6" for="search-exact">
+						<input class="checkbox" type="checkbox" value={true} id="search-exact" bind:checked={searchQueryExact} />
+						<span>Exact Match</span>
+					</label>
+
+					<label class="label flex flex-col mt-1 mb-6" for="search-exclusions">
+						<span class="font-medium">Excluded Terms</span>
+						<input
+							class="input sm:w-2/4"
+							type="text"
+							id="search-exclusions"
+							placeholder="Exclude terms, eg: term1, term2"
+							bind:value={searchExclusions}
+						/>
+					</label>
+
+					<label class="label flex flex-col mt-1 mb-6" for="search-tags">
+						<span class="font-medium">Included Tags</span>
+						<input
+							class="input sm:w-2/4"
+							type="text"
+							id="search-tags"
+							placeholder="Include these tags, eg: tag1, tag2"
+							bind:value={searchTagsString}
+						/>
+					</label>
+
+					{#if $files?.length > 1}
+						<label class="label font-medium" for="institution-options">Institution</label>
+						<select class="select mt-1 rounded-md sm:w-2/4" bind:value={selectedInstitution} id="institution-options">
 							<option value="all">All</option>
 							{#each $files as file}
 								<option value={file.foldername}>{file.title}</option>
 							{/each}
 						</select>
+					{/if}
+					<div>
+						<div class="my-6">
+							<span class="label font-medium">Search type</span>
+							<div class="flex gap-4 flex-wrap">
+								<label class="flex items-center space-x-2 mt-1" for="programme">
+									<input
+										class="checkbox"
+										type="checkbox"
+										name="type"
+										value="programme"
+										id="programme"
+										bind:group={searchTypes}
+									/>
+									<p>Programmes</p>
+								</label>
+
+								<label class="flex items-center space-x-2 mt-1" for="course">
+									<input
+										class="checkbox"
+										type="checkbox"
+										name="type"
+										value="course"
+										id="course"
+										bind:group={searchTypes}
+									/>
+									<p>Courses</p>
+								</label>
+
+								<label class="flex items-center space-x-2 mt-1" for="module">
+									<input
+										class="checkbox"
+										type="checkbox"
+										name="type"
+										value="module"
+										id="module"
+										bind:group={searchTypes}
+									/>
+									<p>Modules</p>
+								</label>
+
+								<label class="flex items-center space-x-2 mt-1" for="lesson">
+									<input
+										class="checkbox"
+										type="checkbox"
+										name="type"
+										value="lesson"
+										id="lesson"
+										bind:group={searchTypes}
+									/>
+									<p>Lessons</p>
+								</label>
+							</div>
+						</div>
 					</div>
-				{/if}
-				<div>
-					<fieldset>
-						<legend>Search Type</legend>
-						<label for="programme">Programmes</label>
-						<input type="checkbox" name="type" value="programme" id="programme" bind:group={searchTypes} />
-						<label for="course">Courses</label>
-						<input type="checkbox" name="type" value="course" id="course" bind:group={searchTypes} />
-						<label for="module">Modules</label>
-						<input type="checkbox" name="type" value="module" id="module" bind:group={searchTypes} />
-						<label for="lesson">Lessons</label>
-						<input type="checkbox" name="type" value="lesson" id="lesson" bind:group={searchTypes} />
-					</fieldset>
 				</div>
-			</div>
-			<div>
-				<button class="show-option-btn" type="button">Advanced Search Options</button>
+			{/if}
+			<div class="flex flex-wrap my-8 gap-4">
+				<button type="submit" class="btn variant-filled-primary" on:submit={handleSubmit}>Search</button>
+				<div>
+					<button class="btn variant-outline-primary variant-filled-secondary" type="button" on:click={toggleOpen}
+						>Advanced Search Options</button
+					>
+				</div>
 			</div>
 		</form>
 	</div>
 	<div>
 		{#if searchQuery.trim() !== ''}
-			<div class="bubble term">
-				<div class="key">{searchQueryExact ? 'Exact' : 'Fuzzy'}</div>
+			<div class="chip variant-filled">
+				<div class="key">{searchQueryExact ? 'Exact:' : 'Fuzzy:'}</div>
 				<div>{searchQuery}</div>
 			</div>
 		{/if}
 		{#if searchExclusions.length !== 0}
-			<div class="bubble exclusion">
+			<div class="chip variant-filled">
 				<div class="key">Excludes:</div>
 				<div>{searchExclusions}</div>
 			</div>
 		{/if}
 		{#if searchTags.length !== 0}
-			<div class="bubble tags">
+			<div class="chip variant-filled">
 				<div class="key">Tags:</div>
 				<div>{searchTags.join(', ')}</div>
 			</div>
 		{/if}
 		{#if searchTypes.length > 0}
-			<div class="bubble type">
+			<div class="chip variant-filled">
 				<div class="key">Types:</div>
 				<div>{searchTypes.join(', ')}</div>
 			</div>
 		{/if}
 		{#if selectedInstitution !== 'all'}
-			<div class="bubble institution">
+			<div class="chip variant-filled">
 				<div class="key">Institution:</div>
 				<div>{selectedInstitution}</div>
 			</div>
 		{/if}
 	</div>
 	{#if searchResults.length > 0}
-		<h2>Search Results</h2>
+		<h2 class="h2 mt-10 mb-8">Search Results</h2>
 	{:else}
-		<h2>No Results</h2>
+		<h2 class="h2 mt-10 mb-8">No Results</h2>
 	{/if}
 	<div class="results-container">
 		{#if searchResults.length > 0}
-			<h2 class="h2 mb-8">Search results</h2>
 			<div class="grid sm:grid-cols-2 gap-4">
 				{#each searchResults as result}
 					<a class="card p-4 variant-ghost-surface" href={result.browserPath}>
-						<header class="card-header border-b pb-2"><h3 class="h3">{result.title}</h3></header>
+						<header class="card-header border-b pb-2 flex justify-between items-center">
+							<h3 class="h3">{result.title}</h3>
+							<span class="chip variant-filled">{result.type}</span>
+						</header>
 						<section class="p-4">
 							<p>Search Score: {Math.round(result.score * 10000) / 10000}</p>
-							<p>Type: {result.type}</p>
 						</section>
 						<footer class="card-footer border-t pt-2">
-							<p class="chip variant-filled">Tags: {result.tags}</p>
+							{#each result.tags as tag}
+								<p class="chip variant-ringed m-1 ms-0">{tag}</p>
+							{/each}
 						</footer>
 					</a>
 				{/each}
