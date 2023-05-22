@@ -1,10 +1,10 @@
 {
 	"name": "@mollify/molly",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"license": "GPL",
 	"publishConfig": {
-    "access": "public"
-  },
+		"access": "public"
+	},
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && npm run package",
@@ -33,7 +33,7 @@
 		"svelte": "^3.54.0"
 	},
 	"devDependencies": {
-		"@mollify/types": "^0.1.1",
+		"@mollify/types": "^0.1.2",
 		"@playwright/test": "^1.28.1",
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/kit": "^1.5.0",
