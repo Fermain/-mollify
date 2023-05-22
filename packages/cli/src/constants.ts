@@ -35,3 +35,5 @@ export const ENTITY_HIERARCHY = [
     parents: [EntityType.Course, EntityType.Module, EntityType.Lesson],
   },
 ];
+
+export const PACKAGE_INVENTORY = ['@mollify/lms', '@mollify/cli', '@mollify/molly', '@mollify/flow', '@mollify/docs', '@mollify/types'];
