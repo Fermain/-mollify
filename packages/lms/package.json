@@ -1,6 +1,6 @@
 {
 	"name": "@mollify/lms",
-	"version": "0.1.8",
+	"version": "0.1.9",
 	"license": "GPL",
 	"publishConfig": {
 		"access": "public"
@@ -20,6 +20,9 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@floating-ui/dom": "^1.2.8",
+		"@mollify/cli": "^0.1.7",
+		"@mollify/molly": "^0.1.7",
 		"@mollify/types": "^0.1.7",
 		"@playwright/test": "^1.28.1",
 		"@skeletonlabs/skeleton": "^1.5.1",
@@ -33,13 +36,17 @@
 		"eslint": "^8.28.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-svelte3": "^4.0.0",
+		"fuse.js": "^6.6.2",
+		"graphql": "^16.6.0",
 		"gray-matter": "^4.0.3",
+		"js-yaml": "^4.1.0",
 		"mdsvex": "^0.10.6",
 		"postcss": "^8.4.23",
 		"postcss-load-config": "^4.0.1",
 		"prettier": "^2.8.0",
 		"prettier-plugin-svelte": "^2.8.1",
 		"remark-emoji-callout": "^1.0.0",
+		"remark-gfm": "^3.0.1",
 		"sass": "^1.62.0",
 		"svelte": "^3.54.0",
 		"svelte-check": "^3.0.1",
@@ -47,17 +54,10 @@
 		"tailwindcss": "^3.3.1",
 		"tslib": "^2.4.1",
 		"typescript": "^5.0.0",
-		"vite": "^4.2.0",
-		"vitest": "^0.25.3",
-		"@floating-ui/dom": "^1.2.8",
-		"@mollify/cli": "^0.1.7",
-		"@mollify/molly": "^0.1.7",
-		"fuse.js": "^6.6.2",
-		"graphql": "^16.6.0",
-		"js-yaml": "^4.1.0",
-		"remark-gfm": "^3.0.1",
 		"unist-builder": "^3.0.1",
-		"unist-util-visit": "^4.1.2"
+		"unist-util-visit": "^4.1.2",
+		"vite": "^4.2.0",
+		"vitest": "^0.25.3"
 	},
 	"gitHead": "06a0fa8b8a99a06ffd56473a139584d434ec6890"
 }
