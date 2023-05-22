@@ -1,5 +1,7 @@
+import { gitInit } from "./init";
 import submodule from "./submodule";
 
 export default {
-  submodule
+  submodule,
+  init: gitInit
 }

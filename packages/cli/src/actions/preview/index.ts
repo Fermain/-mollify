@@ -1,13 +1,12 @@
 import { spawn } from 'child_process';
 import path from 'path';
 import { PACKAGE_INVENTORY } from '../../constants';
+const [LMS] = PACKAGE_INVENTORY;
 
 export function previewProject(
   projectPath: string = process.cwd(),
 ): Promise<void> {
   return new Promise((resolve, reject) => {
-    const [LMS] = PACKAGE_INVENTORY;
-
     const mollifyLmsPath = path.join(projectPath, 'node_modules', LMS);
 
     const dev = spawn('npm', ['run', 'dev'], {

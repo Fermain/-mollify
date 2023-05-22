@@ -1,7 +1,9 @@
-import { ensureContentDir } from "./content";
-import { ensureIgnoreFile } from "./ignore";
+import { ensureSymlink } from '../../symlink/ensure';
+import { ensureContentDir } from './content';
+import { ensureIgnoreFile } from './ignore';
 
 export default {
   contentDir: ensureContentDir,
-  ignoreFile: ensureIgnoreFile
-}
+  ignoreFile: ensureIgnoreFile,
+  symlink: ensureSymlink,
+};
