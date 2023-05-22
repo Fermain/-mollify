@@ -1,7 +1,7 @@
 <script lang="ts">
 	import MollyMessage from '$lib/components/MollyMessage.svelte';
 	import type { ChatCompletionRequestMessage } from 'openai';
-	import { SSE } from 'sse-ts';
+	import { SSE, SSEOptionsMethod, type CustomEventType, type CustomEventDataType } from 'sse-ts';
 	import MollyButton from './MollyButton.svelte';
 	import MollyWindow from './MollyWindow.svelte';
 	import MollyForm from './MollyForm.svelte';
@@ -17,6 +17,7 @@
 		chatMessages = [...chatMessages, { role: 'user', content: query }];
 
 		const eventSource = new SSE(endpoint, {
+			method: SSEOptionsMethod.POST,
 			headers: {
 				'Content-Type': 'application/json'
 			},
@@ -25,16 +26,18 @@
 
 		eventSource.addEventListener('error', handleError);
 
-		eventSource.addEventListener('message', (e) => {
+		eventSource.addEventListener('message', (event: CustomEventType) => {
 			try {
 				loading = false;
-				if (e.data === '[DONE]') {
+				const { data } = event as CustomEventDataType;
+
+				if (data === '[DONE]') {
 					chatMessages = [...chatMessages, { role: 'assistant', content: answer }];
 					answer = '';
 					return;
 				}
 
-				const completionResponse = JSON.parse(e.data);
+				const completionResponse = JSON.parse(data);
 				const [{ delta }] = completionResponse.choices;
 
 				if (delta.content) {
