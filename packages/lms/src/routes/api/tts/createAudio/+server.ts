@@ -1,6 +1,5 @@
 import tts from '@mollify/tts';
 import { ELEVENLABS_API_KEY } from '$env/static/private';
-// import tts from '$lib/tts/index.js';
 import { error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 

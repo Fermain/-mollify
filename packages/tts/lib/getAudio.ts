@@ -1,7 +1,11 @@
 import fs from "fs";
 import path from "path";
 
-//might request the full path to the file
+/**
+ * Gets audio file for a given slug
+ * @param slug content slug to be used as filename
+ * @returns  url to audio file
+ */
 export async function getAudio(slug: string) {
   const filePath = path.join("public", "audio", `${slug}.mp3`);
   // Check if file already exists

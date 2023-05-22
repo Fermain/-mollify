@@ -12,31 +12,34 @@
 	let path = '';
 	let content = '';
 	let slug = '';
+	let isloading = false;
 	function updatePath() {
 		path = browser ? window.location.pathname.replaceAll(`%20`, ' ') : '';
 	}
 
 	onMount(async () => {
 		updatePath();
-
 		page.subscribe(async (data) => {
 			updatePath();
 			audioSrc = null;
 			content = '';
 			slug = '';
 			isContent = false;
-			const response = await fetch('/api/getCurrentPage', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({ url: path })
-			});
-			const matter = await response.json();
-			if (matter.content) {
-				content = matter.content;
-				slug = matter.slug.replaceAll(' ', '-').toLocaleLowerCase();
-				isContent = true;
+			//if path begins with /content, then it is a content page so fetch the content
+			if (path.startsWith('/content')) {
+				const response = await fetch('/api/getCurrentPage', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({ url: path })
+				});
+				const matter = await response.json();
+				if (matter.content) {
+					content = matter.content;
+					slug = matter.slug.replaceAll(' ', '-').toLocaleLowerCase();
+					isContent = true;
+				}
 			}
 		});
 	});
@@ -57,24 +60,29 @@
 		}
 	}
 
+	// Regenerate/create the audio file for the current page content
 	async function regenerateAudio() {
+		isloading = true;
 		const filepath = path;
 		const data = await createAudio(content, slug, filepath, true);
 		audio.set(data);
 		audioSrc = data.url;
+		isloading = false;
 		if (data.error) {
 			alert(data.error);
-			console.log(data);
 		} else {
 			alert('Success!, audio file created.');
 		}
+		toggleSettings();
 	}
 
-	let isOpen = true;
+	// Toggle the settings menu
+	let isOpen = false;
 	function toggleSettings() {
 		isOpen = !isOpen;
 	}
 
+	// For my frustration and amusement
 	let scream: HTMLAudioElement;
 	function playAudio() {
 		scream.play();
@@ -82,25 +90,28 @@
 </script>
 
 <div class="reader">
-	<div class="reader-settings">
-		<i class="icon-f reader-settings" role="button" on:click={toggleSettings}>Settings</i>
-		{#if isOpen}
-			<div class="settings-options">
-				{#if hasAudio}
-					<button on:click={regenerateAudio}>Regenerate Audio File</button>
-				{/if}
-				{#if !hasAudio && isContent}
-					<button on:click={regenerateAudio}>Create Audio</button>
-				{/if}
-				<button on:click={playAudio}>Scream For Help!</button>
-				<audio bind:this={scream}>
-					<source src="/public/audio/silly_stuff/female_scream.wav" type="audio/wav" />
-					Your browser does not support the audio element.
-				</audio>
-			</div>
-		{/if}
-	</div>
-
+	{#if path.startsWith('/content')}
+		<div class="reader-settings">
+			<i class="icon-f reader-settings" role="button" on:click={toggleSettings}>Settings</i>
+			{#if isOpen}
+				<div class="settings-options">
+					{#if hasAudio && !isloading}
+						<button on:click={regenerateAudio}>Regenerate Audio File</button>
+					{:else if isloading}
+						<p>Creating Audio File...</p>
+					{/if}
+					{#if !hasAudio && isContent}
+						<button on:click={regenerateAudio}>Create Audio</button>
+					{/if}
+					<button on:click={playAudio}>Scream For Help!</button>
+					<audio bind:this={scream}>
+						<source src="/public/audio/silly_stuff/female_scream.wav" type="audio/wav" />
+						Your browser does not support the audio element.
+					</audio>
+				</div>
+			{/if}
+		</div>
+	{/if}
 	{#if audioSrc}
 		<audio src={audioSrc} controls class="reader-inner" />
 	{/if}
