@@ -7,6 +7,7 @@ yargs
   .usage('$0 <cmd> [args]')
   .command(commands.init)
   .command(commands.create)
+  .command(commands.preview)
   .command(commands.move)
   .command(commands.remove)
   .command(commands.list)

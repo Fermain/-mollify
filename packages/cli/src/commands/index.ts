@@ -6,6 +6,7 @@ import move from './move';
 import remove from './remove';
 import unlink from './unlink';
 import init from './init';
+import preview from './preview';
 
 export default {
   init,
@@ -16,4 +17,5 @@ export default {
   move,
   remove,
   unlink,
+  preview
 };
