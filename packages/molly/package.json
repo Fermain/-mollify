@@ -1,6 +1,6 @@
 {
 	"name": "@mollify/molly",
-	"version": "0.1.7",
+	"version": "0.1.10",
 	"license": "GPL",
 	"publishConfig": {
 		"access": "public"
@@ -36,7 +36,6 @@
 	"types": "./dist/index.d.ts",
 	"type": "module",
 	"dependencies": {
-		"svelte-markdown": "^0.2.3",
 		"@mollify/types": "^0.1.7",
 		"@playwright/test": "^1.28.1",
 		"@sveltejs/adapter-auto": "^2.0.0",
@@ -55,6 +54,7 @@
 		"publint": "^0.1.9",
 		"svelte": "^3.54.0",
 		"svelte-check": "^3.0.1",
+		"svelte-markdown": "^0.2.3",
 		"tslib": "^2.4.1",
 		"typescript": "^5.0.0",
 		"vite": "^4.2.0",
