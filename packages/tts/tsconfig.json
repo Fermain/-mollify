@@ -3,7 +3,7 @@
     "outDir": "dist",
     "declaration": true,
     "declarationDir": "dist",
-    "module": "commonjs",
+    "module": "es2020",
     "target": "ES6",
     "strict": true,
     "esModuleInterop": true,
