@@ -55,5 +55,5 @@
 	"svelte": "./dist/index.js",
 	"types": "./dist/index.d.ts",
 	"type": "module",
-	"gitHead": "d6554543a8e3b882389cc2c69ac26f97baa924bf"
+	"gitHead": "cd4391f5b321788e10b4c119335e6a8a31974470"
 }
