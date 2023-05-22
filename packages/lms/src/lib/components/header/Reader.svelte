@@ -3,7 +3,10 @@
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
 	import { audio } from '$lib/stores/audio';
+	import { fetchAudio } from '$lib/utils/tts/fetchAudio';
 
+	let hasAudio = false;
+	let isContent = false;
 	let audioSrc: string | null = null;
 	let path = '';
 	let content = '';
@@ -25,33 +28,37 @@
 				body: JSON.stringify({ url: path })
 			});
 			const matter = await response.json();
-			content = matter.content;
-			slug = matter.slug.replaceAll(' ', '-').toLocaleLowerCase();
-			console.log(matter);
+			if (matter.content) {
+				content = matter.content;
+				slug = matter.slug.replaceAll(' ', '-').toLocaleLowerCase();
+				isContent = true;
+			} else {
+				audioSrc = null;
+				content = '';
+				slug = '';
+				isContent = false;
+			}
 		});
 	});
 
-	// $: {
-	// 	// Fetch the audio reactively whenever `content` changes
-	// 	if (content) {
-	// 		(async () => {
-	// 			const response = await fetch(`/api/tts`, {
-	// 				method: 'POST',
-	// 				headers: {
-	// 					'Content-Type': 'application/json'
-	// 				},
-	// 				body: JSON.stringify({ text: content, slug })
-	// 			});
-	// 			const data = await response.json();
-
-	// 			audio.set(data);
-	// 			audioSrc = data.url;
-	// 		})();
-	// 	}
-	// }
+	$: {
+		// Fetch the audio reactively whenever `content` changes
+		if (content) {
+			console.log('fetching audio');
+			(async () => {
+				const data = await fetchAudio(slug);
+				audio.set(data);
+				if (data.exists) {
+					hasAudio = true;
+				} else {
+					hasAudio = false;
+				}
+				audioSrc = data.url;
+			})();
+		}
+	}
 
 	let isOpen = true;
-
 	function toggleSettings() {
 		isOpen = !isOpen;
 	}
@@ -67,8 +74,12 @@
 		<i class="icon-f reader-settings" role="button" on:click={toggleSettings}>Settings</i>
 		{#if isOpen}
 			<div class="settings-options">
-				<button>Regenerate Audio File</button>
-				<button>Create Audio</button>
+				{#if hasAudio}
+					<button>Regenerate Audio File</button>
+				{/if}
+				{#if !hasAudio && isContent}
+					<button>Create Audio</button>
+				{/if}
 				<button on:click={playAudio}>Scream For Help!</button>
 				<audio bind:this={scream}>
 					<source src="/public/audio/silly_stuff/female_scream.wav" type="audio/wav" />
