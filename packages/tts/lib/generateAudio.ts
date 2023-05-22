@@ -1,10 +1,20 @@
 import fs from "fs";
 import path from "path";
 import transform from "./transform";
+import { fetchAudio } from "./fetchAudio";
 
+/**
+ * Creates/updates audio file for a given slug
+ * @param content Content string to be converted to audio
+ * @param slug content slug to be used as filename
+ * @param filepath path to content file
+ * @param ELEVENLABS_API_KEY Your ElevenLabs API key
+ * @param replace If true, will replace existing audio file
+ * @returns url to audio file
+ */
 export async function generateAudio(content: string, slug: string, filepath: string, ELEVENLABS_API_KEY: string, replace = false) {
   const transformedContent = transform.all(content);
-  const VOICE_ID = "21m00Tcm4TlvDq8ikWAM";
+
   const filePath = path.join("public", "audio", `${slug}.mp3`);
   // Check if file already exists
   if (fs.existsSync(filePath)) {
@@ -14,29 +24,16 @@ export async function generateAudio(content: string, slug: string, filepath: str
   }
 
   try {
-    const response = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${VOICE_ID}`, {
-      method: "POST",
-      headers: {
-        accept: "audio/mpeg",
-        "content-type": "application/json",
-        "xi-api-key": ELEVENLABS_API_KEY,
-      },
-      body: JSON.stringify({
-        text: transformedContent,
-        voice_settings: {
-          stability: 0,
-          similarity_boost: 0,
-        },
-      }),
-    });
+    const response = await fetchAudio(transformedContent, ELEVENLABS_API_KEY);
 
     if (response.ok) {
+      // Delete existing file if it already exists
       if (replace) {
         console.log("file deleted");
         fs.unlinkSync(filePath);
       }
     } else {
-      console.log("creation error");
+      console.log("creation error", response.status);
       if (fs.existsSync(filePath)) {
         return JSON.stringify({ error: "Bad request, creation failed", url: `/public/audio/${slug}.mp3`, response });
       }
