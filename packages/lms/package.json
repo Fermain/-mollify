@@ -1,6 +1,6 @@
 {
 	"name": "@mollify/lms",
-	"version": "0.1.10",
+	"version": "0.1.11",
 	"license": "GPL",
 	"publishConfig": {
 		"access": "public"
@@ -22,7 +22,7 @@
 	"dependencies": {
 		"@floating-ui/dom": "^1.2.8",
 		"@mollify/cli": "^0.1.7",
-		"@mollify/molly": "^0.1.10",
+		"@mollify/molly": "^0.1.11",
 		"@mollify/types": "^0.1.7",
 		"@playwright/test": "^1.28.1",
 		"@skeletonlabs/skeleton": "^1.5.1",
