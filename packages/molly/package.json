@@ -1,6 +1,6 @@
 {
 	"name": "@mollify/molly",
-	"version": "0.1.4",
+	"version": "0.1.5",
 	"license": "GPL",
 	"publishConfig": {
 		"access": "public"
@@ -33,7 +33,7 @@
 		"svelte": "^3.54.0"
 	},
 	"devDependencies": {
-		"@mollify/types": "^0.1.4",
+		"@mollify/types": "^0.1.5",
 		"@playwright/test": "^1.28.1",
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/kit": "^1.5.0",
@@ -63,5 +63,5 @@
 	"dependencies": {
 		"svelte-markdown": "^0.2.3"
 	},
-	"gitHead": "7c4af18d609f5eb9ec4ef139f8131929b2416a8d"
+	"gitHead": "6775f752212ebca6a4cd1e0f490cad1c69348090"
 }
