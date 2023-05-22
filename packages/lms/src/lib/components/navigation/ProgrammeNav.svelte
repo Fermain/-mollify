@@ -38,11 +38,11 @@
 <slot />
 {#if isProgramme}
 	<section>
-		<h2>
+		<h2 class="h2 mb-8">
 			{current?.title}
 			{current?.type === 'institution' ? 'Programmes' : 'Courses'}
 		</h2>
-		<div class="inst-grid">
+		<div class="grid sm:grid-cols-2 gap-4">
 			{#each current.children as child}
 				<div class="grid sm:grid-cols-2 gap-4">
 					{#each current.children as child}

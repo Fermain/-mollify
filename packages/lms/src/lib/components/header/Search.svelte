@@ -3,18 +3,22 @@
 	import { getSearchResults } from '$lib/utils/fuseSearch/getSearchResults';
 	import { Autocomplete } from '@skeletonlabs/skeleton';
 	import type { AutocompleteOption } from '@skeletonlabs/skeleton';
+	import { parseRawSearchQuery } from '$lib/utils/fuseSearch/parseRawSearchQuery';
 
 	let searchQuery = '';
 	let searchResults: String[] = [];
 	let timer: string | number | NodeJS.Timeout | undefined;
+	let inputFocused = false;
+	let returnedResults = false;
 
 	function handleSubmit(event: { preventDefault: () => void }) {
-		event.preventDefault();
-		goto(`/search?query=${searchQuery}`);
+		goto(`/search?query=${encodeURIComponent(searchQuery)}`);
+		searchQuery = '';
 	}
 
 	const debounceSearch = async () => {
 		clearTimeout(timer);
+		returnedResults = false;
 		if (searchQuery.length >= 3) {
 			await new Promise((resolve) => {
 				timer = setTimeout(async () => {
@@ -37,6 +41,7 @@
 
 	function handlePageChange() {
 		searchResults = [];
+		searchQuery = '';
 	}
 
 	function handleClickOutside(event: object) {
@@ -52,22 +57,36 @@
 
 <svelte:window on:click={handleClickOutside} />
 <div class="wrapper">
-	<form class="input-group input-group-divider grid-cols-[auto_1fr_auto]" on:submit={handleSubmit}>
-		<div class="input-group-shim"><i class="icon-f">search</i></div>
+	<form class="flex sm:input-group sm:input-group-divider sm:grid-cols-[auto_1fr_auto]" on:submit|preventDefault={handleSubmit}>
 		<input
-			class="input"
+			class="input hidden sm:block w-60"
 			type="search"
+			name="autocomplete-search"
 			placeholder="Search markdown content"
 			bind:value={searchQuery}
 			on:input={async () => {
 				debounceSearch();
 			}}
+			on:focus={() => {
+				inputFocused = true;
+			}}
+			on:blur={() => {
+				inputFocused = false;
+			}}
 		/>
-		<button class="variant-filled-primary">Submit</button>
+		<button
+			class="btn hover:bg-primary-hover-token sm:variant-filled-primary sm:rounded-l-none sm:hover:bg-primary-active-token"
+			><i class="icon-f">search</i></button
+		>
 	</form>
 	{#if searchResults.length > 0}
 		<div class="card w-full max-w-sm max-h-48 p-4 overflow-y-auto absolute">
 			<Autocomplete bind:input={searchQuery} options={searchResults} on:selection={handleSearchSelection} />
+		</div>
+	{/if}
+	{#if searchResults.length === 0 && inputFocused && searchQuery.length >= 3 && returnedResults}
+		<div class="search-items">
+			<p class="no-results">No Results Found</p>
 		</div>
 	{/if}
 </div>

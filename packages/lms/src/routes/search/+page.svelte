@@ -2,189 +2,307 @@
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
 	import { files } from '$lib/stores/files';
-	import { getSearchResults } from '$lib/utils/fuseSearch/getSearchResults';
+	import { getSearchResults, type FiltersType } from '$lib/utils/fuseSearch/getSearchResults';
 	import type { EntityMeta } from '@mollify/types';
+	import { slide } from 'svelte/transition';
+	import { generateRawSearchQuery } from '$lib/utils/fuseSearch/generateRawSearchQuery';
+	import { parseRawSearchQuery } from '$lib/utils/fuseSearch/parseRawSearchQuery';
+	import { updateQueryString } from '$lib/utils/fuseSearch/updateQueryString';
+
+	type QueryType = {
+		query: string;
+		filters: FiltersType;
+	};
+
 	let searchQuery = '';
+	let rawSearchQuery = '';
+	let reversedSearchQuery = {};
 	let searchQueryExact = false;
-	let searchTypes: String[] = [];
+	let searchTypes: string[] = [];
+	let searchTagsString: string = '';
+	let searchTags: string[] = [];
+	let searchExclusions: string = '';
 	let searchResults: EntityMeta[] = [];
 	let selectedInstitution = 'all';
+	let query = '';
+	let isMatch = false;
+	let processedQuery: QueryType = {
+		query: '',
+		filters: {
+			exact: false,
+			types: [],
+			tags: [],
+			institution: '',
+			exclusions: []
+		}
+	};
 
-	const query = $page.url.searchParams.get('query');
-	onMount(() => {
-		if (query) {
-			searchQuery = query;
+	const queryParam = $page.url.searchParams.get('query');
+	if (typeof queryParam === 'string') {
+		query = decodeURIComponent(queryParam);
+	}
 
-			updateSearchResults();
+	let filter: FiltersType = {
+		exact: searchQueryExact,
+		types: searchTypes,
+		institution: selectedInstitution,
+		exclusions: searchExclusions.trim() !== '' ? searchExclusions.split(' ') : [],
+		tags: searchTags
+	};
+
+	async function updateSearchResults() {
+		filter = {
+			exact: searchQueryExact,
+			types: searchTypes,
+			tags: searchTags,
+			institution: selectedInstitution,
+			exclusions: searchExclusions.trim() !== '' ? searchExclusions.split(' ') : []
+		};
+		searchResults = await getSearchResults(searchQuery, filter);
+	}
+
+	onMount(async () => {
+		// fetch files if not already fetched
+		if ($files === null) {
+			const response = await fetch('/api/parseMarkdown');
+			const data = await response.json();
+			files.set(data);
+		}
+
+		// Parse query string if present, update values and get search results
+		if (query.trim() !== '') {
+			rawSearchQuery = query;
+			processedQuery = parseRawSearchQuery(rawSearchQuery);
+			searchQuery = processedQuery.query;
+			searchQueryExact = processedQuery.filters.exact;
+			searchTypes = processedQuery.filters.types;
+			searchTags = processedQuery.filters.tags;
+			searchTagsString = searchTags.join(', ');
+			if ($files !== null) {
+				// check if institution exists
+				isMatch = $files.some(
+					(file: EntityMeta) => file.title.toLowerCase() === processedQuery.filters.institution.toLowerCase()
+				);
+				// if it does, update the value to the correct character case
+				if (isMatch) {
+					const fileMatch = $files.find(
+						(file: EntityMeta) => file.title.toLowerCase() === processedQuery.filters.institution.toLowerCase()
+					);
+					if (fileMatch) {
+						processedQuery.filters.institution = fileMatch.title;
+					}
+				}
+			}
+			selectedInstitution = isMatch ? processedQuery.filters.institution : 'all';
+			searchExclusions = processedQuery.filters.exclusions.join(', ');
+			await updateSearchResults();
 		}
 	});
 
+	// update search results on submit
 	function handleSubmit(event: { preventDefault: () => void }) {
 		event.preventDefault();
 		updateSearchResults();
+		searchTagsString.trim() === '' ? (searchTags = []) : (searchTags = searchTagsString.split(', '));
+
+		const rawSearchQuery = generateRawSearchQuery(
+			searchQuery,
+			searchExclusions,
+			searchTypes,
+			searchTags,
+			selectedInstitution,
+			searchQueryExact
+		);
+		updateQueryString({
+			query: rawSearchQuery
+		});
+		toggleOpen();
 	}
 
-	async function updateSearchResults() {
-		const filters = {
-			exact: searchQueryExact,
-			type: searchTypes,
-			institution: selectedInstitution
-		};
-		searchResults = await getSearchResults(searchQuery, filters);
+	// open/close advanced search options
+	let open = true;
+	function toggleOpen(): void {
+		open = !open;
 	}
 
-	$: selectedInstitution;
-	$: searchTypes;
-	$: searchResults;
-	$: query;
-	$: $page.url.searchParams.get('query');
-	$: $files;
+	$: searchTagsString.trim() === '' ? (searchTags = []) : (searchTags = searchTagsString.split(', '));
 </script>
 
-<section>
-	<h1>Search</h1>
+<section class="p-4">
+	<h1 class="h1 mb-8">Search</h1>
 	<div class="search-wrapper">
 		<form class="search" on:submit={handleSubmit}>
-			<div>
-				<label for="search">Search Query</label>
-				<input type="search" placeholder="Search markdown content" bind:value={searchQuery} />
-			</div>
-			<div class="search-options">
-				<div>
-					<label for="search-exact">Exact Match</label>
-					<input
-						type="checkbox"
-						placeholder="Search markdown content"
-						value={true}
-						id="search-exact"
-						bind:checked={searchQueryExact}
-					/>
-				</div>
-				{#if $files?.length > 1}
-					<div>
-						<label>Institution</label>
-						<select bind:value={selectedInstitution}>
+			<label class="label flex flex-col" for="search">
+				<span class="font-medium">Search query</span>
+				<input
+					class="input sm:w-2/4"
+					type="search"
+					id="search"
+					placeholder="Search markdown content"
+					bind:value={searchQuery}
+				/>
+			</label>
+			{#if open}
+				<div class="search-options" transition:slide={{ duration: 300 }}>
+					<label class="flex items-center space-x-2 mt-1 mb-6" for="search-exact">
+						<input class="checkbox" type="checkbox" value={true} id="search-exact" bind:checked={searchQueryExact} />
+						<span>Exact Match</span>
+					</label>
+
+					<label class="label flex flex-col mt-1 mb-6" for="search-exclusions">
+						<span class="font-medium">Excluded Terms</span>
+						<input
+							class="input sm:w-2/4"
+							type="text"
+							id="search-exclusions"
+							placeholder="Exclude terms, eg: term1, term2"
+							bind:value={searchExclusions}
+						/>
+					</label>
+
+					<label class="label flex flex-col mt-1 mb-6" for="search-tags">
+						<span class="font-medium">Included Tags</span>
+						<input
+							class="input sm:w-2/4"
+							type="text"
+							id="search-tags"
+							placeholder="Include these tags, eg: tag1, tag2"
+							bind:value={searchTagsString}
+						/>
+					</label>
+
+					{#if $files?.length > 1}
+						<label class="label font-medium" for="institution-options">Institution</label>
+						<select class="select mt-1 rounded-md sm:w-2/4" bind:value={selectedInstitution} id="institution-options">
 							<option value="all">All</option>
 							{#each $files as file}
 								<option value={file.foldername}>{file.title}</option>
 							{/each}
 						</select>
+					{/if}
+					<div>
+						<div class="my-6">
+							<span class="label font-medium">Search type</span>
+							<div class="flex gap-4 flex-wrap">
+								<label class="flex items-center space-x-2 mt-1" for="programme">
+									<input
+										class="checkbox"
+										type="checkbox"
+										name="type"
+										value="programme"
+										id="programme"
+										bind:group={searchTypes}
+									/>
+									<p>Programmes</p>
+								</label>
+
+								<label class="flex items-center space-x-2 mt-1" for="course">
+									<input
+										class="checkbox"
+										type="checkbox"
+										name="type"
+										value="course"
+										id="course"
+										bind:group={searchTypes}
+									/>
+									<p>Courses</p>
+								</label>
+
+								<label class="flex items-center space-x-2 mt-1" for="module">
+									<input
+										class="checkbox"
+										type="checkbox"
+										name="type"
+										value="module"
+										id="module"
+										bind:group={searchTypes}
+									/>
+									<p>Modules</p>
+								</label>
+
+								<label class="flex items-center space-x-2 mt-1" for="lesson">
+									<input
+										class="checkbox"
+										type="checkbox"
+										name="type"
+										value="lesson"
+										id="lesson"
+										bind:group={searchTypes}
+									/>
+									<p>Lessons</p>
+								</label>
+							</div>
+						</div>
 					</div>
-				{/if}
+				</div>
+			{/if}
+			<div class="flex flex-wrap my-8 gap-4">
+				<button type="submit" class="btn variant-filled-primary" on:submit={handleSubmit}>Search</button>
 				<div>
-					<fieldset>
-						<legend>Search Type</legend>
-						<label for="programme">Programmes</label>
-						<input
-							type="checkbox"
-							name="type"
-							value="programme"
-							id="programme"
-							bind:group={searchTypes}
-						/>
-						<label for="course">Courses</label>
-						<input
-							type="checkbox"
-							name="type"
-							value="course"
-							id="course"
-							bind:group={searchTypes}
-						/>
-						<label for="module">Modules</label>
-						<input
-							type="checkbox"
-							name="type"
-							value="module"
-							id="module"
-							bind:group={searchTypes}
-						/>
-						<label for="lesson">Lessons</label>
-						<input
-							type="checkbox"
-							name="type"
-							value="lesson"
-							id="lesson"
-							bind:group={searchTypes}
-						/>
-					</fieldset>
+					<button class="btn variant-outline-primary variant-filled-secondary" type="button" on:click={toggleOpen}
+						>Advanced Search Options</button
+					>
 				</div>
 			</div>
-			<div>
-				<button class="show-option-btn" type="button">Advanced Search Options</button>
-			</div>
-			<button type="submit" class="search-btn">Search</button>
 		</form>
 	</div>
+	<div>
+		{#if searchQuery.trim() !== ''}
+			<div class="chip variant-filled">
+				<div class="key">{searchQueryExact ? 'Exact:' : 'Fuzzy:'}</div>
+				<div>{searchQuery}</div>
+			</div>
+		{/if}
+		{#if searchExclusions.length !== 0}
+			<div class="chip variant-filled">
+				<div class="key">Excludes:</div>
+				<div>{searchExclusions}</div>
+			</div>
+		{/if}
+		{#if searchTags.length !== 0}
+			<div class="chip variant-filled">
+				<div class="key">Tags:</div>
+				<div>{searchTags.join(', ')}</div>
+			</div>
+		{/if}
+		{#if searchTypes.length > 0}
+			<div class="chip variant-filled">
+				<div class="key">Types:</div>
+				<div>{searchTypes.join(', ')}</div>
+			</div>
+		{/if}
+		{#if selectedInstitution !== 'all'}
+			<div class="chip variant-filled">
+				<div class="key">Institution:</div>
+				<div>{selectedInstitution}</div>
+			</div>
+		{/if}
+	</div>
+	{#if searchResults.length > 0}
+		<h2 class="h2 mt-10 mb-8">Search Results</h2>
+	{:else}
+		<h2 class="h2 mt-10 mb-8">No Results</h2>
+	{/if}
 	<div class="results-container">
-		{#if searchResults}
-			{#each searchResults as result}
-				<div class="result">
-					<h3>{result.title}</h3>
-					<p>Search Score:{Math.round(result.score * 10000) / 10000}</p>
-					<p>Type: {result.type}</p>
-					<a class="result-btn" href={result.browserPath}>View Details</a>
-				</div>
-			{/each}
+		{#if searchResults.length > 0}
+			<div class="grid sm:grid-cols-2 gap-4">
+				{#each searchResults as result}
+					<a class="card p-4 variant-ghost-surface" href={result.browserPath}>
+						<header class="card-header border-b pb-2 flex justify-between items-center">
+							<h3 class="h3">{result.title}</h3>
+							<span class="chip variant-filled">{result.type}</span>
+						</header>
+						<section class="p-4">
+							<p>Search Score: {Math.round(result.score * 10000) / 10000}</p>
+						</section>
+						<footer class="card-footer border-t pt-2">
+							{#each result.tags as tag}
+								<p class="chip variant-ringed m-1 ms-0">{tag}</p>
+							{/each}
+						</footer>
+					</a>
+				{/each}
+			</div>
 		{/if}
 	</div>
 </section>
-
-<style lang="scss">
-	main {
-		padding-top: var(--spacing-xl);
-		min-height: 100vh;
-		grid-area: main;
-	}
-
-	.search-wrapper {
-		display: flex;
-		flex-direction: column;
-		padding: var(--spacing-m);
-	}
-	.result-btn,
-	.search-btn {
-		background-color: var(--secondary);
-		color: var(--text-primary);
-		margin: auto;
-
-		:hover {
-			background-color: var(--text-primary);
-			color: var(--secondary);
-		}
-	}
-
-	.result-btn {
-		display: block;
-		padding: var(--spacing-s) var(--spacing-m);
-		border-radius: var(--spacing-s);
-		align-self: center;
-		margin: auto;
-		width: fit-content;
-	}
-
-	.show-option-btn {
-		border: none;
-		background-color: transparent;
-		color: var(--text-primary);
-		text-decoration: underline;
-		margin-left: auto;
-	}
-	.search > div,
-	.search-options > div {
-		margin-bottom: var(--spacing-m);
-	}
-
-	.result {
-		background-color: var(--primary);
-		color: var(--text-secondary);
-		padding: var(--spacing-m);
-		border-radius: var(--spacing-m);
-	}
-
-	.results-container {
-		padding: 0.5rem;
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-		grid-gap: 1rem;
-	}
-</style>
