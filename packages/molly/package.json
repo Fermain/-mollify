@@ -32,7 +32,11 @@
 	"peerDependencies": {
 		"svelte": "^3.54.0"
 	},
-	"devDependencies": {
+	"svelte": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"type": "module",
+	"dependencies": {
+		"svelte-markdown": "^0.2.3",
 		"@mollify/types": "^0.1.7",
 		"@playwright/test": "^1.28.1",
 		"@sveltejs/adapter-auto": "^2.0.0",
@@ -49,19 +53,12 @@
 		"prettier": "^2.8.0",
 		"prettier-plugin-svelte": "^2.8.1",
 		"publint": "^0.1.9",
-		"sse-ts": "^1.0.1",
 		"svelte": "^3.54.0",
 		"svelte-check": "^3.0.1",
 		"tslib": "^2.4.1",
 		"typescript": "^5.0.0",
 		"vite": "^4.2.0",
 		"vitest": "^0.25.3"
-	},
-	"svelte": "./dist/index.js",
-	"types": "./dist/index.d.ts",
-	"type": "module",
-	"dependencies": {
-		"svelte-markdown": "^0.2.3"
 	},
 	"gitHead": "06a0fa8b8a99a06ffd56473a139584d434ec6890"
 }
