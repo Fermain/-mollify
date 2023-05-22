@@ -58,7 +58,8 @@
 	}
 
 	async function regenerateAudio() {
-		const data = await createAudio(content, slug, path, true);
+		const filepath = path;
+		const data = await createAudio(content, slug, filepath, true);
 		audio.set(data);
 		if (data.exists) {
 			hasAudio = true;
