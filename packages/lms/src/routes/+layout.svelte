@@ -30,7 +30,7 @@
 		<Main>
 			<slot />
 		</Main>
-		<Molly />
+		<Molly endpoint="/api/molly" />
 	</div>
 	<svelte:fragment slot="footer"
 		><Footer>
