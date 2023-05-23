@@ -37,7 +37,6 @@
 
 	function handlePageChange() {
 		searchResults = [];
-		searchQuery = '';
 	}
 
 	function handleClickOutside(event: object) {
@@ -45,19 +44,13 @@
 			handlePageChange();
 		}
 	}
-
-	function handleSearchSelection(event) {
-		goto(event.detail.browserPath);
-	}
 </script>
 
 <svelte:window on:click={handleClickOutside} />
 <div class="wrapper">
 	<form class="search" on:submit|preventDefault={handleSubmit}>
 		<input
-			class="input hidden sm:block w-60"
 			type="search"
-			name="autocomplete-search"
 			placeholder="Search markdown content"
 			bind:value={searchQuery}
 			on:input={async () => {
@@ -70,10 +63,7 @@
 				inputFocused = false;
 			}}
 		/>
-		<button
-			class="btn hover:bg-primary-hover-token sm:variant-filled-primary sm:rounded-l-none sm:hover:bg-primary-active-token"
-			><i class="icon-f">search</i></button
-		>
+		<button>Search</button>
 	</form>
 	{#if searchResults.length > 0 && inputFocused}
 		<div class="search-items">
