@@ -17,14 +17,22 @@ const options = {
 
 export async function search(
 	searchQuery: string,
-	filters = { institution: 'all', type: [], exact: null }
+	filters: {
+		institution?: string;
+		tags: string[];
+		types: string[];
+		exact: boolean;
+		exclusions: string[];
+	} = { institution: 'all', tags: [], types: [], exact: false, exclusions: [] }
 ) {
 	const data = getEntityMetaTree('src/routes/content', true);
 
 	//filter institution
 	let dataInstitutionFilter = data;
 	if (filters.institution !== 'all') {
-		dataInstitutionFilter = data.filter((item) => item.title === filters.institution);
+		dataInstitutionFilter = data.filter(
+			(item) => item.title.toLowerCase() === filters.institution?.toLowerCase()
+		);
 	}
 
 	//flatten data
@@ -32,8 +40,8 @@ export async function search(
 
 	//filter type
 	let dataTypeFilter = flattenedData;
-	if (filters.type?.length > 0) {
-		dataTypeFilter = flattenedData.filter((item) => filters.type.includes(item.type));
+	if (filters.types?.length > 0) {
+		dataTypeFilter = flattenedData.filter((item: FuseItem) => filters.types.includes(item.type));
 	}
 
 	//exact search
@@ -47,10 +55,9 @@ export async function search(
 	searchQuery = removeStopWords(searchQuery);
 
 	const searchResults = await fuse.search(searchQuery);
-	//filter stuff
-	const filterStuff = searchResults;
 
-	const reducedData = filterStuff.reduce((array, item) => {
+	//filter stuff
+	const reducedData = searchResults.reduce((array: FuseItem[], item: Fuse.FuseResult<FuseItem>) => {
 		item.item.refIndex = item.refIndex;
 		item.item.score = item.score;
 		delete item.item.content;
@@ -59,5 +66,36 @@ export async function search(
 		return array;
 	}, []);
 
-	return reducedData;
+	let filterExclusions = reducedData;
+	if (filters.exclusions?.length > 0) {
+		filterExclusions = reducedData.filter((item: FuseItem) => {
+			// Check for any excluded words in the title
+			filters.exclusions = filters.exclusions.map((word: string) => word.toLowerCase());
+			const titleWords = item.title.toLowerCase().split(' ');
+			if (titleWords.some((word: string) => filters.exclusions.includes(word.toLowerCase()))) {
+				return false;
+			}
+			// Check for any excluded tags
+			if (item.tags?.some((tag: string) => filters.exclusions.includes(tag.toLowerCase()))) {
+				return false;
+			}
+			return true;
+		});
+	}
+
+	let filterTags = filterExclusions;
+	if (filters.tags?.length > 0) {
+		filterExclusions = filterExclusions.map((item) => ({
+			...item,
+			tags: item.tags?.map((tag: string) => tag.toLowerCase())
+		}));
+		filters.tags = filters.tags.map((tag: string) => tag.toLowerCase());
+
+		console.log(filterExclusions[0]?.tags);
+		filterTags = filterExclusions.filter((item) =>
+			item.tags?.some((tag: string) => filters.tags.includes(tag.toLowerCase()))
+		);
+	}
+
+	return filterTags;
 }

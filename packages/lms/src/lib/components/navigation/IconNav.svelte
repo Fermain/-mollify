@@ -2,8 +2,8 @@
 	import { AppRail, AppRailTile } from '@skeletonlabs/skeleton';
 </script>
 
-<AppRail width="w-[3rem] sm:w-20" background="bg-surface-100-800-token">
-	<AppRailTile value={0}><span class="material-symbols-outlined"> home </span></AppRailTile>
-	<AppRailTile value={1}><span class="material-symbols-outlined"> bookmark </span></AppRailTile>
-	<AppRailTile value={2}><span class="material-symbols-outlined"> bookmark_add </span></AppRailTile>
+<AppRail width="w-[3rem] sm:w-20">
+	<AppRailTile value={0}><i class="icon-f">home</i></AppRailTile>
+	<AppRailTile value={1}><i class="icon-f">bookmark</i></AppRailTile>
+	<AppRailTile value={2}><i class="icon-f">bookmark_add</i></AppRailTile>
 </AppRail>
