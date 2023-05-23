@@ -8,28 +8,11 @@
 </script>
 
 <div
-	class="search-item"
+	class="py-1 hover:bg-primary-hover-token cursor-pointer"
 	on:click={() => {
 		dispatch('pageChange');
 		goto(data.browserPath);
 	}}
-	on:keydown={(evt) => {
-		if (evt.key === 'Enter') {
-			dispatch('pageChange');
-			goto(data.browserPath);
-		}
-	}}
 >
 	{data.title}
 </div>
-
-<style lang="scss">
-	.search-item {
-		padding: var(--spacing-s) var(--spacing-xxs);
-		background-color: var(--background-primary);
-		border-radius: var(--spacing-xxs);
-		white-space: nowrap;
-		text-overflow: ellipsis;
-		cursor: pointer;
-	}
-</style>

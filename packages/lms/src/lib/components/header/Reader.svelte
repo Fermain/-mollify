@@ -123,7 +123,7 @@
 		</div>
 	{/if}
 	{#if audioSrc}
-		<audio src={audioSrc} controls class="reader-inner" />
+		<audio src={audioSrc} controls class="w-full h-full" />
 	{/if}
 </div>
 
