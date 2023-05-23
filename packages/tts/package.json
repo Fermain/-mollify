@@ -1,10 +1,13 @@
 {
   "name": "@mollify/tts",
-  "version": "0.0.1",
+  "version": "0.2.0",
   "description": "Elevenlabs text to speech for @mollify",
   "author": "Fermain <Fermain@users.noreply.github.com>",
   "homepage": "https://github.com/Fermain/-Mollify#readme",
-  "license": "ISC",
+  "license": "GPL",
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
