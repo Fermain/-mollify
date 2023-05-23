@@ -50,7 +50,7 @@
 	}
 </script>
 
-<div class="w-full">
+<div class="w-11/12">
 	{#if audioSrc}
 		<audio src={audioSrc} controls class="w-full h-full" />
 	{/if}

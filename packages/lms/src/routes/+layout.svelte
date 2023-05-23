@@ -5,7 +5,6 @@
 	import { Molly } from '@mollify/molly';
 	import '../app.postcss';
 	import { AppShell, Drawer, Toast } from '@skeletonlabs/skeleton';
-	import callouts from 'remark-emoji-callout';
 	import Main from '$lib/components/content/Main.svelte';
 	import Footer from '$lib/components/footer/Footer.svelte';
 	import Reader from '$lib/components/header/Reader.svelte';

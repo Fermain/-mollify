@@ -1,9 +1,7 @@
 <script lang="ts">
 	import MollyMessage from '$lib/components/MollyMessage.svelte';
 	import type { ChatCompletionRequestMessage } from 'openai';
-	import { SSE } from 'sse-ts';
 	import MollyButton from './MollyButton.svelte';
-	import MollyWindow from './MollyWindow.svelte';
 	import MollyForm from './MollyForm.svelte';
 
 	let query: string = '';
@@ -11,21 +9,17 @@
 	let loading: boolean = false;
 	let chatMessages: ChatCompletionRequestMessage[] = [];
 	export let endpoint = '/';
+	let chatWindow: HTMLElement | null;
 
 	const handleSubmit = async () => {
 		loading = true;
 		chatMessages = [...chatMessages, { role: 'user', content: query }];
 
-		const eventSource = new SSE(endpoint, {
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			payload: JSON.stringify({ messages: chatMessages })
-		});
+		const eventSource = new EventSource(endpoint);
 
-		eventSource.addEventListener('error', handleError);
+		eventSource.onerror = handleError;
 
-		eventSource.addEventListener('message', (e) => {
+		eventSource.onmessage = (e) => {
 			try {
 				loading = false;
 				if (e.data === '[DONE]') {
@@ -43,8 +37,7 @@
 			} catch (err) {
 				handleError(err);
 			}
-		});
-		eventSource.stream();
+		};
 	};
 
 	function handleError<T>(err: T) {
@@ -56,38 +49,26 @@
 </script>
 
 <MollyButton>
-	<MollyWindow>
-			<div class="messages-container">
-				{#each chatMessages as message}
-					<MollyMessage type={message.role} message={message.content} />
-				{/each}
-				{#if answer}
-					<MollyMessage type="assistant" message={answer} />
-				{/if}
-				{#if loading}
-					<MollyMessage type="assistant" message="Thinking.." />
-				{/if}
-			</div>
+	<div class="h-full grid grid-rows-[1fr_auto] border border-slate-400">
+		<div
+			bind:this={chatWindow}
+			class="messages-container h-80 bg-slate-200 dark:bg-slate-300 overflow-y-auto"
+		>
+			{#each chatMessages as message}
+				<MollyMessage type={message.role} message={message.content} />
+			{/each}
+			{#if answer}
+				<MollyMessage type="assistant" message={answer} />
+			{/if}
+			{#if loading}
+				<MollyMessage type="assistant" message="Thinking..." />
+			{/if}
+		</div>
 		<MollyForm
 			on:userSubmit={(e) => {
 				query = e.detail;
 				handleSubmit();
 			}}
 		/>
-		</MollyWindow>
+	</div>
 </MollyButton>
-
-<style lang="scss">
-	.messages-container {
-		display: flex;
-		flex-direction: column;
-		justify-content: flex-end;
-		height: 300%;
-		overflow-y: scroll; /*scrolls the content if it overflows the viewport IT'S NOT WORKING*/
-	}
-
-	.messages-container::-webkit-scrollbar {
-		width: 0.5rem;
-		color: #21a299;
-	}
-</style>
