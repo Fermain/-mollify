@@ -10,7 +10,11 @@ const config = {
 		extend: {}
 	},
 
-	plugins: [require('@tailwindcss/forms'), ...require('@skeletonlabs/skeleton/tailwind/skeleton.cjs')()]
+	plugins: [
+		require('@tailwindcss/typography'),
+		require('@tailwindcss/forms'),
+		...require('@skeletonlabs/skeleton/tailwind/skeleton.cjs')()
+	]
 };
 
 module.exports = config;

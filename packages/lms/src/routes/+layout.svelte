@@ -8,14 +8,17 @@
 	import Main from '$lib/components/content/Main.svelte';
 	import Footer from '$lib/components/footer/Footer.svelte';
 	import Reader from '$lib/components/header/Reader.svelte';
-	import Settings from '$lib/components/header/Settings.svelte';
 	import ContentNav from '$lib/components/navigation/ContentNav.svelte';
 	import IconNav from '$lib/components/navigation/IconNav.svelte';
 	import Header from '$lib/components/header/Header.svelte';
 	import Ego from '$lib/components/ui/Ego.svelte';
 </script>
 
-<Drawer><ContentNav /></Drawer>
+<Drawer>
+	<div class="p-4">
+		<ContentNav />
+	</div>
+</Drawer>
 
 <AppShell slotSidebarRight="bg-surface-500/5 w-0 lg:w-64">
 	<svelte:fragment slot="header">
