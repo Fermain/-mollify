@@ -1,7 +1,6 @@
 {
 	"name": "@mollify/lms",
 	"version": "0.0.1",
-	"private": true,
 	"license": "GPL",
 	"scripts": {
 		"dev": "vite dev",
