@@ -2,6 +2,7 @@
 	"name": "@mollify/lms",
 	"version": "0.0.1",
 	"private": true,
+	"license": "GPL",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
@@ -14,6 +15,7 @@
 		"format": "prettier --plugin-search-dir . --write ."
 	},
 	"devDependencies": {
+		"@mollify/tts": "^0.0.1",
 		"@mollify/types": "^0.0.1",
 		"@playwright/test": "^1.28.1",
 		"@sveltejs/adapter-auto": "^2.0.0",
@@ -41,6 +43,7 @@
 	"dependencies": {
 		"@mollify/cli": "^0.0.1",
 		"@mollify/molly": "^0.0.1",
+		"@mollify/tts": "^0.0.1",
 		"fuse.js": "^6.6.2",
 		"graphql": "^16.6.0",
 		"js-yaml": "^4.1.0",

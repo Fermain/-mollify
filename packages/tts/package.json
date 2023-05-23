@@ -1,12 +1,18 @@
 {
-  "name": "@mollify/types",
+  "name": "@mollify/tts",
   "version": "0.0.1",
-  "description": "Global type definitions for @mollify",
+  "description": "Elevenlabs text to speech for @mollify",
   "author": "Fermain <Fermain@users.noreply.github.com>",
   "homepage": "https://github.com/Fermain/-Mollify#readme",
-  "license": "GPL",
+  "license": "ISC",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "svelte": "./dist/index.js"
+    }
+  },
   "directories": {
     "lib": "lib"
   },
@@ -24,9 +30,12 @@
     "url": "https://github.com/Fermain/-Mollify/issues"
   },
   "devDependencies": {
-    "@babel/parser": "^7.21.8",
-    "@babel/types": "^7.21.5",
-    "@types/unist": "^2.0.6",
     "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "@actions/core": "^1.10.0",
+    "@actions/github": "^5.1.1",
+    "@types/node": "^20.2.3",
+    "ts-node": "^10.9.1"
   }
 }
