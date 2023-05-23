@@ -87,6 +87,11 @@
 	function playAudio() {
 		scream.play();
 	}
+
+	let horse: HTMLAudioElement;
+	function playHorseAudio() {
+		horse.play();
+	}
 </script>
 
 <div class="reader">
@@ -106,6 +111,11 @@
 					<button on:click={playAudio}>Scream For Help!</button>
 					<audio bind:this={scream}>
 						<source src="/public/audio/silly_stuff/female_scream.wav" type="audio/wav" />
+						Your browser does not support the audio element.
+					</audio>
+					<button on:click={playHorseAudio}>Horsing Around</button>
+					<audio bind:this={horse}>
+						<source src="/public/audio/silly_stuff/horse-neigh.mp3" type="audio/mpeg" />
 						Your browser does not support the audio element.
 					</audio>
 				</div>
