@@ -14,6 +14,9 @@ const config = {
 		vitePreprocess(),
 		mdsvex({
 			highlight: {},
+			layout: {
+				_: 'src/lib/components/mdLayout/_layout.svelte'
+			},
 			extensions: ['.md', '.svx'],
 			remarkPlugins: [
 				gfm,
