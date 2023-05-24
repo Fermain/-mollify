@@ -1,0 +1,38 @@
+# Node.js dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+out/
+bin/
+
+# Cache and temporary files
+.cache/
+*.log
+*.tmp
+*.pid
+*.lock
+
+# Editors and IDEs
+.vscode/
+.idea/
+*.sublime*
+*.suo
+*.sln
+*.user
+*.swp
+*.bak
+
+# Operating system files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Test artifacts
+*.test.*
+*.spec.*
+*.e2e.*
+coverage/
+.nyc_output/
