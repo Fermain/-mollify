@@ -77,7 +77,10 @@ export async function migrateMarkdownFile(file: string) {
 
 export async function migrateMarkdownFiles(basePath: string) {
   const pattern = path.join(basePath, '**/!(*+page).md');
-  const ignorePattern = path.join('src', 'templates', '**/*'); // Ignore pattern for src/templates
+  const ignorePattern = [
+    path.join('src', 'templates', '**/*'), // Ignore pattern for src/templates
+    path.join('node_modules', '**/*'), // Ignore pattern for node_modules
+  ];
   const files = glob.sync(pattern, { ignore: ignorePattern });
 
   const progressBar = new cliProgress.SingleBar(
