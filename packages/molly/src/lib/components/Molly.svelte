@@ -9,13 +9,14 @@
 	let loading: boolean = false;
 	let chatMessages: ChatCompletionRequestMessage[] = [];
 	export let endpoint = '/';
-	let chatWindow: HTMLElement | null;
 
 	const handleSubmit = async () => {
 		loading = true;
 		chatMessages = [...chatMessages, { role: 'user', content: query }];
 
-		const eventSource = new EventSource(endpoint);
+		const endpointWithParams = `${endpoint}?messages=${encodeURIComponent(query)}`;
+
+		const eventSource = new EventSource(endpointWithParams);
 
 		eventSource.onerror = handleError;
 
@@ -51,7 +52,6 @@
 <MollyButton>
 	<div class="h-full grid grid-rows-[1fr_auto] border border-slate-400">
 		<div
-			bind:this={chatWindow}
 			class="messages-container h-80 bg-slate-200 dark:bg-slate-300 overflow-y-auto"
 		>
 			{#each chatMessages as message}
