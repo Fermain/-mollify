@@ -39,5 +39,6 @@ export const ENTITY_HIERARCHY = [
 ];
 
 export const ROOT_ENTITIES = [EntityType.Institution, EntityType.Programme, EntityType.Course];
+export const ALL_ENTITIES = [EntityType.Institution, EntityType.Programme, EntityType.Course, EntityType.Module, EntityType.Lesson, EntityType.Assessment];
 
 export const PACKAGE_INVENTORY = ['@mollify/lms', '@mollify/cli', '@mollify/molly', '@mollify/flow', '@mollify/docs', '@mollify/types'];
