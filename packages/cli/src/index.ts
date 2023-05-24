@@ -13,5 +13,5 @@ yargs
   .command(commands.list)
   .command(commands.migrate)
   .command(commands.link)
-  // .command(commands.unlink)
+  .command(commands.unlink)
   .help().argv;
