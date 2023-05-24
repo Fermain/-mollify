@@ -15,7 +15,9 @@
 		loading = true;
 		chatMessages = [...chatMessages, { role: 'user', content: query }];
 
-		const eventSource = new EventSource(endpoint);
+		const endpointWithParams = `${endpoint}?messages=${encodeURIComponent(query)}`;
+
+		const eventSource = new EventSource(endpointWithParams);
 
 		eventSource.onerror = handleError;
 

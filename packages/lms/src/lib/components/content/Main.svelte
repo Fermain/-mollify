@@ -3,9 +3,7 @@
 </script>
 
 <main class="p-3">
-	<div class="prose">
-		<ProgrammeNav>
-			<slot />
-		</ProgrammeNav>
-	</div>
+	<ProgrammeNav>
+		<slot />
+	</ProgrammeNav>
 </main>
