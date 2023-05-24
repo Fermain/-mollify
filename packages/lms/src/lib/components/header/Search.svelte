@@ -97,9 +97,9 @@
 						handleSearchSelection(item.browserPath);
 					}}
 				>
-					<span class="flex-auto w-full fill-current transition-transform duration-[200ms] truncate text-ellipsis">
-						<dt>{item.label}</dt>
-						<dd>{item.summary}</dd>
+					<span class="flex-auto w-full fill-current transition-transform duration-[200ms]">
+						<dt class="truncate">{item.label}</dt>
+						<dd class="truncate">{item.summary}</dd>
 					</span>
 				</div>
 			{/each}
