@@ -31,6 +31,7 @@
 							const { title, slug, ...other } = result;
 							return { label: title, value: slug, ...other };
 						});
+						console.log(query, filters);
 						console.log('results', searchResults);
 					} catch (error) {
 						console.log(error);
@@ -53,8 +54,8 @@
 		}
 	}
 
-	function handleSearchSelection(event) {
-		goto(event.detail.browserPath);
+	function handleSearchSelection(path) {
+		goto(path);
 	}
 
 	$: searchResults;
@@ -88,9 +89,21 @@
 		>
 	</form>
 	{#if searchResults.length > 0}
-		<div class="card w-full max-h-48 p-4 overflow-y-auto absolute">
-			<Autocomplete bind:input={rawQuery} options={searchResults} on:selection={handleSearchSelection} />
-		</div>
+		<dl class="list-dl w-full max-h-48 p-4 overflow-y-auto absolute bg-surface-100-800-token">
+			{#each searchResults as item, i}
+				<div
+					class="hover:bg-primary-hover-token rounded-container-token"
+					on:click={() => {
+						handleSearchSelection(item.browserPath);
+					}}
+				>
+					<span class="flex-auto w-full fill-current transition-transform duration-[200ms] truncate text-ellipsis">
+						<dt>{item.label}</dt>
+						<dd>{item.summary}</dd>
+					</span>
+				</div>
+			{/each}
+		</dl>
 	{/if}
 	{#if searchResults.length === 0 && inputFocused && searchQuery.length >= 3 && returnedResults}
 		<div class="card w-full max-h-48 p-4 overflow-y-auto absolute">
