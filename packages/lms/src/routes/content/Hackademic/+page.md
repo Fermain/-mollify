@@ -21,6 +21,10 @@ tags:
 
 # Hackademics!
 
+> ✅Success
+>
+> This is a test
+
 Welcome to Hackademics! Our mission is to empower individuals with the skills and knowledge they need to become successful software engineers. Our online courses are designed to be interactive and engaging, with expert instructors who are passionate about coding and web development.
 
 Whether you're a beginner or an experienced programmer, we have courses that will challenge and inspire you. Our project-based learning approach ensures that you'll gain practical experience and develop a portfolio of work to showcase your skills to employers.

@@ -11,7 +11,7 @@
 	}
 </script>
 
-	<div class="flex p-2 h-13 bg-slate-300 dark:bg-slate-500 border border-slate-400">
+	<div class="flex p-2 h-13 bg-surface-100-800-token border border-slate-400">
 		<div class="flex-1 flex self-center gap-2">
 			<Logo/>
 			<h4 class="self-center text-lg font-medium">Ask Molly</h4>
