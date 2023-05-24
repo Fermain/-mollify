@@ -1,6 +1,6 @@
 {
 	"name": "@mollify/lms",
-	"version": "0.2.1",
+	"version": "0.2.2",
 	"license": "GPL",
 	"scripts": {
 		"dev": "vite dev",
@@ -16,7 +16,7 @@
 	"type": "module",
 	"dependencies": {
 		"@floating-ui/dom": "^1.2.8",
-		"@mollify/cli": "^0.2.1",
+		"@mollify/cli": "^0.2.2",
 		"@mollify/molly": "^0.2.1",
 		"@mollify/tts": "^0.2.1",
 		"@mollify/types": "^0.2.1",
