@@ -61,9 +61,9 @@
 </script>
 
 <svelte:window on:click={handleClickOutside} />
-<div class="wrapper">
+<div class="max-w-sm relative">
 	<form
-		class="flex sm:input-group sm:input-group-divider sm:grid-cols-[auto_1fr_auto]"
+		class="flex w-full sm:input-group sm:input-group-divider sm:grid-cols-[auto_1fr_auto]"
 		on:submit|preventDefault={handleSubmit}
 	>
 		<input
@@ -88,13 +88,13 @@
 		>
 	</form>
 	{#if searchResults.length > 0}
-		<div class="card w-full max-w-sm max-h-48 p-4 overflow-y-auto absolute">
+		<div class="card w-full max-h-48 p-4 overflow-y-auto absolute">
 			<Autocomplete bind:input={rawQuery} options={searchResults} on:selection={handleSearchSelection} />
 		</div>
 	{/if}
 	{#if searchResults.length === 0 && inputFocused && searchQuery.length >= 3 && returnedResults}
-		<div class="card w-full max-w-sm max-h-48 p-4 overflow-y-auto absolute">
-			<p class="no-results">No Results Found</p>
+		<div class="card w-full max-h-48 p-4 overflow-y-auto absolute">
+			<p>No Results Found</p>
 		</div>
 	{/if}
 </div>
