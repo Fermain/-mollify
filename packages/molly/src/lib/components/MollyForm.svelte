@@ -12,7 +12,7 @@
 	}
 </script>
 
-<div class="bg-slate-300 dark:bg-slate-500 border-t border-slate-400 p-4 drop-shadow-md">
+<div class="bg-surface-100-800-token border-t border-slate-400 p-4 drop-shadow-md">
 <form on:submit|preventDefault={() => handleSubmit()} 
 	class="flex input-group sm:input-group-divider sm:grid-cols-[1fr_auto] rounded">
 	<textarea  bind:value={query} 
