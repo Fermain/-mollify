@@ -20,7 +20,7 @@
 	const debounceSearch = async () => {
 		clearTimeout(timer);
 		returnedResults = false;
-		if (searchQuery.length >= 3) {
+		if (searchQuery.length) {
 			await new Promise((resolve) => {
 				timer = setTimeout(async () => {
 					try {
@@ -89,11 +89,11 @@
 	</form>
 	{#if searchResults.length > 0}
 		<div class="card w-full max-w-sm max-h-48 p-4 overflow-y-auto absolute">
-			<Autocomplete bind:input={rawQuery} options?={searchResults} on:selection={handleSearchSelection} />
+			<Autocomplete bind:input={rawQuery} options={searchResults} on:selection={handleSearchSelection} />
 		</div>
 	{/if}
 	{#if searchResults.length === 0 && inputFocused && searchQuery.length >= 3 && returnedResults}
-		<div class="search-items">
+		<div class="card w-full max-w-sm max-h-48 p-4 overflow-y-auto absolute">
 			<p class="no-results">No Results Found</p>
 		</div>
 	{/if}
