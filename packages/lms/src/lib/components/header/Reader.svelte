@@ -72,6 +72,16 @@
 	// Regenerate/create the audio file for the current page content
 	async function regenerateAudio() {
 		isloading = true;
+
+		if (isloading) {
+			const userFeedback: ToastSettings = {
+				message: 'Creating Audio File...',
+				background: 'variant-filled-warning',
+				autohide: false
+			};
+			toastStore.trigger(userFeedback);
+		}
+
 		const filepath = path;
 		const data = await createAudio(content, slug, filepath, true);
 		audio.set(data);
@@ -86,7 +96,7 @@
 			toastStore.trigger(userFeedback);
 		} else {
 			const userFeedback: ToastSettings = {
-				message: 'Success!, audio file created.',
+				message: 'Success! Audio file created.',
 				background: 'variant-filled-success',
 				autohide: false
 			};
@@ -119,8 +129,6 @@
 					<button on:click={regenerateAudio} class="my-5 btn hover:bg-primary-hover-token p-1"
 						>Regenerate Audio File</button
 					>
-				{:else if isloading}
-					<p>Creating Audio File...</p>
 				{/if}
 				{#if !hasAudio && isContent}
 					<button on:click={regenerateAudio}>Create Audio</button>
