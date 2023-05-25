@@ -3,6 +3,7 @@
 	import { onMount } from 'svelte';
 	import { files } from '$lib/stores/files';
 	import type { EntityMeta } from '@mollify/types';
+	import Card from '$lib/components/cards/Card.svelte';
 
 	let data: EntityMeta[] = [];
 	onMount(async () => {
@@ -19,49 +20,10 @@
 </script>
 
 <h1>Content Results Including Tag: {$page.params.tag}</h1>
-<div class="results-container">
+<div class="grid sm:grid-cols-2 gap-4">
 	{#if data.length > 0}
 		{#each data as result}
-			<div class="result">
-				<h3>{result.title}</h3>
-				<p>Type: {result.type}</p>
-				<p>Tags: {result.tags}</p>
-				<a class="result-btn" href={result.browserPath}>View Details</a>
-			</div>
+			<Card {result} />
 		{/each}
 	{/if}
 </div>
-
-<style lang="scss">
-	.result {
-		background-color: var(--primary);
-		color: var(--text-secondary);
-		padding: var(--spacing-m);
-		border-radius: var(--spacing-m);
-	}
-
-	.results-container {
-		padding: 0.5rem;
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-		grid-gap: 1rem;
-	}
-
-	.result-btn {
-		background-color: var(--secondary);
-		color: var(--text-primary);
-		margin: auto;
-		display: block;
-		padding: var(--spacing-s) var(--spacing-m);
-		border-radius: var(--spacing-s);
-		align-self: center;
-		margin: auto;
-		width: fit-content;
-		text-decoration: none;
-	}
-
-	.result-btn:hover {
-		background-color: var(--text-primary);
-		color: var(--secondary);
-	}
-</style>
