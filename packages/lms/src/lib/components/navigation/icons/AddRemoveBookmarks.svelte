@@ -1,70 +1,36 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import { onMount } from 'svelte';
-	import { getLocalStorage, setLocalStorage } from '$lib/utils/bookmarking/localStorage';
 	import * as storage from '$lib/utils/storage';
 	import { page } from '$app/stores';
-	import { Toast, toastStore } from '@skeletonlabs/skeleton';
-	import type { ToastSettings } from '@skeletonlabs/skeleton';
+	import { AddRemoveBookmarks } from '$lib/utils/bookmarking/AddRemove';
+	import { bookmarks } from '$lib/stores/bookmarks';
 
-	let bookmarks: [{ url: string; headings: [] }] | [] = [];
 	let hasBookmarks = false;
 	let currentUrl = '';
 
-	$: hasBookmarks;
-	$: bookmarks;
+	$: {
+		hasBookmarks = $bookmarks.some((b) => b.url.split('/').pop() === currentUrl.split('/').pop());
+	}
+
 	$: page.subscribe((p) => {
 		if (browser) {
 			currentUrl = decodeURIComponent(window.location.pathname);
-			hasBookmarks = bookmarks.some((b) => b.url === currentUrl);
 		}
 	});
 
 	onMount(async () => {
 		if (browser) {
-			bookmarks = storage.load('bookmarks') ? storage.load('bookmarks') : [];
+			const storedBookmarks = storage.load('bookmarks') ? storage.load('bookmarks') : [];
+			bookmarks.set(storedBookmarks);
 			currentUrl = decodeURIComponent(window.location.pathname);
-			hasBookmarks = bookmarks.filter((b) => b.url === decodeURIComponent(window.location.pathname)).length > 0;
 		}
 	});
 
-	// I want to move this but svelte is not playing ball
-	function AddRemoveBookmarks(headings = []) {
-		if (!browser) return;
-		const currentUrl = decodeURIComponent(window.location.pathname);
-		// Try to find an existing bookmark for the current URL
-		let bookmark: { url: string; headings: [] } | null = bookmarks.find((b) => b.url === currentUrl);
-		//deal with the usually svelte silliness fix
-		setTimeout(() => {
-			if (bookmark) {
-				// If a bookmark already exists, remove it
-				bookmarks = bookmarks.filter((b) => b.url !== currentUrl);
-
-				hasBookmarks = false;
-				const toast: ToastSettings = {
-					message: 'All Bookmarks Removed For This Page.',
-					background: 'variant-filled-tertiary',
-					timeout: 2000
-				};
-				toastStore.trigger(toast);
-			} else {
-				// If no bookmark exists, add one
-				bookmark = {
-					url: currentUrl,
-					headings: headings
-				};
-				bookmarks.push(bookmark);
-				hasBookmarks = true;
-				const toast: ToastSettings = {
-					message: 'Success! Bookmark Added.',
-					background: 'variant-filled-success',
-					timeout: 2000
-				};
-				toastStore.trigger(toast);
-			}
-			storage.save('bookmarks', bookmarks);
-			console.log('bookmarks', bookmarks);
-		}, 0);
+	function onclick() {
+		const newBookmarks = AddRemoveBookmarks();
+		bookmarks.set(newBookmarks);
+		console.log(hasBookmarks);
 	}
 </script>
 
@@ -72,7 +38,7 @@
 	<button
 		name="tile-2"
 		class="app-rail-tile unstyled grid place-content-center place-items-center w-full aspect-square space-y-1.5 cursor-pointer bg-primary-hover-token"
-		on:click={(event) => AddRemoveBookmarks()}
+		on:click={(event) => onclick()}
 	>
 		{#if hasBookmarks}
 			<div class="app-rail-tile-icon"><i class="icon-f">bookmark_remove</i></div>
