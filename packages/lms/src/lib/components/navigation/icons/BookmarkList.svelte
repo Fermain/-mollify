@@ -16,9 +16,19 @@
 	{#if bookmarks.length > 0}
 		{#each bookmarks as bookmark}
 			<div class="flex flex-col space-y-2">
-				<a href={bookmark.url} rel="noopener noreferrer" class="text-primary-500-token hover:underline"
-					>{bookmark.url.split('/').pop() === '' ? 'Home' : bookmark.url.split('/').pop()}</a
+				<a
+					href={bookmark.url}
+					rel="noopener noreferrer"
+					class="text-primary-500-token hover:underline"
+					on:click={parent.onClose}>{bookmark.url.split('/').pop() === '' ? 'Home' : bookmark.url.split('/').pop()}</a
 				>
+				{#if bookmark.headings.length > 0}
+					<ul>
+						{#each bookmark.headings as heading}
+							<li class="text-sm text-surface-100-600-token"><a href={bookmark.url + '#' + heading}>{heading}</a></li>
+						{/each}
+					</ul>
+				{/if}
 			</div>
 		{/each}
 	{/if}
