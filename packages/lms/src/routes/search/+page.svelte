@@ -8,6 +8,7 @@
 	import { generateRawSearchQuery } from '$lib/utils/fuseSearch/generateRawSearchQuery';
 	import { parseRawSearchQuery } from '$lib/utils/fuseSearch/parseRawSearchQuery';
 	import { updateQueryString } from '$lib/utils/fuseSearch/updateQueryString';
+	import Card from '$lib/components/cards/Card.svelte';
 
 	type QueryType = {
 		query: string;
@@ -287,17 +288,7 @@
 		{#if searchResults.length > 0}
 			<div class="grid sm:grid-cols-2 gap-4">
 				{#each searchResults as result}
-					<a class="card p-4 variant-ghost-surface no-underline dark:text-slate-100" href={result.browserPath}>
-						<header class="card-header border-b flex justify-between items-baseline gap-3 p-0">
-							<h3 class="h3">{result.title}</h3>
-							<span class="chip variant-filled">{result.type}</span>
-						</header>
-						<footer class="card-footer p-0 pt-2">
-							{#each result.tags as tag}
-								<p class="chip variant-ringed m-1 ms-0 pt-2">{tag}</p>
-							{/each}
-						</footer>
-					</a>
+					<Card {result} />
 				{/each}
 			</div>
 		{/if}
