@@ -1,6 +1,6 @@
 <!-- Uses simple-text-diff -->
-<!-- <script lang="ts">
-	import { onMount, afterUpdate } from 'svelte';
+<script lang="ts">
+	import { onMount } from 'svelte';
 	import InkMde from 'ink-mde/svelte';
 	import diff from 'simple-text-diff';
 	import { marked } from 'marked';
@@ -9,8 +9,10 @@
 	let oldText: string = '';
 	let value: string = '';
 
-	let beforeText = '';
-	let afterText = '';
+	let beforeText: string = '';
+	let afterText: string = '';
+
+	let isContentDisplayed: boolean = false;
 
 	onMount(async () => {
 		const response = await fetch(apiCall);
@@ -20,27 +22,19 @@
 	});
 
 	function displayContents(): void {
-		const { before, after } = diff.diffPatch(oldText, value);
+		/* const { before, after } = diff.diffPatch(oldText, value);
 		beforeText = marked(before);
-		afterText = marked(after);
+		afterText = marked(after); */
+		if (!isContentDisplayed) {
+			isContentDisplayed = true;
+		}
 	}
-
-	afterUpdate(() => {
-		const delElements = document.querySelectorAll('del');
-		for (const el of delElements) {
-			el.style.backgroundColor = 'rgba(255, 182, 186, 0.5)';
-		}
-		const insElements = document.querySelectorAll('ins');
-		for (const el of insElements) {
-			el.style.backgroundColor = 'rgba(151, 242, 149, 0.5)';
-		}
-	});
 </script>
 
 <div>
 	<h1>Editor</h1>
 	<div class="btn-wrapper">
-		<a href="/#demo" class="primary-btn" on:click={displayContents}>Compare changes</a>
+		<a href="/#demo" class="primary-btn" on:click={displayContents}>Preview file</a>
 	</div>
 	<InkMde
 		bind:value
@@ -67,54 +61,16 @@
 		}}
 	/>
 	<div class="btn-wrapper">
-		<a href="/#demo" class="primary-btn" on:click={displayContents}>Compare changes</a>
+		<a href="/#demo" class="primary-btn" on:click={displayContents}>Preview file</a>
 	</div>
 
-	{#if beforeText !== ''}
-		<h2>File comparison</h2>
+	{#if isContentDisplayed}
+		<h2>File preview</h2>
 		<div id="demo" class="demo">
-			<div class="container">
-				{@html beforeText}
-			</div>
-			<div class="container">
-				{@html afterText}
-			</div>
+			{@html marked(value)}
 		</div>
 	{/if}
 </div>
-
-<style lang="scss">
-	.btn-wrapper {
-		margin: 3rem 0;
-	}
-
-	.primary-btn {
-		background-color: rgb(255, 47, 2);
-		color: white;
-		border: none;
-		text-decoration: none;
-		padding: 0.5rem 1rem;
-		font-size: 16px;
-		border-radius: 4px;
-		cursor: pointer;
-
-		&:hover {
-			opacity: 0.9;
-		}
-	}
-
-	.demo {
-		display: flex;
-		gap: 0.5rem;
-		padding: 1rem;
-	}
-
-	.container {
-		border: 1px solid #eee;
-		padding: 0.5rem;
-		flex: 0 0 45%;
-	}
-</style>-->
 
 <!-- Compares sentences with jsdiff: Nice markdown format, but whole left text red and whole right text green-->
 <!-- <script lang="ts">
@@ -329,98 +285,6 @@
 	}
 </style>-->
 
-<!-- Displays one block of text -->
-<!-- <script lang="ts">
-	import * as Diff from 'diff';
-	import InkMde from 'ink-mde/svelte';
-	import { onMount } from 'svelte';
-	import { marked } from 'marked';
-
-	let apiCall: string = '/api/fetchRemote';
-	let oldText: string = '';
-	let value: string = '';
-
-	let differences: {
-		added?: boolean;
-		removed?: boolean;
-		value: string;
-	}[] = [];
-
-	onMount(async () => {
-		const response = await fetch(apiCall);
-		const data: string = await response.text();
-		oldText = data;
-		value = data;
-	});
-
-	function displayContents(): void {
-		const diffResult = Diff.diffChars(oldText, value);
-		differences = diffResult.map((part) => {
-			const added = part.added;
-			const removed = part.removed;
-			const value = part.value;
-			return { added, removed, value };
-		});
-	}
-
-	function formatMarkdown(text: string): string {
-		return marked(text, { breaks: true });
-	}
-</script>
-
-<div>
-	<h1>Editor</h1>
-	<div class="btn-wrapper">
-		<a href="/#demo" class="primary-btn" on:click={displayContents}>Compare changes</a>
-	</div>
-	<InkMde
-		bind:value
-		options={{
-			interface: {
-				appearance: 'light',
-				toolbar: true
-			},
-			readability: true,
-			toolbar: {
-				bold: true,
-				code: true,
-				codeBlock: true,
-				heading: true,
-				image: true,
-				italic: true,
-				link: true,
-				list: true,
-				orderedList: true,
-				quote: true,
-				taskList: true,
-				upload: true
-			}
-		}}
-	/>
-	<div class="btn-wrapper">
-		<a href="/#demo" class="primary-btn" on:click={displayContents}>Compare changes</a>
-	</div>
-	{#if differences.length > 0}
-		<div class="demo pull-request">
-			<span>{@html formatMarkdown(differences.map((d) => d.value).join(''))}</span>
-		</div>
-	{/if}
-</div>
-
-<style>
-	.demo {
-		border: 1px solid #ddd;
-		padding: 2rem 1rem;
-	}
-	.added {
-		color: green;
-	}
-	.removed {
-		color: red;
-	}
-</style>
- -->
-
 <!-- My attempt: two nicely formatted blocks of markdown, no styles applied -->
 <!-- <script>
 	import * as Diff from 'diff';
@@ -495,7 +359,7 @@
 	}
 </style> -->
 
-<script lang="ts">
+<!-- <script lang="ts">
 	import * as Diff from 'diff';
 	import InkMde from 'ink-mde/svelte';
 	import { onMount, afterUpdate } from 'svelte';
@@ -615,6 +479,111 @@
 	}
 
 	.demo > div {
+		flex: 0 0 45%;
+	}
+</style> -->
+
+<!-- Displays one block of text -->
+<!-- <script lang="ts">
+	import * as Diff from 'diff';
+	import InkMde from 'ink-mde/svelte';
+	import { onMount } from 'svelte';
+	import { marked } from 'marked';
+
+	let apiCall: string = '/api/fetchRemote';
+	let oldText: string = '';
+	let value: string = '';
+
+	let differences: {
+		added?: boolean;
+		removed?: boolean;
+		value: string;
+	}[] = [];
+
+	onMount(async () => {
+		const response = await fetch(apiCall);
+		const data: string = await response.text();
+		oldText = data;
+		value = data;
+	});
+
+	function displayContents(): void {
+		const diffResult = Diff.diffChars(oldText, value);
+		differences = diffResult.map((part) => {
+			const added = part.added;
+			const removed = part.removed;
+			const value = part.value;
+			return { added, removed, value };
+		});
+	}
+
+	function formatMarkdown(text: string): string {
+		return marked(text, { breaks: true });
+	}
+</script>
+
+<div>
+	<h1>Editor</h1>
+	<div class="btn-wrapper">
+		<a href="/#demo" class="primary-btn" on:click={displayContents}>Compare changes</a>
+	</div>
+	<InkMde
+		bind:value
+		options={{
+			interface: {
+				appearance: 'light',
+				toolbar: true
+			},
+			readability: true,
+			toolbar: {
+				bold: true,
+				code: true,
+				codeBlock: true,
+				heading: true,
+				image: true,
+				italic: true,
+				link: true,
+				list: true,
+				orderedList: true,
+				quote: true,
+				taskList: true,
+				upload: true
+			}
+		}}
+	/>
+	<div class="btn-wrapper">
+		<a href="/#demo" class="primary-btn" on:click={displayContents}>Compare changes</a>
+	</div>
+	{#if differences.length > 0}
+		<div class="demo pull-request">
+			<span>{@html formatMarkdown(differences.map((d) => d.value).join(''))}</span>
+		</div>
+	{/if}
+</div> -->
+
+<style lang="scss">
+	.btn-wrapper {
+		margin: 3rem 0;
+	}
+
+	.primary-btn {
+		background-color: rgb(255, 47, 2);
+		color: white;
+		border: none;
+		text-decoration: none;
+		padding: 0.5rem 1rem;
+		font-size: 16px;
+		border-radius: 4px;
+		cursor: pointer;
+
+		&:hover {
+			opacity: 0.9;
+		}
+	}
+
+	.container {
+		border: 1px solid #eee;
+		padding: 0.5rem;
 		flex: 0 0 45%;
 	}
 </style>
