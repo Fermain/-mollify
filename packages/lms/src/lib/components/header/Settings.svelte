@@ -14,8 +14,8 @@
 		placement: 'bottom'
 	};
 
+	// The 'tailwindFontSizes' don't work with the typography plugin. HTML elements that we controll will use 'tailwindFontSizes', and HTML we don't controll will use 'proseFontSizes'. Both arrays share sizes and indexes to facilitate shared localStorage code.
 	const tailwindFontSizes: string[] = ['text-sm', 'text-base', 'text-lg', 'text-xl', 'text-2xl'];
-
 	const proseFontSizes: string[] = ['prose-sm', 'prose-base', 'prose-lg', 'prose-xl', 'prose-2xl'];
 
 	// Has to be done onMount because of how the font-size is set in the main HTML file
