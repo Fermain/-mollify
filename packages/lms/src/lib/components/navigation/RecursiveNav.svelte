@@ -13,7 +13,7 @@
 	{#each data as { title, browserPath, children }}
 		<AccordionItem>
 			<svelte:fragment slot="summary">{title}</svelte:fragment>
-			<div slot="content" class="m-5">
+			<div slot="content">
 				<div class="hover:bg-primary-hover-token rounded-container-token">
 					<a href={browserPath} class="flex p-2" on:click={drawerClose}>Overview</a>
 				</div>

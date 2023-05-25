@@ -1,14 +1,5 @@
 <script lang="ts"></script>
 
-<footer>
+<footer class="flex gap-1">
 	<slot />
 </footer>
-
-<style>
-	footer {
-		grid-area: footer;
-		display: flex;
-		gap: 0.5rem;
-		background-color: var(--primary);
-	}
-</style>
