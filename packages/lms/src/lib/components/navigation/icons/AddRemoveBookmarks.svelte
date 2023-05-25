@@ -18,8 +18,7 @@
 
 	onMount(async () => {
 		if (browser) {
-			const local = window.localStorage.getItem('bookmarks') || '[]';
-			bookmarks = JSON.parse(local);
+			bookmarks = getLocalStorage('bookmarks');
 			currentUrl = decodeURIComponent(window.location.pathname);
 			hasBookmarks = bookmarks.filter((b) => b.url === decodeURIComponent(window.location.pathname)).length > 0;
 		}
