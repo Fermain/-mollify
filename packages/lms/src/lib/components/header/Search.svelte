@@ -72,6 +72,7 @@
 			type="search"
 			name="autocomplete-search"
 			placeholder="Search markdown content"
+			autocomplete="off"
 			bind:value={searchQuery}
 			on:input={async () => {
 				debounceSearch();
@@ -99,7 +100,6 @@
 				>
 					<span class="flex-auto w-full fill-current transition-transform duration-[200ms]">
 						<dt class="truncate">{item.label}</dt>
-						<dd class="truncate">{item.summary}</dd>
 					</span>
 				</div>
 			{/each}
