@@ -21,7 +21,19 @@ tags:
 
 # Hackademics!
 
-> ✅Success
+> 💡 Idea!
+>
+> This is a test
+
+> ⛔ warning
+>
+> This is a test
+
+> ✅ Success
+>
+> This is a test
+
+> 👍 Idea
 >
 > This is a test
 
