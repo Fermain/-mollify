@@ -5,7 +5,6 @@ import { mdsvex } from 'mdsvex';
 import callouts from 'remark-emoji-callout';
 import gfm from 'remark-gfm';
 import { createTagLinks } from './src/lib/utils/remarkPlugins/createTagLinks.js';
-import { addHeadingIcons } from './src/lib/utils/remarkPlugins/addHeadingIcons.js';
 import path from 'path';
 
 /** @type {import('@sveltejs/kit').Config} */
@@ -20,7 +19,6 @@ const config = {
 			remarkPlugins: [
 				gfm,
 				createTagLinks,
-				addHeadingIcons,
 				callouts,
 				{
 					dataAttribute: 'custom-callout',
