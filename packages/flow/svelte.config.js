@@ -12,7 +12,18 @@ const config = {
 		mdsvex({
 			highlight: {},
 			extensions: ['.md'],
-			remarkPlugins: [callouts]
+			remarkPlugins: [
+				callouts,
+				{
+					dataAttribute: 'custom-callout',
+					titleTextTagName: 'span',
+					iconTagName: 'span'
+					// ...
+				}
+			],
+			layout: {
+				content: 'src/routes/content/content.svelte'
+			}
 		})
 	],
 
@@ -22,7 +33,7 @@ const config = {
 		// See https://kit.svelte.dev/docs/adapters for more information about adapters.
 		adapter: adapter()
 	},
-	extensions: ['.svelte']
+	extensions: ['.svelte', '.md']
 };
 
 export default config;
