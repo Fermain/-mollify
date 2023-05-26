@@ -27,7 +27,9 @@
 					<ul>
 						{#each bookmark.headings as heading}
 							<li class="ml-5 text-sm list-disc text-surface-100-600-token">
-								<a class="hover:underline" href={bookmark.url + '#' + heading}>{heading}</a>
+								<a class="hover:underline" href={bookmark.url + '#' + heading.toLowerCase().replace(/\s/g, '-')}
+									>{heading}</a
+								>
 							</li>
 						{/each}
 					</ul>
