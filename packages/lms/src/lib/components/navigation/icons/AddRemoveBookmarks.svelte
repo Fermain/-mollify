@@ -27,10 +27,9 @@
 		}
 	});
 
-	function onclick() {
-		const newBookmarks = AddRemoveBookmarks();
+	async function onclick() {
+		const newBookmarks = await AddRemoveBookmarks();
 		bookmarks.set(newBookmarks);
-		console.log(hasBookmarks);
 	}
 </script>
 

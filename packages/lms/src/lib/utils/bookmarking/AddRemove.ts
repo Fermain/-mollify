@@ -3,14 +3,15 @@ import { Toast, toastStore } from '@skeletonlabs/skeleton';
 import type { ToastSettings } from '@skeletonlabs/skeleton';
 import * as storage from '$lib/utils/storage';
 
-export function AddRemoveBookmarks(headings = []) {
+export async function AddRemoveBookmarks(headings = []) {
 	if (!browser) return;
 	const currentUrl = decodeURIComponent(window.location.pathname);
 	let bookmarks: { url: string; headings: [] } | [] = storage.load('bookmarks') ? storage.load('bookmarks') : [];
 	// Try to find an existing bookmark for the current URL
 	let bookmark: { url: string; headings: [] } | null = bookmarks.find((b) => b.url === currentUrl);
 	//deal with the usually svelte silliness fix
-	setTimeout(() => {
+
+	await new Promise((resolve) => {
 		if (bookmark) {
 			// If a bookmark already exists, remove it
 			bookmarks = bookmarks.filter((b) => b.url !== currentUrl);
@@ -35,9 +36,11 @@ export function AddRemoveBookmarks(headings = []) {
 			};
 			toastStore.trigger(toast);
 		}
+
 		storage.save('bookmarks', bookmarks);
 		console.log('bookmarks', bookmarks);
-	}, 0);
+		resolve();
+	});
 
 	return bookmarks;
 }
