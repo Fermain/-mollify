@@ -4,8 +4,8 @@ export const fetchMarkdownFiles = async () => {
 
 	const allFiles = await Promise.all(
 		iterableMarkdownFiles.map(async ([path, resolver]) => {
-			const metadata = await resolver();
-			const filePath = path.slice(11, -3);
+			const { metadata } = await resolver();
+			const filePath = path.slice(11, -9);
 
 			return {
 				meta: metadata,
@@ -13,6 +13,5 @@ export const fetchMarkdownFiles = async () => {
 			};
 		})
 	);
-
 	return allFiles;
 };
