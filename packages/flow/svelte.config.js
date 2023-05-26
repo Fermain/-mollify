@@ -20,10 +20,10 @@ const config = {
 					iconTagName: 'span'
 					// ...
 				}
-			],
-			layout: {
+			]
+			/* layout: {
 				content: 'src/routes/content/content.svelte'
-			}
+			} */
 		})
 	],
 
