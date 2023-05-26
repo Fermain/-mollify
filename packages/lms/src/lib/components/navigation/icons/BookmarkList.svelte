@@ -12,6 +12,7 @@
 	aria-label="Your Bookmarks"
 	style=""
 >
+	<slot />
 	<header class="modal-header text-2xl font-bold">Your Bookmarks</header>
 	{#if bookmarks.length > 0}
 		{#each bookmarks as bookmark}
@@ -25,14 +26,15 @@
 				{#if bookmark.headings.length > 0}
 					<ul>
 						{#each bookmark.headings as heading}
-							<li class="text-sm text-surface-100-600-token"><a href={bookmark.url + '#' + heading}>{heading}</a></li>
+							<li class="ml-5 text-sm list-disc text-surface-100-600-token">
+								<a class="hover:underline" href={bookmark.url + '#' + heading}>{heading}</a>
+							</li>
 						{/each}
 					</ul>
 				{/if}
 			</div>
 		{/each}
 	{/if}
-
 	<footer class="modal-footer flex justify-end space-x-2">
 		<button type="button" class="btn variant-ghost-surface" on:click={parent.onClose}>Close</button>
 	</footer>
