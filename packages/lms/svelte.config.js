@@ -5,6 +5,7 @@ import { mdsvex } from 'mdsvex';
 import callouts from 'remark-emoji-callout';
 import gfm from 'remark-gfm';
 import { createTagLinks } from './src/lib/utils/remarkPlugins/createTagLinks.js';
+//import { addHeadingIds } from './src/lib/utils/remarkPlugins/addHeadingIds.js';
 import path from 'path';
 
 /** @type {import('@sveltejs/kit').Config} */
@@ -16,9 +17,13 @@ const config = {
 		mdsvex({
 			highlight: {},
 			extensions: ['.md', '.svx'],
+			layout: {
+				_: path.resolve('src/lib/components/content/_layout.svelte')
+			},
 			remarkPlugins: [
 				gfm,
 				createTagLinks,
+				// addHeadingIds,
 				callouts,
 				{
 					dataAttribute: 'custom-callout',
@@ -26,22 +31,7 @@ const config = {
 					iconTagName: 'span'
 					// ...
 				}
-			],
-			layout: {
-				_: path.resolve('src/lib/components/content/_layout.svelte')
-			}
-			// frontmatter: {
-			// 	marker: '-',
-			// 	type: 'yaml',
-			// 	parse: (frontmatter, messages) => {
-			// 		try {
-			// 			let content = yaml.load(frontmatter);
-			// 			return { fm: content, ...content };
-			// 		} catch (e) {
-			// 			messages.push(e.message);
-			// 		}
-			// 	}
-			// },
+			]
 		}),
 		preprocess({
 			postcss: true
