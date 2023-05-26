@@ -2,6 +2,7 @@ import adapter from '@sveltejs/adapter-auto';
 import { vitePreprocess } from '@sveltejs/kit/vite';
 import { mdsvex } from 'mdsvex';
 import callouts from 'remark-emoji-callout';
+import path from 'path';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -20,10 +21,10 @@ const config = {
 					iconTagName: 'span'
 					// ...
 				}
-			]
-			/* layout: {
-				content: 'src/routes/content/content.svelte'
-			} */
+			],
+			layout: {
+				content: path.resolve('src/routes/content/content.svelte')
+			}
 		})
 	],
 
