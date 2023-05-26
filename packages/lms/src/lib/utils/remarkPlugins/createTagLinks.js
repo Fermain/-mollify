@@ -9,19 +9,25 @@ export function createTagLinks() {
 
 			if (tags && Array.isArray(tags)) {
 				// Find the first h1 node
-				const h1Index = tree.children.findIndex(
-					(node) => node.type === 'heading' && node.depth === 1
-				);
+				const h1Index = tree.children.findIndex((node) => node.type === 'heading' && node.depth === 1);
 
 				if (h1Index !== -1) {
-					// Convert tags to markdown links and insert them after the h1
+					// Create a container for the tags
+					let tagContainer = '<div class="flex flex-wrap">';
+
+					// Convert tags to markdown links and add them to the container
 					tags.forEach((tag, i) => {
-						const tagLinkNode = u(
-							'html',
-							`<a href="/tags/${tag}" style="text-decoration: none; color: black; line-height: 2.1; padding: 0.25rem; background-color: lightblue; border-radius: 0.25rem;" >${tag}</a>`
-						);
-						tree.children.splice(h1Index + 1 + i, 0, tagLinkNode);
+						tagContainer += `<a href="/tags/${tag}" class="no-underline text-black leading-8 px-1 bg-blue-200 rounded-md m-1">${tag}</a>`;
 					});
+
+					// Close the container
+					tagContainer += '</div>';
+
+					// Create a node for the tag container
+					const tagContainerNode = u('html', tagContainer);
+
+					// Insert the tag container after the h1
+					tree.children.splice(h1Index + 1, 0, tagContainerNode);
 				}
 			}
 		} catch (e) {
