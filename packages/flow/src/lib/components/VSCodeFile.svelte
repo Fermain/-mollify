@@ -1,10 +1,12 @@
 <script lang="ts">
+	import { afterUpdate } from 'svelte';
 	import InkMde from 'ink-mde/svelte';
 	import TurndownService from 'turndown';
 	import * as Diff from 'diff';
 	import { marked } from 'marked';
 	import * as Diff2Html from 'diff2html';
 	import 'diff2html/bundles/css/diff2html.min.css';
+	import '../../app.css';
 
 	export let data: { files: { path: string; meta: { title: string } }[] };
 
@@ -57,12 +59,46 @@
 			console.error(error);
 		}
 	}
+
+	afterUpdate(() => {
+		const demo = document.querySelector('#demo');
+
+		if (demo) {
+			//Select all blockquotes and add the callout class
+			const blockquotes = demo.querySelectorAll('blockquote');
+			blockquotes.forEach((blockquote) => {
+				blockquote.classList.add('callout');
+
+				//if the blockquotes start with emojis, they're a callout, add the proper classes
+				const secondChild = blockquote.childNodes[1];
+				if (secondChild && isEmoji(secondChild.innerHTML)) {
+					secondChild.classList.add('callout-title-text');
+
+					//add specific classes to these emojis
+					if (secondChild.innerHTML.startsWith('⚠')) {
+						blockquote.style.borderLeft = '0.3rem solid #ffff2a';
+					} else if (secondChild.innerHTML.startsWith('✅')) {
+						blockquote.style.borderLeft = '0.3rem solid #01e701';
+					} else if (secondChild.innerHTML.startsWith('⛔')) {
+						blockquote.style.borderLeft = '0.3rem solid #ff2c2c';
+					}
+				}
+			});
+		}
+	});
+
+	//RegEx pattern comes from this blog article https://www.freecodecamp.org/news/how-to-use-regex-to-match-emoji-including-discord-emotes/
+	function isEmoji(text) {
+		const emojiRegex = /<a?:.+?:\d{18}>|\p{Extended_Pictographic}/gu;
+		return emojiRegex.test(text);
+	}
 </script>
 
 <h1>Select the file you want to edit</h1>
 
 <h2>From Mollify LMS</h2>
 <select on:change={(event) => getFile(event.target.value)}>
+	<option value="">Select an option</option>
 	{#each data.files as file}
 		<option value={file.path}>{file.meta.title}</option>
 	{/each}

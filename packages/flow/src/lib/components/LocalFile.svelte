@@ -1,11 +1,11 @@
-<!-- Display file in local computer -->
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, afterUpdate } from 'svelte';
 	import InkMde from 'ink-mde/svelte';
 	import * as Diff from 'diff';
 	import { marked } from 'marked';
 	import * as Diff2Html from 'diff2html';
 	import 'diff2html/bundles/css/diff2html.min.css';
+	import '../../app.css';
 
 	let fileContent: string = '';
 	let oldText: string = '';
@@ -26,7 +26,6 @@
 	}
 
 	onMount(async () => {
-		// Assuming you have an input element with the ID "fileInput"
 		const fileInput = document.getElementById('fileInput') as HTMLInputElement;
 		fileInput.addEventListener('change', async (event) => {
 			const files = event.target.files;
@@ -55,6 +54,39 @@
 			matching: 'lines',
 			outputFormat: 'side-by-side'
 		});
+	}
+
+	afterUpdate(() => {
+		const demo = document.querySelector('#demo');
+
+		if (demo) {
+			//Select all blockquotes and add the callout class
+			const blockquotes = demo.querySelectorAll('blockquote');
+			blockquotes.forEach((blockquote) => {
+				blockquote.classList.add('callout');
+
+				//if the blockquotes start with emojis, they're a callout, add the proper classes
+				const secondChild = blockquote.childNodes[1];
+				if (secondChild && isEmoji(secondChild.innerHTML)) {
+					secondChild.classList.add('callout-title-text');
+
+					//add specific classes to these emojis
+					if (secondChild.innerHTML.startsWith('⚠')) {
+						blockquote.style.borderLeft = '0.3rem solid #ffff2a';
+					} else if (secondChild.innerHTML.startsWith('✅')) {
+						blockquote.style.borderLeft = '0.3rem solid #01e701';
+					} else if (secondChild.innerHTML.startsWith('⛔')) {
+						blockquote.style.borderLeft = '0.3rem solid #ff2c2c';
+					}
+				}
+			});
+		}
+	});
+
+	//RegEx pattern comes from this blog article https://www.freecodecamp.org/news/how-to-use-regex-to-match-emoji-including-discord-emotes/
+	function isEmoji(text) {
+		const emojiRegex = /<a?:.+?:\d{18}>|\p{Extended_Pictographic}/gu;
+		return emojiRegex.test(text);
 	}
 </script>
 
