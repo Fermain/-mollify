@@ -35,8 +35,8 @@ _The following are just guidelines, and there is no one "right" way to write a g
 
 Write a story using the following pictures as inspiration. You are free to choose in which order your pictures will go in your story.
 
-![Laptop on rustic wooden desk](https://fastly.picsum.photos/id/9/5000/3269.jpg?hmac=cZKbaLeduq7rNB8X-bigYO8bvPIWtT-mh8GRXtU3vPc)
-
 ![Alt text](https://picsum.photos/id/1/200/300)
 
-![Alt text](https://picsum.photos/id/11/100/100)
+![Alt text](https://picsum.photos/id/30/200/300)
+
+![Alt text](https://picsum.photos/id/11/200/300)
