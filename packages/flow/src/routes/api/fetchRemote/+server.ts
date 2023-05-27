@@ -1,6 +1,6 @@
 export async function GET(): Promise<Response> {
 	const res = await fetch(
-		'https://raw.githubusercontent.com/Melisa-Zorraindo/auction-house-website/main/README.md'
+		'https://raw.githubusercontent.com/Melisa-Zorraindo/remote-markdown-sample/main/README.md'
 	);
 
 	const item = await res.text();
