@@ -51,7 +51,7 @@
 				blockquote.classList.add('callout');
 
 				//if the blockquotes start with emojis, they're a callout, add the proper classes
-				const secondChild = blockquote.childNodes[1];
+				const secondChild = blockquote.childNodes[1] as HTMLElement;
 				if (secondChild && isEmoji(secondChild.innerHTML)) {
 					secondChild.classList.add('callout-title-text');
 
@@ -69,7 +69,7 @@
 	});
 
 	//RegEx pattern comes from this blog article https://www.freecodecamp.org/news/how-to-use-regex-to-match-emoji-including-discord-emotes/
-	function isEmoji(text) {
+	function isEmoji(text: string) {
 		const emojiRegex = /<a?:.+?:\d{18}>|\p{Extended_Pictographic}/gu;
 		return emojiRegex.test(text);
 	}

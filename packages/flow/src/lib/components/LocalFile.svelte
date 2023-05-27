@@ -16,6 +16,7 @@
 	let isPreviewDisplayed: boolean = false;
 	let isDiffDisplayed: boolean = false;
 
+	//reads the contents of the chosen file
 	function readFile(file: File): Promise<string> {
 		return new Promise((resolve, reject) => {
 			const reader = new FileReader();
@@ -26,14 +27,19 @@
 	}
 
 	onMount(async () => {
+		//this element allows the user to pick a file from their local computer
 		const fileInput = document.getElementById('fileInput') as HTMLInputElement;
-		fileInput.addEventListener('change', async (event) => {
-			const files = event.target.files;
-			if (files && files.length > 0) {
-				const file = files[0];
-				fileContent = await readFile(file);
-				oldText = fileContent;
-				value = fileContent;
+		fileInput.addEventListener('change', async (event: Event) => {
+			if (event && event.target) {
+				const files = event.target.files;
+				//check if some files are selected
+				if (files && files.length > 0) {
+					const file = files[0];
+					//reads the content of the file using the previous function
+					fileContent = await readFile(file);
+					oldText = fileContent;
+					value = fileContent;
+				}
 			}
 		});
 	});
@@ -66,7 +72,7 @@
 				blockquote.classList.add('callout');
 
 				//if the blockquotes start with emojis, they're a callout, add the proper classes
-				const secondChild = blockquote.childNodes[1];
+				const secondChild = blockquote.childNodes[1] as HTMLElement;
 				if (secondChild && isEmoji(secondChild.innerHTML)) {
 					secondChild.classList.add('callout-title-text');
 
@@ -84,7 +90,7 @@
 	});
 
 	//RegEx pattern comes from this blog article https://www.freecodecamp.org/news/how-to-use-regex-to-match-emoji-including-discord-emotes/
-	function isEmoji(text) {
+	function isEmoji(text: string) {
 		const emojiRegex = /<a?:.+?:\d{18}>|\p{Extended_Pictographic}/gu;
 		return emojiRegex.test(text);
 	}

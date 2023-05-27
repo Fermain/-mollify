@@ -48,13 +48,16 @@
 			const doc = parser.parseFromString(htmlContent, 'text/html');
 
 			// Extract the content inside <main> tag
-			mainContent = doc.querySelector('main').innerHTML;
+			const mainElement = doc.querySelector('main');
+			if (mainElement) {
+				mainContent = mainElement.innerHTML;
 
-			// Convert HTML content to Markdown
-			const turndownService = new TurndownService();
+				// Convert HTML content to Markdown
+				const turndownService = new TurndownService();
 
-			oldText = turndownService.turndown(mainContent);
-			value = turndownService.turndown(mainContent);
+				oldText = turndownService.turndown(mainContent);
+				value = turndownService.turndown(mainContent);
+			}
 		} catch (error) {
 			console.error(error);
 		}
@@ -70,7 +73,7 @@
 				blockquote.classList.add('callout');
 
 				//if the blockquotes start with emojis, they're a callout, add the proper classes
-				const secondChild = blockquote.childNodes[1];
+				const secondChild = blockquote.childNodes[1] as HTMLElement;
 				if (secondChild && isEmoji(secondChild.innerHTML)) {
 					secondChild.classList.add('callout-title-text');
 
@@ -88,21 +91,23 @@
 	});
 
 	//RegEx pattern comes from this blog article https://www.freecodecamp.org/news/how-to-use-regex-to-match-emoji-including-discord-emotes/
-	function isEmoji(text) {
+	function isEmoji(text: string) {
 		const emojiRegex = /<a?:.+?:\d{18}>|\p{Extended_Pictographic}/gu;
 		return emojiRegex.test(text);
 	}
 </script>
 
-<h1>Select the file you want to edit</h1>
+{#if value === ''}
+	<h1>Select the file you want to edit</h1>
 
-<h2>From Mollify LMS</h2>
-<select on:change={(event) => getFile(event.target.value)}>
-	<option value="">Select an option</option>
-	{#each data.files as file}
-		<option value={file.path}>{file.meta.title}</option>
-	{/each}
-</select>
+	<h2>From Mollify LMS</h2>
+	<select on:change={(event) => getFile(event?.target?.value)}>
+		<option value="">Select an option</option>
+		{#each data.files as file}
+			<option value={file.path}>{file.meta.title}</option>
+		{/each}
+	</select>
+{/if}
 
 {#if value !== ''}
 	<div>
