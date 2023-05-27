@@ -1,10 +1,5 @@
 ---
 title: Character building
-slug: character-building
-type: lesson
-previous: null
-summary: Teaching the next generation of brilliant story tellers!
-url:
 tags:
   - creativity
   - writing

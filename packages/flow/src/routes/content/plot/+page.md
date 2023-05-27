@@ -1,10 +1,5 @@
 ---
 title: Plot
-slug: plot
-type: lesson
-previous: null
-summary: Teaching the next generation of brilliant story tellers!
-url:
 tags:
   - plot
   - genres

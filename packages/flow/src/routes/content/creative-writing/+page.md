@@ -1,10 +1,5 @@
 ---
 title: Creative writing
-slug: creative-writing
-type: lesson
-previous: null
-summary: Teaching the next generation of brilliant story tellers!
-url:
 tags:
   - creativity
   - writing
@@ -64,6 +59,8 @@ Ancient epics are lengthy narrative poems that were composed orally in prelitera
 8. **Proofread:** Check for spelling, grammar, and syntax errors.
 
 9. **Share and publish:** Consider sharing your story with others or submitting it for publication.
+
+> Regular blockquote
 
 > ✅ Success
 >
