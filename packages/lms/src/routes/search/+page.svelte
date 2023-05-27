@@ -8,6 +8,7 @@
 	import { generateRawSearchQuery } from '$lib/utils/fuseSearch/generateRawSearchQuery';
 	import { parseRawSearchQuery } from '$lib/utils/fuseSearch/parseRawSearchQuery';
 	import { updateQueryString } from '$lib/utils/fuseSearch/updateQueryString';
+	import Card from '$lib/components/cards/Card.svelte';
 
 	type QueryType = {
 		query: string;
@@ -135,7 +136,7 @@
 			<label class="label flex flex-col" for="search">
 				<span class="font-medium">Search query</span>
 				<input
-					class="input sm:w-2/4"
+					class="input sm:w-3/4"
 					type="search"
 					id="search"
 					placeholder="Search markdown content"
@@ -152,7 +153,7 @@
 					<label class="label flex flex-col mt-1 mb-6" for="search-exclusions">
 						<span class="font-medium">Excluded Terms</span>
 						<input
-							class="input sm:w-2/4"
+							class="input sm:w-3/4"
 							type="text"
 							id="search-exclusions"
 							placeholder="Exclude terms, eg: term1, term2"
@@ -163,7 +164,7 @@
 					<label class="label flex flex-col mt-1 mb-6" for="search-tags">
 						<span class="font-medium">Included Tags</span>
 						<input
-							class="input sm:w-2/4"
+							class="input sm:w-3/4"
 							type="text"
 							id="search-tags"
 							placeholder="Include these tags, eg: tag1, tag2"
@@ -173,7 +174,7 @@
 
 					{#if $files?.length > 1}
 						<label class="label font-medium" for="institution-options">Institution</label>
-						<select class="select mt-1 rounded-md sm:w-2/4" bind:value={selectedInstitution} id="institution-options">
+						<select class="select mt-1 rounded-md sm:w-3/4" bind:value={selectedInstitution} id="institution-options">
 							<option value="all">All</option>
 							{#each $files as file}
 								<option value={file.foldername}>{file.title}</option>
@@ -287,20 +288,7 @@
 		{#if searchResults.length > 0}
 			<div class="grid sm:grid-cols-2 gap-4">
 				{#each searchResults as result}
-					<a class="card p-4 variant-ghost-surface" href={result.browserPath}>
-						<header class="card-header border-b pb-2 flex justify-between items-center">
-							<h3 class="h3">{result.title}</h3>
-							<span class="chip variant-filled">{result.type}</span>
-						</header>
-						<section class="p-4">
-							<p>Search Score: {Math.round(result.score * 10000) / 10000}</p>
-						</section>
-						<footer class="card-footer border-t pt-2">
-							{#each result.tags as tag}
-								<p class="chip variant-ringed m-1 ms-0">{tag}</p>
-							{/each}
-						</footer>
-					</a>
+					<Card {result} />
 				{/each}
 			</div>
 		{/if}

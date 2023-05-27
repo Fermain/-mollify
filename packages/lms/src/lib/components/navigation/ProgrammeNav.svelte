@@ -44,7 +44,7 @@
 		</h2>
 		<div class="grid sm:grid-cols-2 gap-4">
 			{#each current.children as child}
-				<a class="card p-3 variant-ghost-surface no-underline" href={child.browserPath}>
+				<a class="card p-3 variant-ghost-surface dark:text-slate-100 no-underline" href={child.browserPath}>
 					<header class="card-header border-b p-0">
 						<h3 class="h3">{child.title}</h3>
 					</header>
