@@ -1,26 +1,74 @@
+//Custom colors
+  $primary: #2d265b;
+  $secondary: #afacc6;
+  $success: #a5dfba;
+  $info: #ebecb3;
+  $warning: #eebfbf;
+  $background: #aee6f2;
+  $white: #fff;
+  $black: #000;
+  
+$theme-colors: (
+  "primary":    $primary,
+  "secondary":  $secondary,
+  "success":    $success,
+  "info":       $info,
+  "warning":    $warning,
+  "background": $background,
+  "white":      $white,
+  "black":      $black,
+);
+
+//Custom fonts and spacing
+$spacing-xxs: 0.25rem; // 3px
+$spacing-xs: 0.5rem; // 7.5px
+$spacing-s: 0.75rem; // 11px
+$spacing-m: 1rem; // 15px
+$spacing-l: 2rem; // 30px
+$spacing-xl: 3rem; // 45px
+$spacing-xxl: 5rem; // 75px;
+
+$border-radius-xs: 5px;
+$border-radius-s: 10px;
+$border-radius-m: 15px;
+$border-radius-l: 20px;
+$border-radius-xl: 25px;
+
+$font-style: normal;
+$font-weight: 400;
+$font-size-xs: 14px;
+$font-size-s: 16px;
+$font-size-m: 20px;
+$font-size-l: 24px;
+$font-size-xl: 36px;
+
 //Custom callouts
 .callout {
-  border-radius: var(--border-radius-xs);
-  padding: var(--spacing-s);
-  background-image: linear-gradient(to right, var(--background-primary-lt), var(--background-primary-ltr));
+  border-radius: $border-radius-xs;
+  border-left: solid $spacing-xs $primary;
+  padding: $spacing-s;  
+  margin-left: $spacing-s;
+  font-style: $font-style;
   &.👍 {
-    border-left: solid 7px var(--secondary);
+    background-color: $background;
   }
   &.💡{
-    border-left: solid 7px var(--secondary-lt);
+    background-color: $info;
   }
   &.⛔{
-    border-left: solid 7px var(--warning);
+    background-color: $warning;
   }
   &.✅{
-    border-left: solid 7px var(--success);
+    background-color: $success;
   }
 }
 
 .callout-title {
-  font-size: var(--font-size-m);
+  font-size: $font-size-m;
+  color: $black;
 }
 
 .callout p {
-  padding-left: var(--spacing-m)
+  padding-left: $spacing-xs;
+  color: $black;
 }
