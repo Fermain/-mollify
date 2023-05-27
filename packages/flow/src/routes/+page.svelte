@@ -20,20 +20,29 @@
 	function getFromRemote(): void {
 		comesFromRemote = true;
 	}
+
+	function reset(): void {
+		comesFromVSCode = false;
+		comesFromComputer = false;
+		comesFromRemote = false;
+	}
 </script>
 
 <div>
-	<h1>Where do you want to get the file from?</h1>
+	{#if !comesFromVSCode && !comesFromComputer && !comesFromRemote}
+		<h1>Where do you want to get the file from?</h1>
 
-	<button on:click={getFromVSCode}>VSCode</button>
-	<button on:click={getFromComputer}>Your computer</button>
-	<button on:click={getFromRemote}>Remote</button>
-
-	{#if comesFromVSCode}
+		<button on:click={getFromVSCode}>VSCode</button>
+		<button on:click={getFromComputer}>Your computer</button>
+		<button on:click={getFromRemote}>Remote</button>
+	{:else if comesFromVSCode}
 		<VsCodeFile {data} />
+		<button on:click={reset}>Choose another source</button>
 	{:else if comesFromComputer}
 		<LocalFile />
+		<button on:click={reset}>Choose another source</button>
 	{:else if comesFromRemote}
 		<RemoteFile />
+		<button on:click={reset}>Choose another source</button>
 	{/if}
 </div>
