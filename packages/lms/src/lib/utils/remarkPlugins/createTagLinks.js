@@ -1,6 +1,9 @@
 import yaml from 'js-yaml';
 import { u } from 'unist-builder';
 
+/**
+ * This plugin creates a container for tags and appends all the tags into it and places it after the first heading on the page.
+ */
 export function createTagLinks() {
 	return function (tree) {
 		try {

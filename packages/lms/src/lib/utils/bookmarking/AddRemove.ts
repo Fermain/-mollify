@@ -3,6 +3,11 @@ import { toastStore } from '@skeletonlabs/skeleton';
 import type { ToastSettings } from '@skeletonlabs/skeleton';
 import * as storage from '$lib/utils/storage';
 
+/**
+ * This function adds or removes a bookmark for the current page, or a specific heading
+ * @param heading If provided, will add or remove a bookmark for the specific heading
+ * @returns Updated bookmarks
+ */
 export async function AddRemoveBookmarks(heading: string | null = null) {
 	if (!browser) return;
 	const currentUrl = decodeURIComponent(window.location.pathname);
