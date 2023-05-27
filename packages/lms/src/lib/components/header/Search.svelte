@@ -44,8 +44,10 @@
 	};
 
 	function handlePageChange() {
-		searchResults = [];
-		searchQuery = '';
+		setTimeout(() => {
+			searchResults = [];
+			searchQuery = '';
+		}, 10);
 	}
 
 	function handleClickOutside(event: object) {
