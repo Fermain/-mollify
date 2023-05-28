@@ -1,6 +1,7 @@
 {
 	"name": "@mollify/flow",
 	"version": "0.0.1",
+	"license": "GPL",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && npm run package",

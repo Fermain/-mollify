@@ -1,25 +1,30 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { getSearchResults } from '$lib/utils/fuseSearch/getSearchResults';
-
 	import SearchItem from '../search/SearchItem.svelte';
+	import { parseRawSearchQuery } from '$lib/utils/fuseSearch/parseRawSearchQuery';
 
 	let searchQuery = '';
 	let searchResults: String[] = [];
 	let timer: string | number | NodeJS.Timeout | undefined;
+	let inputFocused = false;
+	let returnedResults = false;
 
 	function handleSubmit(event: { preventDefault: () => void }) {
-		event.preventDefault();
-		goto(`/search?query=${searchQuery}`);
+		goto(`/search?query=${encodeURIComponent(searchQuery)}`);
+		searchQuery = '';
 	}
 
 	const debounceSearch = async () => {
 		clearTimeout(timer);
+		returnedResults = false;
 		if (searchQuery.length >= 3) {
 			await new Promise((resolve) => {
 				timer = setTimeout(async () => {
 					try {
-						searchResults = await getSearchResults(searchQuery);
+						const { query, filters } = await parseRawSearchQuery(searchQuery);
+						searchResults = await getSearchResults(query, filters);
+						returnedResults = true;
 					} catch (error) {
 						console.log(error);
 					}
@@ -43,7 +48,7 @@
 
 <svelte:window on:click={handleClickOutside} />
 <div class="wrapper">
-	<form class="search" on:submit={handleSubmit}>
+	<form class="search" on:submit|preventDefault={handleSubmit}>
 		<input
 			type="search"
 			placeholder="Search markdown content"
@@ -51,14 +56,25 @@
 			on:input={async () => {
 				debounceSearch();
 			}}
+			on:focus={() => {
+				inputFocused = true;
+			}}
+			on:blur={() => {
+				inputFocused = false;
+			}}
 		/>
 		<button>Search</button>
 	</form>
-	{#if searchResults.length > 0}
+	{#if searchResults.length > 0 && inputFocused}
 		<div class="search-items">
 			{#each searchResults as item, i}
 				<SearchItem data={item} on:pageChange={handlePageChange} />
 			{/each}
+		</div>
+	{/if}
+	{#if searchResults.length === 0 && inputFocused && searchQuery.length >= 3 && returnedResults}
+		<div class="search-items">
+			<p class="no-results">No Results Found</p>
 		</div>
 	{/if}
 </div>
@@ -86,5 +102,11 @@
 		padding: var(--spacing-s);
 		transition: max-height 0.1s ease-in-out;
 		overflow-x: hidden;
+	}
+
+	.no-results {
+		padding: var(--spacing-s) var(--spacing-xxs);
+		background-color: var(--background-primary);
+		border-radius: var(--spacing-xxs);
 	}
 </style>
