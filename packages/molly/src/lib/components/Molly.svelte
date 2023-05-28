@@ -9,7 +9,6 @@
 	let loading: boolean = false;
 	let chatMessages: ChatCompletionRequestMessage[] = [];
 	export let endpoint = '/';
-	let chatWindow: HTMLElement | null;
 
 	const handleSubmit = async () => {
 		loading = true;
@@ -27,6 +26,7 @@
 				if (e.data === '[DONE]') {
 					chatMessages = [...chatMessages, { role: 'assistant', content: answer }];
 					answer = '';
+					eventSource.close();
 					return;
 				}
 
@@ -38,6 +38,7 @@
 				}
 			} catch (err) {
 				handleError(err);
+				eventSource.close();
 			}
 		};
 	};
@@ -46,16 +47,12 @@
 		loading = false;
 		query = '';
 		answer = '';
-		console.error(err);
 	}
 </script>
 
 <MollyButton>
 	<div class="h-full grid grid-rows-[1fr_auto] border border-slate-400">
-		<div
-			bind:this={chatWindow}
-			class="messages-container h-80 bg-slate-200 dark:bg-slate-300 overflow-y-auto"
-		>
+		<div class="messages-container h-80 bg-slate-200 dark:bg-slate-300 overflow-y-auto">
 			{#each chatMessages as message}
 				<MollyMessage type={message.role} message={message.content} />
 			{/each}

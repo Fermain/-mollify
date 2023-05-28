@@ -9,6 +9,13 @@ import { slugger } from '../../utilities';
 import cliProgress from 'cli-progress';
 import { table, log, error } from 'console';
 
+let cancelMigration = false; // create a flag
+
+process.on('SIGINT', function () {
+  cancelMigration = true;
+  console.log('Migration aborted');
+});
+
 async function getUserInput(
   existingFrontmatter: Partial<EntityMeta>,
 ): Promise<Partial<EntityMeta>> {
@@ -77,7 +84,10 @@ export async function migrateMarkdownFile(file: string) {
 
 export async function migrateMarkdownFiles(basePath: string) {
   const pattern = path.join(basePath, '**/!(*+page).md');
-  const ignorePattern = path.join('src', 'templates', '**/*'); // Ignore pattern for src/templates
+  const ignorePattern = [
+    path.join('src', 'templates', '**/*'), // Ignore pattern for src/templates
+    path.join('node_modules', '**/*'), // Ignore pattern for node_modules
+  ];
   const files = glob.sync(pattern, { ignore: ignorePattern });
 
   const progressBar = new cliProgress.SingleBar(
@@ -92,6 +102,10 @@ export async function migrateMarkdownFiles(basePath: string) {
   progressBar.start(files.length, 0);
 
   for await (const [index, file] of files.entries()) {
+    if (cancelMigration) {
+      break; // Check the flag before every migration and break if it's true
+    }
+
     progressBar.stop();
 
     await migrateMarkdownFile(file);
@@ -100,7 +114,11 @@ export async function migrateMarkdownFiles(basePath: string) {
     progressBar.increment(); // Increment the progress bar
   }
 
-  progressBar.stop(); // Stop the progress bar
+  progressBar.stop();
 
-  log('Migration completed');
+  if (cancelMigration) {
+    log('Migration cancelled after processing', files.length, 'files');
+  } else {
+    log('Migration completed');
+  }
 }
