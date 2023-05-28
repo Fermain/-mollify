@@ -38,51 +38,22 @@
 <slot />
 {#if isProgramme}
 	<section>
-		<h2>
+		<h2 class="h2 mb-8">
 			{current?.title}
 			{current?.type === 'institution' ? 'Programmes' : 'Courses'}
 		</h2>
-		<div class="inst-grid">
+		<div class="grid sm:grid-cols-2 gap-4">
 			{#each current.children as child}
-				<div class="card">
-					<h3>{child.title}</h3>
-					<img src={child.url} alt={child.title} />
-					<p>{child.summary}</p>
-					<a href={child.browserPath}>View Details</a>
-				</div>
+				<a class="card p-3 variant-ghost-surface dark:text-slate-100 no-underline" href={child.browserPath}>
+					<header class="card-header border-b p-0">
+						<h3 class="h3">{child.title}</h3>
+					</header>
+					{#if child.url}
+						<img src={child.url} alt={child.title} />
+					{/if}
+					<p class="font-normal">{child.summary}</p>
+				</a>
 			{/each}
 		</div>
 	</section>
 {/if}
-
-<style>
-	.card {
-		max-width: 300px;
-		margin: 1rem;
-		padding: 1rem;
-		box-shadow: 0 2px 8px var(--primary);
-		border-radius: 1rem;
-	}
-
-	.card img {
-		width: 100%;
-	}
-
-	.card a {
-		display: block;
-		text-align: center;
-		margin-top: 1rem;
-		padding: 0.5rem;
-		background-color: var(--secondary);
-		color: var(--text-primary);
-		border-radius: 0.5rem;
-		text-decoration: none;
-		font-size: 1.25rem;
-	}
-
-	.inst-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-		grid-gap: 1rem;
-	}
-</style>

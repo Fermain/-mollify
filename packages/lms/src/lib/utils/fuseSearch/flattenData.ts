@@ -10,6 +10,12 @@ export interface FuseItem extends Omit<EntityMeta, 'children'> {
 	title: string;
 }
 
+/**
+ * This flattens the data for easier handling by Fuse.js
+ * @param data The entity meta data to flatten
+ * @param parent The parent of the current item
+ * @returns The flattened data
+ */
 export function flattenData(data: EntityMeta[], parent: string | null = null): FuseItem[] {
 	return data.flatMap((item) => {
 		const { children, ...itemWithoutChildren } = item;

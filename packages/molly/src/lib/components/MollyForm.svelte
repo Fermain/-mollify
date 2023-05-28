@@ -12,43 +12,13 @@
 	}
 </script>
 
-<form on:submit|preventDefault={() => handleSubmit()}>
-	<textarea  bind:value={query} />
-	<button type="submit"><img src={img} alt="send message"/></button>
-</form>
-
-<style>
-
-form {
-		background-color: #323d47;
-		padding: 10px;
-		display: flex;
-		align-items: center;
-		justify-content: space-evenly;
-	}
-
-	textarea {
-		max-width: 70%;
-		min-width: 70%;
-		max-height: 100px;
-		border-radius: 5px;
-		padding: 5px;
-		resize: none; /*prevents the user from manually resizing the field*/
-	}
-
-	button {
-		padding: 10px;
-		width: 50px;
-		border: none;
-		border-radius: 10px;
-		background-color: #21a299;
-		color: white;
-		cursor: pointer;
-	}
-
-	img {
-		width: 20px;
-		height: 20px;
-	}
-	
-</style>
+<div class="bg-surface-100-800-token border-t border-slate-400 p-4 drop-shadow-md">
+<form on:submit|preventDefault={() => handleSubmit()} 
+	class="flex input-group sm:input-group-divider sm:grid-cols-[1fr_auto] rounded">
+	<textarea  bind:value={query} 
+		class="textarea hidden sm:block bg-slate-100 dark:bg-slate-200 rounded-none p-1 text-black"
+		placeholder="Write here..." />
+	<button type="submit" class="btn variant-filled-primary rounded-none">
+		<img src={img} alt="send message" class="h-6 w-6"/>
+	</button>
+</form></div>

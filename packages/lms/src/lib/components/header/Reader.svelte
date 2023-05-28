@@ -5,6 +5,9 @@
 	import { audio } from '$lib/stores/audio';
 	import { fetchAudio } from '$lib/utils/tts/fetchAudio';
 	import { createAudio } from '$lib/utils/tts/createAudio';
+	import { popup, toastStore } from '@skeletonlabs/skeleton';
+	import type { PopupSettings } from '@skeletonlabs/skeleton';
+	import type { ToastSettings } from '@skeletonlabs/skeleton';
 
 	let hasAudio = false;
 	let isContent = false;
@@ -60,26 +63,45 @@
 		}
 	}
 
+	const audioSettings: PopupSettings = {
+		event: 'click',
+		target: 'audioSettings',
+		placement: 'top'
+	};
+
 	// Regenerate/create the audio file for the current page content
 	async function regenerateAudio() {
 		isloading = true;
+
+		if (isloading) {
+			const userFeedback: ToastSettings = {
+				message: 'Creating Audio File...',
+				background: 'variant-filled-warning',
+				autohide: false
+			};
+			toastStore.trigger(userFeedback);
+		}
+
 		const filepath = path;
 		const data = await createAudio(content, slug, filepath, true);
 		audio.set(data);
 		audioSrc = data.url;
 		isloading = false;
 		if (data.error) {
-			alert(data.error);
+			const userFeedback: ToastSettings = {
+				message: data.error,
+				background: 'variant-filled-error',
+				autohide: false
+			};
+			toastStore.trigger(userFeedback);
 		} else {
-			alert('Success!, audio file created.');
+			const userFeedback: ToastSettings = {
+				message: 'Success! Audio file created.',
+				background: 'variant-filled-success',
+				autohide: false
+			};
+			toastStore.trigger(userFeedback);
 		}
-		toggleSettings();
-	}
-
-	// Toggle the settings menu
-	let isOpen = false;
-	function toggleSettings() {
-		isOpen = !isOpen;
 	}
 
 	// For my frustration and amusement
@@ -94,80 +116,37 @@
 	}
 </script>
 
-<div class="reader">
+<div class="flex w-full justify-between items-center">
 	{#if path.startsWith('/content')}
-		<div class="reader-settings">
-			<i class="icon-f reader-settings" role="button" on:click={toggleSettings}>Settings</i>
-			{#if isOpen}
-				<div class="settings-options">
-					{#if hasAudio && !isloading}
-						<button on:click={regenerateAudio}>Regenerate Audio File</button>
-					{:else if isloading}
-						<p>Creating Audio File...</p>
-					{/if}
-					{#if !hasAudio && isContent}
-						<button on:click={regenerateAudio}>Create Audio</button>
-					{/if}
-					<button on:click={playAudio}>Scream For Help!</button>
-					<audio bind:this={scream}>
-						<source src="/public/audio/silly_stuff/female_scream.wav" type="audio/wav" />
-						Your browser does not support the audio element.
-					</audio>
-					<button on:click={playHorseAudio}>Horsing Around</button>
-					<audio bind:this={horse}>
-						<source src="/public/audio/silly_stuff/horse-neigh.mp3" type="audio/mpeg" />
-						Your browser does not support the audio element.
-					</audio>
-				</div>
-			{/if}
+		<div>
+			<button class="btn hover:bg-primary-hover-token" use:popup={audioSettings}>
+				<i class="icon-f">settings</i></button
+			>
+			<div class="card p-4 w-60 shadow-xl" data-popup="audioSettings" id="settings-card">
+				<h3 class="h3 mb-3">Audio Settings</h3>
+				<hr />
+				{#if hasAudio && !isloading}
+					<button on:click={regenerateAudio} class="my-5 btn hover:bg-primary-hover-token p-1"
+						>Regenerate Audio File</button
+					>
+				{/if}
+				{#if !hasAudio && isContent}
+					<button on:click={regenerateAudio}>Create Audio</button>
+				{/if}
+				<button on:click={playAudio} class="my-5 btn hover:bg-primary-hover-token p-1">Scream For Help!</button>
+				<audio bind:this={scream}>
+					<source src="/public/audio/silly_stuff/female_scream.wav" type="audio/wav" />
+					Your browser does not support the audio element.
+				</audio>
+				<button on:click={playHorseAudio} class="my-5 btn hover:bg-primary-hover-token p-1">Horsing Around</button>
+				<audio bind:this={horse}>
+					<source src="/public/audio/silly_stuff/horse-neigh.mp3" type="audio/mpeg" />
+					Your browser does not support the audio element.
+				</audio>
+			</div>
 		</div>
 	{/if}
 	{#if audioSrc}
-		<audio src={audioSrc} controls class="reader-inner" />
+		<audio src={audioSrc} controls class="w-full h-full" />
 	{/if}
 </div>
-
-<style>
-	.reader-settings {
-		padding: 0.25rem;
-		color: azure;
-		width: fit-content;
-		position: relative;
-	}
-
-	.settings-options {
-		position: absolute;
-		background-color: var(--primary);
-		color: var(--text-secondary);
-		padding: var(--spacing-m);
-		border-radius: var(--spacing-m);
-		left: 50%;
-		bottom: 100%;
-		border: 1px solid var(--secondary);
-	}
-
-	.settings-options button {
-		display: block;
-		width: 100%;
-		padding: var(--spacing-s);
-		border-radius: var(--spacing-s);
-		background-color: var(--secondary);
-		color: var(--text-primary);
-		margin-bottom: var(--spacing-s);
-		border: none;
-	}
-	.reader {
-		grid-area: reader;
-		width: 100%;
-		margin: 0 auto;
-		text-align: center;
-		display: flex;
-	}
-
-	.reader-inner {
-		width: 100%;
-		border-radius: var(--border-radius-xs);
-		margin: 0 auto;
-		height: 100%;
-	}
-</style>
