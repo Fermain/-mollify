@@ -1,6 +1,6 @@
 ---
 title: Template Module
-type: module
+type: Module
 tags:
 - template
 - module
