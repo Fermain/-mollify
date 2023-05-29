@@ -1,6 +1,6 @@
 {
 	"name": "@mollify/flow",
-	"version": "0.2.4",
+	"version": "0.2.5",
 	"license": "GPL",
 	"scripts": {
 		"dev": "vite dev",
@@ -30,7 +30,7 @@
 		"svelte": "^3.54.0"
 	},
 	"devDependencies": {
-		"@mollify/types": "^0.2.1",
+		"@mollify/types": "^0.2.5",
 		"@playwright/test": "^1.28.1",
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/kit": "^1.5.0",

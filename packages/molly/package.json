@@ -1,6 +1,6 @@
 {
 	"name": "@mollify/molly",
-	"version": "0.2.4",
+	"version": "0.2.5",
 	"license": "GPL",
 	"scripts": {
 		"dev": "vite dev",
@@ -33,7 +33,7 @@
 	"types": "./dist/index.d.ts",
 	"type": "module",
 	"dependencies": {
-		"@mollify/types": "^0.2.1",
+		"@mollify/types": "^0.2.5",
 		"@playwright/test": "^1.28.1",
 		"@skeletonlabs/skeleton": "^1.5.1",
 		"@sveltejs/adapter-auto": "^2.0.0",
