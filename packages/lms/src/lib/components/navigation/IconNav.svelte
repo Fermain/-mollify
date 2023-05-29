@@ -1,41 +1,11 @@
 <script lang="ts">
+	import { AppRail, AppRailTile } from '@skeletonlabs/skeleton';
+	import AddRemoveBookmarks from './icons/AddRemoveBookmarks.svelte';
+	import Bookmarks from './icons/Bookmarks.svelte';
 </script>
 
-<div class="wrapper">
-	<nav class="icon-nav">
-		<i class="icon-f">home</i>
-		<i class="icon-f">bookmark</i>
-		<i class="icon-f">bookmark_add</i>
-	</nav>
-</div>
-
-<style lang="scss">
-	.wrapper {
-		height: 100%;
-		background-color: var(--primary);
-		color: var(--text-secondary);
-		grid-area: icons;
-
-		container-name: wrapper;
-		container-type: inline-size;
-	}
-
-	.icon-nav {
-		display: grid;
-		justify-items: center;
-		gap: var(--spacing-m);
-		padding: var(--spacing-m) 0;
-		height: min-content;
-	}
-
-	@container (min-width: 100px) {
-		.wrapper {
-			.icon-nav {
-				display: flex;
-				align-items: center;
-				justify-content: space-evenly;
-				height: 100%;
-			}
-		}
-	}
-</style>
+<AppRail width="w-[3rem] sm:w-20">
+	<AppRailTile name="tile-1" value={0}><i class="icon-f">home </i></AppRailTile>
+	<Bookmarks />
+	<AddRemoveBookmarks />
+</AppRail>

@@ -1,5 +1,10 @@
 import type { EntityMeta } from '@mollify/types';
 
+/**
+ * Sorts the children array of an entity by their dependency on each other
+ * @param children Array of children to sort
+ * @returns Sorted array of children
+ */
 export function sortChildrenByDependency(children: EntityMeta[]): EntityMeta[] {
 	const sortedChildren: EntityMeta[] = children.filter((child) => !child.previous);
 	const unsortedChildren: EntityMeta[] = children.filter((child) => child.previous);

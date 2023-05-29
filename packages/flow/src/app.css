@@ -1,0 +1,22 @@
+.callout {
+	background-color: #e7e7e7;
+	padding: 1rem;
+	border-radius: 1rem;
+	border-left: 0.3rem solid black;
+}
+
+.callout-title-text {
+	font-weight: bold;
+}
+
+blockquote.✅ {
+	border-left: 0.3rem solid #01e701;
+}
+
+blockquote.⚠ {
+	border-left: 0.3rem solid #ffff2a;
+}
+
+blockquote.⛔ {
+	border-left: 0.3rem solid #ff2c2c;
+}

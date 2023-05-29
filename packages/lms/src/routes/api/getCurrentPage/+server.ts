@@ -1,6 +1,9 @@
 import getEntityFrontmatter from '$lib/utils/getEntityFrontmatter.js';
 import getEntitySlug from '$lib/utils/getEntitySlug.js';
 
+/**
+ * Returns the frontmatter for the current page
+ */
 export async function POST({ request }) {
 	try {
 		const req = await request.json();
