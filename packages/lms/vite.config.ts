@@ -4,7 +4,7 @@ import { defineConfig } from 'vitest/config';
 export default defineConfig({
 	server: {
 		fs: {
-			allow: ['public/audio'] // add your directory here
+			allow: ['public/audio', 'node_modules/@sveltejs/kit/src/runtime/client'] // add your directory here
 		}
 	},
 	plugins: [sveltekit()],
