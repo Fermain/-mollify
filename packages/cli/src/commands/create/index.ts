@@ -30,6 +30,12 @@ const createCommand: yargs.CommandModule = {
         describe: 'Tags for the entity',
         type: 'array',
         default: [],
+      })
+      .option('force', {
+        alias: 'f',
+        describe: 'Force creation of the entity',
+        type: 'boolean',
+        default: false,
       }),
   handler: async (argv) => {
     const {
@@ -37,6 +43,7 @@ const createCommand: yargs.CommandModule = {
       type: typeInput,
       title: titleInput,
       tags: tagsInput,
+      force: forceInput,
     } = argv;
 
     const entitySpec = await prompts.entity.define({
@@ -51,9 +58,11 @@ const createCommand: yargs.CommandModule = {
         tags: entitySpec.tags?.join(', '),
       });
 
-      if (!(await prompts.consent())) {
-        console.log('Aborting');
-        process.exit(0);
+      if (!forceInput) {
+        if (!(await prompts.consent())) {
+          console.log('Aborting');
+          process.exit(0);
+        }
       }
 
       await entity.create(
