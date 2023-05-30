@@ -36,7 +36,7 @@
 
 		if (savedProseFontSizeClass !== 'prose-base') {
 			//The new classes aren't applied if 'prose' is still in the class list
-			proseContainer.classList.remove(proseFontSizes[currentIndex], 'prose');
+			//proseContainer.classList.remove(proseFontSizes[currentIndex], 'prose');
 			proseContainer.classList.add(savedProseFontSizeClass);
 		} else {
 			proseContainer.classList.remove(proseFontSizes[currentIndex]);
@@ -59,7 +59,7 @@
 			container.classList.remove(tailwindFontSizes[currentIndex]);
 			container.classList.add(increasedFontSizeClass);
 
-			proseContainer.classList.remove('prose');
+			//proseContainer.classList.remove('prose');
 			proseContainer.classList.remove(proseFontSizes[currentIndex]);
 			proseContainer.classList.add(increasedProseFontSizeClass);
 
@@ -89,7 +89,7 @@
 			container.classList.remove(tailwindFontSizes[currentIndex]);
 			container.classList.add(decreasedFontSizeClass);
 
-			proseContainer.classList.remove('prose');
+			//proseContainer.classList.remove('prose');
 			proseContainer.classList.remove(proseFontSizes[currentIndex]);
 			proseContainer.classList.add(decreasedProseFontSizeClass);
 
