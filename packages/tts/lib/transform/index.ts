@@ -1,7 +1,9 @@
-import headings from './headings';
+import markdown from './markdown';
+import links from './links';
 
 const heuristics = {
-	headings
+	markdown,
+	links
 };
 
 function all(input: string) {
@@ -11,4 +13,4 @@ function all(input: string) {
 	);
 }
 
-export default { headings, all };
+export default { markdown, links, all };
