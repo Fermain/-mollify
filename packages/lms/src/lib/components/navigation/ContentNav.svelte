@@ -6,7 +6,7 @@
 	import RecursiveNav from './RecursiveNav.svelte';
 	import CourseNav from './CourseNav.svelte';
 	import { getCurrentPageEntityMeta } from '$lib/utils/getCurrentPageEntityMeta';
-	import type { EntityMeta } from '@mollify/types';
+	import { EntityType, type EntityMeta } from '@mollify/types';
 	import { Accordion, AccordionItem } from '@skeletonlabs/skeleton';
 
 	let institutes: EntityMeta[] | null = [];
@@ -40,10 +40,10 @@
 			institutes = $files;
 			current = getCurrentPageEntityMeta(institutes, pathArray);
 		}
-		page.subscribe((data) => {
+		page.subscribe(() => {
 			updatePath();
 		});
-		isCourse = current?.type === 'course';
+		isCourse = current?.type === EntityType.Course;
 	}
 </script>
 
@@ -51,7 +51,7 @@
 	<Accordion>
 		{#if institutes}
 			<AccordionItem>
-				<svelte:fragment slot="summary">Recursive Nav</svelte:fragment>
+				<svelte:fragment slot="summary">Main Menu</svelte:fragment>
 				<div slot="content">
 					<RecursiveNav data={institutes} />
 				</div>

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Accordion, AccordionItem, drawerStore } from '@skeletonlabs/skeleton';
-	import type { EntityMeta } from '@mollify/types';
+	import { EntityType, type EntityMeta } from '@mollify/types';
 
 	export let data = [] as EntityMeta[];
 
@@ -18,7 +18,7 @@
 					<a href={browserPath} class="flex p-2" on:click={drawerClose}>Overview</a>
 				</div>
 				{#each children as child}
-					{#if (child.type === 'lesson' && child.children.length === 0) || child.children === undefined}
+					{#if (child.type === EntityType.Lesson && child.children.length === 0) || child.children === undefined}
 						<div class="hover:bg-primary-hover-token rounded-container-token">
 							<a href={child.browserPath} class="flex p-2" on:click={drawerClose}>
 								{child.title}
