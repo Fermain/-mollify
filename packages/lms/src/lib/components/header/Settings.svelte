@@ -36,7 +36,7 @@
 
 		if (savedProseFontSizeClass !== 'prose-base') {
 			//The new classes aren't applied if 'prose' is still in the class list
-			proseContainer.classList.remove(proseFontSizes[currentIndex], 'prose');
+			proseContainer.classList.remove(proseFontSizes[currentIndex]);
 			proseContainer.classList.add(savedProseFontSizeClass);
 		} else {
 			proseContainer.classList.remove(proseFontSizes[currentIndex]);
