@@ -1,7 +1,7 @@
 ---
 title: Overfilled And Sticky Pies
 slug: overfilled-and-sticky-pies
-type: lesson
+type: Lesson
 previous: Burnt Pie Crusts
 tags:
   - pies

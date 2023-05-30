@@ -1,7 +1,7 @@
 ---
 title: Cookies And Brownies
 slug: cookies-and-brownies
-type: module
+type: Module
 tags:
   - cookies
   - brownies

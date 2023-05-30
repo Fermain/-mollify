@@ -1,7 +1,7 @@
 ---
 title: Rock Hard Chewy Brownies
 slug: rock-hard-chewy-brownies
-type: lesson
+type: Lesson
 previous: Undercooked And Soggy
 tags:
   - brownies

@@ -1,7 +1,7 @@
 ---
 title: The Science Of Cake Flops
 slug: the-science-of-cake-flops
-type: lesson
+type: Lesson
 previous: null
 tags:
   - cakes

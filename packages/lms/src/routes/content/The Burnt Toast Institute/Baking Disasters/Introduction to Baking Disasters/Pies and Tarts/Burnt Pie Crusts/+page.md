@@ -1,7 +1,7 @@
 ---
 title: Burnt Pie Crusts
 slug: burnt-pie-crusts
-type: lesson
+type: Lesson
 previous: null
 tags:
   - pies

@@ -1,7 +1,7 @@
 ---
 title: Cooking
 slug: cooking
-type: lesson
+type: Lesson
 previous: null
 tags:
   - module 1

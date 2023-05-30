@@ -1,7 +1,7 @@
 ---
 title: Gastronomy
 slug: gastronomy
-type: lesson
+type: Lesson
 previous: Baking
 tags:
   - module 3

@@ -4,7 +4,7 @@ slug: javaScript-for-front-end-development
 summary: Our JavaScript for Front-End Development program teaches you how to use JavaScript to create interactive user interfaces for web applications. Build your skills in front-end development with our course.
 previous: null
 src:
-type: programme
+type: Programme
 tags:
   - web development
   - programming

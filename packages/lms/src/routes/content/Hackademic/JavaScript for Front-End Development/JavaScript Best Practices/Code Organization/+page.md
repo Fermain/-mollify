@@ -4,7 +4,7 @@ slug: code-organization
 summary: Learn best practices for organizing your JavaScript code, including modules, classes, and functions. Build maintainable and scalable code with our course.
 previous: null
 src:
-type: module
+type: Module
 tags:
   - web development
   - programming

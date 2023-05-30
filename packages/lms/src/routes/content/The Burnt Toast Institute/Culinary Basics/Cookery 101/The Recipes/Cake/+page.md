@@ -1,7 +1,7 @@
 ---
 title: Cake
 slug: example-course-2-mod-1
-type: lesson
+type: Lesson
 tags:
   - module 1
   - Cake
