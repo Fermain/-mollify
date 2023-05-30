@@ -83,7 +83,7 @@
 		}
 
 		const filepath = path;
-		const data = await createAudio(content, slug, filepath, true);
+		const data = await createAudio(content, slug, filepath, hasAudio);
 		audio.set(data);
 		audioSrc = data.url;
 		isloading = false;
@@ -100,6 +100,7 @@
 				background: 'variant-filled-success',
 				autohide: false
 			};
+			hasAudio = true;
 			toastStore.trigger(userFeedback);
 		}
 	}
