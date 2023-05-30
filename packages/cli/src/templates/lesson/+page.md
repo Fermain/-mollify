@@ -1,6 +1,6 @@
 ---
 title: Template Lesson
-type: lesson
+type: Lesson
 tags:
 - template
 - lesson

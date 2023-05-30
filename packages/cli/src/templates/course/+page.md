@@ -1,6 +1,6 @@
 ---
 title: Template Course
-type: course
+type: Course
 tags:
 - template
 - course
