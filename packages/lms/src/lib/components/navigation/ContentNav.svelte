@@ -43,7 +43,7 @@
 		page.subscribe((data) => {
 			updatePath();
 		});
-		isCourse = current?.type === 'course';
+		isCourse = current?.type === 'Course';
 	}
 </script>
 

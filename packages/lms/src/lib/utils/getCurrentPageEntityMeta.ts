@@ -22,7 +22,7 @@ export function getCurrentPageEntityMeta(
 	}
 
 	// If the current object is a course, module, or lesson, return it
-	if (currentObject[0].type == 'course' && stopAtCourse) {
+	if (currentObject[0].type == 'Course' && stopAtCourse) {
 		return currentObject[0];
 	}
 
