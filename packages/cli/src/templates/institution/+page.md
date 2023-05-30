@@ -1,6 +1,6 @@
 ---
 title: Template Institution
-type: institution
+type: Institution
 tags:
 - template
 - institution
