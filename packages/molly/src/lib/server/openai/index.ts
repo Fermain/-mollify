@@ -7,8 +7,11 @@ import {
 import { createChatCompletionResponse } from './features/chatCompletion';
 import type { RequestHandler } from '../../../routes/$types';
 import { isWithinTokenLimit } from 'gpt-tokenizer';
-import { error, json } from '@sveltejs/kit';
+import { error } from '@sveltejs/kit';
 import prompts from './prompts';
+
+const TEMP_USER = "Ask the student for their name."
+const TEMP_CONTENT = "Ask the student for their question."
 
 export default class MollyAI {
 	token: string;
@@ -45,51 +48,7 @@ export default class MollyAI {
 	} = {
 			chatCompletion: {
 				POST: async ({ request }) => {
-					const LIMIT = Number(this.token);
-
-					try {
-						let { messages } = (await request.json()) as { messages: ChatCompletionRequestMessage[] };
-						const tokenCount = isWithinTokenLimit(messages.join('\n'), Number(this.tokenLimit));
-
-						if (!tokenCount) {
-							throw error(400, 'Query too large');
-						}
-
-						const lastMessage = messages[messages.length - 1].content;
-						const isFlagged = await this.flagged(lastMessage);
-
-						if (isFlagged) {
-							throw error(400, 'Query flagged by openai');
-						}
-
-						const role = 'system';
-						const content = prompts.assistant('Test mode, there is no content yet.', 'Timmy Tester');
-						const totalTokenCount = isWithinTokenLimit(content, LIMIT - tokenCount);
-
-						if (!totalTokenCount) {
-							throw error(400, 'Query too large');
-						}
-
-						messages = [{ role, content }, ...messages];
-
-						const chatRequestOpts: CreateChatCompletionRequest = {
-							model: 'gpt-4',
-							messages,
-							temperature: 0.9,
-							stream: true
-						};
-
-						const chatResponse = await this.createChatCompletion(chatRequestOpts);
-
-						return new Response(chatResponse.body, {
-							headers: {
-								'Content-Type': 'text/event-stream'
-							}
-						});
-					} catch (err) {
-						console.error(err);
-						return json({ error: 'There was an error processing your request' }, { status: 500 });
-					}
+					throw error(405, 'Method Not Allowed')
 				},
 				GET: async ({ request }) => {
 					const LIMIT = Number(this.token);
@@ -97,12 +56,14 @@ export default class MollyAI {
 					try {
 						const url = new URL(request.url);
 						const messagesParam = url.searchParams.get('messages');
+						const contentParam = url.searchParams.get('content');
+						const nameParam = url.searchParams.get('name');
 
 						if (!messagesParam) {
 							return new Response('Bad Request: No messages provided', { status: 400 });
 						}
 
-						const messages: Array<ChatCompletionRequestMessage> = [{ role: 'user', content: messagesParam }];
+						const messages: Array<ChatCompletionRequestMessage> = JSON.parse(messagesParam);
 						const tokenCount = isWithinTokenLimit(messages.join('\n'), Number(this.tokenLimit));
 
 						if (!tokenCount) {
@@ -117,7 +78,7 @@ export default class MollyAI {
 						}
 
 						const role = 'system';
-						const content = prompts.assistant('Test mode, there is no content yet.', 'Timmy Tester');
+						const content = prompts.assistant(contentParam || TEMP_CONTENT, nameParam || TEMP_USER);
 						const totalTokenCount = isWithinTokenLimit(content, LIMIT - tokenCount);
 
 						if (!totalTokenCount) {

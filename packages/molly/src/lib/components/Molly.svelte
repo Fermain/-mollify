@@ -10,11 +10,24 @@
 	let messages = new Array<Message>();
 	export let endpoint = '/';
 
+	function lazyContentGrabber() {
+		const main = document.querySelector('main');
+		if (main) {
+			return main.textContent;
+		}
+	}
+
 	const handleSubmit = async () => {
 		loading = true;
 		messages = [...messages, { role: 'user', content: query }];
 
-		const endpointWithParams = `${endpoint}?messages=${encodeURIComponent(query)}`;
+		const params = new URLSearchParams();
+
+		params.append('messages', JSON.stringify(messages));
+		params.append('content', lazyContentGrabber() ?? '');
+		params.append('name', 'Ask the Noroff student their name');
+
+		const endpointWithParams = `${endpoint}?${params.toString()}`;
 
 		const eventSource = new EventSource(endpointWithParams);
 
@@ -57,16 +70,20 @@
 				<MollyMessage {message} />
 			{/each}
 			{#if answer}
-				<MollyMessage message={{
-					role: 'assistant',
-					content: answer
-				}} />
+				<MollyMessage
+					message={{
+						role: 'assistant',
+						content: answer
+					}}
+				/>
 			{/if}
 			{#if loading}
-				<MollyMessage message={{
-					role: 'assistant',
-					content: 'Thinking...'
-				}} />
+				<MollyMessage
+					message={{
+						role: 'assistant',
+						content: 'Thinking...'
+					}}
+				/>
 			{/if}
 		</div>
 		<MollyForm
