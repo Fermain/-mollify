@@ -1,6 +1,7 @@
 ---
 title: AI Safety & Ethics
 type: Course
+previous: Fundamentals
 tags:
   - ai
   - ml

@@ -1,6 +1,7 @@
 ---
 title: AI & ML in Practice
 type: Course
+previous: AI Safety & Ethics
 tags:
   - ai
   - ml
