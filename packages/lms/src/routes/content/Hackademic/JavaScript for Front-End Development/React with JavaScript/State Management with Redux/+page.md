@@ -4,7 +4,7 @@ slug: state-management-with-redux
 summary: Learn how to manage state in your React applications with Redux, a popular JavaScript library for state management. Master the basics of Redux with our course.
 previous: React Router
 src:
-type: module
+type: Module
 tags:
   - web development
   - programming

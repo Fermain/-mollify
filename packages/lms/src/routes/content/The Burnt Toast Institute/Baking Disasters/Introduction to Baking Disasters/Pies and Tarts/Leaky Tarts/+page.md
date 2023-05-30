@@ -1,7 +1,7 @@
 ---
 title: Leaky Tarts
 slug: leaky-tarts
-type: lesson
+type: Lesson
 previous: Overfilled and Sticky Pies
 tags:
   - tarts

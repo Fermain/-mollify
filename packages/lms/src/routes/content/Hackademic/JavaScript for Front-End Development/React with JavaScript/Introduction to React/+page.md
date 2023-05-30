@@ -4,7 +4,7 @@ slug: introduction-to-react
 summary: Learn the basics of React, a popular JavaScript library for building user interfaces. Master JSX, components, and state management with our course.
 previous: null
 src:
-type: module
+type: Module
 tags:
   - web development
   - programming

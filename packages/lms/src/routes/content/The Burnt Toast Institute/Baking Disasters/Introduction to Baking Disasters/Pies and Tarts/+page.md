@@ -1,7 +1,7 @@
 ---
 title: Pies And Tarts
 slug: pies-and-tarts
-type: module
+type: Module
 previous: null
 tags:
   - pies

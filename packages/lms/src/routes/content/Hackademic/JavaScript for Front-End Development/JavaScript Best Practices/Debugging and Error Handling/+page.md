@@ -4,7 +4,7 @@ slug: debugging-and-error-handling
 summary: Learn how to debug your JavaScript code and handle errors effectively. Master the basics of debugging and error handling with our course.
 previous: Code Organization
 src:
-type: module
+type: Module
 tags:
   - web development
   - programming

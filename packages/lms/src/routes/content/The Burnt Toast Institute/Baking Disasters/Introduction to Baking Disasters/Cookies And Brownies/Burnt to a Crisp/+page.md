@@ -1,7 +1,7 @@
 ---
 title: Burnt To A Crisp
 slug: burnt-to-a-crisp
-type: lesson
+type: Lesson
 previous: Rock Hard Chewy Brownies
 tags:
   - cookies

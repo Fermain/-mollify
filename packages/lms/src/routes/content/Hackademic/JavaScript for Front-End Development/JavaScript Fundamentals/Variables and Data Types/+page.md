@@ -4,7 +4,7 @@ slug: variables-and-data-types
 summary: Learn how to declare and use variables in JavaScript, including strings, numbers, booleans, and objects. Master the basics of data types in JavaScript.
 previous: null
 src:
-type: module
+type: Module
 tags:
   - web development
   - programming

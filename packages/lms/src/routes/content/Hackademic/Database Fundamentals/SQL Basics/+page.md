@@ -4,7 +4,7 @@ slug: sql-basics
 summary: Learn the basics of SQL, including how to create, read, update, and delete data in a relational database.
 previous: introduction-to-databases
 src:
-type: course
+type: Course
 tags:
   - SQL
   - databases

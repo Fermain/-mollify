@@ -1,7 +1,7 @@
 ---
 title: Baking
 slug: baking
-type: lesson
+type: Lesson
 previous: Cooking
 tags:
   - module 2

@@ -4,7 +4,7 @@ slug: introduction-to-databases
 summary: Learn the basics of database systems, including their history, types, and the role they play in modern applications.
 previous: database-fundamentals
 src:
-type: course
+type: Course
 tags:
   - databases
   - database systems
