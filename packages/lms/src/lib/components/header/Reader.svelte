@@ -131,7 +131,7 @@
 					>
 				{/if}
 				{#if !hasAudio && isContent}
-					<button on:click={regenerateAudio}>Create Audio</button>
+					<button on:click={regenerateAudio} class="my-5 btn hover:bg-primary-hover-token p-1">Create Audio</button>
 				{/if}
 				<button on:click={playAudio} class="my-5 btn hover:bg-primary-hover-token p-1">Scream For Help!</button>
 				<audio bind:this={scream}>
