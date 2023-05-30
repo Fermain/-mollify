@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import type { EntityMeta } from '@mollify/types';
 import { getEntityFrontmatter } from './getEntityFrontmatter';
+import { sortChildrenByDependency } from './sortChildrenByDependency';
 import getEntitySlug from './getEntitySlug';
 
 /**
@@ -42,8 +43,8 @@ export function getEntityMetaTree(dir: string, content = false) {
 			}
 		});
 
-		if (children.length > 0 || currentObject.type != 'institution') {
-			currentObject.children = children;
+		if (children.length > 0 || currentObject.type != 'Institution') {
+			currentObject.children = sortChildrenByDependency(children);
 		}
 
 		return currentObject;
