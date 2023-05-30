@@ -9,7 +9,7 @@
 	}
 </script>
 
-<button on:click={onClick} class="btn-icon btn-icon-xl fixed bottom-0 right-0 variant-filled-primary drop-shadow-md">
+<button on:click={onClick} class="btn-icon btn-icon-xl drop-shadow-md aspect-1">
 	<MollyIcon />
 </button>
 

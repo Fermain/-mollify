@@ -1,18 +1,18 @@
 <script lang="ts">
 	import MollyMessage from '$lib/components/MollyMessage.svelte';
-	import type { ChatCompletionRequestMessage } from 'openai';
+	import type { ChatCompletionRequestMessage as Message } from 'openai';
 	import MollyButton from './MollyButton.svelte';
 	import MollyForm from './MollyForm.svelte';
 
 	let query: string = '';
 	let answer: string = '';
 	let loading: boolean = false;
-	let chatMessages: ChatCompletionRequestMessage[] = [];
+	let messages = new Array<Message>();
 	export let endpoint = '/';
 
 	const handleSubmit = async () => {
 		loading = true;
-		chatMessages = [...chatMessages, { role: 'user', content: query }];
+		messages = [...messages, { role: 'user', content: query }];
 
 		const endpointWithParams = `${endpoint}?messages=${encodeURIComponent(query)}`;
 
@@ -24,14 +24,14 @@
 			try {
 				loading = false;
 				if (e.data === '[DONE]') {
-					chatMessages = [...chatMessages, { role: 'assistant', content: answer }];
+					messages = [...messages, { role: 'assistant', content: answer }];
 					answer = '';
 					eventSource.close();
 					return;
 				}
 
-				const completionResponse = JSON.parse(e.data);
-				const [{ delta }] = completionResponse.choices;
+				const response = JSON.parse(e.data);
+				const [{ delta }] = response.choices;
 
 				if (delta.content) {
 					answer = (answer ?? '') + delta.content;
@@ -53,14 +53,20 @@
 <MollyButton>
 	<div class="h-full grid grid-rows-[1fr_auto] border border-slate-400">
 		<div class="messages-container h-80 bg-slate-200 dark:bg-slate-300 overflow-y-auto">
-			{#each chatMessages as message}
-				<MollyMessage type={message.role} message={message.content} />
+			{#each messages as message}
+				<MollyMessage {message} />
 			{/each}
 			{#if answer}
-				<MollyMessage type="assistant" message={answer} />
+				<MollyMessage message={{
+					role: 'assistant',
+					content: answer
+				}} />
 			{/if}
 			{#if loading}
-				<MollyMessage type="assistant" message="Thinking..." />
+				<MollyMessage message={{
+					role: 'assistant',
+					content: 'Thinking...'
+				}} />
 			{/if}
 		</div>
 		<MollyForm
