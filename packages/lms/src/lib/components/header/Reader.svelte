@@ -148,6 +148,13 @@
 		</div>
 	{/if}
 	{#if audioSrc}
-		<audio src={audioSrc} controls class="w-full h-full" />
+		<audio src={audioSrc} controls class="w-full" />
 	{/if}
 </div>
+
+<style>
+	audio {
+		height: 1.8rem;
+		margin-right: 1rem;
+	}
+</style>
