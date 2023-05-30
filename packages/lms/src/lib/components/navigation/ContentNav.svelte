@@ -44,7 +44,7 @@
 		page.subscribe(() => {
 			updatePath();
 		});
-		isCourse = current?.type.toLocaleLowerCase() === 'course';
+		isCourse = current?.type === 'Course';
 	}
 </script>
 

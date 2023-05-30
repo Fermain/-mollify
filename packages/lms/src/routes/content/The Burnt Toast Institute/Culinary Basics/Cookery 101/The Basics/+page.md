@@ -1,7 +1,7 @@
 ---
 title: The Basics
 slug: the-basics
-type: module
+type: Module
 tags:
   - cooking
   - culinary basics

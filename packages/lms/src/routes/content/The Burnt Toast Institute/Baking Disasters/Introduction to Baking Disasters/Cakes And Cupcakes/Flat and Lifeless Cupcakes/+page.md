@@ -1,7 +1,7 @@
 ---
 title: Flat And Lifeless Cupcakes
 slug: flat-and-lifeless-cupcakes
-type: lesson
+type: Lesson
 previous: Lopsided Cakes
 tags:
   - cupcakes

@@ -1,7 +1,7 @@
 ---
 title: Cakes And Cupcakes
 slug: cakes-and-cupcakes
-type: module
+type: Module
 tags:
   - cakes
   - cupcakes

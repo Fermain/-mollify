@@ -1,7 +1,7 @@
 ---
 title: The Recipes
 slug: recipes-101
-type: module
+type: Module
 previous: null
 tags:
   - recipes

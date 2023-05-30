@@ -1,7 +1,7 @@
 ---
 title: Pastries
 slug: example-course-2-mod-3
-type: lesson
+type: Lesson
 tags:
   - module 3
   - Pastries

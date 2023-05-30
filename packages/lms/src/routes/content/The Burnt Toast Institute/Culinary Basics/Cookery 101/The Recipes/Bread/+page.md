@@ -1,7 +1,7 @@
 ---
 title: Bread
 slug: example-course-2-mod-2
-type: lesson
+type: Lesson
 tags:
   - module 2
   - Bread

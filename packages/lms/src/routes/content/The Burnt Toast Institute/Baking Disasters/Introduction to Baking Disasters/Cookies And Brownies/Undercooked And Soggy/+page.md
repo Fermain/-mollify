@@ -1,7 +1,7 @@
 ---
 title: Undercooked And Soggy
 slug: undercooked-and-soggy
-type: lesson
+type: Lesson
 previous: null
 tags:
   - cookies

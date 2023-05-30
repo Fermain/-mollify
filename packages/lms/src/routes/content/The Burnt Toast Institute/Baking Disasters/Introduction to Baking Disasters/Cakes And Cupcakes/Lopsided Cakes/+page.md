@@ -1,7 +1,7 @@
 ---
 title: Lopsided Cakes
 slug: lopsided-cakes
-type: lesson
+type: Lesson
 previous: The Science Of Cake Flops
 tags:
   - cakes

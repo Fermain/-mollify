@@ -18,7 +18,7 @@
 					<a href={browserPath} class="flex p-2" on:click={drawerClose}>Overview</a>
 				</div>
 				{#each children as child}
-					{#if (child.type === "Lesson" && child.children.length === 0) || child.children === undefined}
+					{#if (child.type === 'Lesson' && child.children.length === 0) || child.children === undefined}
 						<div class="hover:bg-primary-hover-token rounded-container-token">
 							<a href={child.browserPath} class="flex p-2" on:click={drawerClose}>
 								{child.title}
