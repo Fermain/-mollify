@@ -1,6 +1,7 @@
 ---
 title: History of AI & ML
 type: Lesson
+previous: applications-of-ai-and-ml
 tags:
   - ai
   - ml
