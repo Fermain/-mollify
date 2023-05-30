@@ -6,7 +6,7 @@
 	import RecursiveNav from './RecursiveNav.svelte';
 	import CourseNav from './CourseNav.svelte';
 	import { getCurrentPageEntityMeta } from '$lib/utils/getCurrentPageEntityMeta';
-	import { EntityType, type EntityMeta } from '@mollify/types';
+	import type { EntityMeta } from '@mollify/types';
 	import { Accordion, AccordionItem } from '@skeletonlabs/skeleton';
 
 	let institutes: EntityMeta[] | null = [];
@@ -43,7 +43,7 @@
 		page.subscribe(() => {
 			updatePath();
 		});
-		isCourse = current?.type === EntityType.Course;
+		isCourse = current?.type === 'Course';
 	}
 </script>
 
