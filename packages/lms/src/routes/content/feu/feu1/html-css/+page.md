@@ -20,17 +20,17 @@ Our goal is to equip you with the knowledge and skills to create compelling, acc
 Here's a brief look at the various modules included in this course:
 
 ### CSS
-- **[Fundamentals](./html-css/css/fundamentals):** Acquire the foundational knowledge of CSS.
-- **[Modular CSS](./html-css/css/modular):** Understand the importance of modular CSS for maintainable designs.
-- **[Accessibility](./html-css/css/accessibility):** Learn how to make your CSS designs accessible to all users.
-- **[Responsive Design](./html-css/css/responsive):** Explore how to make your designs adapt to different devices and screen sizes.
-- **[Animation](./html-css/css/animation):** Dive into the captivating world of CSS animations.
+- **Fundamentals**: Acquire the foundational knowledge of CSS.
+- **Modular CSS**: Understand the importance of modular CSS for maintainable designs.
+- **Accessibility**: Learn how to make your CSS designs accessible to all users.
+- **Responsive Design**: Explore how to make your designs adapt to different devices and screen sizes.
+- **Animation**: Dive into the captivating world of CSS animations.
 
 ### HTML
-- **[HTML Fundamentals](./html-css/html/fundamentals):** Begin your journey into HTML with the essential concepts.
-- **[Semantic HTML](./html-css/html/semantic):** Understand the importance of semantics in HTML and how to use it effectively.
-- **[Accessibility](./html-css/html/accessibility):** Learn how to make your HTML content accessible to everyone.
-- **[HTML Forms](./html-css/html/forms):** Discover how to capture user input using HTML forms.
-- **[Advanced HTML](./html-css/html/advanced):** Dive deeper into HTML, exploring more complex concepts.
+- **Fundamentals**: Begin your journey into HTML with the essential concepts.
+- **Semantic HTML**: Understand the importance of semantics in HTML and how to use it effectively.
+- **Accessibility**: Learn how to make your HTML content accessible to everyone.
+- **HTML Forms**: Discover how to capture user input using HTML forms.
+- **Advanced HTML**: Dive deeper into HTML, exploring more complex concepts.
 
 By the end of this course, you will be well-versed in HTML and CSS, and be capable of creating your own web pages that are both aesthetically pleasing and functionally robust. Let's get started and happy coding!
