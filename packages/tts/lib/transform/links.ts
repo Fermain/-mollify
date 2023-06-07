@@ -1,3 +1,5 @@
+import { log } from "console";
+
 /**
  * Changes link markdown syntax to a TTS-friendly format.
  * @param input The string to be spoken by TTS
@@ -11,8 +13,10 @@ export default function handleLinks(text: string): string {
   
       // Extract the path from the URL
       const path = url.pathname;
+
+      log("LINK DETECTED")
   
-      return `${p1} (at ${domain}${path})`;
+      return `${p1} (external link)`;
     });
   }
   

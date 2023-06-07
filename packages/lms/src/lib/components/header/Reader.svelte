@@ -77,7 +77,7 @@
 			const userFeedback: ToastSettings = {
 				message: 'Creating Audio File...',
 				background: 'variant-filled-warning',
-				autohide: false
+				autohide: true,
 			};
 			toastStore.trigger(userFeedback);
 		}
@@ -91,14 +91,14 @@
 			const userFeedback: ToastSettings = {
 				message: data.error,
 				background: 'variant-filled-error',
-				autohide: false
+				autohide: true,
 			};
 			toastStore.trigger(userFeedback);
 		} else {
 			const userFeedback: ToastSettings = {
 				message: 'Success! Audio file created.',
 				background: 'variant-filled-success',
-				autohide: false
+				autohide: true,
 			};
 			hasAudio = true;
 			toastStore.trigger(userFeedback);

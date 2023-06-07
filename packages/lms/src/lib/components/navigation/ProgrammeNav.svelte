@@ -25,7 +25,7 @@
 		const objectPath = path.replace('/content/', '');
 		pathArray = objectPath.split('/');
 		let currentPath = pathArray[pathArray.length - 1];
-		current = getCurrentPageEntityMeta(institutes || [], pathArray) || ({} as EntityMeta);
+		current = getCurrentPageEntityMeta(institutes || [], pathArray) || ({} as EntityMeta);		
 
 		if (current?.type === 'Institution' || current?.type === 'Programme') {
 			isProgramme = true;
