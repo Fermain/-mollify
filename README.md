@@ -22,7 +22,7 @@ Mollify Molly is an OpenAI-powered teaching assistant, designed to answer studen
 
 ### Mollify TTS Package
 
-Mollify TTS provides audio for markdown content, enabling users to generate and listen to the content. Currently leveraging ElvenLabs for TTS, future plans may include various optional TTS packages to offer a more flexible user experience.
+Mollify Text-To-Speech provides audio for markdown content, enabling users to generate and listen to the content. Currently leveraging ElvenLabs for TTS, future plans may include various optional TTS packages to offer a more flexible user experience.
 
 ### Mollify Flow Package
 
