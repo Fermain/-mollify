@@ -84,7 +84,7 @@ A future goal is for users to simply run the following command to automatically 
 npm i @mollify/LMS
 ```
 
-Then create a content folder with markdown using the Flow editor or migrate existing content using
+Then create a content folder with markdown files using the Flow editor, or migrate existing content using
 
 ```
 npx mollify migrate
