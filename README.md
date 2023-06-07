@@ -78,7 +78,7 @@ npx lerna run dev --scope @mollify/lms
 
 ### Future Implementation
 
-The aim in the future will be for a users to simple run to install mollify and its dependencies.
+A future goal is for users to simply run the following command to automatically install Mollify and its dependencies:
 
 ```
 npm i @mollify/LMS
