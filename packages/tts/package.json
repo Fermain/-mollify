@@ -1,6 +1,6 @@
 {
   "name": "@mollify/tts",
-  "version": "0.2.4",
+  "version": "0.2.10",
   "description": "Elevenlabs text to speech for @mollify",
   "author": "Fermain <Fermain@users.noreply.github.com>",
   "homepage": "https://github.com/Fermain/-Mollify#readme",
