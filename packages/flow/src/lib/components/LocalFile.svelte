@@ -6,6 +6,7 @@
 	import * as Diff2Html from 'diff2html';
 	import 'diff2html/bundles/css/diff2html.min.css';
 	import '../../app.css';
+	import { displayPreview } from '$lib/utils/displayPreview';
 
 	let fileContent: string = '';
 	let oldText: string = '';
@@ -14,6 +15,7 @@
 	let diffHtml: string = '';
 
 	let isPreviewDisplayed: boolean = false;
+
 	let isDiffDisplayed: boolean = false;
 
 	//reads the contents of the chosen file
@@ -43,12 +45,6 @@
 			}
 		});
 	});
-
-	function displayPreview(): void {
-		if (!isPreviewDisplayed) {
-			isPreviewDisplayed = true;
-		}
-	}
 
 	function displayDiff(): void {
 		isDiffDisplayed = true;
@@ -100,7 +96,11 @@
 	<h1>Editor</h1>
 	<div class="btn-wrapper">
 		<input type="file" id="fileInput" accept=".txt,.md" />
-		<button class="primary-btn" on:click={displayPreview}>Preview file</button>
+		<a
+			href="/#demo"
+			class="primary-btn"
+			on:click={() => (isPreviewDisplayed = displayPreview(isPreviewDisplayed))}>Preview file</a
+		>
 		<button class="secondary-btn" on:click={displayDiff}>Display diff</button>
 	</div>
 	<InkMde
@@ -128,7 +128,11 @@
 		}}
 	/>
 	<div class="btn-wrapper">
-		<button class="primary-btn" on:click={displayPreview}>Preview file</button>
+		<a
+			href="/#demo"
+			class="primary-btn"
+			on:click={() => (isPreviewDisplayed = displayPreview(isPreviewDisplayed))}>Preview file</a
+		>
 		<button class="secondary-btn" on:click={displayDiff}>Display diff</button>
 	</div>
 

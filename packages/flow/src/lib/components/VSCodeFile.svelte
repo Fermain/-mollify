@@ -1,12 +1,13 @@
 <script lang="ts">
 	import { afterUpdate } from 'svelte';
+	import * as Diff from 'diff';
+	import * as Diff2Html from 'diff2html';
 	import InkMde from 'ink-mde/svelte';
 	import TurndownService from 'turndown';
-	import * as Diff from 'diff';
 	import { marked } from 'marked';
-	import * as Diff2Html from 'diff2html';
 	import 'diff2html/bundles/css/diff2html.min.css';
 	import '../../app.css';
+	import { displayPreview } from '$lib/utils/displayPreview';
 
 	export let data: { files: { path: string; meta: { title: string } }[] };
 
@@ -18,13 +19,8 @@
 	let diffHtml: string = '';
 
 	let isPreviewDisplayed: boolean = false;
-	let isDiffDisplayed: boolean = false;
 
-	function displayPreview(): void {
-		if (!isPreviewDisplayed) {
-			isPreviewDisplayed = true;
-		}
-	}
+	let isDiffDisplayed: boolean = false;
 
 	function displayDiff(): void {
 		isDiffDisplayed = true;
@@ -113,7 +109,11 @@
 	<div>
 		<h1>Editor</h1>
 		<div class="btn-wrapper">
-			<a href="/#demo" class="primary-btn" on:click={displayPreview}>Preview file</a>
+			<a
+				href="/#demo"
+				class="primary-btn"
+				on:click={() => (isPreviewDisplayed = displayPreview(isPreviewDisplayed))}>Preview file</a
+			>
 			<a href="/#diff" class="secondary-btn" on:click={displayDiff}>Display diff</a>
 		</div>
 		<InkMde
@@ -142,7 +142,11 @@
 		/>
 	</div>
 	<div class="btn-wrapper">
-		<a href="/#demo" class="primary-btn" on:click={displayPreview}>Preview file</a>
+		<a
+			href="/#demo"
+			class="primary-btn"
+			on:click={() => (isPreviewDisplayed = displayPreview(isPreviewDisplayed))}>Preview file</a
+		>
 		<a href="/#diff" class="secondary-btn" on:click={displayDiff}>Display diff</a>
 	</div>
 

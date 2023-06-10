@@ -6,6 +6,7 @@
 	import * as Diff2Html from 'diff2html';
 	import 'diff2html/bundles/css/diff2html.min.css';
 	import '../../app.css';
+	import { displayPreview } from '$lib/utils/displayPreview';
 
 	let apiCall: string = '/api/fetchRemote';
 	let oldText: string = '';
@@ -14,6 +15,7 @@
 	let diffHtml: string = '';
 
 	let isPreviewDisplayed: boolean = false;
+
 	let isDiffDisplayed: boolean = false;
 
 	onMount(async () => {
@@ -22,12 +24,6 @@
 		oldText = data;
 		value = data;
 	});
-
-	function displayPreview(): void {
-		if (!isPreviewDisplayed) {
-			isPreviewDisplayed = true;
-		}
-	}
 
 	function displayDiff(): void {
 		isDiffDisplayed = true;
@@ -78,7 +74,11 @@
 <div>
 	<h1>Editor</h1>
 	<div class="btn-wrapper">
-		<a href="/#demo" class="primary-btn" on:click={displayPreview}>Preview file</a>
+		<a
+			href="/#demo"
+			class="primary-btn"
+			on:click={() => (isPreviewDisplayed = displayPreview(isPreviewDisplayed))}>Preview file</a
+		>
 		<a href="/#diff" class="secondary-btn" on:click={displayDiff}>Display diff</a>
 	</div>
 	<InkMde
@@ -106,7 +106,11 @@
 		}}
 	/>
 	<div class="btn-wrapper">
-		<a href="/#demo" class="primary-btn" on:click={displayPreview}>Preview file</a>
+		<a
+			href="/#demo"
+			class="primary-btn"
+			on:click={() => (isPreviewDisplayed = displayPreview(isPreviewDisplayed))}>Preview file</a
+		>
 		<a href="/#diff" class="secondary-btn" on:click={displayDiff}>Display diff</a>
 	</div>
 
