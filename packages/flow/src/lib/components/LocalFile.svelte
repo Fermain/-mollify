@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { onMount, afterUpdate } from 'svelte';
 	import InkMde from 'ink-mde/svelte';
-	import * as Diff from 'diff';
 	import { marked } from 'marked';
-	import * as Diff2Html from 'diff2html';
 	import 'diff2html/bundles/css/diff2html.min.css';
 	import '../../app.css';
 	import { displayPreview } from '$lib/utils/displayPreview';
+	import { generateDiff } from '$lib/utils/generateDiff';
+	import { displayDiff } from '$lib/utils/displayDiff';
 
 	let fileContent: string = '';
 	let oldText: string = '';
@@ -45,18 +45,6 @@
 			}
 		});
 	});
-
-	function displayDiff(): void {
-		isDiffDisplayed = true;
-		const textDiff = Diff.createTwoFilesPatch('file', 'file', oldText, value);
-
-		const diffJson = Diff2Html.parse(textDiff);
-		diffHtml = Diff2Html.html(diffJson, {
-			drawFileList: true,
-			matching: 'lines',
-			outputFormat: 'side-by-side'
-		});
-	}
 
 	afterUpdate(() => {
 		const demo = document.querySelector('#demo');
@@ -101,7 +89,14 @@
 			class="primary-btn"
 			on:click={() => (isPreviewDisplayed = displayPreview(isPreviewDisplayed))}>Preview file</a
 		>
-		<button class="secondary-btn" on:click={displayDiff}>Display diff</button>
+		<a
+			href="/#diff"
+			class="secondary-btn"
+			on:click={() => {
+				diffHtml = generateDiff(oldText, value);
+				isDiffDisplayed = displayDiff(isDiffDisplayed);
+			}}>Display diff</a
+		>
 	</div>
 	<InkMde
 		bind:value
@@ -133,7 +128,14 @@
 			class="primary-btn"
 			on:click={() => (isPreviewDisplayed = displayPreview(isPreviewDisplayed))}>Preview file</a
 		>
-		<button class="secondary-btn" on:click={displayDiff}>Display diff</button>
+		<a
+			href="/#diff"
+			class="secondary-btn"
+			on:click={() => {
+				diffHtml = generateDiff(oldText, value);
+				isDiffDisplayed = displayDiff(isDiffDisplayed);
+			}}>Display diff</a
+		>
 	</div>
 
 	{#if isPreviewDisplayed}
