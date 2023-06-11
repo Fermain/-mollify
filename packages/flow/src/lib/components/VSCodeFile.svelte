@@ -23,7 +23,7 @@
 
 	let isDiffDisplayed: boolean = false;
 
-	async function getFile(fileName: string) {
+	async function getFile(fileName: string): Promise<void> {
 		try {
 			const response = await fetch(`${fileName}`);
 			const htmlContent = await response.text();
@@ -33,7 +33,7 @@
 			const doc = parser.parseFromString(htmlContent, 'text/html');
 
 			// Extract the content inside <main> tag
-			const mainElement = doc.querySelector('main');
+			const mainElement: HTMLElement | null = doc.querySelector('main');
 			if (mainElement) {
 				mainContent = mainElement.innerHTML;
 
@@ -57,7 +57,7 @@
 	<h1>Select the file you want to edit</h1>
 
 	<h2>From Mollify LMS</h2>
-	<select on:change={(event) => getFile(event?.target?.value)}>
+	<select on:change={(event) => getFile(event.currentTarget.value)}>
 		<option value="">Select an option</option>
 		{#each data.files as file}
 			<option value={file.path}>{file.meta.title}</option>

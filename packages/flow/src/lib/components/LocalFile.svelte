@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount, afterUpdate } from 'svelte';
+	import type { ChangeEvent } from 'react';
 	import InkMde from 'ink-mde/svelte';
 	import { marked } from 'marked';
 	import 'diff2html/bundles/css/diff2html.min.css';
@@ -32,9 +33,9 @@
 	onMount(async () => {
 		//this element allows the user to pick a file from their local computer
 		const fileInput = document.getElementById('fileInput') as HTMLInputElement;
-		fileInput.addEventListener('change', async (event: Event) => {
-			if (event && event.target) {
-				const files = event.target.files;
+		fileInput.addEventListener('change', async (event: ChangeEvent<HTMLInputElement>) => {
+			if (event && event.currentTarget) {
+				const files = event.currentTarget.files;
 				//check if some files are selected
 				if (files && files.length > 0) {
 					const file = files[0];
