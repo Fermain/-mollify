@@ -8,6 +8,7 @@
 	import { displayPreview } from '$lib/utils/displayPreview';
 	import { displayDiff } from '$lib/utils/displayDiff';
 	import { generateDiff } from '$lib/utils/generateDiff';
+	import { styleCallouts } from '$lib/utils/styleCallouts';
 
 	export let data: { files: { path: string; meta: { title: string } }[] };
 
@@ -48,37 +49,8 @@
 	}
 
 	afterUpdate(() => {
-		const demo = document.querySelector('#demo');
-
-		if (demo) {
-			//Select all blockquotes and add the callout class
-			const blockquotes = demo.querySelectorAll('blockquote');
-			blockquotes.forEach((blockquote) => {
-				blockquote.classList.add('callout');
-
-				//if the blockquotes start with emojis, they're a callout, add the proper classes
-				const secondChild = blockquote.childNodes[1] as HTMLElement;
-				if (secondChild && isEmoji(secondChild.innerHTML)) {
-					secondChild.classList.add('callout-title-text');
-
-					//add specific classes to these emojis
-					if (secondChild.innerHTML.startsWith('⚠')) {
-						blockquote.style.borderLeft = '0.3rem solid #ffff2a';
-					} else if (secondChild.innerHTML.startsWith('✅')) {
-						blockquote.style.borderLeft = '0.3rem solid #01e701';
-					} else if (secondChild.innerHTML.startsWith('⛔')) {
-						blockquote.style.borderLeft = '0.3rem solid #ff2c2c';
-					}
-				}
-			});
-		}
+		styleCallouts();
 	});
-
-	//RegEx pattern comes from this blog article https://www.freecodecamp.org/news/how-to-use-regex-to-match-emoji-including-discord-emotes/
-	function isEmoji(text: string) {
-		const emojiRegex = /<a?:.+?:\d{18}>|\p{Extended_Pictographic}/gu;
-		return emojiRegex.test(text);
-	}
 </script>
 
 {#if value === ''}
