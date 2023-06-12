@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import type { ChangeEvent } from 'react';
 	import 'diff2html/bundles/css/diff2html.min.css';
-	import Editor from './Editor.svelte';
+	import Editor from '../Editor.svelte';
 
 	let fileContent: string = '';
 	let oldText: string = '';

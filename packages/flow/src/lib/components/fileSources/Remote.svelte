@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import Editor from './Editor.svelte';
+	import Editor from '../Editor.svelte';
 	import 'diff2html/bundles/css/diff2html.min.css';
 
 	let apiCall: string = '/api/fetchRemote';

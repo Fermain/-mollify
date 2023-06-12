@@ -1,7 +1,7 @@
 <script lang="ts">
 	import TurndownService from 'turndown';
 	import 'diff2html/bundles/css/diff2html.min.css';
-	import Editor from './Editor.svelte';
+	import Editor from '../Editor.svelte';
 
 	export let data: { files: { path: string; meta: { title: string } }[] };
 
