@@ -28,13 +28,30 @@
 			// Extract the content inside <main> tag
 			const mainElement: HTMLElement | null = doc.querySelector('main');
 			if (mainElement) {
-				mainContent = mainElement.innerHTML;
+				// Extract the title
+				const titleElement: HTMLElement | null = mainElement.querySelector('h1');
+				const title = titleElement ? titleElement.textContent : '';
 
-				// Convert HTML content to Markdown
-				const turndownService = new TurndownService();
+				// Extract the tags
+				const tagsElement: HTMLElement | null = mainElement.querySelectorAll('.tag');
 
-				oldText = turndownService.turndown(mainContent);
-				value = turndownService.turndown(mainContent);
+				const frontmatter = `---
+title: ${title}
+tags:
+${Array.from(tagsElement)
+	.map((tag) => `- ${tag.textContent}`)
+	.join('\n')}
+---`;
+
+				// Create an instance of TurndownService
+				const turndownService = new TurndownService({ headingStyle: 'atx', bulletListMarker: '-' });
+
+				// Convert the main content to Markdown
+				mainContent = turndownService.turndown(mainElement.innerHTML);
+
+				// Update the value and oldText with the frontmatter and converted markdown content
+				oldText = `${frontmatter}\n\n${mainContent}`;
+				value = `${frontmatter}\n\n${mainContent}`;
 			}
 		} catch (error) {
 			console.error(error);
