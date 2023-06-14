@@ -33,14 +33,12 @@
 				const title = titleElement ? titleElement.textContent : '';
 
 				// Extract the tags
-				const tagsElement: HTMLElement | null = mainElement.querySelectorAll('.tag');
-
+				const tagsElement: NodeListOf<Element> = mainElement.querySelectorAll('.tag');
+				const tagsArray: HTMLElement[] = Array.from(tagsElement) as HTMLElement[];
 				const frontmatter = `---
 title: ${title}
 tags:
-${Array.from(tagsElement)
-	.map((tag) => `- ${tag.textContent}`)
-	.join('\n')}
+${tagsArray.map((tag) => `- ${tag.textContent}`).join('\n')}
 ---`;
 
 				// Create an instance of TurndownService
