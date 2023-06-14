@@ -1,13 +1,13 @@
 <script lang="ts">
 	import '../../app.css';
-	export let title;
-	export let tags;
+	export let title: string;
+	export let tags: string[];
 </script>
 
 <div>
 	<h1>{title}</h1>
 
-	<ul>
+	<ul class="tags">
 		{#each tags as tag}
 			<li class="tag">{tag}</li>
 		{/each}
