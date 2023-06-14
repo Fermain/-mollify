@@ -44,6 +44,18 @@ ${tagsArray.map((tag) => `- ${tag.textContent}`).join('\n')}
 				// Create an instance of TurndownService
 				const turndownService = new TurndownService({ headingStyle: 'atx', bulletListMarker: '-' });
 
+				// h1 is part of frontmatter, remove it to avoid repetition
+				if (titleElement) {
+					mainElement.firstChild?.removeChild(titleElement);
+				}
+
+				// tags are part of frontmatter, remove them to avoid repetition
+				const tagsUlElement: HTMLElement | null = mainElement.querySelector('.tags');
+
+				if (tagsUlElement) {
+					mainElement.firstChild?.removeChild(tagsUlElement);
+				}
+
 				// Convert the main content to Markdown
 				mainContent = turndownService.turndown(mainElement.innerHTML);
 
