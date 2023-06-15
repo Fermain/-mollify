@@ -7,9 +7,12 @@
 	import { generateDiff } from '$lib/utils/generateDiff';
 	import { styleCallouts } from '$lib/utils/styleCallouts';
 	import '../../app.css';
+	import createFrontmatterTable from '$lib/utils/createFrontmatterTable';
 
 	export let oldText: string = '';
 	export let value: string = '';
+
+	let frontmatter: HTMLTableElement | null;
 
 	export let diffHtml: string = '';
 
@@ -19,6 +22,10 @@
 
 	afterUpdate(() => {
 		styleCallouts();
+
+		if (value !== '') {
+			frontmatter = createFrontmatterTable(value);
+		}
 	});
 </script>
 
@@ -83,6 +90,9 @@
 {#if isPreviewDisplayed}
 	<h2>File preview</h2>
 	<div id="demo" class="demo">
+		{#if frontmatter}
+			{@html frontmatter.outerHTML}
+		{/if}
 		{@html marked(value)}
 	</div>
 {/if}
