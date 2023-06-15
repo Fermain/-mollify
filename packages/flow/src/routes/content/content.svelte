@@ -1,7 +1,9 @@
 <script lang="ts">
 	import '../../app.css';
-	export let title: string;
-	export let tags: string[];
+
+	// adding types makes the server crash
+	export let title;
+	export let tags;
 </script>
 
 <div>
