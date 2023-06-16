@@ -24,7 +24,7 @@
 		styleCallouts();
 
 		if (value !== '') {
-			frontmatter = createFrontmatterTable(value);
+			frontmatter = createFrontmatterTable();
 		}
 	});
 </script>
