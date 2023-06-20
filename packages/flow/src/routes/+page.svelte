@@ -1,7 +1,7 @@
 <script lang="ts">
-	import VsCodeFile from '$lib/components/VSCodeFile.svelte';
-	import RemoteFile from '$lib/components/RemoteFile.svelte';
-	import LocalFile from '$lib/components/LocalFile.svelte';
+	import CodeEditor from '$lib/components/fileSources/CodeEditor.svelte';
+	import Local from '$lib/components/fileSources/Local.svelte';
+	import Remote from '$lib/components/fileSources/Remote.svelte';
 
 	export let data: { files: { path: string; meta: { title: string } }[] };
 
@@ -36,13 +36,13 @@
 		<button on:click={getFromComputer}>Your computer</button>
 		<button on:click={getFromRemote}>Remote</button>
 	{:else if comesFromVSCode}
-		<VsCodeFile {data} />
+		<CodeEditor {data} />
 		<button on:click={reset}>Choose another source</button>
 	{:else if comesFromComputer}
-		<LocalFile />
+		<Local />
 		<button on:click={reset}>Choose another source</button>
 	{:else if comesFromRemote}
-		<RemoteFile />
+		<Remote />
 		<button on:click={reset}>Choose another source</button>
 	{/if}
 </div>

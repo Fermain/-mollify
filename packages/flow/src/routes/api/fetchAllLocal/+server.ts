@@ -1,4 +1,4 @@
-import { fetchMarkdownFiles } from '$lib/utils';
+import { fetchMarkdownFiles } from '$lib/utils/fetchMarkdownFiles';
 import { json } from '@sveltejs/kit';
 
 export const GET = async () => {
