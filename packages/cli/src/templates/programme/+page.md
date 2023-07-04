@@ -1,6 +1,6 @@
 ---
 title: Template Programme
-type: programme
+type: Programme
 tags:
 - template
 - programme

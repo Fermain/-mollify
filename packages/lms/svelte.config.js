@@ -14,7 +14,6 @@ const config = {
 	preprocess: [
 		vitePreprocess(),
 		mdsvex({
-			highlight: {},
 			extensions: ['.md', '.svx'],
 			layout: {
 				_: path.resolve('src/lib/components/content/_layout.svelte')

@@ -28,7 +28,8 @@ export async function generateAudio(content: string, slug: string, filepath: str
 
     if (response.ok) {
       // Delete existing file if it already exists
-      if (replace) {
+      if (replace && fs.existsSync(filePath)) {
+        console.log("file deleted");
         fs.unlinkSync(filePath);
       }
     } else {
