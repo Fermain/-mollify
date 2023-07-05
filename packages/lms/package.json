@@ -1,6 +1,6 @@
 {
 	"name": "@mollify/lms",
-	"version": "0.2.10",
+	"version": "0.2.11",
 	"license": "GPL",
 	"scripts": {
 		"dev": "vite dev",
@@ -16,10 +16,10 @@
 	"type": "module",
 	"dependencies": {
 		"@floating-ui/dom": "^1.2.8",
-		"@mollify/cli": "^0.2.6",
-		"@mollify/molly": "^0.2.5",
-		"@mollify/tts": "^0.2.10",
-		"@mollify/types": "^0.2.5",
+		"@mollify/cli": "^0.2.11",
+		"@mollify/molly": "^0.2.11",
+		"@mollify/tts": "^0.2.11",
+		"@mollify/types": "^0.2.11",
 		"@playwright/test": "^1.28.1",
 		"@skeletonlabs/skeleton": "^1.5.1",
 		"@sveltejs/adapter-auto": "^2.0.0",
