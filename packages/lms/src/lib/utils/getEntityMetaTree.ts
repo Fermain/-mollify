@@ -42,7 +42,7 @@ export function getEntityMetaTree(dir: string, content = false) {
 			}
 		});
 
-		if (children.length > 0 || currentObject.type != 'institution') {
+		if (children.length > 0 || currentObject.type != 'Institution') {
 			currentObject.children = children;
 		}
 
