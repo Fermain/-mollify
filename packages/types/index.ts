@@ -29,4 +29,3 @@ export interface EntityMeta extends EntityBase {
     children: Array<EntityMeta>;
     address: string;
 }
-

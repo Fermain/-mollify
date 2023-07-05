@@ -1,12 +1,15 @@
 {
   "name": "@mollify/docs",
-  "version": "1.0.0",
+  "version": "0.2.1",
   "description": "",
   "main": "index.js",
+  "license": "GPL",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
-  "license": "GPL"
+  "author": ""
 }

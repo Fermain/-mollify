@@ -6,7 +6,7 @@ const [LMS] = PACKAGE_INVENTORY;
 
 export async function ensureSymlink(
   origin = path.join(process.cwd(), SYMLINK_DIR),
-  destination = path.join(process.cwd(), 'node_modules', LMS, 'src/routes'),
+  destination = path.join(process.cwd(), 'node_modules', LMS, 'src/routes/content'),
 ) {
   try {
     log(`Ensuring symlink from ${origin} to ${destination}`)
