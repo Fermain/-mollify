@@ -5,7 +5,6 @@ import { mdsvex } from 'mdsvex';
 import callouts from 'remark-emoji-callout';
 import gfm from 'remark-gfm';
 import { createTagLinks } from './src/lib/utils/remarkPlugins/createTagLinks.js';
-import path from 'path';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
