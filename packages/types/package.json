@@ -10,12 +10,6 @@
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "directories": {
-    "lib": "lib"
-  },
-  "files": [
-    "lib"
-  ],
   "scripts": {
     "build": "tsc"
   },

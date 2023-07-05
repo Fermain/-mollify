@@ -38,12 +38,13 @@
 	$: {
 		if ($files) {
 			institutes = $files;
+			
 			current = getCurrentPageEntityMeta(institutes, pathArray);
 		}
-		page.subscribe((data) => {
+		page.subscribe(() => {
 			updatePath();
 		});
-		isCourse = current?.type === 'course';
+		isCourse = current?.type === 'Course';
 	}
 </script>
 
@@ -51,7 +52,7 @@
 	<Accordion>
 		{#if institutes}
 			<AccordionItem>
-				<svelte:fragment slot="summary">Recursive Nav</svelte:fragment>
+				<svelte:fragment slot="summary">Institutes</svelte:fragment>
 				<div slot="content">
 					<RecursiveNav data={institutes} />
 				</div>
@@ -60,7 +61,7 @@
 		{#if isCourse}
 			<AccordionItem>
 				<!-- If current path is to a course/module/lesson -->
-				<svelte:fragment slot="summary">Course Nav</svelte:fragment>
+				<svelte:fragment slot="summary">Course</svelte:fragment>
 				<div slot="content">
 					<CourseNav data={current} />
 				</div>

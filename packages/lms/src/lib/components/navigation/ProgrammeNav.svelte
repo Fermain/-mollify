@@ -25,9 +25,9 @@
 		const objectPath = path.replace('/content/', '');
 		pathArray = objectPath.split('/');
 		let currentPath = pathArray[pathArray.length - 1];
-		current = getCurrentPageEntityMeta(institutes || [], pathArray) || ({} as EntityMeta);
+		current = getCurrentPageEntityMeta(institutes || [], pathArray) || ({} as EntityMeta);		
 
-		if (current?.type === 'institution' || current?.type === 'programme') {
+		if (current?.type === 'Institution' || current?.type === 'Programme') {
 			isProgramme = true;
 		} else {
 			isProgramme = false;
@@ -40,7 +40,7 @@
 	<section>
 		<h2 class="h2 mb-8">
 			{current?.title}
-			{current?.type === 'institution' ? 'Programmes' : 'Courses'}
+			{current?.type === 'Institution' ? 'Programmes' : 'Courses'}
 		</h2>
 		<div class="grid sm:grid-cols-2 gap-4">
 			{#each current.children as child}

@@ -38,7 +38,7 @@
 	</div>
 	<svelte:fragment slot="footer"
 		><Footer>
-			<Ego />
+			<!-- <Ego /> -->
 			<Reader />
 			<Molly endpoint="/api/molly" />
 		</Footer>
