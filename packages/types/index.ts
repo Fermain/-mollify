@@ -6,11 +6,11 @@ export enum EntityType {
     Module = "Module",
     Lesson = "Lesson",
     Assessment = "Assessment",
-  }
-  
-  // Base interface for entity metadata
-  // This is the fundamental information contained in frontmatter
-  export interface EntityBase {
+}
+
+// Base interface for entity metadata
+// This is the fundamental information contained in frontmatter
+export interface EntityBase {
     type: EntityType;
     title: string;
     url?: string;
@@ -19,14 +19,13 @@ export enum EntityType {
     previous?: string;
     content?: string;
     [key: string]: unknown;
-  }
-  
-  // Extended interface for entity metadata, including slug, children, and address
-  // These represent dynamic values that must come from disk
-  export interface EntityMeta extends EntityBase {
+}
+
+// Extended interface for entity metadata, including slug, children, and address
+// These represent dynamic values that must come from disk
+export interface EntityMeta extends EntityBase {
     slug: string;
     browserPath?: string;
     children: Array<EntityMeta>;
     address: string;
-  }
-  
+}

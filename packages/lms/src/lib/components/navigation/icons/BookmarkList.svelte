@@ -14,29 +14,34 @@
 >
 	<slot />
 	<header class="modal-header text-2xl font-bold">Your Bookmarks</header>
-	{#if bookmarks.length > 0}
-		{#each bookmarks as bookmark}
-			<div class="flex flex-col space-y-2">
-				<a
-					href={bookmark.url}
-					rel="noopener noreferrer"
-					class="text-primary-500-token hover:underline"
-					on:click={parent.onClose}>{bookmark.url.split('/').pop() === '' ? 'Home' : bookmark.url.split('/').pop()}</a
-				>
-				{#if bookmark.headings.length > 0}
-					<ul>
-						{#each bookmark.headings as heading}
-							<li class="ml-5 text-sm list-disc text-surface-100-600-token">
-								<a class="hover:underline" href={bookmark.url + '#' + heading.toLowerCase().replace(/\s/g, '-')}
-									>{heading}</a
-								>
-							</li>
-						{/each}
-					</ul>
-				{/if}
+	{#each bookmarks as bookmark}
+		<div class="flex flex-col space-y-2">
+			<a
+				href={bookmark.url}
+				rel="noopener noreferrer"
+				class="text-primary-500-token hover:underline"
+				on:click={parent.onClose}>{bookmark.url.split('/').pop() === '' ? 'Home' : bookmark.url.split('/').pop()}</a
+			>
+			{#if bookmark.headings.length > 0}
+				<ul>
+					{#each bookmark.headings as heading}
+						<li class="ml-5 text-sm list-disc text-surface-100-600-token">
+							<a class="hover:underline" href={bookmark.url + '#' + heading.toLowerCase().replace(/\s/g, '-')}
+								>{heading}</a
+							>
+						</li>
+					{/each}
+				</ul>
+			{/if}
+		</div>
+	{:else}
+		<div class="alert variant-ghost">
+			<div class="alert-message">
+				<h3 class="h3">No Bookmarks yet</h3>
+				<p>We couldn't find any of your bookmarks.</p>
 			</div>
-		{/each}
-	{/if}
+		</div>
+	{/each}
 	<footer class="modal-footer flex justify-end space-x-2">
 		<button type="button" class="btn variant-ghost-surface" on:click={parent.onClose}>Close</button>
 	</footer>

@@ -1,12 +1,7 @@
 <script lang="ts">
-	let resultType = {
-		browserPath: typeof String,
-		title: typeof String,
-		type: typeof String,
-		tags: [] as string[]
-	};
+	import type { EntityMeta } from "@mollify/types";
 
-	export let result: typeof resultType;
+	export let result: EntityMeta;
 </script>
 
 <a class="card p-4 variant-ghost-surface no-underline dark:text-slate-100" href={result.browserPath}>
