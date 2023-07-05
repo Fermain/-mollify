@@ -1,5 +1,7 @@
 <script lang="ts">
 	import '../../app.css';
+
+	// adding types makes the server crash
 	export let title;
 	export let tags;
 </script>
@@ -7,11 +9,11 @@
 <div>
 	<h1>{title}</h1>
 
-	<div>
+	<ul class="tags">
 		{#each tags as tag}
-			<span class="tag">{tag}</span>
+			<li class="tag">{tag}</li>
 		{/each}
-	</div>
+	</ul>
 
 	<slot />
 </div>
