@@ -37,15 +37,10 @@
 
 <style lang="scss">
 	.entity {
-		&-inner {
-			// padding: 0.5rem;
-		}
-
 		&-header {
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
-            // border-top: 2px solid;
 		}
 
 		&-title {
@@ -55,12 +50,7 @@
 		}
 
 		&-children {
-            // padding-top: 0.5rem;
 			padding-left: 0.5rem;
-			// border-left: 1rem solid;
-            // gap: 0.5rem;
-            // display: flex;
-            // flex-direction: column;
 
 			&:not(.open) {
 				display: none;
