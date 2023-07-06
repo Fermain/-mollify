@@ -77,7 +77,7 @@
 			const userFeedback: ToastSettings = {
 				message: 'Creating Audio File...',
 				background: 'variant-filled-warning',
-				autohide: false
+				autohide: true,
 			};
 			toastStore.trigger(userFeedback);
 		}
@@ -91,14 +91,14 @@
 			const userFeedback: ToastSettings = {
 				message: data.error,
 				background: 'variant-filled-error',
-				autohide: false
+				autohide: true,
 			};
 			toastStore.trigger(userFeedback);
 		} else {
 			const userFeedback: ToastSettings = {
 				message: 'Success! Audio file created.',
 				background: 'variant-filled-success',
-				autohide: false
+				autohide: true,
 			};
 			hasAudio = true;
 			toastStore.trigger(userFeedback);
@@ -132,7 +132,7 @@
 					>
 				{/if}
 				{#if !hasAudio && isContent}
-					<button on:click={regenerateAudio}>Create Audio</button>
+					<button on:click={regenerateAudio} class="my-5 btn hover:bg-primary-hover-token p-1">Create Audio</button>
 				{/if}
 				<button on:click={playAudio} class="my-5 btn hover:bg-primary-hover-token p-1">Scream For Help!</button>
 				<audio bind:this={scream}>
@@ -148,6 +148,13 @@
 		</div>
 	{/if}
 	{#if audioSrc}
-		<audio src={audioSrc} controls class="w-full h-full" />
+		<audio src={audioSrc} controls class="w-full" />
 	{/if}
 </div>
+
+<style>
+	audio {
+		height: 1.8rem;
+		margin-right: 1rem;
+	}
+</style>

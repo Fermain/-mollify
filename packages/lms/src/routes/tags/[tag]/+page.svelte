@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
-	import { files } from '$lib/stores/files';
 	import type { EntityMeta } from '@mollify/types';
 	import Card from '$lib/components/cards/Card.svelte';
 

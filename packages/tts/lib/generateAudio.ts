@@ -48,7 +48,6 @@ export async function generateAudio(content: string, slug: string, filepath: str
     if (!fs.existsSync(audioDir)) {
       fs.mkdirSync(audioDir, { recursive: true });
     }
-    console.log("success");
     await fs.promises.writeFile(path.join("public", "audio", `${file}.mp3`), buffer);
     return JSON.stringify({ file: `${file}.mp3`, url: `/public/audio/${file}.mp3` });
   } catch (error: any) {

@@ -8,16 +8,18 @@
 	import Main from '$lib/components/content/Main.svelte';
 	import Footer from '$lib/components/footer/Footer.svelte';
 	import Reader from '$lib/components/header/Reader.svelte';
-	import ContentNav from '$lib/components/navigation/ContentNav.svelte';
 	import IconNav from '$lib/components/navigation/IconNav.svelte';
 	import Header from '$lib/components/header/Header.svelte';
-	import Ego from '$lib/components/ui/Ego.svelte';
-	import "prismjs/themes/prism-tomorrow.css";
+	import 'prismjs/themes/prism-tomorrow.css';
+	import type { LayoutData } from './$types';
+	import EntityNav from '$lib/components/navigation/EntityNav.svelte';
+
+	export let data: LayoutData;
 </script>
 
 <Drawer>
 	<div class="p-4">
-		<ContentNav />
+		<EntityNav entities={data.sitemap} />
 	</div>
 </Drawer>
 
@@ -26,19 +28,18 @@
 		<Header />
 	</svelte:fragment>
 	<svelte:fragment slot="sidebarRight">
-		<ContentNav />
+		<div class="p-2">
+			<EntityNav entities={data.sitemap} />
+		</div>
 	</svelte:fragment>
 	<svelte:fragment slot="sidebarLeft">
 		<IconNav />
 	</svelte:fragment>
-	<div class="relative">
-		<Main>
-			<slot />
-		</Main>
-	</div>
+	<Main>
+		<slot />
+	</Main>
 	<svelte:fragment slot="footer"
 		><Footer>
-			<Ego />
 			<Reader />
 			<Molly endpoint="/api/molly" />
 		</Footer>

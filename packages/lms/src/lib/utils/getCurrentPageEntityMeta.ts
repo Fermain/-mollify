@@ -11,7 +11,7 @@ export function getCurrentPageEntityMeta(
 	keys: string[],
 	stopAtCourse = true
 ): EntityMeta | undefined {
-	if (!contentArray || !keys || keys.length === 0 || contentArray.length === 0) {
+	if (!contentArray || !keys || keys.length === 0 || !contentArray.length) {
 		return undefined;
 	}
 

@@ -1,6 +1,6 @@
 import slugify from "slugify"
 
-export function slugger(input: string) {
+export function createEntitySlug(input: string) {
   return slugify(input, {
     replacement: '-',  // replace spaces with replacement character, defaults to `-`
     remove: undefined, // remove characters that match regex, defaults to `undefined`

@@ -2,8 +2,8 @@
 	import ProgrammeNav from '../navigation/ProgrammeNav.svelte';
 </script>
 
-<main class="p-5 w-full">
-	<div class="prose max-w-none sm:w-3/4" id="prose-container">
+<main class="p-5 w-full relative">
+	<div class="prose max-w-none" id="prose-container">
 		<ProgrammeNav>
 			<slot />
 		</ProgrammeNav>

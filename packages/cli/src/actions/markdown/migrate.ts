@@ -5,9 +5,9 @@ import matter from 'gray-matter';
 import { prompt } from 'enquirer';
 import { EntityBase, EntityMeta, EntityType } from '@mollify/types';
 import { ENTITY_FILE } from '../../constants';
-import { slugger } from '../../utilities';
 import cliProgress from 'cli-progress';
 import { table, log, error } from 'console';
+import entity from '../entity';
 
 let cancelMigration = false; // create a flag
 
@@ -57,7 +57,7 @@ export async function migrateMarkdownFile(file: string) {
   try {
     const fileContent = await fs.readFile(file, 'utf8');
     const { data: existingFrontmatter, content } = matter(fileContent);
-    let slug = slugger(path.parse(file).name);
+    let slug = entity.slug.create(path.parse(file).name);
     slug = slug === 'index' ? '' : slug;
 
     const userInput = await getUserInput(existingFrontmatter);

@@ -1,13 +1,14 @@
 import path from 'path';
 import fs from 'fs-extra';
-import { copyTemplate, slugger } from '../../utilities';
+import { copyTemplate } from '../../utilities';
 import { EntityBase } from '@mollify/types';
+import { createEntitySlug } from './slug/create';
 
 export async function createEntity(
   entityMeta: EntityBase,
   location = process.cwd()
 ) {
-  const slug = slugger(entityMeta.title);
+  const slug = createEntitySlug(entityMeta.title);
   
   // Ensure type exists
   if (!entityMeta.type) {
