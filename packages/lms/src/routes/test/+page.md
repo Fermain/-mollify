@@ -1,3 +1,7 @@
+---
+title: Test Page
+---
+
 # Heading 1
 
 ## Heading 2
@@ -57,12 +61,6 @@ with multiple lines
 | --------------- | --------------- |
 | Row 1, Column 1 | Row 1, Column 2 |
 | Row 2, Column 1 | Row 2, Column 2 |
-
-Here is some inline math: $\sqrt{a^2 + b^2}$. And here is some math in a separate line:
-
-$$
-\int_0^\infty e^{-x^2} dx = \frac{\sqrt{\pi}}{2}
-$$
 
 <!-- Custom callout examples -->
 

@@ -1,22 +1,22 @@
 //Custom colors
-  $primary: #2d265b;
-  $secondary: #afacc6;
-  $success: #a5dfba;
-  $info: #ebecb3;
-  $warning: #eebfbf;
-  $background: #aee6f2;
-  $white: #fff;
-  $black: #000;
-  
+$primary: #2d265b;
+$secondary: #afacc6;
+$success: #a5dfba;
+$info: #ebecb3;
+$warning: #eebfbf;
+$background: #aee6f2;
+$white: #fff;
+$black: #000;
+
 $theme-colors: (
-  "primary":    $primary,
-  "secondary":  $secondary,
-  "success":    $success,
-  "info":       $info,
-  "warning":    $warning,
-  "background": $background,
-  "white":      $white,
-  "black":      $black,
+  'primary': $primary,
+  'secondary': $secondary,
+  'success': $success,
+  'info': $info,
+  'warning': $warning,
+  'background': $background,
+  'white': $white,
+  'black': $black
 );
 
 //Custom fonts and spacing
@@ -46,19 +46,19 @@ $font-size-xl: 36px;
 .callout {
   border-radius: $border-radius-xs;
   border-left: solid $spacing-xs $primary;
-  padding: $spacing-s;  
+  padding: $spacing-s;
   margin-left: $spacing-s;
   font-style: $font-style;
   &.👍 {
     background-color: $background;
   }
-  &.💡{
+  &.💡 {
     background-color: $info;
   }
-  &.⛔{
+  &.⛔ {
     background-color: $warning;
   }
-  &.✅{
+  &.✅ {
     background-color: $success;
   }
 }

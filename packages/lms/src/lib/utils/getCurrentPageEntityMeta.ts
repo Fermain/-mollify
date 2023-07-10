@@ -7,37 +7,37 @@ import type { EntityMeta } from '@mollify/types';
  * @param stopAtCourse whether to stop at type course or not
  */
 export function getCurrentPageEntityMeta(
-	contentArray: EntityMeta[],
-	keys: string[],
-	stopAtCourse = true
+  contentArray: EntityMeta[],
+  keys: string[],
+  stopAtCourse = true
 ): EntityMeta | undefined {
-	if (!contentArray || !keys || keys.length === 0 || !contentArray.length) {
-		return undefined;
-	}
+  if (!contentArray || !keys || keys.length === 0 || !contentArray.length) {
+    return undefined;
+  }
 
-	const currentObject = contentArray.filter((item) => item.title === keys[0]);
+  const currentObject = contentArray.filter((item) => item.title === keys[0]);
 
-	if (currentObject.length === 0 || currentObject.length > 1) {
-		return undefined;
-	}
+  if (currentObject.length === 0 || currentObject.length > 1) {
+    return undefined;
+  }
 
-	// If the current object is a course, module, or lesson, return it
-	if (currentObject[0].type == 'Course' && stopAtCourse) {
-		return currentObject[0];
-	}
+  // If the current object is a course, module, or lesson, return it
+  if (currentObject[0].type == 'Course' && stopAtCourse) {
+    return currentObject[0];
+  }
 
-	if (currentObject[0].foldername === keys[0] && keys.length !== 1) {
-		if (currentObject[0].children) {
-			const rest = keys.slice(1);
-			const child = currentObject[0].children.filter((child) => child.title === rest[0]);
-			if (child.length === 0 || child.length > 1) {
-				return undefined;
-			}
-			return getCurrentPageEntityMeta(child, rest);
-		}
-	} else if (currentObject[0].foldername === keys[0]) {
-		return currentObject[0];
-	}
+  if (currentObject[0].foldername === keys[0] && keys.length !== 1) {
+    if (currentObject[0].children) {
+      const rest = keys.slice(1);
+      const child = currentObject[0].children.filter((child) => child.title === rest[0]);
+      if (child.length === 0 || child.length > 1) {
+        return undefined;
+      }
+      return getCurrentPageEntityMeta(child, rest);
+    }
+  } else if (currentObject[0].foldername === keys[0]) {
+    return currentObject[0];
+  }
 
-	return undefined;
+  return undefined;
 }

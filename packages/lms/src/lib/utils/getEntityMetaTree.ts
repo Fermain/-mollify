@@ -11,50 +11,50 @@ import getEntitySlug from './getEntitySlug';
  * @returns A nested object containing the parsed markdown files
  */
 export function getEntityMetaTree(dir: string, content = false) {
-	function walkSync(currentDir: string) {
-		let currentObject = {} as EntityMeta;
-		const children: EntityMeta[] = [];
-		// Get the files in the current directory
-		const files = fs.readdirSync(currentDir);
-		files.forEach((filename) => {
-			// Create the full file path check if it is a directory or a markdown file.
-			const filePath = path.join(currentDir, filename);
-			const stat = fs.statSync(filePath);
-			if (stat.isDirectory()) {
-				// Recursively call walkSync with the current directory and the current object
-				children.push(walkSync(filePath));
-			} else if (path.extname(filename) === '.md') {
-				// If the current item is a markdown file, read the file and parse the frontmatter
-				const Entity = getEntityFrontmatter(filePath, content);
-				const slug = getEntitySlug(filePath);
-				// browserPath is the path relative to the browser
-				const browserPath = filePath
-					.replaceAll('\\', '/')
-					.replace('src/routes/content', '/content')
-					.replace('+page.md', '');
-				currentObject = {
-					...Entity,
-					slug,
-					address: filePath,
-					foldername: path.basename(currentDir),
-					browserPath,
-					children: []
-				};
-			}
-		});
+  function walkSync(currentDir: string) {
+    let currentObject = {} as EntityMeta;
+    const children: EntityMeta[] = [];
+    // Get the files in the current directory
+    const files = fs.readdirSync(currentDir);
+    files.forEach((filename) => {
+      // Create the full file path check if it is a directory or a markdown file.
+      const filePath = path.join(currentDir, filename);
+      const stat = fs.statSync(filePath);
+      if (stat.isDirectory()) {
+        // Recursively call walkSync with the current directory and the current object
+        children.push(walkSync(filePath));
+      } else if (path.extname(filename) === '.md') {
+        // If the current item is a markdown file, read the file and parse the frontmatter
+        const Entity = getEntityFrontmatter(filePath, content);
+        const slug = getEntitySlug(filePath);
+        // browserPath is the path relative to the browser
+        const browserPath = filePath
+          .replaceAll('\\', '/')
+          .replace('src/routes/content', '/content')
+          .replace('+page.md', '');
+        currentObject = {
+          ...Entity,
+          slug,
+          address: filePath,
+          foldername: path.basename(currentDir),
+          browserPath,
+          children: []
+        };
+      }
+    });
 
-		if (children.length > 0 || currentObject.type != 'Institution') {
-			currentObject.children = sortChildrenByDependency(children);
-		}
+    if (children.length > 0 || currentObject.type != 'Institution') {
+      currentObject.children = sortChildrenByDependency(children);
+    }
 
-		return currentObject;
-	}
+    return currentObject;
+  }
 
-	const institutes = fs.readdirSync(dir);
-	const data = institutes.map((institute) => {
-		const instituteDir = path.join(dir, institute);
-		return walkSync(instituteDir);
-	});
+  const institutes = fs.readdirSync(dir);
+  const data = institutes.map((institute) => {
+    const instituteDir = path.join(dir, institute);
+    return walkSync(instituteDir);
+  });
 
-	return data;
+  return data;
 }

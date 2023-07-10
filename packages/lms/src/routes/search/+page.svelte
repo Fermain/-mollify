@@ -17,12 +17,11 @@
 
 	let searchQuery = '';
 	let rawSearchQuery = '';
-	let reversedSearchQuery = {};
 	let searchQueryExact = false;
 	let searchTypes: string[] = [];
-	let searchTagsString: string = '';
+	let searchTagsString = '';
 	let searchTags: string[] = [];
-	let searchExclusions: string = '';
+	let searchExclusions = '';
 	let searchResults: EntityMeta[] = [];
 	let selectedInstitution = 'all';
 	let query = '';
@@ -63,13 +62,6 @@
 	}
 
 	onMount(async () => {
-		// fetch files if not already fetched
-		if ($files === null) {
-			const response = await fetch('/api/parseMarkdown');
-			const data = await response.json();
-			files.set(data);
-		}
-
 		// Parse query string if present, update values and get search results
 		if (query.trim() !== '') {
 			rawSearchQuery = query;
@@ -79,6 +71,8 @@
 			searchTypes = processedQuery.filters.types;
 			searchTags = processedQuery.filters.tags;
 			searchTagsString = searchTags.join(', ');
+			console.log($files);
+			
 			if ($files !== null) {
 				// check if institution exists
 				isMatch = $files.some(
@@ -172,7 +166,7 @@
 						/>
 					</label>
 
-					{#if $files?.length > 1}
+					{#if $files && $files?.length > 1}
 						<label class="label font-medium" for="institution-options">Institution</label>
 						<select class="select mt-1 rounded-md sm:w-3/4" bind:value={selectedInstitution} id="institution-options">
 							<option value="all">All</option>
@@ -284,11 +278,12 @@
 	{:else}
 		<h2 class="h2 mt-10 mb-8">No Results</h2>
 	{/if}
+
 	<div class="results-container">
-		{#if searchResults.length > 0}
+		{#if searchResults && searchResults.length}
 			<div class="grid sm:grid-cols-2 gap-4">
-				{#each searchResults as result}
-					<Card {result} />
+				{#each searchResults as {title, type, browserPath, tags}}
+					<Card {title} {type} {browserPath} {tags} />
 				{/each}
 			</div>
 		{/if}

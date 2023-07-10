@@ -1,0 +1,19 @@
+# Default state for all rules
+default: true
+
+# MD033/no-inline-html - Inline HTML
+MD033:
+  # Allowed elements
+  allowed_elements: [iframe]
+
+# MD013/line-length - Line length
+MD013: false
+
+# MD010/no-hard-tabs - Hard tabs
+MD010:
+  # Include code blocks
+  code_blocks: true
+  # Fenced code languages to ignore
+  ignore_code_languages: []
+  # Number of spaces for each hard tab
+  spaces_per_tab: 2

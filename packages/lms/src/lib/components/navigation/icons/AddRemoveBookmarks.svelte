@@ -3,7 +3,7 @@
 	import { onMount } from 'svelte';
 	import * as storage from '$lib/utils/storage';
 	import { page } from '$app/stores';
-	import { AddRemoveBookmarks } from '$lib/utils/bookmarking/AddRemove';
+	import { type Bookmark, addRemoveBookmarks } from '$lib/utils/bookmarking/AddRemove';
 	import { bookmarks } from '$lib/stores/bookmarks';
 
 	let hasBookmarks = false;
@@ -28,8 +28,8 @@
 	});
 
 	async function onclick() {
-		const newBookmarks = await AddRemoveBookmarks();
-		bookmarks.set(newBookmarks);
+		const newBookmarks = await addRemoveBookmarks();
+		bookmarks.set(newBookmarks || new Array<Bookmark>());
 	}
 </script>
 

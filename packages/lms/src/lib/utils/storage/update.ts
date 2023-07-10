@@ -1,4 +1,4 @@
-import * as storage from "./index.js";
+import * as storage from './index.js';
 
 /**
  * Updates a key/value pair in localStorage
@@ -11,8 +11,8 @@ import * as storage from "./index.js";
  * // Expect the function to change the value of the property in the key you specify.
  * ```
  */
-export function update(key, property, value) {
-    const obj = storage.load(key);
-    obj[property] = value;
-    storage.save(key, obj);
+export function update(key: string, property: string, value: unknown) {
+  const obj = storage.load(key);
+  obj[property] = value;
+  storage.save(key, obj);
 }
