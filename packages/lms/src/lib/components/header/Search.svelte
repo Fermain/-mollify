@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { getSearchResults } from '$lib/utils/fuseSearch/getSearchResults';
-	import { Autocomplete } from '@skeletonlabs/skeleton';
 	import type { AutocompleteOption } from '@skeletonlabs/skeleton';
 	import { parseRawSearchQuery } from '$lib/utils/fuseSearch/parseRawSearchQuery';
 
@@ -42,6 +41,43 @@
 			searchResults = [];
 		}
 	};
+
+	//my function
+
+	let selected = -1;
+
+	function handleKeyboardNavigation(event): void {
+		const key = event.key;
+
+		switch (key) {
+			case 'Enter':
+				// goToPage();
+				break;
+			case 'ArrowDown':
+				navigateSearchResults(1);
+				break;
+			case 'ArrowUp':
+				navigateSearchResults(-1);
+				break;
+			default:
+				break;
+		}
+	}
+
+	function navigateSearchResults(direction: number): void {
+		const newSelected = selected + direction;
+		if (newSelected >= 0 && newSelected < searchResults.length) {
+			selected = newSelected;
+		}
+
+		const selectedSuggestion = searchResults[selected].refIndex;
+		searchResults.forEach((result) => {
+			const domElement = document.getElementById(result.refIndex);
+			result.refIndex === selectedSuggestion
+				? domElement?.classList.add('bg-primary-300/25')
+				: domElement?.classList.remove('bg-primary-300/25');
+		});
+	}
 
 	function handlePageChange() {
 		setTimeout(() => {
@@ -85,6 +121,7 @@
 			on:blur={() => {
 				inputFocused = false;
 			}}
+			on:keydown={handleKeyboardNavigation}
 		/>
 		<button
 			class="btn hover:bg-primary-hover-token sm:variant-filled-primary sm:rounded-l-none sm:hover:bg-primary-active-token"
@@ -95,7 +132,8 @@
 		<dl class="list-dl w-full max-h-48 p-4 overflow-y-auto absolute bg-surface-100-800-token">
 			{#each searchResults as item, i}
 				<div
-					class="hover:bg-primary-hover-token rounded-container-token"
+					id={item.refIndex}
+					class="hover:bg-primary-hover-token rounded-container-token cursor-pointer"
 					on:click={() => {
 						handleSearchSelection(item.browserPath);
 					}}
