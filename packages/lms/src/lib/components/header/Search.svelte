@@ -67,8 +67,11 @@
 			case 'ArrowUp':
 				navigateSearchResults(-1);
 				break;
-			case 'Backspace' || 'Delete':
-				selection = -1;
+			case 'Backspace':
+			case 'Delete':
+				if (searchQuery === '') {
+					selection = -1;
+				}
 				break;
 			default:
 				break;
@@ -158,7 +161,7 @@
 			on:blur={() => {
 				inputFocused = false;
 			}}
-			on:keydown={handleKeyboardNavigation}
+			on:keyup={handleKeyboardNavigation}
 		/>
 		<button
 			class="btn hover:bg-primary-hover-token sm:variant-filled-primary sm:rounded-l-none sm:hover:bg-primary-active-token"
@@ -174,7 +177,7 @@
 					on:click={() => {
 						handleSearchSelection(item.browserPath);
 					}}
-					on:keydown={handleKeyboardNavigation}
+					on:keyup={handleKeyboardNavigation}
 				>
 					<span class="flex-auto w-full fill-current transition-transform duration-[200ms]">
 						<dt class="truncate">{item.label}</dt>
