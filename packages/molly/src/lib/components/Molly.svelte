@@ -19,7 +19,7 @@
 
 	const handleSubmit = async () => {
 		loading = true;
-		messages = [...messages, { role: 'user', content: query }];
+		messages = [...messages, { role: 'user', content: query, name: "Student" }];
 
 		const params = new URLSearchParams();
 
