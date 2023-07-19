@@ -55,14 +55,16 @@ git clone https://github.com/Fermain/-mollify.git
 
 2. Install the dependencies:
 
-```
+```bash
 npm install
 npx lerna bootstrap
+# or
+npm run build --workspaces
 ```
 
 3. Create a .env in the LMS package root
 
-```
+```bash
 OPENAI_API_KEY=YOUR_KEY
 OPENAI_TOKEN_LIMIT=1000
 ELEVENLABS_API_KEY=YOUR_KEY
@@ -74,19 +76,21 @@ To run the LMS you can use this command from the root, alternatively you can run
 
 ```bash
 npx lerna run dev --scope @mollify/lms
+# or
+npm run dev --workspace @mollify/lms
 ```
 
 ### Future Implementation
 
 A future goal is for users to simply run the following command to automatically install Mollify and its dependencies:
 
-```
-npm i @mollify/LMS
+```bash
+npm i @mollify/lms
 ```
 
 Then create a content folder with markdown files using the Flow editor, or migrate existing content using
 
-```
+```bash
 npx mollify migrate
 ```
 
@@ -98,7 +102,7 @@ Create a fork, find an issue to work on and submit a pull request with your cont
 
 ## Contact
 
-[![Fermain God Emperor](readme/contact.jpg)](https://github.com/Fermain)
+[![Fermain](readme/contact.jpg)](https://github.com/Fermain)
 
 ## License
 
