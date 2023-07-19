@@ -19,7 +19,7 @@ export async function generateAudio(content: string, slug: string, filepath: str
   // Check if file already exists
   if (fs.existsSync(filePath)) {
     if (!replace) {
-      return JSON.stringify({ file: `${slug}.mp3`, url: `/public/audio/${slug}.mp3` });
+      return JSON.stringify({ file: `${slug}.mp3`, url: `/audio/${slug}.mp3` });
     }
   }
 
@@ -35,9 +35,9 @@ export async function generateAudio(content: string, slug: string, filepath: str
     } else {
       console.log("creation error", response.status);
       if (fs.existsSync(filePath)) {
-        return JSON.stringify({ error: "Bad request, creation failed", url: `/public/audio/${slug}.mp3`, response });
+        return JSON.stringify({ error: "Bad request, creation failed", url: `/audio/${slug}.mp3`, response });
       }
-      return JSON.stringify({ error: "Bad request, creation failed", url: `/public/audio/no_audio/no-audio.mp3`, response });
+      return JSON.stringify({ error: "Bad request, creation failed", url: `/audio/no_audio/no-audio.mp3`, response });
     }
 
     const arrayBuffer = await response.arrayBuffer();
@@ -49,7 +49,7 @@ export async function generateAudio(content: string, slug: string, filepath: str
       fs.mkdirSync(audioDir, { recursive: true });
     }
     await fs.promises.writeFile(path.join("public", "audio", `${file}.mp3`), buffer);
-    return JSON.stringify({ file: `${file}.mp3`, url: `/public/audio/${file}.mp3` });
+    return JSON.stringify({ file: `${file}.mp3`, url: `/audio/${file}.mp3` });
   } catch (error: any) {
     console.error("Error generating audio:", error);
   }

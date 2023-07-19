@@ -1,11 +1,9 @@
 ---
-title: Template Evaluation
+title: Template Assessment
 type: Assessment
 tags:
-- template
-- evaluation
+- Template
+- Assessment
 ---
-
-# Template Assessment
 
 This is a template assessment. It is used to create new assessments.

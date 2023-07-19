@@ -136,7 +136,7 @@
 		goto(path);
 	}
 
-	$: searchResults;
+  $: searchResults;
 </script>
 
 <svelte:window on:click={handleClickOutside} />
