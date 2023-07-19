@@ -12,7 +12,7 @@
 	{/if}
 	<Tags {tags} />
 	<div class="toc-container">
-		<TableOfContents width="w-auto" label="" target="#page" />
+		<TableOfContents width="w-auto" label="" target="#page" allowedHeadings="h2" />
 	</div>
 	<div class="content">
 		<slot />
@@ -23,7 +23,7 @@
 	.content-grid {
 		display: grid;
 		gap: 0 1rem;
-		grid-template-columns: minmax(0, 88ch) max-content;
+		grid-template-columns: minmax(0, 88ch) minmax(min-content, 20rem);
 		grid-template-rows: auto auto 1fr;
 		grid-template-areas:
 			'heading toc'

@@ -12,6 +12,7 @@ yargs
   .command(commands.remove)
   .command(commands.list)
   .command(commands.migrate)
+  .command(commands.migrateImages)
   .command(commands.link)
   .command(commands.unlink)
   .help().argv;

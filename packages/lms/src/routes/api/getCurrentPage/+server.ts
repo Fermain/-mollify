@@ -16,4 +16,4 @@ export const POST: RequestHandler = async ({ request }) => {
     //console.error('Error getting page:', err);
     return new Response(JSON.stringify({ error: String(err), url: '/no_audio/no-audio' }));
   }
-}
+};

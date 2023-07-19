@@ -7,6 +7,7 @@ import remove from './remove';
 import unlink from './unlink';
 import init from './init';
 import preview from './preview';
+import migrateImages from './migrate/images';
 
 export default {
   init,
@@ -17,5 +18,6 @@ export default {
   move,
   remove,
   unlink,
-  preview
+  preview,
+  migrateImages
 };

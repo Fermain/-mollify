@@ -134,16 +134,6 @@
 				{#if !hasAudio && isContent}
 					<button on:click={regenerateAudio} class="my-5 btn hover:bg-primary-hover-token p-1">Create Audio</button>
 				{/if}
-				<button on:click={playAudio} class="my-5 btn hover:bg-primary-hover-token p-1">Scream For Help!</button>
-				<audio bind:this={scream}>
-					<source src="/audio/silly_stuff/female_scream.wav" type="audio/wav" />
-					Your browser does not support the audio element.
-				</audio>
-				<button on:click={playHorseAudio} class="my-5 btn hover:bg-primary-hover-token p-1">Horsing Around</button>
-				<audio bind:this={horse}>
-					<source src="/audio/silly_stuff/horse-neigh.mp3" type="audio/mpeg" />
-					Your browser does not support the audio element.
-				</audio>
 			</div>
 		</div>
 	{/if}

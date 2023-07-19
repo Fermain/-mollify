@@ -2,10 +2,8 @@
 title: Template Institution
 type: Institution
 tags:
-- template
+- Template
 - institution
 ---
-
-# Template Institution
 
 This is a template institution. It is used to create new institutions.
