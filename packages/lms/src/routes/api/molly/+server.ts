@@ -1,4 +1,4 @@
-import { OPENAI_API_KEY, OPENAI_TOKEN_LIMIT } from '$lib/server/optional.config';
+import { OPENAI_API_KEY, OPENAI_TOKEN_LIMIT } from '$env/static/private';
 import { MollyAI } from '@mollify/molly';
 
 const molly = new MollyAI(OPENAI_API_KEY, OPENAI_TOKEN_LIMIT)
