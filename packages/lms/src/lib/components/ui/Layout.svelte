@@ -6,6 +6,12 @@
 	export let tags = [''];
 </script>
 
+<svelte:head>
+	<title>{title ? `${title} | ` : ''}Mollify LMS</title>
+	<meta property="og:title" content={title} />
+	<meta property="og:image" content="/brand/og.png" />
+</svelte:head>
+
 <div class="content-grid">
 	{#if title}
 		<h1>{title}</h1>
