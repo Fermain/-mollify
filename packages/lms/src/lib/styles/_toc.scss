@@ -1,0 +1,10 @@
+.toc {
+  position: sticky;
+  top: 1rem;
+  overflow-y: auto;
+  height: calc(100vh - 10rem);
+
+  &-label {
+    display: none;
+  }
+}

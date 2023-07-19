@@ -12,7 +12,7 @@ const createCommand: yargs.CommandModule = {
       .positional('location', {
         describe: 'Location to create the entity',
         type: 'string',
-        default: process.cwd(),
+        default: process.env.INIT_CWD,
       })
       .option('type', {
         alias: 'y',

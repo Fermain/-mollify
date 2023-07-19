@@ -12,35 +12,35 @@
  * console.log(rawSearchQuery); // "search query" !excluded type:"type, search" tags:"tag, search" institution:"institution search" title:"title search"
  */
 export function generateRawSearchQuery(
-	searchQuery: string,
-	searchExclusions: string,
-	searchTypes: string[],
-	searchTags: string[],
-	selectedInstitution: string,
-	searchQueryExact: boolean
+  searchQuery: string,
+  searchExclusions: string,
+  searchTypes: string[],
+  searchTags: string[],
+  selectedInstitution: string,
+  searchQueryExact: boolean
 ) {
-	let rawSearchQuery = searchQuery;
+  let rawSearchQuery = searchQuery;
 
-	if (searchQueryExact) {
-		rawSearchQuery = `"${rawSearchQuery}"`;
-	}
+  if (searchQueryExact) {
+    rawSearchQuery = `"${rawSearchQuery}"`;
+  }
 
-	if (searchExclusions.split(', ').length > 0 && searchExclusions.trim() !== '') {
-		searchExclusions.split(', ').forEach((exclusion) => {
-			rawSearchQuery += ` !${exclusion}`;
-		});
-	}
+  if (searchExclusions.split(', ').length > 0 && searchExclusions.trim() !== '') {
+    searchExclusions.split(', ').forEach((exclusion) => {
+      rawSearchQuery += ` !${exclusion}`;
+    });
+  }
 
-	if (searchTypes.length > 0) {
-		rawSearchQuery += ` types:"${searchTypes.join(', ')}"`;
-	}
+  if (searchTypes.length > 0) {
+    rawSearchQuery += ` types:"${searchTypes.join(', ')}"`;
+  }
 
-	if (searchTags.length > 0) {
-		rawSearchQuery += ` tags:"${searchTags.join(', ')}"`;
-	}
+  if (searchTags.length > 0) {
+    rawSearchQuery += ` tags:"${searchTags.join(', ')}"`;
+  }
 
-	if (selectedInstitution !== 'all') {
-		rawSearchQuery += ` institution:"${selectedInstitution}"`;
-	}
-	return rawSearchQuery;
+  if (selectedInstitution !== 'all') {
+    rawSearchQuery += ` institution:"${selectedInstitution}"`;
+  }
+  return rawSearchQuery;
 }

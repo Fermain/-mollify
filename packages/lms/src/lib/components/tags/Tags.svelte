@@ -1,23 +1,20 @@
 <script lang="ts">
-	export let data: Object;
+	import Tag from './Tag.svelte';
 
-	function handleTagClick() {
-		// Forward user to tag relevant page
-	}
+	export let tags = new Array<string>();
+	$: _tags = tags && Array.isArray(tags) ? tags.filter(Boolean) : [];
 </script>
 
-<div
-	class="tag"
-	on:click={handleTagClick}
-	on:keydown={(evt) => {
-		if (evt.key === 'Enter') handleTagClick;
-	}}
->
-	#{data}
-</div>
+{#if _tags.length}
+	<div class="tags gap-1 flex flex-wrap my-3">
+		{#each _tags as tag}
+			<Tag {tag} />
+		{/each}
+	</div>
+{/if}
 
 <style>
-	.tag {
-		color: var(--grey);
+	.tags {
+		grid-area: tags;
 	}
 </style>
