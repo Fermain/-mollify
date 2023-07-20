@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 import yargs from 'yargs';
 import commands from './commands';
+import actions from './actions';
+
+const test = actions.entity.getBySlug;
 
 yargs
   .scriptName('mollify')
@@ -16,3 +19,7 @@ yargs
   .command(commands.link)
   .command(commands.unlink)
   .help().argv;
+
+export {
+  test
+};

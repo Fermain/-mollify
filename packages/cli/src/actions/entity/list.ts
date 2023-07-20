@@ -1,8 +1,7 @@
 import * as glob from 'glob';
 import path from 'path';
-import fs from 'fs/promises';
-import matter from 'gray-matter';
-import type { EntityType, EntityMeta, EntityBase } from '@mollify/types';
+import type { EntityType, EntityMeta } from '@mollify/types';
+import { getEntity } from './get';
 
 export async function listEntities(
   entityType?: EntityType,
@@ -13,26 +12,9 @@ export async function listEntities(
   const files = glob.sync(pattern, { ignore: ignorePattern });
 
   // Utility function to process a single file
-  const processFile = async (file: string): Promise<EntityMeta | null> => {
+  const readEntityFile = async (file: string): Promise<EntityMeta | null> => {
     try {
-      const fileContent = await fs.readFile(file, 'utf8');
-      const { data: frontmatter } = matter(fileContent);
-      const slug = path.dirname(file).split(path.sep).pop();
-      const base = frontmatter as EntityBase;
-
-      if (entityType === undefined || base.type.toLocaleLowerCase() === entityType) {
-        if (slug) {
-          return {
-            tags: frontmatter.title,
-            children: [],
-            ...frontmatter,
-            title: frontmatter.title,
-            slug,
-            type: frontmatter.type as EntityType,
-            address: file,
-          };
-        }
-      }
+      return await getEntity(file);
     } catch (error) {
       console.error(`Error reading file ${file}:`, error);
     }
@@ -40,8 +22,8 @@ export async function listEntities(
   };
 
   // Read all files concurrently using Promise.all
-  const entities = await Promise.all(files.map(processFile));
+  const entities = await Promise.all(files.map(readEntityFile));
 
   // Remove null entries and return the valid entities
-  return entities.filter((entity): entity is EntityMeta => Boolean(entity));
+  return entities.filter((entity): entity is EntityMeta => Boolean(entity)).filter(entity => entity.type === entityType);
 }
