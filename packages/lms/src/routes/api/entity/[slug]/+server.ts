@@ -1,5 +1,5 @@
 import { error, json, type RequestHandler } from "@sveltejs/kit";
-import { test } from "@mollify/cli";
+import cli from "@mollify/cli/bin/index.mjs";
 
 export const GET: RequestHandler = async ({ params, url }) => {
     const { slug } = params;
@@ -10,8 +10,7 @@ export const GET: RequestHandler = async ({ params, url }) => {
         throw error(400, "No slug provided")
     }
 
-    // const entity = await actions.entity.getBySlug(slug);
-    const entity = {}
+    const entity = await cli.actions.entity.getBySlug(slug);
 
     // get entity
 

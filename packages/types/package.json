@@ -10,8 +10,9 @@
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "type": "module",
   "scripts": {
-    "build": "tsc"
+    "build": "tsup index.ts --dts --format esm --minify --clean --legacy-output --sourcemap --target esnext"
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,7 @@
     "@babel/parser": "^7.21.8",
     "@babel/types": "^7.21.5",
     "@types/unist": "^2.0.6",
+    "tsup": "^7.1.0",
     "typescript": "^5.0.4"
   }
 }

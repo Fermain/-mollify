@@ -1,14 +1,25 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "es2019",
+    "module": "esnext",
+    "target": "esnext",
     "outDir": "bin",
     "rootDir": "src",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "declaration": true,
+    "moduleResolution": "node",
+    "isolatedModules": true,
+    "lib": [
+      "esnext",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "rootDirs": [
+      ".",
+    ],
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules", "bin"]
