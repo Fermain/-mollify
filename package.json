@@ -1,7 +1,16 @@
 {
   "name": "root",
   "private": true,
+  "scripts": {
+    "build": "npm run build --workspaces",
+    "dev": "npm run dev --workspace @mollify/lms"
+  },
   "workspaces": [
+    "packages/types",
+    "packages/cli",
+    "packages/tts",
+    "packages/molly",
+    "packages/lms",
     "packages/*"
   ],
   "devDependencies": {
