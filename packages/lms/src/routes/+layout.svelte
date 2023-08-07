@@ -13,15 +13,13 @@
   import 'prismjs/themes/prism-tomorrow.css';
   import type { LayoutData } from './$types';
   import EntityNav from '$lib/components/navigation/EntityNav.svelte';
-  import { afterNavigate } from '$app/navigation';
+  import { page } from '$app/stores';
 
   export let data: LayoutData;
-	let main: Main;
 
-	afterNavigate(() => {
-		main?.scrollToTop();
-	})
-
+  const scrollIntoView = (node: HTMLElement) => {
+    node.scrollIntoView();
+  };
 </script>
 
 <Drawer>
@@ -42,7 +40,10 @@
   <svelte:fragment slot="sidebarLeft">
     <IconNav />
   </svelte:fragment>
-  <Main bind:this={main}>
+  {#key $page.url.pathname}
+    <div use:scrollIntoView />
+  {/key}
+  <Main>
     <slot />
   </Main>
   <svelte:fragment slot="footer"
