@@ -7,6 +7,7 @@
   },
   "workspaces": [
     "packages/types",
+    "packages/fs",
     "packages/cli",
     "packages/tts",
     "packages/molly",

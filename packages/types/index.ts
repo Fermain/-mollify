@@ -18,6 +18,7 @@ export interface EntityBase {
     tags: Array<string>;
     previous?: string;
     content?: string;
+    hidden?: boolean;
     [key: string]: unknown;
 }
 
@@ -26,6 +27,6 @@ export interface EntityBase {
 export interface EntityMeta extends EntityBase {
     slug: string;
     browserPath?: string;
-    children: Array<EntityMeta>;
+    children?: Array<EntityMeta>;
     address: string;
 }
