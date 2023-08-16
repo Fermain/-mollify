@@ -17,18 +17,20 @@
 
   export let data: LayoutData;
 
-  const scrollIntoView = (node: HTMLElement) => {
+  const scrollIntoView = (node: HTMLElement) => {    
     node.scrollIntoView();
   };
 </script>
 
+{#if data.sitemap.length}
 <Drawer>
   <div class="p-4">
     <EntityNav entities={data.sitemap} />
   </div>
 </Drawer>
+{/if}
 
-<AppShell slotSidebarRight="bg-surface-500/5 w-0 lg:w-64">
+<AppShell slotSidebarRight={`bg-surface-500/5 w-0 lg:w-64 ${data.sitemap.length ? '' : 'hidden'}`}>
   <svelte:fragment slot="header">
     <Header />
   </svelte:fragment>
