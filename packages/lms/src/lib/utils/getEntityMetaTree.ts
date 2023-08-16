@@ -51,7 +51,7 @@ export function getEntityMetaTree(dir: string, content = false) {
   }
 
   const institutes = fs.readdirSync(dir);
-  const data = institutes.map((institute) => {
+  const data = institutes.filter(institute => !institute.endsWith('.md')).map((institute) => {
     const instituteDir = path.join(dir, institute);
     return walkSync(instituteDir);
   });
