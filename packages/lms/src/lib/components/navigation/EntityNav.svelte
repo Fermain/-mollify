@@ -4,8 +4,10 @@
 	export let entities: Array<EntityMeta> | EntityMeta = [];
 	$: _entities = Array.isArray(entities) ? entities : [entities];
 
-	function toggle(entity) {
-		entity.open = !entity.open;
+	export let open = false;
+
+	function toggle() {
+		open = !open;
 	}
 </script>
 
@@ -13,17 +15,17 @@
 	<nav class="entity">
 		<div class="entity-inner">
 			<div class="entity-header hover:bg-primary-hover-token rounded-container-token p-2">
-				<a href={entity.browserPath} class="entity-title" on:click={() => entity.open = false}>
+				<a href={entity.browserPath} class="entity-title">
 					{entity.title}
 				</a>
 				{#if entity.children.length}
-					<button on:click={() => toggle(entity)} class="btn hover:bg-primary-hover-token p-0">
-						<i class="icon-f">{entity.open ? 'expand_less' : 'expand_more'}</i>
-					</button>
+					<button on:click={toggle} class="btn hover:bg-primary-hover-token p-0"
+						><i class="icon-f">{open ? 'expand_less' : 'expand_more'}</i></button
+					>
 				{/if}
 			</div>
 			{#if entity.children.length}
-				<div class="entity-children" class:open={entity.open}>
+				<div class="entity-children" class:open>
 					{#each entity.children as child}
 						<svelte:self entities={child} />
 					{/each}
@@ -43,18 +45,16 @@
 
 		&-title {
 			flex: 1;
-			padding: 0.5rem 0;
-			padding-left: 0.5rem;
+            padding: 0.5rem 0;
+            padding-left: 0.5rem;
 		}
 
 		&-children {
 			padding-left: 0.5rem;
-			display: none;
 
-			&.open {
-				display: block;
+			&:not(.open) {
+				display: none;
 			}
 		}
 	}
 </style>
-
