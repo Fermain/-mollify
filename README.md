@@ -78,6 +78,8 @@ ELEVENLABS_API_KEY=YOUR_KEY
 
 ### Usage
 
+#### LMS
+
 Before running the LMS, you must build the other packages:
 
 ```bash
@@ -90,11 +92,75 @@ To run the LMS:
 npm run dev
 ```
 
-Additionally you can run the Molly package independently:
+Markdown content is stored in the content folder located at:
+
+```
+packages/lms/src/routes/content
+```
+
+The LMS will automatically index the content and generate pages. The folder structure is used to define the navigation. For example, the following folder structure defines a course:
+
+```
+content
+├── hackademic
+    ├── +page.md
+    ├── Programme1
+        ├── +page.md
+        ├── Course1
+            ├── +page.md
+            ├── Module1
+            │   ├── +page.md
+            │   ├── Lesson1
+            │   │   ├── +page.md
+            │   ├── Lesson2
+            │   │   ├── +page.md
+            ├── Module2
+                ├── +page.md
+                ├── Lesson1
+                │   ├── +page.md
+                ├── Lesson2
+                    ├── +page.md
+```
+
+Each folder can contain a +page.md file. This file is indexed and used to generate a page. The folder name is used to define the page slug. The +page.md front matter is used to define the content type and its properties. For example, the following front matter defines a institution:
+
+```yaml
+---
+title: Hackademic
+slug: hackademic
+summary: Hackademics offers interactive online courses in coding and web development, featuring project-based learning and expert instructors. Become a skilled software engineer with our program!
+previous: null
+type: institution
+tags:
+  - coding
+  - programming
+  - web development
+---
+# Content goes here
+```
+
+The type property is used to define the content type. The following content types are currently supported:
+
+- Institution
+- Programme
+- Course
+- Module
+- Lesson
+- Assessment
+
+The **tags** property list in the front matter can filtered for on the search page, as well as clicked on to find other content with the same tag.
+
+The **previous** property is used to define the previous item in the navigation. A `Null` value indicates that the page is the first item in the navigation menu, and therefore has no previous page.
+
+#### Molly
+
+Run the Molly package independently:
 
 ```bash
 npm run molly-dev
 ```
+
+#### Individual package building
 
 Additional build commands if you only want to build a specific package:
 
