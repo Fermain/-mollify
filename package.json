@@ -3,15 +3,20 @@
   "private": true,
   "scripts": {
     "build": "npm run build --workspaces",
-    "dev": "npm run dev --workspace @mollify/lms"
+    "dev": "npm run dev --workspace @mollify/lms",
+    "preview": "npm run preview --workspace @mollify/lms",
+    "molly-dev": "npm run dev --workspace @mollify/molly",
+    "molly-build": "npm run build --workspace @mollify/molly",
+    "molly-preview": "npm run preview --workspace @mollify/molly",
+    "tts-build": "npm run build --workspace @mollify/tts",
+    "cli-build": "npm run build --workspace @mollify/cli"
   },
   "workspaces": [
     "packages/types",
     "packages/cli",
     "packages/tts",
     "packages/molly",
-    "packages/lms",
-    "packages/*"
+    "packages/lms"
   ],
   "devDependencies": {
     "lerna": "^6.6.1"

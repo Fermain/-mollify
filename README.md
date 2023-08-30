@@ -55,10 +55,18 @@ git clone https://github.com/Fermain/-mollify.git
 
 2. Install the dependencies:
 
-```
+```bash
 npm install
 npx lerna bootstrap
 ```
+
+Optionally, if you want to ensure all Lerna-managed packages are correctly linked together:
+
+```bash
+npx lerna bootstrap --hoist
+```
+
+The --hoist flag is used to move all common dependencies to the root of your monorepo, reducing duplication.
 
 3. Create a .env in the LMS package root
 
@@ -70,10 +78,50 @@ ELEVENLABS_API_KEY=YOUR_KEY
 
 ### Usage
 
-To run the LMS you can use this command from the root, alternatively you can run this on the Molly and Flow branches.
+Before running the LMS, you must build the other packages:
 
 ```bash
-npx lerna run dev --scope @mollify/lms
+npm run build
+```
+
+To run the LMS:
+
+```bash
+npm run dev
+```
+
+Additionally you can run the Molly package independently:
+
+```bash
+npm run molly-dev
+```
+
+Additional build commands if you only want to build a specific package:
+
+```bash
+npm run cli-build
+npm run molly-build
+npm run tts-build
+```
+
+### Additional Lerna Commands
+
+#### Clean Node Modules:
+
+If you ever run into issues related to dependencies, or simply want to refresh everything:
+
+```bash
+npx lerna clean -y && npm install
+```
+
+This command removes the node_modules from all packages and then reinstalls.
+
+#### List Packages:
+
+To see which packages Lerna is managing:
+
+```bash
+npx lerna list
 ```
 
 ### Future Implementation
