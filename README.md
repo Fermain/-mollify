@@ -80,25 +80,31 @@ ELEVENLABS_API_KEY=YOUR_KEY
 
 #### LMS
 
-Before running the LMS, you must build the other packages:
+1. **Build All Packages:** Before running the LMS, make sure all other dependencies are built:
 
 ```bash
 npm run build
 ```
 
-To run the LMS:
+2 **Run the LMS:**
 
 ```bash
 npm run dev
 ```
 
-Markdown content is stored in the content folder located at:
+#### Structuring Your LMS Content
+
+The LMS system uses markdown content stored in the content directory. The exact location is:
 
 ```
 packages/lms/src/routes/content
 ```
 
-The LMS will automatically index the content and generate pages. The folder structure is used to define the navigation. For example, the following folder structure defines a course:
+The system will automatically index this content and generate pages. The structure of the folders determines the navigation.
+
+**Example Structure**
+
+Your content folder can look like this to define a particular institution and its content:
 
 ```
 content
@@ -122,7 +128,9 @@ content
                     ├── +page.md
 ```
 
-Each folder can contain a +page.md file. This file is indexed and used to generate a page. The folder name is used to define the page slug. The +page.md front matter is used to define the content type and its properties. For example, the following front matter defines a institution:
+Each folder can contain a +page.md file. This file is indexed and used to generate a page. The folder name is used to define the page slug. The +page.md front matter is used to define the content type and its properties.
+
+**Example Front Matter**
 
 ```yaml
 ---
@@ -139,7 +147,7 @@ tags:
 # Content goes here
 ```
 
-The type property is used to define the content type. The following content types are currently supported:
+The **type** property is used to define the content type. The following content types are currently supported:
 
 - Institution
 - Programme
@@ -148,9 +156,11 @@ The type property is used to define the content type. The following content type
 - Lesson
 - Assessment
 
-The **tags** property list in the front matter can filtered for on the search page, as well as clicked on to find other content with the same tag.
+**Tags and Navigation**
 
-The **previous** property is used to define the previous item in the navigation. A `Null` value indicates that the page is the first item in the navigation menu, and therefore has no previous page.
+**Tags:** Use the **tags** property to list subjects that can be filtered on the search page or clicked on to find related content.
+
+**Navigation:** The **previous** property defines the preceding item in the navigation. A null value indicates the page is the first item, meaning it doesn't have a prior page in the navigation menu.
 
 #### Molly
 
