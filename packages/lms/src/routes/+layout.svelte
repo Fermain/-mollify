@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import '@skeletonlabs/skeleton/themes/theme-skeleton.css';
   import '@skeletonlabs/skeleton/styles/skeleton.css';
   import '../lib/styles/styles.scss';
@@ -29,10 +30,11 @@
   };
 
   // Initial check on component mount
-  checkIsMobile();
-
-  // Listen for window resize events to update the isMobile variable
-  window.addEventListener('resize', checkIsMobile);
+  onMount(() => {
+    checkIsMobile();
+    // Listen for window resize events to update the isMobile variable
+    window.addEventListener('resize', checkIsMobile);
+  });
 </script>
 
 {#if isMobile}
@@ -72,7 +74,6 @@
   </svelte:fragment>
   <Toast position="t" />
 </AppShell>
-
 
 <!-- <script lang="ts">
   import '@skeletonlabs/skeleton/themes/theme-skeleton.css';
