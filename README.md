@@ -88,8 +88,16 @@ npm run build
 
 2 **Run the LMS:**
 
+Running this from the root scope will start LMS.
+
 ```bash
 npm run dev
+```
+
+Alternatively from the root scope you can run
+
+```bash
+npm run dev --workspace @mollify/lms
 ```
 
 #### Structuring Your LMS Content
@@ -110,25 +118,25 @@ Your content folder can look like this to define a particular institution and it
 content
 ├── hackademic
     ├── +page.md
-    ├── Programme1
+    ├── programme1
         ├── +page.md
-        ├── Course1
+        ├── course1
             ├── +page.md
-            ├── Module1
+            ├── module1
             │   ├── +page.md
-            │   ├── Lesson1
+            │   ├── lesson1
             │   │   ├── +page.md
-            │   ├── Lesson2
+            │   ├── lesson2
             │   │   ├── +page.md
-            ├── Module2
+            ├── module2
                 ├── +page.md
-                ├── Lesson1
+                ├── lesson1
                 │   ├── +page.md
-                ├── Lesson2
+                ├── lesson2
                     ├── +page.md
 ```
 
-Each folder can contain a +page.md file. This file is indexed and used to generate a page. The folder name is used to define the page slug. The +page.md front matter is used to define the content type and its properties.
+Capitalised path names are not supported and each folder can contain a +page.md file. This .md file is indexed and used to generate a page. The folder name is used to define the page slug. The +page.md front matter is used to define the content type and its properties.
 
 **Example Front Matter**
 
