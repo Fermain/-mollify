@@ -11,7 +11,7 @@
     "tts-build": "npm run build --workspace @mollify/tts",
     "cli-build": "npm run build --workspace @mollify/cli",
     "flow-build" "npm run build --workspace @mollify/flow",
-    "flow-dev" "npm run dev --workspace @mollify/flow"
+    "flow-dev": "npm run dev --workspace @mollify/flow"
   },
   "workspaces": [
     "packages/types",
