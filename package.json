@@ -10,15 +10,15 @@
     "molly-preview": "npm run preview --workspace @mollify/molly",
     "tts-build": "npm run build --workspace @mollify/tts",
     "cli-build": "npm run build --workspace @mollify/cli",
-    "flow-build" "npm run build --workspace @mollify/flow",
-    "flow-dev" "npm run dev --workspace @mollify/flow"
+    "flow-build": "npm run build --workspace @mollify/flow",
+    "flow-dev": "npm run dev --workspace @mollify/flow"
   },
   "workspaces": [
     "packages/types",
     "packages/cli",
     "packages/tts",
     "packages/molly",
-    "packages/lms",.
+    "packages/lms",
     "packages/flow"
   ],
   "devDependencies": {
