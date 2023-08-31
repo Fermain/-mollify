@@ -18,7 +18,7 @@
     "packages/cli",
     "packages/tts",
     "packages/molly",
-    "packages/lms",.
+    "packages/lms",
     "packages/flow"
   ],
   "devDependencies": {
