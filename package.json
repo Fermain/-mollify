@@ -9,7 +9,9 @@
     "molly-build": "npm run build --workspace @mollify/molly",
     "molly-preview": "npm run preview --workspace @mollify/molly",
     "tts-build": "npm run build --workspace @mollify/tts",
-    "cli-build": "npm run build --workspace @mollify/cli"
+    "cli-build": "npm run build --workspace @mollify/cli",
+    "flow-build" "npm run build --workspace @mollify/flow",
+    "flow-dev" "npm run dev --workspace @mollify/flow"
   },
   "workspaces": [
     "packages/types",
