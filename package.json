@@ -16,7 +16,8 @@
     "packages/cli",
     "packages/tts",
     "packages/molly",
-    "packages/lms"
+    "packages/lms",.
+    "packages/flow"
   ],
   "devDependencies": {
     "lerna": "^6.6.1"
