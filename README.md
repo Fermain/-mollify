@@ -139,7 +139,7 @@ summary: Hackademics offers interactive online courses in coding and web develop
 previous: null
 type: Institution
 tags:
-  - coding
+  - Coding
   - programming
   - web development
 ---
