@@ -141,7 +141,7 @@ type: Institution
 tags:
   - Coding
   - Programming
-  - web development
+  - Web Development
 ---
 # Content goes here
 ```
