@@ -140,7 +140,7 @@ previous: null
 type: Institution
 tags:
   - Coding
-  - programming
+  - Programming
   - web development
 ---
 # Content goes here
