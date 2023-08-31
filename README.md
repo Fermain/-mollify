@@ -57,7 +57,7 @@ git clone https://github.com/Fermain/-mollify.git
 
 ```bash
 npm install
-npx lerna bootstrap
+npm run build
 ```
 
 Optionally, if you want to ensure all Lerna-managed packages are correctly linked together:
