@@ -20,13 +20,13 @@ export default class MollyAI {
 
 	constructor(openaiApiKey: string, private tokenLimit: number | string) {
 		this.tokenLimit = Number(tokenLimit);
-		this.token = openaiApiKey;
-		this.configuration = new Configuration({ apiKey: this.token });
+		this.openaiApiKey = openaiApiKey;
+		this.configuration = new Configuration({ apiKey: this.openaiApiKey });
 		this.api = new OpenAIApi(this.configuration);
 	}
 
 	async createChatCompletion(options: CreateChatCompletionRequest) {
-		return await createChatCompletionResponse(this.token, options);
+		return await createChatCompletionResponse(this.openaiApiKey, options);
 	}
 
 	async flagged(input: string) {
@@ -51,10 +51,10 @@ export default class MollyAI {
 					throw error(405, 'Method Not Allowed')
 				},
 				GET: async ({ request }) => {
-					const LIMIT = Number(this.token);
+					const LIMIT = Number(this.tokenLimit);
 
 					try {
-						const url = new URL(request.url);
+						const url = new URL(request.url);	
 						const messagesParam = url.searchParams.get('messages');
 						const contentParam = url.searchParams.get('content');
 						const nameParam = url.searchParams.get('name');
