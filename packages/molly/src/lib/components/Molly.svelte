@@ -3,12 +3,19 @@
 	import type { ChatCompletionRequestMessage as Message } from 'openai';
 	import MollyButton from './MollyButton.svelte';
 	import MollyForm from './MollyForm.svelte';
+	import { readableStreamStore } from '../stores/readableStream';
 
 	let query: string = '';
 	let answer: string = '';
 	let loading: boolean = false;
 	let messages = new Array<Message>();
 	export let endpoint = '/';
+
+	const response = readableStreamStore();
+	response.subscribe(($response) => {
+		loading = $response.loading;
+		answer = $response.text;
+	});
 
 	function lazyContentGrabber() {
 		const main = document.querySelector('main');
@@ -18,42 +25,28 @@
 	}
 
 	const handleSubmit = async () => {
-		loading = true;
 		messages = [...messages, { role: 'user', content: query }];
 
-		const params = new URLSearchParams();
+		try {
+			const promiseReply = response.request(
+				new Request(endpoint, {
+					method: 'POST',
+					body: JSON.stringify({
+						messages,
+						query,
+						documentContent: lazyContentGrabber(),
+						name: 'Ask the Noroff student their name'
+					})
+				})
+			);
 
-		params.append('messages', JSON.stringify(messages));
-		params.append('content', lazyContentGrabber() ?? '');
-		params.append('name', 'Ask the Noroff student their name');
-
-		const endpointWithParams = `${endpoint}?${params.toString()}`;
-
-		const eventSource = new EventSource(endpointWithParams);
-
-		eventSource.onerror = handleError;
-
-		eventSource.onmessage = (e) => {
-			try {
-				loading = false;
-				if (e.data === '[DONE]') {
-					messages = [...messages, { role: 'assistant', content: answer }];
-					answer = '';
-					eventSource.close();
-					return;
-				}
-
-				const response = JSON.parse(e.data);
-				const [{ delta }] = response.choices;
-
-				if (delta.content) {
-					answer = (answer ?? '') + delta.content;
-				}
-			} catch (err) {
-				handleError(err);
-				eventSource.close();
-			}
-		};
+			(await promiseReply) || '';
+			messages = [...messages, { role: 'assistant', content: answer }];
+			answer = '';
+			query = '';
+		} catch (err) {
+			alert(err);
+		}
 	};
 
 	function handleError<T>(err: T) {
