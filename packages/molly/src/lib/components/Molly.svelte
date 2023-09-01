@@ -37,9 +37,11 @@
 					})
 				})
 			);
+
 			messages = [...messages, { role: 'user', content: query }];
 
 			(await promiseReply) || '';
+
 			messages = [...messages, { role: 'assistant', content: answer }];
 			answer = '';
 			query = '';
