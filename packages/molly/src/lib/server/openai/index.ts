@@ -54,7 +54,7 @@ export default class MollyAI {
 					const body = await request.json()
 
 					try {
-						// validation
+						// validation				
 						const { messages, query, documentContent, name }: {
 							messages: ChatCompletionRequestMessage[],
 							query: string,
@@ -62,18 +62,21 @@ export default class MollyAI {
 							name: string
 						} = body
 
-						if (!messages) return new Response('Bad Request: No messages provided', { status: 400 });
+						if (!query) return new Response('Bad Request: No messages provided', { status: 400 });
 
-						const tokenCount = isWithinTokenLimit(messages.join('\n'), Number(this.tokenLimit));
+						const tokenCount = isWithinTokenLimit(query, Number(this.tokenLimit));
 						if (!tokenCount) return new Response('Bad Request: Query too large', { status: 400 });
 
-						const isFlagged = await this.flagged(documentContent + messages[0].content);
+						const isFlagged = await this.flagged(documentContent + query);
 						if (isFlagged) return new Response('Bad Request: Query flagged by openai', { status: 400 });
 
-						const content = prompts.assistant(documentContent || TEMP_CONTENT, name || TEMP_USER);
-						const LIMIT = Number(this.tokenLimit);
-						const totalTokenCount = isWithinTokenLimit(content, LIMIT - tokenCount);
-						if (!totalTokenCount) return new Response('Bad Request: Query too large', { status: 400 });
+						const assistantPrompt = prompts.assistant(documentContent || TEMP_CONTENT, name || TEMP_USER);
+
+						// current limit is to low for content. commenting this part out until we can agree to a specific content limit
+
+						// const LIMIT = Number(this.tokenLimit);
+						// const totalTokenCount = isWithinTokenLimit(assistantPrompt, LIMIT - tokenCount);
+						// if (!totalTokenCount) return new Response('Bad Request: Query too large', { status: 400 });
 
 						const key = this.openaiApiKey
 						const readableStream = new ReadableStream({
@@ -89,7 +92,7 @@ export default class MollyAI {
 								});
 
 								await chat.call([
-									new SystemMessage(content),
+									new SystemMessage(assistantPrompt),
 									// ...history,
 									new HumanMessage(query)
 								]);

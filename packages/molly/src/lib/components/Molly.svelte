@@ -25,8 +25,6 @@
 	}
 
 	const handleSubmit = async () => {
-		messages = [...messages, { role: 'user', content: query }];
-
 		try {
 			const promiseReply = response.request(
 				new Request(endpoint, {
@@ -39,6 +37,7 @@
 					})
 				})
 			);
+			messages = [...messages, { role: 'user', content: query }];
 
 			(await promiseReply) || '';
 			messages = [...messages, { role: 'assistant', content: answer }];
