@@ -8,9 +8,9 @@ Mollify is a dynamic Learning Management System (LMS) designed to provide a user
 
 Mollify, divided into various packages within a Lerna monorepository, primarily consists of the LMS and CLI. These modules empower users to manage their content efficiently and transform it into a navigable webpage.
 
-### Mollify LMS Package
+### Mollify LMS
 
-The Mollify LMS package is the frontend of the Mollify project, constructed using Sveltekit, TypeScript, Tailwind, Skeleton UI, and MDsveX. The aim is to convert markdown content into an accessible website, enabling users to navigate, search, and bookmark content effectively, along with additional feature integration. The ultimate goal is to allow users to install the LMS package, migrate their existing content or create new, and finally, present it as a website.
+The Mollify LMS package is the frontend of the Mollify project. The aim is to convert markdown content into an accessible website, enabling users to navigate, search, and bookmark content effectively, along with additional feature integration. The ultimate goal is to allow users to install the LMS package, migrate their existing content or create new, and finally, present it as a website.
 
 ### Mollify CLI Package
 
@@ -22,7 +22,7 @@ Mollify Molly is an OpenAI-powered teaching assistant, designed to enhance the s
 
 ### Mollify TTS Package
 
-Mollify Text-To-Speech provides audio for markdown content, enabling users to generate and listen to the content. Currently leveraging ElvenLabs for TTS, future plans may include various optional TTS packages to offer a more flexible user experience.
+Mollify Text-To-Speech provides audio for markdown content, enabling users to generate and listen to the content. Currently leveraging ElevenLabs for TTS, future plans may include various optional TTS packages to offer a more flexible user experience.
 
 ### Mollify Flow Package
 
@@ -68,7 +68,7 @@ npx lerna bootstrap --hoist
 
 The --hoist flag is used to move all common dependencies to the root of your monorepo, reducing duplication.
 
-3. Create a .env in the LMS package root
+3. Create a .env in the LMS package root and provide API keys
 
 ```
 OPENAI_API_KEY=YOUR_KEY
@@ -76,11 +76,9 @@ OPENAI_TOKEN_LIMIT=1000
 ELEVENLABS_API_KEY=YOUR_KEY
 ```
 
-### Usage
+### Build All Packages
 
-#### LMS
-
-1. **Build All Packages:** Before running the LMS, make sure all other dependencies are built:
+1. Before running the LMS, make sure all other dependencies are built:
 
 ```bash
 npm run build
@@ -100,92 +98,48 @@ Alternatively from the root scope you can run
 npm run dev --workspace @mollify/lms
 ```
 
-#### Structuring Your LMS Content
+### Test
 
-The LMS system uses markdown content stored in the content directory. The exact location is:
+Create an example file in the following location.
 
-```
-packages/lms/src/routes/content
-```
+packages/lms/src/routes/content/example/+page.md
 
-The system will automatically index this content and generate pages. The structure of the folders determines the navigation.
-
-**Example Structure**
-
-Your content folder can look like this to define a particular institution and its content:
+Add contents:
 
 ```
-content
-├── hackademic
-    ├── +page.md
-    ├── programme1
-        ├── +page.md
-        ├── course1
-            ├── +page.md
-            ├── module1
-            │   ├── +page.md
-            │   ├── lesson1
-            │   │   ├── +page.md
-            │   ├── lesson2
-            │   │   ├── +page.md
-            ├── module2
-                ├── +page.md
-                ├── lesson1
-                │   ├── +page.md
-                ├── lesson2
-                    ├── +page.md
-```
-
-Capitalised path names are not supported and each folder can contain a +page.md file. This .md file is indexed and used to generate a page. The folder name is used to define the page slug. The +page.md front matter is used to define the content type and its properties.
-
-**Example Front Matter**
-
-```yaml
 ---
-title: Hackademic
-summary: Hackademics offers interactive online courses in coding and web development, featuring project-based learning and expert instructors. Become a skilled software engineer with our program!
-previous: null
-type: Institution
+title: This is an example
+type: Lesson
 tags:
-  - Coding
-  - Programming
-  - Web Development
+
+- Example
 ---
-# Content goes here
+
+Hello World!
 ```
 
-The **type** property is used to define the content type. The following content types are currently supported:
+Visit the site and see if the content is created
 
-- Institution
-- Programme
-- Course
-- Module
-- Lesson
-- Assessment
+### Individual package building
 
-**Tags and Navigation**
-
-**Tags:** Use the **tags** property to list subjects that can be filtered on the search page or clicked on to find related content.
-
-**Navigation:** The **previous** property defines the preceding item in the navigation. A null value indicates the page is the first item, meaning it doesn't have a prior page in the navigation menu.
-
-#### Molly
-
-Run the Molly package independently:
+If you only want to build a specific package, run the following respective command:
 
 ```bash
 npm run molly-dev
-```
-
-#### Individual package building
-
-Additional build commands if you only want to build a specific package:
-
-```bash
 npm run cli-build
 npm run molly-build
 npm run tts-build
+npm run flow-build
 ```
+
+Please refer individual package for further instructions:
+
+- [LMS](./packages/lms/README.md)
+- [cli](./packages/cli/README.md)
+- [Molly](./packages/molly/README.md)
+- [TTS](./packages/tts/README.md)
+- [flow](./packages/flow/README.md)
+- [types](./packages/flow/README.md)
 
 ### Additional Lerna Commands
 
