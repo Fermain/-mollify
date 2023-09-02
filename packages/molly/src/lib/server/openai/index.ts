@@ -9,7 +9,7 @@ import { error } from '@sveltejs/kit';
 import prompts from './prompts';
 import { CallbackManager } from "langchain/callbacks";
 import { ChatOpenAI } from "langchain/chat_models/openai";
-import { HumanMessage, SystemMessage } from "langchain/schema";
+import { BaseMessage, HumanMessage, SystemMessage, AIMessage } from "langchain/schema";
 
 const TEMP_USER = "Ask the student for their name."
 const TEMP_CONTENT = "Ask the student for their question."
@@ -66,6 +66,13 @@ export default class MollyAI {
 
 						const assistantPrompt = prompts.assistant(documentContent || TEMP_CONTENT, name || TEMP_USER);
 
+						const recentChatHistory: BaseMessage[] = []
+						messages.slice(-4).forEach(msg => {
+							if (msg.role === 'assistant') return recentChatHistory.push(new AIMessage(String(msg.content)))
+							if (msg.role === 'user') return recentChatHistory.push(new HumanMessage(String(msg.content)))
+							recentChatHistory.push(new SystemMessage(String(msg.content)))
+						})
+
 						// current limit is to low for content. commenting this part out until we can agree to a specific content limit
 
 						// const LIMIT = Number(this.tokenLimit);
@@ -87,7 +94,7 @@ export default class MollyAI {
 
 								await chat.call([
 									new SystemMessage(assistantPrompt),
-									// ...history,
+									...recentChatHistory,
 									new HumanMessage(query)
 								]);
 
