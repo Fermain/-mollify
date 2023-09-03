@@ -36,37 +36,37 @@ Mollify, divided into various packages within a Lerna monorepository, primarily 
 
 The Mollify LMS package is the frontend of the Mollify project. The aim is to convert markdown content into an accessible website, enabling users to navigate, search, and bookmark content effectively, along with additional feature integration. The ultimate goal is to allow users to install the LMS package, migrate their existing content or create new, and finally, present it as a website.
 
-For more information checkout the [LMS Package](./packages/lms/README.md)
+For more information checkout the [LMS Package](./packages/lms)
 
 ### Mollify CLI Package
 
 Mollify CLI is a command-line tool designed to manage the filesystem for the Mollify Learning Management System (LMS). It ensures that the file structure adheres to SvelteKit's file path conventions and provides a convenient way to create, archive, and remove various entities within the LMS. Mollify CLI is written in TypeScript and uses the Commander and Enquirer libraries to provide a user-friendly and intuitive interface.
 
-For more information checkout the [CLI Package](./packages/cli/README.md)
+For more information checkout the [CLI Package](./packages/cli)
 
 ### Mollify Molly Package
 
 Mollify Molly is an OpenAI-powered teaching assistant, designed to enhance the student learning experience by tapping into the lesson content to answer queries. The aim is to make learning more interactive and efficient with Molly's capabilities. We aim to expand Molly's functionalities to not only assist students but also teachers and content creators. In the pipeline, we have plans for Molly to aid in content creation with the Flow package. Its anticipated capabilities include facilitating the generation of quizzes and glossaries, thereby streamlining the course creation process. Furthermore, we also foresee Molly automating the creation of file frontmatter such as tags and summaries, leading to efficient management and categorization of course content. This could possibly even extend to automating the migration of content into the system, thereby streamlining the integration process.
 
-For more information checkout the [Molly Package](./packages/molly/README.md)
+For more information checkout the [Molly Package](./packages/molly)
 
 ### Mollify TTS Package
 
 Mollify Text-To-Speech provides audio for markdown content, enabling users to generate and listen to the content. Currently leveraging ElevenLabs for TTS, future plans may include various optional TTS packages to offer a more flexible user experience.
 
-For more information checkout the [TTS Package](./packages/tts/README.md)
+For more information checkout the [TTS Package](./packages/tts)
 
 ### Mollify Flow Package
 
 Mollify Flow offers a user interface for the CLI package, enabling users to create, update, and manage content. It includes a WYSIWYG editor for real-time content preview and update tracking.
 
-For more information checkout the [Flow Package](./packages/flow/README.md)
+For more information checkout the [Flow Package](./packages/flow)
 
 ### Mollify Types Package
 
 Mollify Types package is home to all TypeScript types and definitions for easy import into any of the Mollify packages.
 
-For more information checkout the [Types Package](./packages/types/README.md)
+For more information checkout the [Types Package](./packages/types)
 
 ## Stack
 
