@@ -130,15 +130,54 @@
   //Handles bionic reading selection
   let wordEmphasis: boolean = false;
 
-  function applyWordEmphasis(): void {
-    wordEmphasis = !wordEmphasis;
-    const textContainer = document.querySelector('#content') as HTMLDivElement;
-    console.log(textContainer?.innerText);
-
+  function toggleWordEmphasis() {
     if (wordEmphasis) {
-      textContainer?.classList.add('font-bold');
+      wordEmphasis = false;
+      // removeWordEmphasis();
     } else {
-      textContainer?.classList.remove('font-bold');
+      wordEmphasis = true;
+      applyWordEmphasis();
+    }
+  }
+
+  function toBold(word: string): string {
+    const wordSplit = word.split('');
+    const toBold = Math.floor(word.length / 2);
+    return `<b>${wordSplit.slice(0, toBold).join('')}</b>${wordSplit.slice(toBold, word.length).join('')} `;
+  }
+
+  /* To maintain the original HTML structure as much as possible, the code processes individual nodes. This approach accommodates the complex nature of Markdown text, which can generate multiple HTML elements, each with its hierarchy. Word emphasis is selectively applied to text within paragraphs (<p>) and list items (<li>), while it avoids applying emphasis to headings (<hn>), links (<a>), and code blocks (<code>) to preserve their distinct styling.*/
+
+  function applyWordEmphasis(): void {
+    const textContainer = document.querySelector('#content') as HTMLDivElement;
+
+    for (const child of textContainer.children) {
+      child.childNodes.forEach((childNode) => {
+        if (childNode.parentNode?.nodeName === 'P' && childNode.nodeType === Node.TEXT_NODE) {
+          const edited: string[] = [];
+          const textNode = childNode as Text;
+          const words = textNode.textContent?.split(' ');
+
+          words?.forEach((word: string) => {
+            const editedWord = toBold(word);
+            edited.push(editedWord);
+          });
+
+          const span = document.createElement('span');
+          span.innerHTML = edited.join(' ');
+          textNode.parentNode?.replaceChild(span, textNode);
+        } else if (childNode.nodeName === 'LI') {
+          const edited: string[] = [];
+          const htmlElement = childNode as HTMLElement;
+          const words = htmlElement.innerText.split(' ');
+
+          words.forEach((word: string) => {
+            const editedWord = toBold(word);
+            edited.push(editedWord);
+            htmlElement.innerHTML = edited.join(' ');
+          });
+        }
+      });
     }
   }
 </script>
@@ -168,9 +207,9 @@
       </div>
     </div>
     <div class="flex justify-between my-5">
-      <span class="p-1">Bio reading</span>
+      <span class="p-1">Word emphasis</span>
       <div class="flex gap-4">
-        <SlideToggle name="slide" size="sm" bind:checked={wordEmphasis} on:click={applyWordEmphasis} />
+        <SlideToggle name="slide" size="sm" bind:checked={wordEmphasis} on:click={toggleWordEmphasis} />
       </div>
     </div>
   </div>
