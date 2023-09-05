@@ -1,0 +1,30 @@
+# Installation
+
+1. Clone the repo:
+
+```bash
+git clone https://github.com/Fermain/-mollify.git
+```
+
+2. Install the dependencies:
+
+```bash
+npm install
+npm run build
+```
+
+Optionally, if you want to ensure all Lerna-managed packages are correctly linked together:
+
+```bash
+npx lerna bootstrap --hoist
+```
+
+The --hoist flag is used to move all common dependencies to the root of your monorepo, reducing duplication.
+
+3. Create a .env in the LMS package root and provide API keys. (package/lms/.env)
+
+```
+OPENAI_API_KEY=YOUR_KEY
+OPENAI_TOKEN_LIMIT=1000
+ELEVENLABS_API_KEY=YOUR_KEY
+```

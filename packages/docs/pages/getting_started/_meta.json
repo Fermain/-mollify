@@ -1,0 +1,8 @@
+{
+  "installation": "Installation",
+  "building_all_packages": "Building All Packages",
+  "building_individual_package": "Building Individual Packages",
+  "lerna_commands": "Additional Lerna Commands",
+  "creating_contents": "Creating Contents",
+  "future_implementations": "Future Implementations"
+}

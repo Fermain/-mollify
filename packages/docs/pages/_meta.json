@@ -1,9 +1,9 @@
 {
   "index": "Welcome to Mollify Docs",
   "about": "About Mollify",
-  "installation": "Installation",
-  "configuration": "Configuration",
   "getting_started": "Getting Started",
   "packages": "Packages",
-  "contributing": "Contributions"
+  "contributions": "Contributions",
+  "acknowledgements": "Acknowledgements",
+  "license": "License"
 }

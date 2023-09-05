@@ -1,0 +1,19 @@
+# Additional Lerna Commands
+
+## Clean Node Modules:
+
+If you ever run into issues related to dependencies, or simply want to refresh everything:
+
+```bash
+npx lerna clean -y && npm install
+```
+
+This command removes the node_modules from all packages and then reinstalls.
+
+## List Packages:
+
+To see which packages Lerna is managing:
+
+```bash
+npx lerna list
+```

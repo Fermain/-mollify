@@ -1,0 +1,70 @@
+# Creating Test Content
+
+The LMS system uses markdown content stored in the content directory.
+The exact location is:
+
+```
+packages/lms/src/routes/content
+```
+
+The system will automatically index this content and generate pages. The structure of the folders determines the navigation.
+
+## Example Structure
+
+Your content folder can look like this to define a particular institution and its content:
+
+```
+content
+├── institution1
+    ├── +page.md
+    ├── programme1
+        ├── +page.md
+        ├── course1
+            ├── +page.md
+            ├── module1
+            │   ├── +page.md
+            │   ├── lesson1
+            │   │   ├── +page.md
+            │   ├── lesson2
+            │   │   ├── +page.md
+            ├── module2
+                ├── +page.md
+                ├── lesson1
+                │   ├── +page.md
+                ├── lesson2
+                    ├── +page.md
+```
+
+Capitalised path names are not supported and each folder can contain a +page.md file. This .md file is indexed and used to generate a page. The folder name is used to define the page slug. The +page.md front matter is used to define the content type and its properties.
+
+### Add page contents:
+
+```ymal
+---
+title: lesson1
+type: Lesson
+summary: This is a lesson
+previous: null
+tags:
+
+- Example Lesson
+---
+
+# Lesson Content Here
+
+```
+
+The **type** property is used to define the content type. The following content types are currently supported:
+
+- Institution
+- Programme
+- Course
+- Module
+- Lesson
+- Assessment
+
+### Tags and Navigation
+
+**Tags:** Use the **tags** property to list subjects that can be filtered on the search page or clicked on to find related content.
+
+**Navigation:** The **previous** property defines the preceding item in the navigation. A null value indicates the page is the first item, meaning it doesn't have a prior page in the navigation menu.
