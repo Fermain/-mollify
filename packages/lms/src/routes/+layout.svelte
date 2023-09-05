@@ -28,13 +28,11 @@
       isNavVisible = !isNavVisible; // Toggle the visibility of the navigation bar
     }
   };
-
- 
 </script>
 
 <Drawer>
   <div class="p-4">
-    <EntityNav entities={data.sitemap} onItemClick={handleNavItemClick} />
+    <EntityNav entities={data.sitemap} on:click={handleNavItemClick} />
   </div>
 </Drawer>
 
@@ -44,7 +42,7 @@
   </svelte:fragment>
   <svelte:fragment slot="sidebarRight">
     <div class="p-2">
-      <EntityNav entities={data.sitemap} onItemClick={handleNavItemClick} />
+      <EntityNav entities={data.sitemap} on:click={handleNavItemClick} />
     </div>
   </svelte:fragment>
   <svelte:fragment slot="sidebarLeft">

@@ -42,13 +42,13 @@
   <nav class="entity">
     <div class="entity-inner">
       <div class="entity-header hover:bg-primary-hover-token rounded-container-token p-2">
-        <a href={entity.browserPath} class="entity-title">
+        <a href={entity.browserPath} class="entity-title" on:click={toggle}>
           {entity.title}
         </a>
         {#if entity.children.length}
-          <button on:click={toggle} class="btn hover:bg-primary-hover-token p-0"
-            ><i class="icon-f">{open ? 'expand_less' : 'expand_more'}</i></button
-          >
+          <button class="btn hover:bg-primary-hover-token p-0">
+            <i class="icon-f">{open ? 'expand_less' : 'expand_more'}</i>
+          </button>
         {/if}
       </div>
       {#if entity.children.length}
