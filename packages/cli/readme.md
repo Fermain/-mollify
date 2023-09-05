@@ -50,4 +50,4 @@ npm install -g @Mollify/cli
 
 ## Contributing
 
-Mollify CLI is an open-source project, and contributions are always welcome. If you'd like to contribute, please feel free to fork the repository, make your changes, and submit a pull request.
+Mollify CLI is an open-source project, and contributions are always welcome. If you'd like to contribute, please feel free to fork the repository, make your changes, and submit a pull request. For more information on contributing to this repository, please checkout the [Mollify Repository](https://github.com/Fermain/-mollify), and post a comment on the [sign up issue](https://github.com/Fermain/-mollify/issues/131).
