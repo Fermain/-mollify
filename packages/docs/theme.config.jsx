@@ -3,7 +3,7 @@ import Image from "next/image";
 export default {
   logo: (
     <span>
-      <img src="./components/icon/molly_logo.png" alt="Molly logo" />
+      <img src="./assets/icon/molly_logo.png" alt="Molly logo" />
       Mollify
     </span>
   ),
