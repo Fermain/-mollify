@@ -21,13 +21,15 @@
   };
 
   let isMobile = false; // Set this based on screen width or viewport size
+  let isNavVisible = false; // Initialize the visibility state
 
   const handleNavItemClick = () => {
     if (isMobile) {
-      // Toggle the visibility of the navigation bar here
-      // You might need to use Svelte's state management to achieve this
+      isNavVisible = !isNavVisible; // Toggle the visibility of the navigation bar
     }
   };
+
+ 
 </script>
 
 <Drawer>
