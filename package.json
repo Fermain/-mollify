@@ -14,7 +14,8 @@
     "packages/*"
   ],
   "devDependencies": {
-    "lerna": "^6.6.1"
+    "lerna": "^6.6.1",
+    "typescript": "^5.2.2"
   },
   "dependencies": {
     "dotenv": "^16.0.3"
