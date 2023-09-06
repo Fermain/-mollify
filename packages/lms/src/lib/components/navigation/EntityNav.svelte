@@ -1,3 +1,4 @@
+
 <script lang="ts">
 	import type { EntityMeta } from '@mollify/types';
 	import { readable, writable } from 'svelte/store';
@@ -23,6 +24,7 @@
 		on:keydown={(event) => {
 			if (event.key === 'Enter' || event.key === 'Space') {
 				toggle(entity.id);
+				
 			}
 		}}
 	>
