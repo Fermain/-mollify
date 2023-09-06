@@ -2,7 +2,7 @@
   position: sticky;
   top: 1rem;
   overflow-y: auto;
-  height: calc(100vh - 10rem);
+  height: 80vh; /* Adjust to your preference */
 
   &-label {
     display: none;
