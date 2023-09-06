@@ -6,7 +6,7 @@
 </script>
 
 <div
-	class="message {message.role} max-w-full m-0 bg-slate-200 dark:bg-slate-400 py-2.5 px-1 m-3 rounded rounded-1 text-black"
+	class="message {message.role} max-w-full  bg-slate-200 dark:bg-slate-400 py-2.5 px-1 m-3 rounded rounded-1 text-black"
 >
 	<SvelteMarkdown source={message.content} />
 </div>

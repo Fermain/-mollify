@@ -7,7 +7,6 @@
   import { AppShell, Drawer, Toast } from '@skeletonlabs/skeleton';
   import Main from '$lib/components/content/Main.svelte';
   import Footer from '$lib/components/footer/Footer.svelte';
-  // import Reader from '$lib/components/header/Reader.svelte';
   import IconNav from '$lib/components/navigation/IconNav.svelte';
   import Header from '$lib/components/header/Header.svelte';
   import 'prismjs/themes/prism-tomorrow.css';
@@ -20,11 +19,20 @@
   const scrollIntoView = (node: HTMLElement) => {
     node.scrollIntoView();
   };
+
+  let isMobile = false; // Set this based on screen width or viewport size
+  let isNavVisible = false; // Initialize the visibility state
+
+  const handleNavItemClick = () => {
+    if (isMobile) {
+      isNavVisible = !isNavVisible; // Toggle the visibility of the navigation bar
+    }
+  };
 </script>
 
 <Drawer>
   <div class="p-4">
-    <EntityNav entities={data.sitemap} />
+    <EntityNav entities={data.sitemap} on:click={handleNavItemClick} />
   </div>
 </Drawer>
 
@@ -34,7 +42,7 @@
   </svelte:fragment>
   <svelte:fragment slot="sidebarRight">
     <div class="p-2">
-      <EntityNav entities={data.sitemap} />
+      <EntityNav entities={data.sitemap} on:click={handleNavItemClick} />
     </div>
   </svelte:fragment>
   <svelte:fragment slot="sidebarLeft">
