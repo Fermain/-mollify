@@ -14,6 +14,8 @@
     placement: 'bottom'
   };
 
+  let wordEmphasis: boolean;
+
   // The 'tailwindFontSizes' don't work with the typography plugin. HTML elements that we controll will use 'tailwindFontSizes', and HTML we don't controll will use 'proseFontSizes'. Both arrays share sizes and indexes to facilitate shared localStorage code.
   const tailwindFontSizes: string[] = ['text-sm', 'text-base', 'text-lg', 'text-xl', 'text-2xl'];
   const proseFontSizes: string[] = ['prose-sm', 'prose-base', 'prose-lg', 'prose-xl', 'prose-2xl'];
@@ -43,6 +45,11 @@
       proseContainer.classList.add(savedProseFontSizeClass);
     }
     container.setAttribute('data-font-size-index', storedFontSize.toString());
+
+    //Get word emphasis data from local storage and apply the feature if data returns true
+    const isWordEmphasisSaved = storage.load('wordEmphasis');
+    wordEmphasis = isWordEmphasisSaved || false;
+    wordEmphasis ? applyWordEmphasis() : removeWordEmphasis();
   });
 
   function increaseFontSize(): void {
@@ -127,13 +134,11 @@
     toastStore.trigger(userFeedback);
   }
 
-  //Handles bionic reading selection
-  let wordEmphasis: boolean = false;
-
+  //Handles bionic reading
   function toggleWordEmphasis() {
     if (wordEmphasis) {
       wordEmphasis = false;
-      // removeWordEmphasis();
+      removeWordEmphasis();
     } else {
       wordEmphasis = true;
       applyWordEmphasis();
@@ -147,7 +152,6 @@
   }
 
   /* To maintain the original HTML structure as much as possible, the code processes individual nodes. This approach accommodates the complex nature of Markdown text, which can generate multiple HTML elements, each with its hierarchy. Word emphasis is selectively applied to text within paragraphs (<p>) and list items (<li>), while it avoids applying emphasis to headings (<hn>), links (<a>), and code blocks (<code>) to preserve their distinct styling.*/
-
   function applyWordEmphasis(): void {
     const textContainer = document.querySelector('#content') as HTMLDivElement;
 
@@ -179,6 +183,14 @@
         }
       });
     }
+
+    storage.save('wordEmphasis', true);
+  }
+
+  function removeWordEmphasis() {
+    const textContainer = document.querySelector('#content') as HTMLDivElement;
+    console.log(textContainer);
+    storage.save('wordEmphasis', false);
   }
 </script>
 
