@@ -14,28 +14,36 @@
   import EntityNav from '$lib/components/navigation/EntityNav.svelte';
   import { page } from '$app/stores';
 
-  export let data: LayoutData;
-
-  const scrollIntoView = (node: HTMLElement) => {
-    node.scrollIntoView();
-  };
-
-  let isMobile = window.innerWidth <= 768; // Check for mobile viewport width
-  let isNavVisible = false; // Initialize the visibility state
-
+  // Declare the handleNavItemClick function
   const handleNavItemClick = () => {
     if (isMobile) {
       isNavVisible = !isNavVisible; // Toggle the visibility of the navigation bar
     }
   };
 
-  // Add a listener to resize events to toggle the navigation based on viewport width
-  window.addEventListener('resize', () => {
+  export let data: LayoutData;
+
+  const scrollIntoView = (node: HTMLElement) => {
+    node.scrollIntoView();
+  };
+
+  let isMobile = false; // Initialize the visibility state
+  let isNavVisible = false; // Initialize the visibility state
+
+  // Check if the code is running in a browser environment
+  if (typeof window !== 'undefined') {
     isMobile = window.innerWidth <= 768;
-    if (!isMobile) {
-      isNavVisible = false; // Close the navigation on wider screens
-    }
-  });
+
+    // Add a listener to resize events to toggle the navigation based on viewport width
+    const handleWindowResize = () => {
+      isMobile = window.innerWidth <= 768;
+      if (!isMobile) {
+        isNavVisible = false; // Close the navigation on wider screens
+      }
+    };
+
+    window.addEventListener('resize', handleWindowResize);
+  }
 </script>
 
 <Drawer open={isNavVisible}>
@@ -71,3 +79,4 @@
   </svelte:fragment>
   <Toast position="t" />
 </AppShell>
+
