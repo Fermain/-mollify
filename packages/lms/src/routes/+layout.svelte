@@ -14,13 +14,6 @@
   import EntityNav from '$lib/components/navigation/EntityNav.svelte';
   import { page } from '$app/stores';
 
-  // Declare the handleNavItemClick function
-  const handleNavItemClick = () => {
-    if (isMobile) {
-      isNavVisible = !isNavVisible; // Toggle the visibility of the navigation bar
-    }
-  };
-
   export let data: LayoutData;
 
   const scrollIntoView = (node: HTMLElement) => {
@@ -28,22 +21,27 @@
   };
 
   let isMobile = false; // Initialize the visibility state
-  let isNavVisible = false; // Initialize the visibility state
 
   // Check if the code is running in a browser environment
-  if (typeof window !== 'undefined') {
-    isMobile = window.innerWidth <= 768;
+  if (typeof Svelte !== 'undefined' && Svelte.window) {
+    isMobile = Svelte.window.innerWidth <= 768;
 
     // Add a listener to resize events to toggle the navigation based on viewport width
     const handleWindowResize = () => {
-      isMobile = window.innerWidth <= 768;
-      if (!isMobile) {
-        isNavVisible = false; // Close the navigation on wider screens
-      }
+      isMobile = Svelte.window.innerWidth <= 768;
     };
 
-    window.addEventListener('resize', handleWindowResize);
+    Svelte.window.addEventListener('resize', handleWindowResize);
   }
+
+  // Declare the handleNavItemClick function
+  const handleNavItemClick = () => {
+    if (isMobile) {
+      isNavVisible = !isNavVisible; // Toggle the visibility of the navigation bar
+    }
+  };
+
+  let isNavVisible = false; // Initialize the visibility state
 </script>
 
 <Drawer open={isNavVisible}>
@@ -70,8 +68,8 @@
   <Main>
     <slot />
   </Main>
-  <svelte:fragment slot="footer"
-    ><Footer>
+  <svelte:fragment slot="footer">
+    <Footer>
       <!-- <Reader /> -->
       <div class="flex-1"></div>
       <Molly endpoint="/api/molly" />
@@ -79,4 +77,3 @@
   </svelte:fragment>
   <Toast position="t" />
 </AppShell>
-

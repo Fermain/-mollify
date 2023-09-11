@@ -3,7 +3,7 @@
   import { readable, writable } from 'svelte/store';
 
   export let entities: Array<EntityMeta> | EntityMeta = [];
-  $: _entities = Array.isArray(entities) ? entities : [entities];
+  let _entities = Array.isArray(entities) ? entities : [entities]; // Define _entities based on entities prop
 
   // Use Svelte writable store for the "open" state
   let openStates = writable({}); // Initialize as a writable store
@@ -48,15 +48,36 @@
   }
 </script>
 
+
+<style lang="scss">
+  .entity {
+    &-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer; /* Add cursor pointer to indicate clickable element */
+    }
+
+    &-title {
+      flex: 1;
+      padding: 0.5rem 0;
+      padding-left: 0.5rem;
+    }
+
+    &-children {
+      padding-left: 0.5rem;
+
+      &:not(.open) {
+        display: none;
+      }
+    }
+  }
+</style>
+
 {#each _entities as entity}
   <nav
     class="entity"
     tabindex="0"
-    on:keydown={(event) => {
-      if (event.key === 'Enter' || event.key === 'Space') {
-        toggle(entity.id);
-      }
-    }}
   >
     <div class="entity-inner">
       <div
@@ -85,28 +106,4 @@
     </div>
   </nav>
 {/each}
-
-<style lang="scss">
-  .entity {
-    &-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      cursor: pointer; /* Add cursor pointer to indicate clickable element */
-    }
-
-    &-title {
-      flex: 1;
-      padding: 0.5rem 0;
-      padding-left: 0.5rem;
-    }
-
-    &-children {
-      padding-left: 0.5rem;
-
-      &:not(.open) {
-        display: none;
-      }
-    }
-  }
-</style>
+<!-- Consider adding an ID field to entity front-matter for improved content management -->
