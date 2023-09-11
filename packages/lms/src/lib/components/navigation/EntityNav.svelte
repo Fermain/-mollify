@@ -14,9 +14,6 @@
     // Add a listener to resize events to track the mobile state
     window.addEventListener('resize', () => {
       isMobile = window.innerWidth <= 768;
-      if (!isMobile) {
-        isMobile = false; // Close the navigation on wider screens
-      }
     });
   }
 
@@ -47,7 +44,6 @@
     }
   }
 </script>
-
 
 <style lang="scss">
   .entity {
@@ -106,4 +102,3 @@
     </div>
   </nav>
 {/each}
-<!-- Consider adding an ID field to entity front-matter for improved content management -->
