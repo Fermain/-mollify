@@ -6,7 +6,7 @@
   import * as storage from '../../utils/storage/index';
   import { onMount } from 'svelte';
 
-  import 'material-icons/iconfont/material-icons.css';
+  import Icon from '../ui/Icon.svelte';
 
   storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
 
@@ -131,9 +131,7 @@
 </script>
 
 <div>
-  <button class="btn hover:bg-primary-hover-token" use:popup={settings}>
-    <span class="material-icons">settings</span></button
-  >
+  <button class="btn hover:bg-primary-hover-token" use:popup={settings}> <Icon iconName="settings" /></button>
 
   <div class="card p-4 w-60 shadow-xl" data-popup="settings" id="settings-card">
     <h3 class="h3 mb-3">Settings</h3>
@@ -145,14 +143,14 @@
     <div class="flex justify-between my-5">
       <span class="p-1">Text</span>
       <div class="flex gap-4">
-        <button class="btn hover:bg-primary-hover-token p-1" on:click={increaseFontSize}
-          ><span class="material-icons">text_increase</span></button
+        <button class="btn hover:bg-primary-hover-token p-1" on:click={increaseFontSize}>
+          <Icon iconName="text_increase" /></button
         >
-        <button class="btn hover:bg-primary-hover-token p-1" on:click={decreaseFontSize}
-          ><span class="material-icons">text_decrease</span></button
+        <button class="btn hover:bg-primary-hover-token p-1" on:click={decreaseFontSize}>
+          <Icon iconName="text_decrease" /></button
         >
         <button class="btn hover:bg-primary-hover-token p-1" on:click={resetFontSize}>
-          <span class="material-icons">refresh</span></button
+          <Icon iconName="refresh" /></button
         >
       </div>
     </div>

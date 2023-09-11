@@ -1,30 +1,30 @@
 <script lang="ts">
-	import { Modal } from '@skeletonlabs/skeleton';
-	import type { ModalSettings } from '@skeletonlabs/skeleton';
-	import { modalStore } from '@skeletonlabs/skeleton';
-	import BookmarkList from './BookmarkList.svelte';
-	import 'material-icons/iconfont/material-icons.css';
+  import { Modal } from '@skeletonlabs/skeleton';
+  import type { ModalSettings } from '@skeletonlabs/skeleton';
+  import { modalStore } from '@skeletonlabs/skeleton';
+  import BookmarkList from './BookmarkList.svelte';
+  import Icon from '$lib/components/ui/Icon.svelte';
 
-	const modalComponent = {
-		Logo: {
-			ref: BookmarkList
-		}
-	};
+  const modalComponent = {
+    Logo: {
+      ref: BookmarkList
+    }
+  };
 
-	const searchModal: ModalSettings = {
-		type: 'component',
-		component: 'Logo'
-	};
+  const searchModal: ModalSettings = {
+    type: 'component',
+    component: 'Logo'
+  };
 </script>
 
 <div>
-	<button
-		name="tile-2"
-		class="app-rail-tile unstyled grid place-content-center place-items-center w-full aspect-square space-y-1.5 cursor-pointer bg-primary-hover-token"
-		on:click={() => modalStore.trigger(searchModal)}
-	>
-		<span class="material-icons">bookmark</span>
-	</button>
+  <button
+    name="tile-2"
+    class="app-rail-tile unstyled grid place-content-center place-items-center w-full aspect-square space-y-1.5 cursor-pointer bg-primary-hover-token"
+    on:click={() => modalStore.trigger(searchModal)}
+  >
+    <Icon iconName="bookmark" />
+  </button>
 
-	<Modal components={modalComponent} />
+  <Modal components={modalComponent} />
 </div>
