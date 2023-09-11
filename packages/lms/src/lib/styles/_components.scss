@@ -14,11 +14,11 @@
   cursor: pointer;
 }
 
-.icon-f {
+.material-icons {
   @include icon;
 }
 
-.icon-o {
+.material-icons  {
   @include icon;
   font-variation-settings: 'FILL' 0;
 }

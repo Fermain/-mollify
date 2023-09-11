@@ -1,156 +1,160 @@
 <script lang="ts">
-	import { LightSwitch, popup, storePopup, toastStore } from '@skeletonlabs/skeleton';
-	import type { PopupSettings } from '@skeletonlabs/skeleton';
-	import type { ToastSettings } from '@skeletonlabs/skeleton';
-	import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
-	import * as storage from '../../utils/storage/index';
-	import { onMount } from 'svelte';
+  import { LightSwitch, popup, storePopup, toastStore } from '@skeletonlabs/skeleton';
+  import type { PopupSettings } from '@skeletonlabs/skeleton';
+  import type { ToastSettings } from '@skeletonlabs/skeleton';
+  import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
+  import * as storage from '../../utils/storage/index';
+  import { onMount } from 'svelte';
 
-	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
+  import 'material-icons/iconfont/material-icons.css';
 
-	const settings: PopupSettings = {
-		event: 'click',
-		target: 'settings',
-		placement: 'bottom'
-	};
+  storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
 
-	// The 'tailwindFontSizes' don't work with the typography plugin. HTML elements that we controll will use 'tailwindFontSizes', and HTML we don't controll will use 'proseFontSizes'. Both arrays share sizes and indexes to facilitate shared localStorage code.
-	const tailwindFontSizes: string[] = ['text-sm', 'text-base', 'text-lg', 'text-xl', 'text-2xl'];
-	const proseFontSizes: string[] = ['prose-sm', 'prose-base', 'prose-lg', 'prose-xl', 'prose-2xl'];
+  const settings: PopupSettings = {
+    event: 'click',
+    target: 'settings',
+    placement: 'bottom'
+  };
 
-	// Has to be done onMount because of how the font-size is set in the main HTML file
-	onMount(() => {
-		// Get the current index
-		const container = document.querySelector('#container') as HTMLDivElement;
-		const proseContainer = document.querySelector('#prose-container') as HTMLDivElement;
-		const currentIndex = parseInt(container.getAttribute('data-font-size-index') as string, 10) || 0;
+  // The 'tailwindFontSizes' don't work with the typography plugin. HTML elements that we controll will use 'tailwindFontSizes', and HTML we don't controll will use 'proseFontSizes'. Both arrays share sizes and indexes to facilitate shared localStorage code.
+  const tailwindFontSizes: string[] = ['text-sm', 'text-base', 'text-lg', 'text-xl', 'text-2xl'];
+  const proseFontSizes: string[] = ['prose-sm', 'prose-base', 'prose-lg', 'prose-xl', 'prose-2xl'];
 
-		// Get user's saved index
-		const storedFontSize = Number(storage.load('fontSize'));
+  // Has to be done onMount because of how the font-size is set in the main HTML file
+  onMount(() => {
+    // Get the current index
+    const container = document.querySelector('#container') as HTMLDivElement;
+    const proseContainer = document.querySelector('#prose-container') as HTMLDivElement;
+    const currentIndex = parseInt(container.getAttribute('data-font-size-index') as string, 10) || 0;
 
-		// Apply the saved index
-		const savedFontSizeClass = tailwindFontSizes[storedFontSize];
-		const savedProseFontSizeClass = proseFontSizes[storedFontSize];
-		container.classList.remove(tailwindFontSizes[currentIndex]);
-		container.classList.add(savedFontSizeClass);
+    // Get user's saved index
+    const storedFontSize = Number(storage.load('fontSize'));
 
-		if (savedProseFontSizeClass !== 'prose-base') {
-			//The new classes aren't applied if 'prose' is still in the class list
-			//proseContainer.classList.remove(proseFontSizes[currentIndex], 'prose');
-			proseContainer.classList.add(savedProseFontSizeClass);
-		} else {
-			proseContainer.classList.remove(proseFontSizes[currentIndex]);
-			proseContainer.classList.add(savedProseFontSizeClass);
-		}
-		container.setAttribute('data-font-size-index', storedFontSize.toString());
-	});
+    // Apply the saved index
+    const savedFontSizeClass = tailwindFontSizes[storedFontSize];
+    const savedProseFontSizeClass = proseFontSizes[storedFontSize];
+    container.classList.remove(tailwindFontSizes[currentIndex]);
+    container.classList.add(savedFontSizeClass);
 
-	function increaseFontSize(): void {
-		const container = document.querySelector('#container') as HTMLDivElement;
-		const proseContainer = document.querySelector('#prose-container') as HTMLDivElement;
+    if (savedProseFontSizeClass !== 'prose-base') {
+      //The new classes aren't applied if 'prose' is still in the class list
+      //proseContainer.classList.remove(proseFontSizes[currentIndex], 'prose');
+      proseContainer.classList.add(savedProseFontSizeClass);
+    } else {
+      proseContainer.classList.remove(proseFontSizes[currentIndex]);
+      proseContainer.classList.add(savedProseFontSizeClass);
+    }
+    container.setAttribute('data-font-size-index', storedFontSize.toString());
+  });
 
-		const currentIndex = parseInt(container.getAttribute('data-font-size-index') as string, 10) || 0;
-		const increasedFontSizeIndex = currentIndex + 1;
+  function increaseFontSize(): void {
+    const container = document.querySelector('#container') as HTMLDivElement;
+    const proseContainer = document.querySelector('#prose-container') as HTMLDivElement;
 
-		if (increasedFontSizeIndex < tailwindFontSizes.length) {
-			const increasedFontSizeClass = tailwindFontSizes[increasedFontSizeIndex];
-			const increasedProseFontSizeClass = proseFontSizes[increasedFontSizeIndex];
+    const currentIndex = parseInt(container.getAttribute('data-font-size-index') as string, 10) || 0;
+    const increasedFontSizeIndex = currentIndex + 1;
 
-			container.classList.remove(tailwindFontSizes[currentIndex]);
-			container.classList.add(increasedFontSizeClass);
+    if (increasedFontSizeIndex < tailwindFontSizes.length) {
+      const increasedFontSizeClass = tailwindFontSizes[increasedFontSizeIndex];
+      const increasedProseFontSizeClass = proseFontSizes[increasedFontSizeIndex];
 
-			//proseContainer.classList.remove('prose');
-			proseContainer.classList.remove(proseFontSizes[currentIndex]);
-			proseContainer.classList.add(increasedProseFontSizeClass);
+      container.classList.remove(tailwindFontSizes[currentIndex]);
+      container.classList.add(increasedFontSizeClass);
 
-			container.setAttribute('data-font-size-index', increasedFontSizeIndex.toString());
-			storage.save('fontSize', increasedFontSizeIndex.toString());
-		} else {
-			const userFeedback: ToastSettings = {
-				message: 'Maximum font size reached.',
-				background: 'variant-filled-warning',
-				autohide: false
-			};
-			toastStore.trigger(userFeedback);
-		}
-	}
+      //proseContainer.classList.remove('prose');
+      proseContainer.classList.remove(proseFontSizes[currentIndex]);
+      proseContainer.classList.add(increasedProseFontSizeClass);
 
-	function decreaseFontSize(): void {
-		const container = document.querySelector('#container') as HTMLDivElement;
-		const proseContainer = document.querySelector('#prose-container') as HTMLDivElement;
+      container.setAttribute('data-font-size-index', increasedFontSizeIndex.toString());
+      storage.save('fontSize', increasedFontSizeIndex.toString());
+    } else {
+      const userFeedback: ToastSettings = {
+        message: 'Maximum font size reached.',
+        background: 'variant-filled-warning',
+        autohide: false
+      };
+      toastStore.trigger(userFeedback);
+    }
+  }
 
-		const currentIndex = parseInt(container.getAttribute('data-font-size-index') as string, 10) || 0;
-		const decreasedFontSizeIndex = currentIndex - 1;
+  function decreaseFontSize(): void {
+    const container = document.querySelector('#container') as HTMLDivElement;
+    const proseContainer = document.querySelector('#prose-container') as HTMLDivElement;
 
-		if (decreasedFontSizeIndex >= 0) {
-			const decreasedFontSizeClass = tailwindFontSizes[decreasedFontSizeIndex];
-			const decreasedProseFontSizeClass = proseFontSizes[decreasedFontSizeIndex];
+    const currentIndex = parseInt(container.getAttribute('data-font-size-index') as string, 10) || 0;
+    const decreasedFontSizeIndex = currentIndex - 1;
 
-			container.classList.remove(tailwindFontSizes[currentIndex]);
-			container.classList.add(decreasedFontSizeClass);
+    if (decreasedFontSizeIndex >= 0) {
+      const decreasedFontSizeClass = tailwindFontSizes[decreasedFontSizeIndex];
+      const decreasedProseFontSizeClass = proseFontSizes[decreasedFontSizeIndex];
 
-			//proseContainer.classList.remove('prose');
-			proseContainer.classList.remove(proseFontSizes[currentIndex]);
-			proseContainer.classList.add(decreasedProseFontSizeClass);
+      container.classList.remove(tailwindFontSizes[currentIndex]);
+      container.classList.add(decreasedFontSizeClass);
 
-			container.setAttribute('data-font-size-index', decreasedFontSizeIndex.toString());
-			storage.save('fontSize', decreasedFontSizeIndex.toString());
-		} else {
-			const userFeedback: ToastSettings = {
-				message: 'Minimum font size reached.',
-				background: 'variant-filled-warning',
-				autohide: false
-			};
-			toastStore.trigger(userFeedback);
-		}
-	}
+      //proseContainer.classList.remove('prose');
+      proseContainer.classList.remove(proseFontSizes[currentIndex]);
+      proseContainer.classList.add(decreasedProseFontSizeClass);
 
-	function resetFontSize(): void {
-		const container = document.querySelector('#container') as HTMLDivElement;
-		const proseContainer = document.querySelector('#prose-container') as HTMLDivElement;
+      container.setAttribute('data-font-size-index', decreasedFontSizeIndex.toString());
+      storage.save('fontSize', decreasedFontSizeIndex.toString());
+    } else {
+      const userFeedback: ToastSettings = {
+        message: 'Minimum font size reached.',
+        background: 'variant-filled-warning',
+        autohide: false
+      };
+      toastStore.trigger(userFeedback);
+    }
+  }
 
-		const currentIndex = parseInt(container.getAttribute('data-font-size-index') as string, 10) || 0;
+  function resetFontSize(): void {
+    const container = document.querySelector('#container') as HTMLDivElement;
+    const proseContainer = document.querySelector('#prose-container') as HTMLDivElement;
 
-		container.classList.remove(tailwindFontSizes[currentIndex]);
-		container.classList.add('text-base');
+    const currentIndex = parseInt(container.getAttribute('data-font-size-index') as string, 10) || 0;
 
-		proseContainer.classList.remove(proseFontSizes[currentIndex]);
-		proseContainer.classList.add('prose', 'prose-base');
+    container.classList.remove(tailwindFontSizes[currentIndex]);
+    container.classList.add('text-base');
 
-		container.setAttribute('data-font-size-index', '1');
-		storage.save('fontSize', '1');
-		const userFeedback: ToastSettings = {
-			message: 'Font size reset successfully',
-			background: 'variant-filled-success',
-			autohide: false
-		};
-		toastStore.trigger(userFeedback);
-	}
+    proseContainer.classList.remove(proseFontSizes[currentIndex]);
+    proseContainer.classList.add('prose', 'prose-base');
+
+    container.setAttribute('data-font-size-index', '1');
+    storage.save('fontSize', '1');
+    const userFeedback: ToastSettings = {
+      message: 'Font size reset successfully',
+      background: 'variant-filled-success',
+      autohide: false
+    };
+    toastStore.trigger(userFeedback);
+  }
 </script>
 
 <div>
-	<button class="btn hover:bg-primary-hover-token" use:popup={settings}> <i class="icon-f">settings</i></button>
+  <button class="btn hover:bg-primary-hover-token" use:popup={settings}>
+    <span class="material-icons">settings</span></button
+  >
 
-	<div class="card p-4 w-60 shadow-xl" data-popup="settings" id="settings-card">
-		<h3 class="h3 mb-3">Settings</h3>
-		<hr />
-		<div class="flex justify-between my-5">
-			<span>Theme</span>
-			<LightSwitch />
-		</div>
-		<div class="flex justify-between my-5">
-			<span class="p-1">Text</span>
-			<div class="flex gap-4">
-				<button class="btn hover:bg-primary-hover-token p-1" on:click={increaseFontSize}
-					><i class="icon-f">text_increase</i></button
-				>
-				<button class="btn hover:bg-primary-hover-token p-1" on:click={decreaseFontSize}
-					><i class="icon-f">text_decrease</i></button
-				>
-				<button class="btn hover:bg-primary-hover-token p-1" on:click={resetFontSize}>
-					<i class="icon-f">refresh</i></button
-				>
-			</div>
-		</div>
-	</div>
+  <div class="card p-4 w-60 shadow-xl" data-popup="settings" id="settings-card">
+    <h3 class="h3 mb-3">Settings</h3>
+    <hr />
+    <div class="flex justify-between my-5">
+      <span>Theme</span>
+      <LightSwitch />
+    </div>
+    <div class="flex justify-between my-5">
+      <span class="p-1">Text</span>
+      <div class="flex gap-4">
+        <button class="btn hover:bg-primary-hover-token p-1" on:click={increaseFontSize}
+          ><span class="material-icons">text_increase</span></button
+        >
+        <button class="btn hover:bg-primary-hover-token p-1" on:click={decreaseFontSize}
+          ><span class="material-icons">text_decrease</span></button
+        >
+        <button class="btn hover:bg-primary-hover-token p-1" on:click={resetFontSize}>
+          <span class="material-icons">refresh</span></button
+        >
+      </div>
+    </div>
+  </div>
 </div>

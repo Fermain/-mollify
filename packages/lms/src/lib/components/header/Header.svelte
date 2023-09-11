@@ -3,6 +3,7 @@
 	import Logo from './Logo.svelte';
 	import Search from './Search.svelte';
 	import Settings from './Settings.svelte';
+	import 'material-icons/iconfont/material-icons.css';
 
 	function drawerOpen(): void {
 		drawerStore.open();
@@ -13,7 +14,7 @@
 	<svelte:fragment slot="lead">
 		<div class="flex items-center">
 			<button class="lg:hidden btn btn-sm mr-4" on:click={drawerOpen}>
-				<i class="icon-f">menu</i>
+				<span class="material-icons">menu</span>
 			</button>
 			<Logo />
 		</div>

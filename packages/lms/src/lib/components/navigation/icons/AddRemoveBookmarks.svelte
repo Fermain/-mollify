@@ -5,6 +5,8 @@
 	import { page } from '$app/stores';
 	import { type Bookmark, addRemoveBookmarks } from '$lib/utils/bookmarking/AddRemove';
 	import { bookmarks } from '$lib/stores/bookmarks';
+	import 'material-icons/iconfont/material-icons.css';
+
 
 	let hasBookmarks = false;
 	let currentUrl = '';
@@ -40,9 +42,9 @@
 		on:click={(event) => onclick()}
 	>
 		{#if hasBookmarks}
-			<div class="app-rail-tile-icon"><i class="icon-f">bookmark_remove</i></div>
+		<span class="material-icons">bookmark_remove</span>
 		{:else}
-			<div class="app-rail-tile-icon"><i class="icon-f">bookmark_add</i></div>
+		<span class="material-icons">bookmark_add</span>
 		{/if}
 	</button>
 </div>

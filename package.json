@@ -17,6 +17,7 @@
     "lerna": "^6.6.1"
   },
   "dependencies": {
-    "dotenv": "^16.0.3"
+    "dotenv": "^16.0.3",
+    "material-icons": "^1.13.11"
   }
 }

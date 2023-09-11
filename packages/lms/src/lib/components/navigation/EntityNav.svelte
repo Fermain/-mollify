@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { EntityMeta } from '@mollify/types';
+	import 'material-icons/iconfont/material-icons.css';
 
 	export let entities: Array<EntityMeta> | EntityMeta = [];
 	$: _entities = Array.isArray(entities) ? entities : [entities];
@@ -20,7 +21,7 @@
 				</a>
 				{#if entity.children.length}
 					<button on:click={toggle} class="btn hover:bg-primary-hover-token p-0"
-						><i class="icon-f">{open ? 'expand_less' : 'expand_more'}</i></button
+						><span class="material-icons">{open ? 'expand_less' : 'expand_more'}</span></button
 					>
 				{/if}
 			</div>
