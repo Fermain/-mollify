@@ -15,6 +15,8 @@
   import EntityNav from '$lib/components/navigation/EntityNav.svelte';
   import { page } from '$app/stores';
 
+  import favicon from "../favicon.ico"
+
   export let data: LayoutData;
 
   const scrollIntoView = (node: HTMLElement) => {
@@ -27,6 +29,10 @@
     <EntityNav entities={data.sitemap} />
   </div>
 </Drawer>
+
+<svelte:head>
+  <link rel="icon" type="image/svg" href={favicon} />
+</svelte:head>
 
 <AppShell slotSidebarRight="bg-surface-500/5 w-0 lg:w-64">
   <svelte:fragment slot="header">
