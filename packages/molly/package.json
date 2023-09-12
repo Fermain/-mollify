@@ -46,6 +46,7 @@
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-svelte3": "^4.0.0",
 		"gpt-tokenizer": "^1.0.4",
+		"langchain": "^0.0.138",
 		"mdsvex": "^0.10.6",
 		"openai": "^3.2.1",
 		"postcss": "^8.4.23",
