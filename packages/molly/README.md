@@ -1,58 +1,45 @@
-# create-svelte
+# Mollify Molly
 
-Everything you need to build a Svelte library, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+## Description
 
-Read more about creating a library [in the docs](https://kit.svelte.dev/docs/packaging).
+Mollify Molly is an OpenAI-powered teaching assistant, designed to enhance the student learning experience by tapping into the lesson content to answer queries. The aim is to make learning more interactive and efficient with Molly's capabilities. We aim to expand Molly's functionalities to not only assist students but also teachers and content creators. In the pipeline, we have plans for Molly to aid in content creation with the Flow package. Its anticipated capabilities include facilitating the generation of quizzes and glossaries, thereby streamlining the course creation process. Furthermore, we also foresee Molly automating the creation of file frontmatter such as tags and summaries, leading to efficient management and categorization of course content. This could possibly even extend to automating the migration of content into the system, thereby streamlining the integration process.
 
-## Creating a project
+## Stack
 
-If you're seeing this, you've probably already done this step. Congrats!
+Core dependencies:
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+- Lerna
+- Sveltekit
+- TypeScript
+- Tailwind
+- Skeleton UI
+- Vite
+- OpenAI
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+### Usage
 
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-Everything inside `src/lib` is part of your library, everything inside `src/routes` can be used as a showcase or preview app.
-
-## Building
-
-To build your library:
+Run the Molly package independently:
 
 ```bash
-npm run package
+npm run molly-dev
 ```
 
-To create a production version of your showcase app:
+#### Individual package building
+
+Additional build commands if you only want to build a specific package:
 
 ```bash
-npm run build
+npm run molly-build
 ```
 
-You can preview the production build with `npm run preview`.
+## Contributing
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+Mollify CLI is an open-source project, and contributions are always welcome. If you'd like to contribute, please feel free to fork the repository, make your changes, and submit a pull request. For more information on contributing to this repository, please checkout the [Mollify Repository](https://github.com/Fermain/-mollify), and post a comment on the [sign up issue](https://github.com/Fermain/-mollify/issues/131).
 
-## Publishing
+## License
 
-Go into the `package.json` and give your package the desired name through the `"name"` option. Also consider adding a `"license"` field and point it to a `LICENSE` file which you can create from a template (one popular option is the [MIT license](https://opensource.org/license/mit/)).
+Copyright 2023 Oliver Dipple
 
-To publish your library to [npm](https://www.npmjs.com):
+Licensed under the Apache License, Version 2.0 (the "License");
 
-```bash
-npm publish
-```
+http://www.apache.org/licenses/LICENSE-2.0
