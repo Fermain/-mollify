@@ -49,7 +49,7 @@
   <svelte:fragment slot="footer"
     ><Footer>
       <Reader />
-      <div class="flex-1"></div>
+      <div class="flex-1" />
       <Molly endpoint="/api/molly" />
     </Footer>
   </svelte:fragment>
