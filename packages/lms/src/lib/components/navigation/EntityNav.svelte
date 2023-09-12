@@ -50,6 +50,20 @@
       }, 300); // Adjust the animation duration as needed
     }
   }
+
+  // Mapping entity types to representations
+  const entityRepresentations = {
+    'Assessment': 'Task',
+    'Lesson': 'Article',
+    'Module': 'Layers',
+    'Course': 'Book',
+    // Add more mappings as needed
+  };
+
+  // Function to get the representation for an entity
+  function getEntityRepresentation(entity: EntityMeta) {
+    return entityRepresentations[entity.type] || 'Folder';
+  }
 </script>
 
 {#each _entities as entity}
