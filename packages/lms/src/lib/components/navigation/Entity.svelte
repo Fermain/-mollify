@@ -12,11 +12,14 @@
         'Assessment': 'Task',
         'Lesson': 'Article',
         'Module': 'Layers',
-        'Course': 'Book',
+        'Course': 'Book_5',
         'Programme': 'Folder',
         'Institution': 'School'
     }
-    let icon = entityIcons[typeOfEntity] || '';
+	let icon = entityIcons[typeOfEntity] || 'Folder';
+	if (entity.children.length === 0 && !entityIcons[typeOfEntity]) {
+		icon = "Article"
+	}
 
 	function toggle() {
 		open = !open;
@@ -27,7 +30,7 @@
 	<div class="entity-inner">
 		<div class="entity-header hover:bg-primary-hover-token rounded-container-token p-2">
             <a href={entity.browserPath} on:click={drawerClose} class="entity-title flex flex-row items-center">
-                <i class="icon-f p-2">{icon}</i>
+				<i class="icon-f p-2">{icon}</i>
                 <p>{entity.title}</p>
 			</a>
 			{#if entity.children.length}
@@ -61,7 +64,7 @@
 		}
 
 		&-children {
-			padding-left: 1.7rem;
+			padding-left: 0.5rem;
 
 			&:not(.open) {
 				display: none;
