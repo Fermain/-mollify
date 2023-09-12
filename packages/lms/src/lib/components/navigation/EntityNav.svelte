@@ -45,6 +45,33 @@
   }
 </script>
 
+{#each _entities as entity}
+  <nav class="entity" tabindex="0">
+    <div class="entity-inner">
+      <div
+        class="entity-header hover:bg-primary-hover-token rounded-container-token p-2"
+        on:click={() => toggle(entity.id)}
+      >
+        <a href={entity.browserPath} class="entity-title">
+          {entity.title}
+        </a>
+        {#if entity.children.length}
+          <button class="btn hover:bg-primary-hover-token p-0">
+            <i class="icon-f">{openStates[entity.id] ? 'expand_less' : 'expand_more'}</i>
+          </button>
+        {/if}
+      </div>
+      {#if entity.children.length}
+        <div class="entity-children" class:open={$openStates[entity.id]}>
+          {#each entity.children as child}
+            <svelte:self entities={child} />
+          {/each}
+        </div>
+      {/if}
+    </div>
+  </nav>
+{/each}
+
 <style lang="scss">
   .entity {
     &-header {
@@ -69,36 +96,3 @@
     }
   }
 </style>
-
-{#each _entities as entity}
-  <nav
-    class="entity"
-    tabindex="0"
-  >
-    <div class="entity-inner">
-      <div
-        class="entity-header hover:bg-primary-hover-token rounded-container-token p-2"
-        on:click={() => toggle(entity.id)}
-      >
-        <a href={entity.browserPath} class="entity-title">
-          {entity.title}
-        </a>
-        {#if entity.children.length}
-          <button class="btn hover:bg-primary-hover-token p-0">
-            <i class="icon-f">{openStates[entity.id] ? 'expand_less' : 'expand_more'}</i>
-          </button>
-        {/if}
-      </div>
-      {#if entity.children.length}
-        <div
-          class="entity-children"
-          class:open={$openStates[entity.id]}
-        >
-          {#each entity.children as child}
-            <svelte:self entities={child} />
-          {/each}
-        </div>
-      {/if}
-    </div>
-  </nav>
-{/each}
