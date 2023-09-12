@@ -1,32 +1,29 @@
 import {
 	Configuration,
 	OpenAIApi,
-	type CreateChatCompletionRequest,
 	type ChatCompletionRequestMessage
 } from 'openai';
-import { createChatCompletionResponse } from './features/chatCompletion';
 import type { RequestHandler } from '../../../routes/$types';
 import { isWithinTokenLimit } from 'gpt-tokenizer';
 import { error } from '@sveltejs/kit';
 import prompts from './prompts';
+import { CallbackManager } from "langchain/callbacks";
+import { ChatOpenAI } from "langchain/chat_models/openai";
+import { BaseMessage, HumanMessage, SystemMessage, AIMessage } from "langchain/schema";
 
 const TEMP_USER = "Ask the student for their name."
 const TEMP_CONTENT = "Ask the student for their question."
 
 export default class MollyAI {
-	token: string;
+	openaiApiKey: string;
 	configuration: Configuration;
 	api: OpenAIApi;
 
 	constructor(openaiApiKey: string, private tokenLimit: number | string) {
 		this.tokenLimit = Number(tokenLimit);
-		this.token = openaiApiKey;
-		this.configuration = new Configuration({ apiKey: this.token });
+		this.openaiApiKey = openaiApiKey;
+		this.configuration = new Configuration({ apiKey: this.openaiApiKey });
 		this.api = new OpenAIApi(this.configuration);
-	}
-
-	async createChatCompletion(options: CreateChatCompletionRequest) {
-		return await createChatCompletionResponse(this.token, options);
 	}
 
 	async flagged(input: string) {
@@ -48,65 +45,76 @@ export default class MollyAI {
 	} = {
 			chatCompletion: {
 				POST: async ({ request }) => {
-					throw error(405, 'Method Not Allowed')
-				},
-				GET: async ({ request }) => {
-					const LIMIT = Number(this.token);
+					const body = await request.json()
 
 					try {
-						const url = new URL(request.url);
-						const messagesParam = url.searchParams.get('messages');
-						const contentParam = url.searchParams.get('content');
-						const nameParam = url.searchParams.get('name');
+						// validation				
+						const { messages, query, documentContent, name }: {
+							messages: ChatCompletionRequestMessage[],
+							query: string,
+							documentContent: string,
+							name: string
+						} = body
 
-						if (!messagesParam) {
-							return new Response('Bad Request: No messages provided', { status: 400 });
-						}
+						if (!query) return new Response('Bad Request: No query provided', { status: 400 });
 
-						const messages: Array<ChatCompletionRequestMessage> = JSON.parse(messagesParam);
-						const tokenCount = isWithinTokenLimit(messages.join('\n'), Number(this.tokenLimit));
+						const tokenCount = isWithinTokenLimit(query, Number(this.tokenLimit));
+						if (!tokenCount) return new Response('Bad Request: Query too large', { status: 400 });
 
-						if (!tokenCount) {
-							return new Response('Bad Request: Query too large', { status: 400 });
-						}
+						const isFlagged = await this.flagged(documentContent + query);
+						if (isFlagged) return new Response('Bad Request: Query flagged by openai', { status: 400 });
 
-						const lastMessage = messagesParam;
-						const isFlagged = await this.flagged(lastMessage);
+						const assistantPrompt = prompts.assistant(documentContent || TEMP_CONTENT, name || TEMP_USER);
 
-						if (isFlagged) {
-							return new Response('Bad Request: Query flagged by openai', { status: 400 });
-						}
+						const recentChatHistory: BaseMessage[] = []
+						messages.slice(-4).forEach(msg => {
+							if (msg.role === 'assistant') return recentChatHistory.push(new AIMessage(String(msg.content)))
+							if (msg.role === 'user') return recentChatHistory.push(new HumanMessage(String(msg.content)))
+							recentChatHistory.push(new SystemMessage(String(msg.content)))
+						})
 
-						const role = 'system';
-						const content = prompts.assistant(contentParam || TEMP_CONTENT, nameParam || TEMP_USER);
-						const totalTokenCount = isWithinTokenLimit(content, LIMIT - tokenCount);
+						// current limit is to low for content. commenting this part out until we can agree to a specific content limit
 
-						if (!totalTokenCount) {
-							return new Response('Bad Request: Query too large', { status: 400 });
-						}
+						// const LIMIT = Number(this.tokenLimit);
+						// const totalTokenCount = isWithinTokenLimit(assistantPrompt, LIMIT - tokenCount);
+						// if (!totalTokenCount) return new Response('Bad Request: Query too large', { status: 400 });
 
-						messages.unshift({ role, content });
+						const key = this.openaiApiKey
+						const readableStream = new ReadableStream({
+							async start(controller) {
+								const chat = new ChatOpenAI({
+									openAIApiKey: key,
+									modelName: "gpt-4",
+									streaming: true,
+									temperature: 0.9,
+									callbacks: CallbackManager.fromHandlers({
+										handleLLMNewToken: async (token: string) => controller.enqueue(token),
+									}),
+								});
 
-						const chatRequestOpts: CreateChatCompletionRequest = {
-							model: 'gpt-4',
-							messages,
-							temperature: 0.9,
-							stream: true
-						};
+								await chat.call([
+									new SystemMessage(assistantPrompt),
+									...recentChatHistory,
+									new HumanMessage(query)
+								]);
 
-						const chatResponse = await this.createChatCompletion(chatRequestOpts);
-
-						return new Response(chatResponse.body, {
-							headers: {
-								'Content-Type': 'text/event-stream'
-							}
+								controller.close();
+							},
 						});
+
+						// Create and return a response of the readable stream
+						return new Response(readableStream, {
+							headers: { 'Content-Type': 'text/plain' },
+						});
+
 					} catch (err) {
 						console.error(err);
 						return new Response('Internal Server Error: There was an error processing your request', { status: 500 });
 					}
+				},
+				GET: async ({ request }) => {
+					throw error(405, "Method Not Allowed");
 				}
-
 			}
 		};
 }
