@@ -7,21 +7,16 @@
         drawerStore.close();
     }
     let typeOfEntity = entity.type;
-    let icon = '';
-
-    if (typeOfEntity === 'Assessment') {
-        icon = 'Task'
-    } else if (typeOfEntity === 'Lesson') {
-        icon = 'Article'
-    } else if (typeOfEntity === 'Module') {
-        icon = 'Layers'
-    } else if (typeOfEntity === 'Course') {
-        icon = 'Book'
-    } else if (typeOfEntity === 'Programme') {
-        icon = 'Folder'
-    } else if (typeOfEntity === 'Institution') {
-        icon = 'School'
+    
+    const entityIcons = {
+        'Assessment': 'Task',
+        'Lesson': 'Article',
+        'Module': 'Layers',
+        'Course': 'Book',
+        'Programme': 'Folder',
+        'Institution': 'School'
     }
+    let icon = entityIcons[typeOfEntity] || '';
 
 	function toggle() {
 		open = !open;
