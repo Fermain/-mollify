@@ -31,7 +31,7 @@
 	<label for="userText">Ask Molly</label>
 		<div class="flex input-group sm:input-group-divider sm:grid-cols-[1fr_auto] rounded">
 			<textarea bind:value={query}
-			class="block bg-slate-100 dark:bg-slate-200 rounded-none p-1 text-black"
+			class="textarea bg-slate-100 dark:bg-slate-200 rounded-none p-1 text-black"
 			placeholder="Your Query"
 			id="userText"
 			on:keypress={(event) => handleKeyPress(event)} />
