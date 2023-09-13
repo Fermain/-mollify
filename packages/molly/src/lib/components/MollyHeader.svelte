@@ -17,10 +17,10 @@
 				<Logo/>
 			</div>
 			
-			<h4 class="self-center text-lg font-medium">Ask Molly</h4>
+			<!-- <h4 class="self-center text-lg font-medium">Ask Molly</h4> -->
 		</div>
 		<button on:click={onClick} class="btn-icon btn-icon-xl rounded h-8 w-8 variant-filled-primary">
-			<img src={img} alt="close chat" class="h-8 w-8"/>
+			<img src={img} alt="hide chat" class="h-8 w-8"/>
 		</button>
 	</div>
 	
