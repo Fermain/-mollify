@@ -30,7 +30,7 @@
 	<form on:submit|preventDefault={() => handleSubmit()} 
 class="flex input-group sm:input-group-divider sm:grid-cols-[1fr_auto] rounded">
 		<textarea bind:value={query}
-		class="textarea hidden sm:block bg-slate-100 dark:bg-slate-200 rounded-none p-1 text-black"
+		class="block bg-slate-100 dark:bg-slate-200 rounded-none p-1 text-black"
 		placeholder="Write here..."
 		on:keypress={(event) => handleKeyPress(event)} />
 		<button type="submit" class="btn variant-filled-primary rounded-none">
