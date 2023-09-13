@@ -12,7 +12,7 @@
     "test:unit": "vitest",
     "lint": "prettier --plugin-search-dir . --check . && eslint . && markdownlint-cli2 '**/*.md'",
     "lint:fix": "prettier --plugin-search-dir . --write . && eslint . --fix && markdownlint-cli2 '**/*.md' --fix",
-    "format": "prettier --plugin-search-dir . --write ."
+    "format": "prettier --plugin='prettier-plugin-svelte' --write ."
   },
   "type": "module",
   "dependencies": {
