@@ -8,7 +8,8 @@
 
 </script>
 
-<div class="messages-container h-80 bg-slate-200 dark:bg-slate-300 overflow-y-auto flex flex-col justify-end">
+<div class="messages-container h-80 bg-slate-200 dark:bg-slate-300 flex flex-col-reverse overflow-y-auto">
+<div class="wrapper">
 	{#each messages as message}
 		<MollyMessage {message} />
 	{/each}
@@ -28,4 +29,5 @@
 			}}
 		/>
 	{/if}
+</div>
 </div>
