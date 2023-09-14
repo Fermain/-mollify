@@ -1,8 +1,8 @@
 <script lang="ts">
-	import MollyMessage from '$lib/components/MollyMessage.svelte';
 	import type { ChatCompletionRequestMessage as Message } from 'openai';
 	import MollyButton from './MollyButton.svelte';
 	import MollyForm from './MollyForm.svelte';
+	import MollyMessages from './MollyMessages.svelte';
 	import { readableStreamStore } from '../stores/readableStream';
 
 	let query: string = '';
@@ -59,27 +59,7 @@
 
 <MollyButton>
 	<div class="h-full grid grid-rows-[1fr_auto] border border-slate-400">
-		<div class="messages-container h-80 bg-slate-200 dark:bg-slate-300 overflow-y-auto flex flex-col justify-end">
-			{#each messages as message}
-				<MollyMessage {message} />
-			{/each}
-			{#if answer}
-				<MollyMessage
-					message={{
-						role: 'assistant',
-						content: answer
-					}}
-				/>
-			{/if}
-			{#if loading}
-				<MollyMessage
-					message={{
-						role: 'assistant',
-						content: 'Thinking...'
-					}}
-				/>
-			{/if}
-		</div>
+		<MollyMessages {loading} {messages} {answer}/>
 		<MollyForm
 			on:userSubmit={(e) => {
 				query = e.detail;

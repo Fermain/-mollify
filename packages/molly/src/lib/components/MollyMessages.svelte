@@ -2,12 +2,13 @@
 	import type { ChatCompletionRequestMessage as Message } from 'openai';
 	import MollyMessage from './MollyMessage.svelte';
 
-	export const messages = new Array<Message>();
+	export let messages: Message[];
 	export let answer: string;
 	export let loading: boolean;
+
 </script>
 
-<div class="messages-container h-80 bg-slate-200 dark:bg-slate-300 overflow-y-auto">
+<div class="messages-container h-80 bg-slate-200 dark:bg-slate-300 overflow-y-auto flex flex-col justify-end">
 	{#each messages as message}
 		<MollyMessage {message} />
 	{/each}
