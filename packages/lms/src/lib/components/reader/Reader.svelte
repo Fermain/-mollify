@@ -8,8 +8,6 @@
   import { popup, toastStore } from '@skeletonlabs/skeleton';
   import type { PopupSettings } from '@skeletonlabs/skeleton';
   import type { ToastSettings } from '@skeletonlabs/skeleton';
-  import 'material-icons/iconfont/material-icons.css';
-  import Icon from '../ui/Icon.svelte';
 
   let hasAudio = false;
   let isContent = false;
@@ -17,7 +15,7 @@
   let path = '';
   let content = '';
   let slug = '';
-  let isloading = false;
+  let isLoading = false;
   function updatePath() {
     path = browser ? window.location.pathname.replaceAll(`%20`, ' ') : '';
   }
@@ -73,9 +71,9 @@
 
   // Regenerate/create the audio file for the current page content
   async function regenerateAudio() {
-    isloading = true;
+    isLoading = true;
 
-    if (isloading) {
+    if (isLoading) {
       const userFeedback: ToastSettings = {
         message: 'Creating Audio File...',
         background: 'variant-filled-warning',
@@ -86,9 +84,8 @@
 
     const filepath = path;
     const data = await createAudio(content, slug, filepath, hasAudio);
-    audio.set(data);
-    audioSrc = data.url;
-    isloading = false;
+
+    isLoading = false;
     if (data.error) {
       const userFeedback: ToastSettings = {
         message: data.error,
@@ -97,12 +94,16 @@
       };
       toastStore.trigger(userFeedback);
     } else {
+      audio.update((oldAudio) => data);
+      audioSrc = data.url;
+
       const userFeedback: ToastSettings = {
         message: 'Success! Audio file created.',
         background: 'variant-filled-success',
         autohide: true
       };
       hasAudio = true;
+
       toastStore.trigger(userFeedback);
     }
   }
@@ -122,11 +123,13 @@
 <div class="flex w-full justify-between items-center">
   {#if path.startsWith('/content')}
     <div>
-      <button class="btn hover:bg-primary-hover-token" use:popup={audioSettings}> <Icon iconName="settings" /></button>
+      <button class="btn hover:bg-primary-hover-token" use:popup={audioSettings}>
+        <i class="icon-f">settings</i></button
+      >
       <div class="card p-4 w-60 shadow-xl" data-popup="audioSettings" id="settings-card">
         <h3 class="h3 mb-3">Audio Settings</h3>
         <hr />
-        {#if hasAudio && !isloading}
+        {#if hasAudio && !isLoading}
           <button on:click={regenerateAudio} class="my-5 btn hover:bg-primary-hover-token p-1"
             >Regenerate Audio File</button
           >
@@ -137,8 +140,8 @@
       </div>
     </div>
   {/if}
-  {#if audioSrc}
-    <audio src={audioSrc} controls class="w-full" />
+  {#if hasAudio}
+    <audio src="/public/{audioSrc}" controls class="w-full" />
   {/if}
 </div>
 

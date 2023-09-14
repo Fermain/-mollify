@@ -5,7 +5,6 @@
   import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
   import * as storage from '../../utils/storage/index';
   import { onMount } from 'svelte';
-
   import Icon from '../ui/Icon.svelte';
 
   storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });

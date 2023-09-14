@@ -13,8 +13,8 @@
 
   //these handle keyboard navigation
   //set to -1 so that the user can select the first search suggestion which in an array would be 0
-  let selection: number = -1;
-  let pathToNavigateTo: string = '';
+  let selection = -1;
+  let pathToNavigateTo = '';
 
   interface SearchResultItem {
     title: string;
