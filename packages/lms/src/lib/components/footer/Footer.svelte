@@ -1,3 +1,3 @@
 <footer class="flex gap-1 bg-surface-100-800-token">
-	<slot />
+  <slot />
 </footer>
