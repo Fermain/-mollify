@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
-	import sendChat from './icons/paper-plane.svg'
+	// import sendChat from './icons/paper-plane.svg'
   
-	export let img: string = sendChat;
+	// export let img:string = sendChat;
 
 	let query: string = "";
 	const dispatch = createEventDispatcher();
@@ -27,7 +27,7 @@
 </script>
 
 <div class="bg-surface-100-800-token border-t border-slate-400 p-4 drop-shadow-md">
-	<form on:submit|preventDefault={() => handleSubmit()} >
+	<form >
 	<label for="userText">Ask Molly</label>
 		<div class="flex input-group sm:input-group-divider sm:grid-cols-[1fr_auto] rounded">
 			<textarea bind:value={query}
@@ -35,8 +35,8 @@
 			placeholder="Your Query"
 			id="userText"
 			on:keypress={(event) => handleKeyPress(event)} />
-			<button type="submit" class="btn variant-filled-primary rounded-none">
+			<!-- <button type="submit" class="btn variant-filled-primary rounded-none">
 				<img src={img} alt="send message" class="h-6 w-6"/>
-			</button>
+			</button> -->
 		</div>
 </form></div>
