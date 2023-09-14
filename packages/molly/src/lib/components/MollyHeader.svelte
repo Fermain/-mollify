@@ -14,7 +14,6 @@ export let toggleMollyOpen:()=>void;
 				<Logo/>
 			</div>
 			
-			<!-- <h4 class="self-center text-lg font-medium">Ask Molly</h4> -->
 		</div>
 		<button on:click={toggleMollyOpen} class="btn-icon btn-icon-xl rounded h-8 w-8 variant-filled-primary">
 			<img src={img} alt="hide chat" class="h-8 w-8"/>

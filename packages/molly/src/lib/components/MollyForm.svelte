@@ -1,16 +1,8 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
-	// import sendChat from './icons/paper-plane.svg'
-  
-	// export let img:string = sendChat;
 
 	let query: string = "";
 	const dispatch = createEventDispatcher();
-
-	function handleSubmit() {
-		dispatch('userSubmit', query);
-		query = "";
-	}
 
 	function handleKeyPress(event:KeyboardEvent) {
 		//if statement to prevent empty query to be submitted
@@ -20,7 +12,8 @@
 		//enable press Enter submit and Shit+Enter line break
 		if(query.length > 0 && event.key === 'Enter' && !event.shiftKey){
 			event.preventDefault()
-			handleSubmit()
+			dispatch('userSubmit', query);
+			query = "";
 		}}
 }
 
@@ -35,8 +28,5 @@
 			placeholder="Your Query"
 			id="userText"
 			on:keypress={(event) => handleKeyPress(event)} />
-			<!-- <button type="submit" class="btn variant-filled-primary rounded-none">
-				<img src={img} alt="send message" class="h-6 w-6"/>
-			</button> -->
 		</div>
 </form></div>
