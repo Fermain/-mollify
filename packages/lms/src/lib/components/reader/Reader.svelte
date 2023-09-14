@@ -8,6 +8,7 @@
   import { popup, toastStore } from '@skeletonlabs/skeleton';
   import type { PopupSettings } from '@skeletonlabs/skeleton';
   import type { ToastSettings } from '@skeletonlabs/skeleton';
+  import Icon from '../ui/Icon.svelte';
 
   let hasAudio = false;
   let isContent = false;
@@ -124,7 +125,7 @@
   {#if path.startsWith('/content')}
     <div>
       <button class="btn hover:bg-primary-hover-token" use:popup={audioSettings}>
-        <i class="icon-f">settings</i></button
+        <Icon iconName="settings" /></button
       >
       <div class="card p-4 w-60 shadow-xl" data-popup="audioSettings" id="settings-card">
         <h3 class="h3 mb-3">Audio Settings</h3>
