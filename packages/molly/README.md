@@ -16,20 +16,28 @@ Core dependencies:
 - Vite
 - OpenAI
 
-### Usage
+## Getting Started
 
-Run the Molly package independently:
+Follow these steps if you want to use Molly package independently.
+
+1. Installing
 
 ```bash
-npm run molly-dev
+npm install @mollify/molly
 ```
 
-#### Individual package building
+2. Create a .env in the root
 
-Additional build commands if you only want to build a specific package:
+```
+OPENAI_API_KEY=YOUR_KEY
+OPENAI_TOKEN_LIMIT=1000
+```
+
+3. Running the package
 
 ```bash
-npm run molly-build
+npm run build
+npm run dev
 ```
 
 ## Contributing
