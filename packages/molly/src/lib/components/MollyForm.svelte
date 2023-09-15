@@ -19,7 +19,7 @@
 
 </script>
 
-<div class="bg-surface-100-800-token border-t border-slate-400 p-4 drop-shadow-md">
+<div class="bg-surface-100-800-token border-t border-slate-400 p-4 drop-shadow-md h-min bottom-0 w-full">
 	<form >
 	<label for="userText">Ask Molly</label>
 		<div class="flex input-group sm:input-group-divider sm:grid-cols-[1fr_auto] rounded">

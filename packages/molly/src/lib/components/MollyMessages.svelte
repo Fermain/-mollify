@@ -8,7 +8,7 @@
 
 </script>
 
-<div class="messages-container h-80 bg-slate-200 dark:bg-slate-300 flex flex-col-reverse overflow-y-auto">
+<div class="messages-container bg-slate-200 dark:bg-slate-300 flex flex-col-reverse overflow-y-scroll h-full">
 	<div class="wrapper">
 		{#each messages as message}
 			<MollyMessage {message} />

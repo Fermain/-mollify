@@ -1,13 +1,15 @@
 <script lang="ts">
 	import type { ChatCompletionRequestMessage as Message } from 'openai';
+	import { readableStreamStore } from '../stores/readableStream';
 	import MollyButton from './MollyButton.svelte';
 	import MollyForm from './MollyForm.svelte';
 	import MollyMessages from './MollyMessages.svelte';
-	import { readableStreamStore } from '../stores/readableStream';
+	import MollyHeader from './MollyHeader.svelte';
 
 	let query: string = '';
 	let answer: string = '';
 	let loading: boolean = false;
+	let isOpen:boolean = false;
 	let messages = new Array<Message>();
 	export let endpoint = '/';
 
@@ -55,16 +57,39 @@
 		query = '';
 		answer = '';
 	}
+
+	export function toggleMollyOpen(){
+		isOpen = !isOpen;	
+	}
+
 </script>
 
-<MollyButton>
-	<div class="h-full grid grid-rows-[1fr_auto] border border-slate-400">
-		<MollyMessages {loading} {messages} {answer}/>
-		<MollyForm
-			on:userSubmit={(e) => {
-				query = e.detail;
-				handleSubmit();
-			}}
-		/>
+<div>
+	<MollyButton {toggleMollyOpen}/>
+	{#if isOpen}
+	<div class="chat-container fixed bottom-0 right-0 w-80 drop-shadow-md h-96">
+		<div class="inner flex flex-col border border-slate-400 h-full ">
+			<MollyHeader {toggleMollyOpen}/>
+			<MollyMessages {loading} {messages} {answer}/>
+			<MollyForm
+					on:userSubmit={(e) => {
+						query = e.detail;
+						handleSubmit();
+					}}
+				/>
+			</div>
 	</div>
-</MollyButton>
+	{/if}
+</div>
+
+<style>
+.chat-container{
+transform: rotateZ(180deg); /* Positioning resize to top left corner */
+resize: both;
+overflow: auto;
+}
+
+.inner{
+	transform: rotateZ(180deg);
+}
+</style>

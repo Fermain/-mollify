@@ -8,15 +8,17 @@ export let toggleMollyOpen:()=>void;
 
 </script>
 
-	<div class="flex p-2 h-13 bg-surface-100-800-token border border-slate-400">
+	<div class="flex p-2 bg-surface-100-800-token border border-slate-400 h-min w-full">
 		<div class="flex-1 flex self-center gap-2">
+			
+			<!-- // Resize btn goes here....
 			<div class="flex-0 w-8">
-				<Logo/>
-			</div>
+					<img src={img} alt="resize" class="h-8 w-8"/>
+			</div> -->
 			
 		</div>
-		<button on:click={toggleMollyOpen} class="btn-icon btn-icon-xl rounded h-8 w-8 variant-filled-primary">
-			<img src={img} alt="hide chat" class="h-8 w-8"/>
+		<button on:click={toggleMollyOpen} class="flex-0 w-8" aria-label="hide chat box">
+			<Logo/>
 		</button>
 	</div>
 	
