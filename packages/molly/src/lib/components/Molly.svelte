@@ -62,12 +62,18 @@
 		isOpen = !isOpen;	
 	}
 
+function closeMollyOnPressEsc(event:KeyboardEvent){
+	if(event?.key === "Escape"){
+		isOpen = false
+	}
+}
 </script>
 
 <div>
 	<MollyButton {toggleMollyOpen}/>
 	{#if isOpen}
-	<div class="chat-container fixed bottom-0 right-0 w-80 drop-shadow-md h-96">
+	<div class="chat-container fixed bottom-0 right-0 w-80 drop-shadow-md h-96"
+	on:keydown={(event)=>closeMollyOnPressEsc(event)}>
 		<div class="inner flex flex-col border border-slate-400 h-full ">
 			<MollyHeader {toggleMollyOpen}/>
 			<MollyMessages {loading} {messages} {answer}/>
