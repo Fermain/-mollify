@@ -16,7 +16,7 @@
   <nav class="entity">
     <div class="entity-inner">
       <div class="entity-header hover:bg-primary-hover-token rounded-container-token p-2">
-        <a href={entity.browserPath} class="entity-title" data-sveltekit-reload>
+        <a href={entity.browserPath} class="entity-title">
           {entity.title}
         </a>
         {#if entity.children.length}

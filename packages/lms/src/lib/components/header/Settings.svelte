@@ -5,6 +5,8 @@
   import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
   import * as storage from '../../utils/storage/index';
   import { onMount } from 'svelte';
+  import { wordEmphasisEnabled } from '$lib/stores/wordEmphasis';
+  import { toggleWordEmphasis } from '$lib/utils/settings/wordEmphasis/toogle';
 
   storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
 
@@ -13,8 +15,6 @@
     target: 'settings',
     placement: 'bottom'
   };
-
-  let wordEmphasis: boolean;
 
   // The 'tailwindFontSizes' don't work with the typography plugin. HTML elements that we controll will use 'tailwindFontSizes', and HTML we don't controll will use 'proseFontSizes'. Both arrays share sizes and indexes to facilitate shared localStorage code.
   const tailwindFontSizes: string[] = ['text-sm', 'text-base', 'text-lg', 'text-xl', 'text-2xl'];
@@ -45,11 +45,6 @@
       proseContainer.classList.add(savedProseFontSizeClass);
     }
     container.setAttribute('data-font-size-index', storedFontSize.toString());
-
-    //Get word emphasis data from local storage and apply the feature if data returns true
-    const isWordEmphasisSaved = storage.load('wordEmphasis');
-    wordEmphasis = isWordEmphasisSaved || false;
-    wordEmphasis ? applyWordEmphasis() : removeWordEmphasis();
   });
 
   function increaseFontSize(): void {
@@ -133,65 +128,6 @@
     };
     toastStore.trigger(userFeedback);
   }
-
-  //Handles bionic reading
-  function toggleWordEmphasis() {
-    if (wordEmphasis) {
-      wordEmphasis = false;
-      removeWordEmphasis();
-    } else {
-      wordEmphasis = true;
-      applyWordEmphasis();
-    }
-  }
-
-  function toBold(word: string): string {
-    const wordSplit = word.split('');
-    const toBold = Math.floor(word.length / 2);
-    return `<b>${wordSplit.slice(0, toBold).join('')}</b>${wordSplit.slice(toBold, word.length).join('')} `;
-  }
-
-  /* To maintain the original HTML structure as much as possible, the code processes individual nodes. This approach accommodates the complex nature of Markdown text, which can generate multiple HTML elements, each with its hierarchy. Word emphasis is selectively applied to text within paragraphs (<p>) and list items (<li>), while it avoids applying emphasis to headings (<hn>), links (<a>), and code blocks (<code>) to preserve their distinct styling.*/
-  function applyWordEmphasis(): void {
-    const textContainer = document.querySelector('#content') as HTMLDivElement;
-
-    for (const child of textContainer.children) {
-      child.childNodes.forEach((childNode) => {
-        if (childNode.parentNode?.nodeName === 'P' && childNode.nodeType === Node.TEXT_NODE) {
-          const edited: string[] = [];
-          const textNode = childNode as Text;
-          const words = textNode.textContent?.split(' ');
-
-          words?.forEach((word: string) => {
-            const editedWord = toBold(word);
-            edited.push(editedWord);
-          });
-
-          const span = document.createElement('span');
-          span.innerHTML = edited.join(' ');
-          textNode.parentNode?.replaceChild(span, textNode);
-        } else if (childNode.nodeName === 'LI') {
-          const edited: string[] = [];
-          const htmlElement = childNode as HTMLElement;
-          const words = htmlElement.innerText.split(' ');
-
-          words.forEach((word: string) => {
-            const editedWord = toBold(word);
-            edited.push(editedWord);
-            htmlElement.innerHTML = edited.join(' ');
-          });
-        }
-      });
-    }
-
-    storage.save('wordEmphasis', true);
-  }
-
-  function removeWordEmphasis() {
-    const textContainer = document.querySelector('#content') as HTMLDivElement;
-    console.log(textContainer);
-    storage.save('wordEmphasis', false);
-  }
 </script>
 
 <div>
@@ -221,7 +157,7 @@
     <div class="flex justify-between my-5">
       <span class="p-1">Word emphasis</span>
       <div class="flex gap-4">
-        <SlideToggle name="slide" size="sm" bind:checked={wordEmphasis} on:click={toggleWordEmphasis} />
+        <SlideToggle name="slide" size="sm" {$wordEmphasisEnabled} on:click={toggleWordEmphasis} />
       </div>
     </div>
   </div>
