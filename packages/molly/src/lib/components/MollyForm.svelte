@@ -19,17 +19,15 @@
 
 </script>
 
-<div class="bg-surface-100-800-token border-t border-slate-400 px-4 pt-2 drop-shadow-md h-min bottom-0 w-full">
-	<form >
-<label for="userText">Ask Molly</label>
-		<div class="flex input-group sm:input-group-divider sm:grid-cols-[1fr_auto] rounded">
-			<textarea bind:value={query}
-			class="textarea bg-slate-100 dark:bg-slate-200 rounded-none p-1 text-black"
-			placeholder="Your Query"
-			id="userText"
-			on:keypress={(event) => handleKeyPress(event)} 
-			autofocus
-			/>
-		</div>
-		<small class="text-slate-400 text-right block">Enter to send. Shift + Enter for new line.</small>
+<div class="text-surface-800 dark:text-white bg-surface-100-800-token border-t border-slate-400 px-4 pt-2 drop-shadow-md bottom-0 w-full">
+	<form class="h-full">
+		<label for="userText">Ask Molly</label>
+		<textarea bind:value={query}
+		class="textarea bg-slate-100 dark:bg-slate-200 rounded-none p-1 text-black"
+		placeholder="Your Query"
+		id="userText"
+		on:keypress={(event) => handleKeyPress(event)} 
+		autofocus
+		/>
+		<small class=" dark:text-slate-400 text-right block">Enter to send. Shift + Enter for new line.</small>
 </form></div>
