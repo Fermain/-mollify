@@ -17,7 +17,7 @@ export let toggleMollyOpen:()=>void;
 			</div> -->
 			
 		</div>
-		<button on:click={toggleMollyOpen} class="flex-0 w-8" aria-label="hide chat box">
+		<button on:click={toggleMollyOpen} class="btn-icon drop-shadow-md hover:drop-shadow-lg" aria-label="hide chat box">
 			<Logo/>
 		</button>
 	</div>

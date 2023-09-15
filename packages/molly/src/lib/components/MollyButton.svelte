@@ -5,7 +5,7 @@
 export let toggleMollyOpen:()=>void;
 </script>
 
-<button on:click={toggleMollyOpen} class="btn-icon btn-icon-xl drop-shadow-md aspect-1">
+<button on:click={toggleMollyOpen} class="btn-icon btn-icon-xl drop-shadow-md aspect-1 hover:drop-shadow-lg" aria-label="open chat box">
 	<MollyIcon />
 </button>
 
