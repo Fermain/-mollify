@@ -89,7 +89,7 @@ resize: both;
 overflow: auto;
 max-width: 100vw;
 max-height: 100vh;
-min-width: fit-content;
+min-width: 200px;
 min-height: 40%;
 }
 
