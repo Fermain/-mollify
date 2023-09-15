@@ -87,6 +87,10 @@
 transform: rotateZ(180deg); /* Positioning resize to top left corner */
 resize: both;
 overflow: auto;
+max-width: 100vw;
+max-height: 100vh;
+min-width: fit-content;
+min-height: 40%;
 }
 
 .inner{
