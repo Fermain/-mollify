@@ -27,6 +27,8 @@
 			class="textarea bg-slate-100 dark:bg-slate-200 rounded-none p-1 text-black"
 			placeholder="Your Query"
 			id="userText"
-			on:keypress={(event) => handleKeyPress(event)} />
+			on:keypress={(event) => handleKeyPress(event)} 
+			autofocus
+			/>
 		</div>
 </form></div>
