@@ -97,6 +97,7 @@ max-width: 100vw;
 max-height: 100vh;
 min-width: 200px;
 min-height: 40%;
+z-index: 100;
 }
 
 .inner{
