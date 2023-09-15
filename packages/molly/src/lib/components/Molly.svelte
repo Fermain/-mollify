@@ -10,6 +10,7 @@
 	let answer: string = '';
 	let loading: boolean = false;
 	let isOpen:boolean = false;
+	let isExpanded:boolean = false;
 	let messages = new Array<Message>();
 	export let endpoint = '/';
 
@@ -62,20 +63,28 @@
 		isOpen = !isOpen;	
 	}
 
-function closeMollyOnPressEsc(event:KeyboardEvent){
-	if(event?.key === "Escape"){
-		isOpen = false
+	function toggleExpand(){
+		isExpanded = !isExpanded
+		const container = document.querySelector<HTMLElement>('.chat-container')
+		if(container){
+			console.log(container.style);
+			container.style.cssText = ""
+		}
 	}
+	function closeMollyOnPressEsc(event:KeyboardEvent){
+		if(event?.key === "Escape"){
+			isOpen = false
+		}
 }
 </script>
 
 <div>
 	<MollyButton {toggleMollyOpen}/>
 	{#if isOpen}
-	<div class="chat-container fixed bottom-0 right-0 w-80 drop-shadow-md h-96"
+	<div class="chat-container fixed bottom-0 right-0 drop-shadow-md {isExpanded? "w-full sm:w-[700px] h-full":'w-80 h-96'}"
 	on:keydown={(event)=>closeMollyOnPressEsc(event)}>
 		<div class="inner flex flex-col border border-slate-400 h-full ">
-			<MollyHeader {toggleMollyOpen}/>
+			<MollyHeader {toggleMollyOpen}{toggleExpand}/>
 			<MollyMessages {loading} {messages} {answer}/>
 			<MollyForm
 					on:userSubmit={(e) => {
