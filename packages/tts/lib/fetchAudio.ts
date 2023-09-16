@@ -2,7 +2,7 @@
  * Fetches audio from ElevenLabs API
  * @param {string} content Content string to be converted to audio
  * @param {string} ELEVENLABS_API_KEY Your ElevenLabs API key
- * @returns {Promise<Response>} Response object representing the audio file
+ * @returns {Promise<Response>} Audio file
  */
 export async function fetchAudio(
   content: string,
