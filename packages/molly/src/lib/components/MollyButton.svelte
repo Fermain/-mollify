@@ -1,5 +1,4 @@
 <script lang='ts'>
-	// import MollyHeader from './MollyHeader.svelte';
 	import MollyIcon from './MollyIcon.svelte';
 
 export let toggleMollyOpen:()=>void;
