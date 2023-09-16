@@ -157,7 +157,7 @@
     <div class="flex justify-between my-5">
       <span class="p-1">Word emphasis</span>
       <div class="flex gap-4">
-        <SlideToggle name="slide" size="sm" {$wordEmphasisEnabled} on:click={toggleWordEmphasis} />
+        <SlideToggle name="slide" size="sm" on:click={toggleWordEmphasis} checked={$wordEmphasisEnabled} />
       </div>
     </div>
   </div>

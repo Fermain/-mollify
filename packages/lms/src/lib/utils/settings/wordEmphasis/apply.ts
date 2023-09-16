@@ -1,5 +1,6 @@
 import { toBold } from './toBold';
 import { save } from '$lib/utils/storage';
+import { wordEmphasisEnabled } from '$lib/stores/wordEmphasis';
 
 /*Word emphasis is selectively applied to text within paragraphs (<p>) and list items (<li>), while it avoids applying emphasis to headings (<hn>), links (<a>), and code blocks (<code>) to preserve their distinct styling.*/
 export function applyWordEmphasis(): void {
@@ -35,5 +36,6 @@ export function applyWordEmphasis(): void {
     });
   }
 
+  wordEmphasisEnabled.set(true);
   save('wordEmphasis', true);
 }

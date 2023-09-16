@@ -1,4 +1,5 @@
 import { save } from '$lib/utils/storage';
+import { wordEmphasisEnabled } from '$lib/stores/wordEmphasis';
 
 export function removeWordEmphasis() {
   const textContainer = document.querySelector('#content') as HTMLDivElement;
@@ -29,5 +30,6 @@ export function removeWordEmphasis() {
   });
 
   textContainer.normalize();
+  wordEmphasisEnabled.set(false);
   save('wordEmphasis', false);
 }

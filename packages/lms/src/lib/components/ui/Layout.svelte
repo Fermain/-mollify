@@ -1,9 +1,25 @@
-<script>
+<script lang="ts">
   import Tags from '../tags/Tags.svelte';
   import { TableOfContents } from '@skeletonlabs/skeleton';
+  import { onMount } from 'svelte';
+  import { wordEmphasisEnabled } from '$lib/stores/wordEmphasis';
+  import { applyWordEmphasis } from '$lib/utils/settings/wordEmphasis/apply';
+  import { load } from '$lib/utils/storage';
 
   export let title = '';
   export let tags = [''];
+
+  /*  onMount(() => {
+    $wordEmphasisEnabled && applyWordEmphasis();
+  }); */
+
+  onMount(() => {
+    const wordEmphasis = load('wordEmphasis');
+    if ($wordEmphasisEnabled || wordEmphasis === true) {
+      wordEmphasisEnabled.set(true);
+      applyWordEmphasis();
+    }
+  });
 </script>
 
 <svelte:head>
