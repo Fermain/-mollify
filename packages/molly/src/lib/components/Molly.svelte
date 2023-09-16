@@ -6,6 +6,7 @@
 	import MollyMessages from './MollyMessages.svelte';
 	import MollyHeader from './MollyHeader.svelte';
 
+	let container: HTMLElement|null;
 	let query: string = '';
 	let answer: string = '';
 	let loading: boolean = false;
@@ -65,9 +66,7 @@
 
 	function toggleExpand(){
 		isExpanded = !isExpanded
-		const container = document.querySelector<HTMLElement>('.chat-container')
 		if(container){
-			console.log(container.style);
 			container.style.cssText = ""
 		}
 	}
@@ -81,7 +80,7 @@
 <div>
 	<MollyButton {toggleMollyOpen}/>
 	{#if isOpen}
-	<div class="chat-container fixed bottom-0 right-0 drop-shadow-md {isExpanded? "w-full sm:w-[700px] h-full":'w-80 h-96'}"
+	<div bind:this={container} class="chat-container fixed bottom-0 right-0 drop-shadow-md {isExpanded? "w-full sm:w-[700px] h-full":'w-80 h-96'}"
 	on:keydown={(event)=>closeMollyOnPressEsc(event)}>
 		<div class="inner flex flex-col border border-slate-400 h-full ">
 			<MollyHeader {toggleMollyOpen}{toggleExpand}/>
