@@ -1,7 +1,5 @@
 import { visit } from 'unist-util-visit';
 
-const importString = "import {CodeBlock} from '@skeletonlabs/skeleton'";
-
 export default function codeBlockPlugin() {
   let codeBlockExists = false;
   return (tree) => {
@@ -9,7 +7,7 @@ export default function codeBlockPlugin() {
       codeBlockExists = true;
       node.type = 'html';
       node.value = `
-			<CodeBlock 
+			<Components.CodeBlock 
 				class="my-2" 
 				language="${node.lang}" 
 				code={${JSON.stringify(node.value)}} 
@@ -17,14 +15,5 @@ export default function codeBlockPlugin() {
 				lineNumbers={true}
 			/>`;
     });
-
-    if (codeBlockExists) {
-      visit(tree, 'root', (node) => {
-        node.children.push({
-          type: 'html',
-          value: `<script> ${importString} </script>`
-        });
-      });
-    }
   };
 }
