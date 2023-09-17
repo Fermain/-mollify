@@ -46,7 +46,7 @@
     <div use:scrollIntoView />
   {/key}
   <Main>
-		<slot />
+    <slot />
   </Main>
   <svelte:fragment slot="footer"
     ><Footer>
