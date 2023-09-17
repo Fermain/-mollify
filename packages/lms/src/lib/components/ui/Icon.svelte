@@ -3,4 +3,4 @@
   import 'material-icons/iconfont/material-icons.css';
 </script>
 
-<span class="material-icons" {...$$restProps}>{iconName}</span>
+<span class="material-icons" {...$$restProps}>{name}</span>
