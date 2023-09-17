@@ -1,12 +1,13 @@
-<script lang='ts'>
+<script lang="ts">
 	import MollyIcon from './MollyIcon.svelte';
 
-export let toggleMollyOpen:()=>void;
+	export let toggleMollyOpen: () => void;
 </script>
 
-<button on:click={toggleMollyOpen} class="btn-icon btn-icon-xl drop-shadow-md aspect-1 hover:drop-shadow-lg" aria-label="open chat box">
+<button
+	on:click={toggleMollyOpen}
+	class="btn-icon btn-icon-xl drop-shadow-md aspect-1 hover:drop-shadow-lg"
+	aria-label="open chat box"
+>
 	<MollyIcon />
 </button>
-
-
-

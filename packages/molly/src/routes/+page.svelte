@@ -5,9 +5,12 @@
 <div class="wrapper">
 	<main>
 		<p>This is some unique context to test Molly with.</p>
-		<b>If Molly is successfully seeing page context, she will know that the password is `Flugelhorn`.</b>
+		<b
+			>If Molly is successfully seeing page context, she will know that the password is
+			`Flugelhorn`.</b
+		>
 	</main>
-	
+
 	<div class="demo">
 		<Molly />
 	</div>
