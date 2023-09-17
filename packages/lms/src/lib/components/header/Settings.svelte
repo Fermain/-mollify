@@ -1,11 +1,13 @@
 <script lang="ts">
-  import { LightSwitch, popup, storePopup, toastStore } from '@skeletonlabs/skeleton';
+  import { LightSwitch, popup, SlideToggle, storePopup, toastStore } from '@skeletonlabs/skeleton';
   import type { PopupSettings } from '@skeletonlabs/skeleton';
   import type { ToastSettings } from '@skeletonlabs/skeleton';
   import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
   import * as storage from '../../utils/storage/index';
   import { onMount } from 'svelte';
   import Icon from '../ui/Icon.svelte';
+  import { wordEmphasisEnabled } from '$lib/stores/wordEmphasis';
+  import { toggleWordEmphasis } from '$lib/utils/settings/wordEmphasis/toogle';
 
   storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
 
@@ -151,6 +153,12 @@
         <button class="btn hover:bg-primary-hover-token p-1" on:click={resetFontSize}>
           <Icon name="refresh" /></button
         >
+      </div>
+    </div>
+    <div class="flex justify-between my-5">
+      <span class="p-1">Word emphasis</span>
+      <div class="flex gap-4">
+        <SlideToggle name="slide" size="sm" on:click={toggleWordEmphasis} checked={$wordEmphasisEnabled} />
       </div>
     </div>
   </div>

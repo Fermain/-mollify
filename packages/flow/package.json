@@ -30,6 +30,7 @@
 		"svelte": "^3.54.0"
 	},
 	"devDependencies": {
+		"@esbuild/win32-x64": "^0.19.3",
 		"@mollify/types": "^0.2.11",
 		"@playwright/test": "^1.28.1",
 		"@sveltejs/adapter-auto": "^2.0.0",
