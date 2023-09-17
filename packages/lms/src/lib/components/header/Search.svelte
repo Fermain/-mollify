@@ -156,7 +156,7 @@
     <button
       class="btn hover:bg-primary-hover-token sm:variant-filled-primary sm:rounded-l-none sm:hover:bg-primary-active-token"
     >
-      <Icon iconName="search" /></button
+      <Icon name="search" /></button
     >
   </form>
   {#if searchResults.length > 0}
