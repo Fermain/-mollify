@@ -150,9 +150,7 @@
         <button class="btn hover:bg-primary-hover-token p-1" on:click={decreaseFontSize}>
           <Icon name="text_decrease" /></button
         >
-        <button class="btn hover:bg-primary-hover-token p-1" on:click={resetFontSize}>
-          <Icon name="refresh" /></button
-        >
+        <button class="btn hover:bg-primary-hover-token p-1" on:click={resetFontSize}> <Icon name="refresh" /></button>
       </div>
     </div>
     <div class="flex justify-between my-5">
