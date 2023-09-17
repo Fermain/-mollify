@@ -1,6 +1,6 @@
 <script lang="ts">
-  export let iconName: string;
+  export let name: string;
   import 'material-icons/iconfont/material-icons.css';
 </script>
 
-<span class="material-icons">{iconName}</span>
+<span class="material-icons" {...$$restProps}>{iconName}</span>

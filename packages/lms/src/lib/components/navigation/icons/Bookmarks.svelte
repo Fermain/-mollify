@@ -23,7 +23,7 @@
     class="app-rail-tile unstyled grid place-content-center place-items-center w-full aspect-square space-y-1.5 cursor-pointer bg-primary-hover-token"
     on:click={() => modalStore.trigger(searchModal)}
   >
-    <Icon iconName="bookmark" />
+    <Icon name="bookmark" />
   </button>
 
   <Modal components={modalComponent} />

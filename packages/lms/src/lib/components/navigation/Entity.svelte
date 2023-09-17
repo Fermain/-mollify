@@ -31,12 +31,12 @@
   <div class="entity-inner">
     <div class="entity-header hover:bg-primary-hover-token rounded-container-token p-2">
       <a href={entity.browserPath} on:click={drawerClose} class="entity-title flex flex-row items-center">
-        <Icon iconName={icon} />
+        <Icon name={icon} />
         <p>{entity.title}</p>
       </a>
       {#if entity.children.length}
         <button on:click={toggle} class="btn hover:bg-primary-hover-token p-0">
-          <Icon iconName={open ? 'expand_less' : 'expand_more'} />
+          <Icon name={open ? 'expand_less' : 'expand_more'} />
         </button>
       {/if}
     </div>

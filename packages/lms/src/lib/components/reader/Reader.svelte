@@ -125,7 +125,7 @@
   {#if path.startsWith('/content')}
     <div>
       <button class="btn hover:bg-primary-hover-token" use:popup={audioSettings}>
-        <Icon iconName="settings" /></button
+        <Icon name="settings" /></button
       >
       <div class="card p-4 w-60 shadow-xl" data-popup="audioSettings" id="settings-card">
         <h3 class="h3 mb-3">Audio Settings</h3>

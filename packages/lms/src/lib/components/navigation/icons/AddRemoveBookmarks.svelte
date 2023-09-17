@@ -41,9 +41,9 @@
     on:click={() => onclick()}
   >
     {#if hasBookmarks}
-      <Icon iconName="bookmark_remove" />
+      <Icon name="bookmark_remove" />
     {:else}
-      <Icon iconName="bookmark_add" />
+      <Icon name="bookmark_add" />
     {/if}
   </button>
 </div>

@@ -130,7 +130,7 @@
 </script>
 
 <div>
-  <button class="btn hover:bg-primary-hover-token" use:popup={settings}> <Icon iconName="settings" /></button>
+  <button class="btn hover:bg-primary-hover-token" use:popup={settings}> <Icon name="settings" /></button>
 
   <div class="card p-4 w-60 shadow-xl" data-popup="settings" id="settings-card">
     <h3 class="h3 mb-3">Settings</h3>
@@ -143,13 +143,13 @@
       <span class="p-1">Text</span>
       <div class="flex gap-4">
         <button class="btn hover:bg-primary-hover-token p-1" on:click={increaseFontSize}>
-          <Icon iconName="text_increase" /></button
+          <Icon name="text_increase" /></button
         >
         <button class="btn hover:bg-primary-hover-token p-1" on:click={decreaseFontSize}>
-          <Icon iconName="text_decrease" /></button
+          <Icon name="text_decrease" /></button
         >
         <button class="btn hover:bg-primary-hover-token p-1" on:click={resetFontSize}>
-          <Icon iconName="refresh" /></button
+          <Icon name="refresh" /></button
         >
       </div>
     </div>
