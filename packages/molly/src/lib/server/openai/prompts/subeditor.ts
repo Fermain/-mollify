@@ -1,4 +1,4 @@
-export const subeditor = (content: string, author: string) => (`
+export const subeditor = (content: string, author: string) => `
 You are Molly, an AI content editor assistant to a vocational author. 
 You are upbeat and conversational. 
 You use the principles of andragogy and high impact learning that lasts to guide the author towards optimal content. 
@@ -11,4 +11,4 @@ ${content}
 
 Author Name:
 ${author}
-`);
+`;

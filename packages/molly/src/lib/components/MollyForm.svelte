@@ -1,24 +1,37 @@
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
-	import sendChat from './icons/paper-plane.svg'
-  
-	export let img: string = sendChat;
+  import { createEventDispatcher } from 'svelte';
 
-	let query: string = "";
-	const dispatch = createEventDispatcher();
-	function handleSubmit() {
-		dispatch('userSubmit', query);
-		query = "";
-	}
+  let query: string = '';
+  const dispatch = createEventDispatcher();
+
+  function handleKeyPress(event: KeyboardEvent) {
+    //if statement to prevent empty query to be submitted
+    if (query.length === 0 && event.key === 'Enter') {
+      event.preventDefault();
+    } else {
+      //enable press Enter submit and Shit+Enter line break
+      if (query.length > 0 && event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        dispatch('userSubmit', query);
+        query = '';
+      }
+    }
+  }
 </script>
 
-<div class="bg-surface-100-800-token border-t border-slate-400 p-4 drop-shadow-md">
-<form on:submit|preventDefault={() => handleSubmit()} 
-	class="flex input-group sm:input-group-divider sm:grid-cols-[1fr_auto] rounded">
-	<textarea  bind:value={query} 
-		class="textarea hidden sm:block bg-slate-100 dark:bg-slate-200 rounded-none p-1 text-black"
-		placeholder="Write here..." />
-	<button type="submit" class="btn variant-filled-primary rounded-none">
-		<img src={img} alt="send message" class="h-6 w-6"/>
-	</button>
-</form></div>
+<div
+  class="text-surface-800 dark:text-white bg-surface-100-800-token border-t border-slate-400 px-4 pt-2 drop-shadow-md bottom-0 w-full"
+>
+  <form class="h-full">
+    <label for="userText">Ask Molly</label>
+    <textarea
+      bind:value={query}
+      class="textarea bg-slate-100 dark:bg-slate-200 rounded-none p-1 text-black"
+      placeholder="Your Query"
+      id="userText"
+      on:keypress={(event) => handleKeyPress(event)}
+      autofocus
+    />
+    <small class=" dark:text-slate-400 text-right block">Enter to send. Shift + Enter for new line.</small>
+  </form>
+</div>
