@@ -1,4 +1,9 @@
-<script lang="ts">
+<script context="module">
+  import { CodeBlock } from '../components';
+  export { CodeBlock };
+</script>
+
+<script>
   import Tags from '../tags/Tags.svelte';
   import { TableOfContents } from '@skeletonlabs/skeleton';
   import { onMount } from 'svelte';

@@ -1,4 +1,4 @@
-import Molly from "./components/Molly.svelte";
-import MollyAI from "./server/openai";
+import Molly from './components/Molly.svelte';
+import MollyAI from './server/openai';
 
-export { Molly, MollyAI }
+export { Molly, MollyAI };
