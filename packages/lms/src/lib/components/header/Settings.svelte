@@ -5,6 +5,7 @@
   import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
   import * as storage from '../../utils/storage/index';
   import { onMount } from 'svelte';
+  import Icon from '../ui/Icon.svelte';
   import { wordEmphasisEnabled } from '$lib/stores/wordEmphasis';
   import { toggleWordEmphasis } from '$lib/utils/settings/wordEmphasis/toogle';
 
@@ -131,7 +132,7 @@
 </script>
 
 <div>
-  <button class="btn hover:bg-primary-hover-token" use:popup={settings}> <i class="icon-f">settings</i></button>
+  <button class="btn hover:bg-primary-hover-token" use:popup={settings}> <Icon name="settings" /></button>
 
   <div class="card p-4 w-60 shadow-xl" data-popup="settings" id="settings-card">
     <h3 class="h3 mb-3">Settings</h3>
@@ -143,15 +144,13 @@
     <div class="flex justify-between my-5">
       <span class="p-1">Text</span>
       <div class="flex gap-4">
-        <button class="btn hover:bg-primary-hover-token p-1" on:click={increaseFontSize}
-          ><i class="icon-f">text_increase</i></button
+        <button class="btn hover:bg-primary-hover-token p-1" on:click={increaseFontSize}>
+          <Icon name="text_increase" /></button
         >
-        <button class="btn hover:bg-primary-hover-token p-1" on:click={decreaseFontSize}
-          ><i class="icon-f">text_decrease</i></button
+        <button class="btn hover:bg-primary-hover-token p-1" on:click={decreaseFontSize}>
+          <Icon name="text_decrease" /></button
         >
-        <button class="btn hover:bg-primary-hover-token p-1" on:click={resetFontSize}>
-          <i class="icon-f">refresh</i></button
-        >
+        <button class="btn hover:bg-primary-hover-token p-1" on:click={resetFontSize}> <Icon name="refresh" /></button>
       </div>
     </div>
     <div class="flex justify-between my-5">

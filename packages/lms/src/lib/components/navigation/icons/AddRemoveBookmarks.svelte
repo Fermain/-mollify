@@ -5,6 +5,7 @@
   import { page } from '$app/stores';
   import { type Bookmark, addRemoveBookmarks } from '$lib/utils/bookmarking/AddRemove';
   import { bookmarks } from '$lib/stores/bookmarks';
+  import Icon from '$lib/components/ui/Icon.svelte';
 
   let hasBookmarks = false;
   let currentUrl = '';
@@ -37,12 +38,12 @@
   <button
     name="tile-2"
     class="app-rail-tile unstyled grid place-content-center place-items-center w-full aspect-square space-y-1.5 cursor-pointer bg-primary-hover-token"
-    on:click={(event) => onclick()}
+    on:click={() => onclick()}
   >
     {#if hasBookmarks}
-      <div class="app-rail-tile-icon"><i class="icon-f">bookmark_remove</i></div>
+      <Icon name="bookmark_remove" />
     {:else}
-      <div class="app-rail-tile-icon"><i class="icon-f">bookmark_add</i></div>
+      <Icon name="bookmark_add" />
     {/if}
   </button>
 </div>
