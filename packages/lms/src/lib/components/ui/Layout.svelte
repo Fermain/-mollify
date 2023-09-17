@@ -9,10 +9,6 @@
   export let title = '';
   export let tags = [''];
 
-  /*  onMount(() => {
-    $wordEmphasisEnabled && applyWordEmphasis();
-  }); */
-
   onMount(() => {
     const wordEmphasis = load('wordEmphasis');
     if ($wordEmphasisEnabled || wordEmphasis === true) {
