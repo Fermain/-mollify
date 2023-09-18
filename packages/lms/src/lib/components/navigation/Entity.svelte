@@ -13,7 +13,7 @@
     Assessment: 'task',
     Lesson: 'article',
     Module: 'layers',
-    Course: 'book_5',
+    Course: 'book',
     Programme: 'folder',
     Institution: 'school'
   };
