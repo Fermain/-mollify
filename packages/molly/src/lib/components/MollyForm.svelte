@@ -1,11 +1,18 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
-  import DOMPurify from 'dompurify' //XXS Sanitizer (https://www.npmjs.com/package/dompurify)
+  import DOMPurify from 'dompurify'; //XXS Sanitizer (https://www.npmjs.com/package/dompurify)
 
   let query: string = '';
+  let textarea: HTMLElement;
+
   const dispatch = createEventDispatcher();
 
-  function handleKeyPress(event: KeyboardEvent) {
+  function handleKeyPress(event: KeyboardEvent & { currentTarget: EventTarget & HTMLTextAreaElement }) {
+    // auto-resize textarea
+    textarea.style.height = 'auto';
+    let scrollHeight = event.currentTarget.scrollHeight as number;
+    textarea.style.height = `${scrollHeight}px`;
+
     //if statement to prevent empty query to be submitted
     if (query.length === 0 && event.key === 'Enter') {
       event.preventDefault();
@@ -13,26 +20,28 @@
       //enable press Enter submit and Shit+Enter line break
       if (query.length > 0 && event.key === 'Enter' && !event.shiftKey) {
         event.preventDefault();
-        //Sanitize user input 
+        //Sanitize user input
         const sanitizedInput = DOMPurify.sanitize(query);
         dispatch('userSubmit', sanitizedInput);
         query = '';
+        textarea.style.height = 'auto';
       }
     }
   }
 </script>
 
 <div
-  class="text-surface-800 dark:text-white bg-surface-100-800-token border-t border-slate-400 px-4 pt-2 drop-shadow-md bottom-0 w-full"
+  class="text-surface-800 dark:text-white bg-surface-100-800-token border-t border-slate-400 px-4 pt-2 drop-shadow-md bottom-0 w-full flex flex-col max-h-[50%]"
 >
   <form class="h-full">
-    <label for="userText">Ask Molly</label>
+    <label for="block userText">Ask Molly</label>
     <textarea
+      bind:this={textarea}
       bind:value={query}
-      class="textarea bg-slate-100 dark:bg-slate-200 rounded-none p-1 text-black"
+      class="textarea block bg-slate-100 dark:bg-slate-200 rounded rounded-1 p-1 my-1 text-black max-h-[80%] overflow-y-scroll"
       placeholder="Your Query"
       id="userText"
-      on:keypress={(event) => handleKeyPress(event)}
+      on:keyup={(event) => handleKeyPress(event)}
       autofocus
     />
     <small class=" dark:text-slate-400 text-right block">Enter to send. Shift + Enter for new line.</small>
