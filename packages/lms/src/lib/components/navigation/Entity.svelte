@@ -10,16 +10,16 @@
   let typeOfEntity = entity.type;
 
   const entityIcons = {
-    Assessment: 'Task',
-    Lesson: 'Article',
-    Module: 'Layers',
-    Course: 'Book_5',
-    Programme: 'Folder',
-    Institution: 'School'
+    Assessment: 'task',
+    Lesson: 'article',
+    Module: 'layers',
+    Course: 'book',
+    Programme: 'folder',
+    Institution: 'school'
   };
-  let icon = entityIcons[typeOfEntity] || 'Folder';
+  let icon = entityIcons[typeOfEntity] || 'folder';
   if (entity.children.length === 0 && !entityIcons[typeOfEntity]) {
-    icon = 'Article';
+    icon = 'article';
   }
 
   function toggle() {
@@ -30,10 +30,18 @@
 <nav class="entity">
   <div class="entity-inner">
     <div class="entity-header hover:bg-primary-hover-token rounded-container-token p-2">
-      <a href={entity.browserPath} on:click={drawerClose} class="entity-title flex flex-row items-center">
-        <Icon name={icon} />
-        <p>{entity.title}</p>
-      </a>
+      {#if entity.browserPath}
+        <a href={entity.browserPath} on:click={drawerClose} class="entity-title flex flex-row items-center">
+          <Icon name={icon} />
+          <p class="ms-2">{entity.title}</p>
+        </a>
+      {:else}
+        <button on:click={toggle} class="entity-title flex flex-row items-center">
+          <Icon name={icon} />
+          <span class="ms-2 text-start">{entity.title}</span>
+        </button>
+      {/if}
+
       {#if entity.children.length}
         <button on:click={toggle} class="btn hover:bg-primary-hover-token p-0">
           <Icon name={open ? 'expand_less' : 'expand_more'} />
