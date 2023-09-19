@@ -2,8 +2,10 @@
   import { drawerStore } from '@skeletonlabs/skeleton';
   import type { EntityMeta } from '@mollify/types';
   import Icon from '../ui/Icon.svelte';
+  import { onMount } from 'svelte';
   export let entity: EntityMeta;
   let open = false;
+  let active = false;
   function drawerClose(): void {
     drawerStore.close();
   }
@@ -22,6 +24,13 @@
     icon = 'article';
   }
 
+  onMount(() => {
+    if (!entity.browserPath) return;
+    const currentPath = decodeURI(window.location.pathname);
+
+    if (currentPath + '/' === entity.browserPath) active = true;
+    if (currentPath.includes(entity.browserPath)) toggle();
+  });
   function toggle() {
     open = !open;
   }
@@ -31,7 +40,11 @@
   <div class="entity-inner">
     <div class="entity-header hover:bg-primary-hover-token rounded-container-token p-2">
       {#if entity.browserPath}
-        <a href={entity.browserPath} on:click={drawerClose} class="entity-title flex flex-row items-center">
+        <a
+          href={entity.browserPath}
+          on:click={drawerClose}
+          class="entity-title flex flex-row items-center {active ? 'active' : ''}"
+        >
           <Icon name={icon} />
           <p class="ms-2">{entity.title}</p>
         </a>
@@ -64,6 +77,10 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+
+      &:has(.active) {
+        background-color: rgb(188, 188, 229);
+      }
     }
 
     &-title {
