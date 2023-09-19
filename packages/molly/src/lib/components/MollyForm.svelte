@@ -1,5 +1,6 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
+  import DOMPurify from 'dompurify' //XXS Sanitizer (https://www.npmjs.com/package/dompurify)
 
   let query: string = '';
   const dispatch = createEventDispatcher();
@@ -12,7 +13,9 @@
       //enable press Enter submit and Shit+Enter line break
       if (query.length > 0 && event.key === 'Enter' && !event.shiftKey) {
         event.preventDefault();
-        dispatch('userSubmit', query);
+        //Sanitize user input 
+        const sanitizedInput = DOMPurify.sanitize(query);
+        dispatch('userSubmit', sanitizedInput);
         query = '';
       }
     }
