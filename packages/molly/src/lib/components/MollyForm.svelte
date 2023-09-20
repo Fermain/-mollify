@@ -3,7 +3,7 @@
   import DOMPurify from 'dompurify'; //XXS Sanitizer (https://www.npmjs.com/package/dompurify)
 
   let query: string = '';
-  let textarea: HTMLElement;
+  let textarea: HTMLTextAreaElement;
 
   const dispatch = createEventDispatcher();
 
@@ -38,7 +38,7 @@
     <textarea
       bind:this={textarea}
       bind:value={query}
-      class="textarea block bg-slate-100 dark:bg-slate-200 rounded rounded-1 p-1 my-1 text-black max-h-[80%] overflow-y-scroll"
+      class="textarea block bg-slate-100 dark:bg-slate-200 rounded rounded-1 p-2 my-1 text-black max-h-[80%] overflow-y-scroll hide-scrollbar"
       placeholder="Your Query"
       id="userText"
       on:keyup={(event) => handleKeyPress(event)}
