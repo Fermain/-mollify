@@ -3,7 +3,6 @@
   import SvelteMarkdown from 'svelte-markdown';
   import MollyIcon from './MollyIcon.svelte';
   export let message: ChatCompletionRequestMessage;
-  
 </script>
 
 <div
@@ -14,10 +13,10 @@
       <MollyIcon />
     </div>
     <SvelteMarkdown source={message.content} />
-  {/if}  
+  {/if}
   {#if message.role === 'user'}
     <SvelteMarkdown source={message.content} />
-  {/if}  
+  {/if}
 </div>
 
 <style lang="scss">
