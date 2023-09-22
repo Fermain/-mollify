@@ -3,6 +3,7 @@
   import { drawerStore } from '@skeletonlabs/skeleton';
   import type { EntityMeta } from '@mollify/types';
   import Icon from '../ui/Icon.svelte';
+  import { onMount } from 'svelte';
   export let entity: EntityMeta;
   let open = false;
 
@@ -23,6 +24,10 @@
   if (entity.children.length === 0 && !entityIcons[typeOfEntity]) {
     icon = 'article';
   }
+
+  onMount(() => {
+    if (decodeURI($page.url.pathname).includes(entity.browserPath as string)) toggle();
+  });
 
   function toggle() {
     open = !open;
