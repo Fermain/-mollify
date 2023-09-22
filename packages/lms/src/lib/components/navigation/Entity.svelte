@@ -3,10 +3,9 @@
   import { drawerStore } from '@skeletonlabs/skeleton';
   import type { EntityMeta } from '@mollify/types';
   import Icon from '../ui/Icon.svelte';
-  import { onMount } from 'svelte';
   export let entity: EntityMeta;
   let open = false;
-  let active = false;
+
   function drawerClose(): void {
     drawerStore.close();
   }
