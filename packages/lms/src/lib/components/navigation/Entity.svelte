@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { page } from '$app/stores';
   import { drawerStore } from '@skeletonlabs/skeleton';
   import type { EntityMeta } from '@mollify/types';
   import Icon from '../ui/Icon.svelte';
@@ -24,13 +25,6 @@
     icon = 'article';
   }
 
-  onMount(() => {
-    if (!entity.browserPath) return;
-    const currentPath = decodeURI(window.location.pathname);
-
-    if (currentPath + '/' === entity.browserPath) active = true;
-    if (currentPath.includes(entity.browserPath)) toggle();
-  });
   function toggle() {
     open = !open;
   }
@@ -43,7 +37,8 @@
         <a
           href={entity.browserPath}
           on:click={drawerClose}
-          class="entity-title flex flex-row items-center {active ? 'active' : ''}"
+          class="entity-title flex flex-row items-center"
+          class:active={decodeURI($page.url.pathname) + '/' === entity.browserPath}
         >
           <Icon name={icon} />
           <p class="ms-2">{entity.title}</p>
