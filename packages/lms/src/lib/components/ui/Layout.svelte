@@ -10,6 +10,8 @@
   import { wordEmphasisEnabled } from '$lib/stores/wordEmphasis';
   import { applyWordEmphasis } from '$lib/utils/settings/wordEmphasis/apply';
   import { load } from '$lib/utils/storage';
+  import progressLog from '$lib/utils/progress/progressLog';
+  import observeContentProgress from '$lib/utils/progress/observeContentProgress';
 
   export let title = '';
   export let tags = [''];
@@ -20,6 +22,9 @@
       wordEmphasisEnabled.set(true);
       applyWordEmphasis();
     }
+
+    progressLog();
+    observeContentProgress();
   });
 </script>
 

@@ -4,8 +4,10 @@
   import type { EntityMeta } from '@mollify/types';
   import Icon from '../ui/Icon.svelte';
   import { onMount } from 'svelte';
+  import { load } from '$lib/utils/storage';
   export let entity: EntityMeta;
   let open = false;
+  let completed: boolean | undefined = false;
 
   function drawerClose(): void {
     drawerStore.close();
@@ -27,6 +29,9 @@
 
   onMount(() => {
     if (decodeURI($page.url.pathname).includes(entity.browserPath as string)) toggle();
+
+    const contentProgressMap: Map<string, boolean> = new Map(load('contentCompletionMap'));
+    completed = contentProgressMap.get(String(entity.browserPath));
   });
 
   function toggle() {
@@ -34,7 +39,7 @@
   }
 </script>
 
-<nav class="entity">
+<nav class="entity" class:completed>
   <div class="entity-inner">
     <div class="entity-header hover:bg-primary-hover-token rounded-container-token p-2">
       {#if entity.browserPath}
@@ -72,6 +77,9 @@
 
 <style lang="scss">
   .entity {
+    &.completed {
+      color: green !important;
+    }
     &-header {
       display: flex;
       justify-content: space-between;
