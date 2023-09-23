@@ -1,7 +1,7 @@
 /**
- * Generates audio using browser-based Text-to-Speech (TTS) or a fallback option.
+ * Generates audio content using browser-based Text-to-Speech (TTS) or a fallback option.
  * @param {string} content Content string to be converted to audio
- * @returns {Promise<string>} URL to the generated audio
+ * @returns {Promise<string>} Audio content in base64 format
  */
 export async function generateAudio(content: string): Promise<string> {
   if ('speechSynthesis' in window) {
@@ -11,8 +11,16 @@ export async function generateAudio(content: string): Promise<string> {
     return new Promise<string>((resolve, reject) => {
       utterance.onend = () => {
         const audioBlob = new Blob([new Uint8Array(0)], { type: 'audio/mpeg' });
-        const audioUrl = URL.createObjectURL(audioBlob);
-        resolve(audioUrl);
+        const reader = new FileReader();
+
+        reader.onloadend = () => {
+          resolve(reader.result as string);
+        };
+        reader.onerror = error => {
+          reject(error);
+        };
+
+        reader.readAsDataURL(audioBlob);
       };
       utterance.onerror = error => {
         reject(error);
@@ -29,7 +37,17 @@ export async function generateAudio(content: string): Promise<string> {
     return new Promise<string>((resolve, reject) => {
       audioElement.onended = () => {
         document.body.removeChild(audioElement);
-        resolve(audioElement.src);
+        const audioBlob = new Blob([new Uint8Array(0)], { type: 'audio/mpeg' });
+        const reader = new FileReader();
+
+        reader.onloadend = () => {
+          resolve(reader.result as string);
+        };
+        reader.onerror = error => {
+          reject(error);
+        };
+
+        reader.readAsDataURL(audioBlob);
       };
       audioElement.onerror = error => {
         document.body.removeChild(audioElement);
