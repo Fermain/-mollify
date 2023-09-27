@@ -1,96 +1,119 @@
 <script lang="ts">
-	import MollyMessage from '$lib/components/MollyMessage.svelte';
-	import type { ChatCompletionRequestMessage as Message } from 'openai';
-	import MollyButton from './MollyButton.svelte';
-	import MollyForm from './MollyForm.svelte';
+  import type { ChatCompletionRequestMessage as Message } from 'openai';
+  import { readableStreamStore } from '../stores/readableStream';
+  import MollyButton from './MollyButton.svelte';
+  import MollyForm from './MollyForm.svelte';
+  import MollyMessages from './MollyMessages.svelte';
+  import MollyHeader from './MollyHeader.svelte';
 
-	let query: string = '';
-	let answer: string = '';
-	let loading: boolean = false;
-	let messages = new Array<Message>();
-	export let endpoint = '/';
+  let container: HTMLElement | null;
+  let query: string = '';
+  let answer: string = '';
+  let loading: boolean = false;
+  let isOpen: boolean = false;
+  let isExpanded: boolean = false;
+  let messages = new Array<Message>();
+  export let endpoint = '/';
 
-	function lazyContentGrabber() {
-		const main = document.querySelector('main');
-		if (main) {
-			return main.textContent;
-		}
-	}
+  const response = readableStreamStore();
+  response.subscribe(($response) => {
+    loading = $response.loading;
+    answer = $response.text;
+  });
 
-	const handleSubmit = async () => {
-		loading = true;
-		messages = [...messages, { role: 'user', content: query }];
+  function lazyContentGrabber() {
+    const main = document.querySelector('main');
+    if (main) {
+      return main.textContent;
+    }
+  }
 
-		const params = new URLSearchParams();
+  const handleSubmit = async () => {
+    try {
+      const promiseReply = response.request(
+        new Request(endpoint, {
+          method: 'POST',
+          body: JSON.stringify({
+            messages,
+            query,
+            documentContent: lazyContentGrabber(),
+            name: 'Ask the Noroff student their name'
+          })
+        })
+      );
 
-		params.append('messages', JSON.stringify(messages));
-		params.append('content', lazyContentGrabber() ?? '');
-		params.append('name', 'Ask the Noroff student their name');
+      messages = [...messages, { role: 'user', content: query }];
 
-		const endpointWithParams = `${endpoint}?${params.toString()}`;
+      (await promiseReply) || '';
 
-		const eventSource = new EventSource(endpointWithParams);
+      messages = [...messages, { role: 'assistant', content: answer }];
+      answer = '';
+      query = '';
+    } catch (err) {
+      alert(err);
+    }
+  };
 
-		eventSource.onerror = handleError;
+  function handleError<T>(err: T) {
+    loading = false;
+    query = '';
+    answer = '';
+  }
 
-		eventSource.onmessage = (e) => {
-			try {
-				loading = false;
-				if (e.data === '[DONE]') {
-					messages = [...messages, { role: 'assistant', content: answer }];
-					answer = '';
-					eventSource.close();
-					return;
-				}
+  export function toggleMollyOpen() {
+    isOpen = !isOpen;
+  }
 
-				const response = JSON.parse(e.data);
-				const [{ delta }] = response.choices;
-
-				if (delta.content) {
-					answer = (answer ?? '') + delta.content;
-				}
-			} catch (err) {
-				handleError(err);
-				eventSource.close();
-			}
-		};
-	};
-
-	function handleError<T>(err: T) {
-		loading = false;
-		query = '';
-		answer = '';
-	}
+  function toggleExpand() {
+    isExpanded = !isExpanded;
+    if (container) {
+      container.style.cssText = '';
+    }
+  }
+  function closeMollyOnPressEsc(event: KeyboardEvent) {
+    if (event?.key === 'Escape') {
+      isOpen = false;
+    }
+  }
 </script>
 
-<MollyButton>
-	<div class="h-full grid grid-rows-[1fr_auto] border border-slate-400">
-		<div class="messages-container h-80 bg-slate-200 dark:bg-slate-300 overflow-y-auto">
-			{#each messages as message}
-				<MollyMessage {message} />
-			{/each}
-			{#if answer}
-				<MollyMessage
-					message={{
-						role: 'assistant',
-						content: answer
-					}}
-				/>
-			{/if}
-			{#if loading}
-				<MollyMessage
-					message={{
-						role: 'assistant',
-						content: 'Thinking...'
-					}}
-				/>
-			{/if}
-		</div>
-		<MollyForm
-			on:userSubmit={(e) => {
-				query = e.detail;
-				handleSubmit();
-			}}
-		/>
-	</div>
-</MollyButton>
+<div>
+  <MollyButton {toggleMollyOpen} />
+  {#if isOpen}
+    <div
+      bind:this={container}
+      class="chat-container fixed bottom-0 right-0 drop-shadow-md {isExpanded
+        ? 'w-full sm:w-[700px] h-full'
+        : 'w-80 h-96'}"
+      on:keydown={(event) => closeMollyOnPressEsc(event)}
+    >
+      <div class="inner flex flex-col border border-slate-400 h-full">
+        <MollyHeader {toggleMollyOpen} {toggleExpand} />
+        <MollyMessages {loading} {messages} {answer} />
+        <MollyForm
+          on:userSubmit={(e) => {
+            query = e.detail;
+            handleSubmit();
+          }}
+        />
+      </div>
+    </div>
+  {/if}
+</div>
+
+<style>
+  .chat-container {
+    transform: rotateZ(180deg); /* Positioning resize to top left corner */
+    resize: both;
+    overflow: auto;
+    max-width: 100vw;
+    max-height: 100vh;
+    min-width: 200px;
+    min-height: 40%;
+    z-index: 100;
+  }
+
+  .inner {
+    transform: rotateZ(180deg);
+  }
+</style>

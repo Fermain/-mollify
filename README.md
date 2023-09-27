@@ -95,7 +95,6 @@ git clone https://github.com/Fermain/-mollify.git
 
 ```bash
 npm install
-npm run build
 ```
 
 Optionally, if you want to ensure all Lerna-managed packages are correctly linked together:
@@ -114,7 +113,7 @@ OPENAI_TOKEN_LIMIT=1000
 ELEVENLABS_API_KEY=YOUR_KEY
 ```
 
-### Build All Packages
+### Running the LMS and other packages
 
 1. Before running the LMS, make sure all other dependencies are built: (Remember to build after any changes to the other packages)
 

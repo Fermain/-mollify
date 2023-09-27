@@ -2,6 +2,7 @@
   import { goto } from '$app/navigation';
   import { getSearchResults } from '$lib/utils/fuseSearch/getSearchResults';
   import { parseRawSearchQuery } from '$lib/utils/fuseSearch/parseRawSearchQuery';
+  import Icon from '../ui/Icon.svelte';
 
   let searchQuery = '';
   let searchResults: { label: string; value: string; refIndex: number; browserPath: string }[] = [];
@@ -12,8 +13,8 @@
 
   //these handle keyboard navigation
   //set to -1 so that the user can select the first search suggestion which in an array would be 0
-  let selection: number = -1;
-  let pathToNavigateTo: string = '';
+  let selection = -1;
+  let pathToNavigateTo = '';
 
   interface SearchResultItem {
     title: string;
@@ -154,7 +155,8 @@
     />
     <button
       class="btn hover:bg-primary-hover-token sm:variant-filled-primary sm:rounded-l-none sm:hover:bg-primary-active-token"
-      ><i class="icon-f">search</i></button
+    >
+      <Icon name="search" /></button
     >
   </form>
   {#if searchResults.length > 0}

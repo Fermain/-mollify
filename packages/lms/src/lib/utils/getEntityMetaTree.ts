@@ -11,6 +11,23 @@ import getEntitySlug from './getEntitySlug';
  * @returns A nested object containing the parsed markdown files
  */
 export function getEntityMetaTree(dir: string, content = false) {
+  // Check if a directory tree has markdown files
+  function hasMarkdownFiles(directory: string): boolean {
+    const items = fs.readdirSync(directory);
+    for (const item of items) {
+      const itemPath = path.join(directory, item);
+      const stat = fs.statSync(itemPath);
+      if (stat.isDirectory()) {
+        if (hasMarkdownFiles(itemPath)) {
+          return true;
+        }
+      } else if (path.extname(item) === '.md') {
+        return true;
+      }
+    }
+    return false;
+  }
+
   function walkSync(currentDir: string) {
     let currentObject = {} as EntityMeta;
     const children: EntityMeta[] = [];
@@ -21,8 +38,11 @@ export function getEntityMetaTree(dir: string, content = false) {
       const filePath = path.join(currentDir, filename);
       const stat = fs.statSync(filePath);
       if (stat.isDirectory()) {
-        // Recursively call walkSync with the current directory and the current object
-        children.push(walkSync(filePath));
+        //check for empty folders
+        if (hasMarkdownFiles(filePath)) {
+          // Recursively call walkSync with the current directory and the current object
+          children.push(walkSync(filePath));
+        }
       } else if (path.extname(filename) === '.md') {
         // If the current item is a markdown file, read the file and parse the frontmatter
         const Entity = getEntityFrontmatter(filePath, content);
@@ -45,6 +65,10 @@ export function getEntityMetaTree(dir: string, content = false) {
 
     if (children.length > 0 || currentObject.type != 'Institution') {
       currentObject.children = sortChildrenByDependency(children);
+    }
+
+    if (!currentObject.title) {
+      currentObject.title = path.basename(currentDir);
     }
 
     return currentObject;

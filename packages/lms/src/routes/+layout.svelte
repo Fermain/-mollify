@@ -14,7 +14,9 @@
   import type { LayoutData } from './$types';
   import EntityNav from '$lib/components/navigation/EntityNav.svelte';
   import { page } from '$app/stores';
-
+  import hljs from '$lib/utils/highlightjs.config';
+  ('../lib/utils/highlightjs.config');
+  import { storeHighlightJs } from '@skeletonlabs/skeleton';
   export let data: LayoutData;
 
   const scrollIntoView = (node: HTMLElement) => {
@@ -49,7 +51,7 @@
   <svelte:fragment slot="footer"
     ><Footer>
       <Reader />
-      <div class="flex-1"></div>
+      <div class="flex-1" />
       <Molly endpoint="/api/molly" />
     </Footer>
   </svelte:fragment>
