@@ -14,6 +14,7 @@ export function getEntityFrontmatter(entityPath: string, textBody = false): Enti
   const Entity: EntityBase = {
     ...data,
     title: data.title,
+    hidden: data.hidden,
     type: data.type,
     tags: data.tags,
     previous: data.previous,

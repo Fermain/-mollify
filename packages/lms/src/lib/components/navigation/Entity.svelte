@@ -6,7 +6,7 @@
   import { onMount } from 'svelte';
   export let entity: EntityMeta;
   let open = false;
-
+  
   function drawerClose(): void {
     drawerStore.close();
   }
@@ -35,6 +35,7 @@
 </script>
 
 <nav class="entity">
+  {#if !entity.hidden}
   <div class="entity-inner">
     <div class="entity-header hover:bg-primary-hover-token rounded-container-token p-2">
       {#if entity.browserPath}
@@ -53,7 +54,6 @@
           <span class="ms-2 text-start">{entity.title}</span>
         </button>
       {/if}
-
       {#if entity.children.length}
         <button on:click={toggle} class="btn hover:bg-primary-hover-token p-0">
           <Icon name={open ? 'expand_less' : 'expand_more'} />
@@ -68,6 +68,7 @@
       </div>
     {/if}
   </div>
+  {/if}
 </nav>
 
 <style lang="scss">
