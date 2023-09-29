@@ -12,13 +12,13 @@
 
 <AppBar gridColumns="grid-cols-3" slotDefault="place-self-center" slotTrail="place-content-end">
   <svelte:fragment slot="lead">
-    <div class="flex items-center">
-      <button class="lg:hidden btn btn-sm mr-4" on:click={drawerOpen}>
-        <Icon name="menu" />
-      </button>
       <Logo />
-    </div>
   </svelte:fragment>
-  <Search />
-  <svelte:fragment slot="trail"><Settings /></svelte:fragment>
+  <svelte:fragment slot="trail">
+    <Search />
+    <Settings />
+    <button class="lg:hidden btn btn-sm mr-4" on:click={drawerOpen}>
+      <Icon name="menu" />
+    </button>
+  </svelte:fragment>
 </AppBar>
