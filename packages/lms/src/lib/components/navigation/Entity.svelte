@@ -20,6 +20,9 @@
     Programme: 'folder',
     Institution: 'school'
   };
+
+  const param = $page.url.searchParams.get('nav');
+  
   let icon = entityIcons[typeOfEntity] || 'folder';
   if (entity.children.length === 0 && !entityIcons[typeOfEntity]) {
     icon = 'article';
@@ -39,7 +42,7 @@
     <div class="entity-header hover:bg-primary-hover-token rounded-container-token p-2">
       {#if entity.browserPath}
         <a
-          href={entity.browserPath}
+          href={`${entity.browserPath}?nav=${typeOfEntity.toLocaleLowerCase()}`}
           on:click={drawerClose}
           class="entity-title flex flex-row items-center"
           class:active={decodeURI($page.url.pathname) + '/' === entity.browserPath}
