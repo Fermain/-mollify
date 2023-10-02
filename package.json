@@ -25,6 +25,7 @@
     "lerna": "^6.6.1"
   },
   "dependencies": {
+    "directory-tree": "^3.5.1",
     "dotenv": "^16.0.3"
   }
 }
