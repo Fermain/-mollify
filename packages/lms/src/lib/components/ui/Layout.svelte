@@ -13,9 +13,11 @@
   import observeContentProgress from '$lib/utils/progress/observeContentProgress';
   import calculateProgress from '$lib/utils/progress/calculateProgress';
   import ProgressBar from './ProgressBar.svelte';
+  import { page } from '$app/stores';
 
   export let title = '';
   export let tags = [''];
+  export let type = '';
 
   onMount(() => {
     const wordEmphasis = load('wordEmphasis');
@@ -34,7 +36,9 @@
   <meta property="og:image" content="/brand/og.png" />
 </svelte:head>
 
-<ProgressBar value={calculateProgress()} />
+{#if type === 'Programme' || type === 'Course' || type === 'module'}
+  <ProgressBar value={calculateProgress(decodeURIComponent($page.url.pathname))} />
+{/if}
 
 <div class="content-grid">
   {#if title}
