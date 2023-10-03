@@ -28,6 +28,8 @@
 
     observeContentProgress();
   });
+
+  const displayProgressBar = type === 'Programme' || type === 'Course' || type === 'Module';
 </script>
 
 <svelte:head>
@@ -36,16 +38,15 @@
   <meta property="og:image" content="/brand/og.png" />
 </svelte:head>
 
-{#if type === 'Programme' || type === 'Course' || type === 'module'}
-  <ProgressBar value={calculateProgress(decodeURIComponent($page.url.pathname))} />
-{/if}
-
 <div class="content-grid">
   {#if title}
     <h1>{title}</h1>
   {/if}
   <Tags {tags} />
   <div class="toc-container">
+    {#if displayProgressBar}
+      <ProgressBar value={calculateProgress(decodeURIComponent($page.url.pathname))} />
+    {/if}
     <TableOfContents width="w-auto" label="" target="#page" allowedHeadings="h2" />
   </div>
   <div class="content" id="content">
