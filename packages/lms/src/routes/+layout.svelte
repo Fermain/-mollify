@@ -5,10 +5,9 @@
   import { Molly } from '@mollify/molly';
   import '../app.postcss';
   import { AppShell, Drawer, Toast } from '@skeletonlabs/skeleton';
-  import Main from '$lib/components/content/Main.svelte';
   import Footer from '$lib/components/footer/Footer.svelte';
   import Reader from '$lib/components/reader/Reader.svelte';
-  import IconNav from '$lib/components/navigation/IconNav.svelte';
+  import BookmarkBar from '$lib/components/bookmarks/BookmarkBar.svelte';
   import Header from '$lib/components/header/Header.svelte';
   import 'prismjs/themes/prism-tomorrow.css';
   import type { LayoutData } from './$types';
@@ -40,14 +39,16 @@
     </div>
   </svelte:fragment>
   <svelte:fragment slot="sidebarLeft">
-    <IconNav />
+    <BookmarkBar />
   </svelte:fragment>
   {#key $page.url.pathname}
     <div use:scrollIntoView />
   {/key}
-  <Main>
-    <slot />
-  </Main>
+  <main class="px-5 py-2 w-full relative">
+    <div class="prose max-w-none" id="prose-container">
+      <slot />
+    </div>
+  </main>
   <svelte:fragment slot="footer"
     ><Footer>
       <Reader />
