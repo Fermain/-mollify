@@ -17,7 +17,7 @@
   <svelte:fragment slot="trail">
     <Search />
     <Settings />
-    <button class="lg:hidden btn btn-sm mr-4" on:click={drawerOpen}>
+    <button class="lg:hidden btn btn-sm mr-4 hover:bg-primary-hover-token" on:click={drawerOpen}>
       <Icon name="menu" />
     </button>
   </svelte:fragment>
