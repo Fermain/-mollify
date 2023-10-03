@@ -5,6 +5,7 @@
   import Icon from '../ui/Icon.svelte';
   import { onMount } from 'svelte';
   import { load } from '$lib/utils/storage';
+  import { progressMapStore } from '$lib/stores/courseProgress';
   export let entity: EntityMeta;
   let open = false;
   let completed: boolean | undefined = false;
@@ -28,10 +29,13 @@
   }
 
   onMount(() => {
-    if (decodeURI($page.url.pathname).includes(entity.browserPath as string)) toggle();
+    const currentPage = decodeURI($page.url.pathname);
+    const browserPath = entity.browserPath ?? '';
+    if (currentPage.includes(browserPath)) toggle();
 
-    const contentProgressMap: Map<string, boolean> = new Map(load('contentCompletionMap'));
-    completed = contentProgressMap.get(String(entity.browserPath));
+    progressMapStore.subscribe(() => {
+      completed = progressMapStore.getStatus(browserPath);
+    });
   });
 
   function toggle() {

@@ -10,8 +10,9 @@
   import { wordEmphasisEnabled } from '$lib/stores/wordEmphasis';
   import { applyWordEmphasis } from '$lib/utils/settings/wordEmphasis/apply';
   import { load } from '$lib/utils/storage';
-  import progressLog from '$lib/utils/progress/progressLog';
   import observeContentProgress from '$lib/utils/progress/observeContentProgress';
+  import calculateProgress from '$lib/utils/progress/calculateProgress';
+  import ProgressBar from './ProgressBar.svelte';
 
   export let title = '';
   export let tags = [''];
@@ -23,7 +24,6 @@
       applyWordEmphasis();
     }
 
-    progressLog();
     observeContentProgress();
   });
 </script>
@@ -33,6 +33,8 @@
   <meta property="og:title" content={title} />
   <meta property="og:image" content="/brand/og.png" />
 </svelte:head>
+
+<ProgressBar value={calculateProgress()} />
 
 <div class="content-grid">
   {#if title}
