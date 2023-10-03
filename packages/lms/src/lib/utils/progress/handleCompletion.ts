@@ -1,26 +1,22 @@
-import { load, save } from "../storage";
-
-type MapValue = {
-	children: string[],
-	parentAddress: string
-}
+import { progressMapStore } from "$lib/stores/courseProgress";
+import { get } from "svelte/store";
+import { courseRelationMap } from "$lib/stores/courseRelationMap";
 
 export default function handleCompletion(address: string) {
-	const hierarchyMap: Map<string, MapValue> = new Map(JSON.parse(sessionStorage.getItem("hierarchyMap") || ""))
-	const completionMap: Map<string, boolean> = new Map(load('contentCompletionMap'));
-	const parentMap = hierarchyMap.get(address)
+	const progressStore = get(progressMapStore)
+	const parentMap = get(courseRelationMap)
+	const parent = parentMap.get(address)
+	if (!parent) return
 
-	if (!parentMap) return
+	if (parent.children.length > 0) {
+		const allChildrenCompleted = parent.children.every(child => progressStore.get(child))
+		if (!allChildrenCompleted) return false
 
-	if (parentMap.children.length > 0) {
-		const allChildrenCompleted = parentMap.children.every(child => completionMap.get(child))
-		if (allChildrenCompleted) {
-			completionMap.set(address, true)
-			handleCompletion(parentMap.parentAddress)
-		}
+		progressMapStore.setComplete(address, true)
+		handleCompletion(String(parent.parentAddress))
+
 	} else {
-		completionMap.set(address, true)
+		progressMapStore.setComplete(address, true)
 	}
-	save('contentCompletionMap', [...completionMap])
 };
 
