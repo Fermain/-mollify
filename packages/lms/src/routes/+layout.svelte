@@ -46,9 +46,9 @@
   {#key $page.url.pathname}
     <div use:scrollIntoView />
   {/key}
-<Main>
-  <slot />
-</Main>
+  <Main>
+    <slot />
+  </Main>
   <svelte:fragment slot="footer"
     ><Footer>
       <Reader />
