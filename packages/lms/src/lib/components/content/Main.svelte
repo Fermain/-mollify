@@ -1,5 +1,5 @@
 <script lang="ts">
-  import ProgrammeNav from '../navigation/ProgrammeNav.svelte';
+  import ProgrammeNav from '../signpost/ProgrammeNav.svelte';
 </script>
 
 <main class="px-5 py-2 w-full relative">

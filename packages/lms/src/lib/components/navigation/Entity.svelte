@@ -40,39 +40,40 @@
 </script>
 
 <nav class="entity">
-  <div class="entity-inner">
-    <div class="entity-header hover:bg-primary-hover-token rounded-container-token p-2">
-      {#if entity.browserPath}
-        <a
-          href={`${entity.browserPath}?${urlSearchParams.toString()}`}
-          on:click={drawerClose}
-          class="entity-title flex flex-row items-center"
-          class:active={decodeURI($page.url.pathname) + '/' === entity.browserPath}
-        >
-          <Icon name={icon} />
-          <p class="ms-2">{entity.title}</p>
-        </a>
-      {:else}
-        <button on:click={toggle} class="entity-title flex flex-row items-center">
-          <Icon name={icon} />
-          <span class="ms-2 text-start">{entity.title}</span>
-        </button>
-      {/if}
-
+  {#if !entity.hidden}
+    <div class="entity-inner">
+      <div class="entity-header hover:bg-primary-hover-token rounded-container-token p-2">
+        {#if entity.browserPath}
+          <a
+            href={entity.browserPath}
+            on:click={drawerClose}
+            class="entity-title flex flex-row items-center"
+            class:active={decodeURI($page.url.pathname) + '/' === entity.browserPath}
+          >
+            <Icon name={icon} />
+            <p class="ms-2">{entity.title}</p>
+          </a>
+        {:else}
+          <button on:click={toggle} class="entity-title flex flex-row items-center">
+            <Icon name={icon} />
+            <span class="ms-2 text-start">{entity.title}</span>
+          </button>
+        {/if}
+        {#if entity.children.length}
+          <button on:click={toggle} class="btn hover:bg-primary-hover-token p-0">
+            <Icon name={open ? 'expand_less' : 'expand_more'} />
+          </button>
+        {/if}
+      </div>
       {#if entity.children.length}
-        <button on:click={toggle} class="btn hover:bg-primary-hover-token p-0">
-          <Icon name={open ? 'expand_less' : 'expand_more'} />
-        </button>
+        <div class="entity-children" class:open>
+          {#each entity.children as child}
+            <svelte:self entity={child} />
+          {/each}
+        </div>
       {/if}
     </div>
-    {#if entity.children.length}
-      <div class="entity-children" class:open>
-        {#each entity.children as child}
-          <svelte:self entity={child} />
-        {/each}
-      </div>
-    {/if}
-  </div>
+  {/if}
 </nav>
 
 <style lang="scss">
