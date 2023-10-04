@@ -281,3 +281,8 @@ Collaborators
 - Eric Pretzinger [pretzL](https://github.com/pretzL)
 - Jenny Feragen [jenfer93](https://github.com/Jenfer93)
 - Melisa Zorraindo [Melisa-Zorraindo](https://github.com/Melisa-Zorraindo)
+- Christopher Tønnesland [Christonn93](https://github.com/Christonn93)
+- Didi Ethmane [Ousman37](https://github.com/Ousman37)
+- Megumi Kimura [MegumiKim](https://github.com/MegumiKim)
+- Robin Lysaker [Lysaker-git](https://github.com/Lysaker-git)
+- Stian Stordal [StianSto](https://github.com/StianSto)
