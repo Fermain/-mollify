@@ -5,6 +5,7 @@
   import { Molly } from '@mollify/molly';
   import '../app.postcss';
   import { AppShell, Drawer, Toast } from '@skeletonlabs/skeleton';
+  import Main from '$lib/components/content/Main.svelte';
   import Footer from '$lib/components/footer/Footer.svelte';
   import Reader from '$lib/components/reader/Reader.svelte';
   import BookmarkBar from '$lib/components/bookmarks/BookmarkBar.svelte';
@@ -16,6 +17,7 @@
   import hljs from '$lib/utils/highlightjs.config';
   ('../lib/utils/highlightjs.config');
   import { storeHighlightJs } from '@skeletonlabs/skeleton';
+
   export let data: LayoutData;
 
   const scrollIntoView = (node: HTMLElement) => {
@@ -44,11 +46,9 @@
   {#key $page.url.pathname}
     <div use:scrollIntoView />
   {/key}
-  <main class="px-5 py-2 w-full relative">
-    <div class="prose max-w-none" id="prose-container">
-      <slot />
-    </div>
-  </main>
+<Main>
+  <slot />
+</Main>
   <svelte:fragment slot="footer"
     ><Footer>
       <Reader />
