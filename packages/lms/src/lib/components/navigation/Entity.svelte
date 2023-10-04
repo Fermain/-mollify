@@ -4,6 +4,7 @@
   import type { EntityMeta } from '@mollify/types';
   import Icon from '../ui/Icon.svelte';
   import { onMount } from 'svelte';
+  import { navRenderParamStore } from '$lib/stores/navRender';
   export let entity: EntityMeta;
   let open = false;
 
@@ -21,8 +22,9 @@
     Institution: 'school'
   };
 
-  const param = $page.url.searchParams.get('nav');
-  
+  const urlSearchParams = new URLSearchParams();
+  urlSearchParams.set('nav', $navRenderParamStore);
+
   let icon = entityIcons[typeOfEntity] || 'folder';
   if (entity.children.length === 0 && !entityIcons[typeOfEntity]) {
     icon = 'article';
@@ -42,7 +44,7 @@
     <div class="entity-header hover:bg-primary-hover-token rounded-container-token p-2">
       {#if entity.browserPath}
         <a
-          href={`${entity.browserPath}?nav=${typeOfEntity.toLocaleLowerCase()}`}
+          href={`${entity.browserPath}?${urlSearchParams.toString()}`}
           on:click={drawerClose}
           class="entity-title flex flex-row items-center"
           class:active={decodeURI($page.url.pathname) + '/' === entity.browserPath}
