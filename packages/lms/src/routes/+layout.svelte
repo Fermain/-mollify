@@ -8,7 +8,7 @@
   import Main from '$lib/components/content/Main.svelte';
   import Footer from '$lib/components/footer/Footer.svelte';
   import Reader from '$lib/components/reader/Reader.svelte';
-  import IconNav from '$lib/components/navigation/IconNav.svelte';
+  import BookmarkBar from '$lib/components/bookmarks/BookmarkBar.svelte';
   import Header from '$lib/components/header/Header.svelte';
   import 'prismjs/themes/prism-tomorrow.css';
   import type { LayoutData } from './$types';
@@ -17,6 +17,7 @@
   import hljs from '$lib/utils/highlightjs.config';
   ('../lib/utils/highlightjs.config');
   import { storeHighlightJs } from '@skeletonlabs/skeleton';
+
   export let data: LayoutData;
 
   const scrollIntoView = (node: HTMLElement) => {
@@ -40,7 +41,7 @@
     </div>
   </svelte:fragment>
   <svelte:fragment slot="sidebarLeft">
-    <IconNav />
+    <BookmarkBar />
   </svelte:fragment>
   {#key $page.url.pathname}
     <div use:scrollIntoView />
