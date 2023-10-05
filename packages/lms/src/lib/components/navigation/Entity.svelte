@@ -4,7 +4,6 @@
   import type { EntityMeta } from '@mollify/types';
   import Icon from '../ui/Icon.svelte';
   import { onMount } from 'svelte';
-  import { load } from '$lib/utils/storage';
   import { progressMapStore } from '$lib/stores/courseProgress';
   export let entity: EntityMeta;
   let open = false;
