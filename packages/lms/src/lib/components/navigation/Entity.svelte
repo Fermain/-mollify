@@ -3,9 +3,11 @@
   import { drawerStore } from '@skeletonlabs/skeleton';
   import type { EntityMeta } from '@mollify/types';
   import Icon from '../ui/Icon.svelte';
-  import { onMount } from 'svelte';
   import { progressMapStore } from '$lib/stores/courseProgress';
+  import { getContext, onMount } from 'svelte';
+ 
   export let entity: EntityMeta;
+
   let open = false;
   let completed: boolean | undefined = false;
 
@@ -22,6 +24,12 @@
     Programme: 'folder',
     Institution: 'school'
   };
+
+  const renderByType: string = getContext('navRender');
+  const urlSearchParams = new URLSearchParams();
+  urlSearchParams.set('nav', renderByType);
+  let href = entity.browserPath + '?' + urlSearchParams.toString();
+
   let icon = entityIcons[typeOfEntity] || 'folder';
   if (entity.children.length === 0 && !entityIcons[typeOfEntity]) {
     icon = 'article';
@@ -48,7 +56,7 @@
       <div class="entity-header hover:bg-primary-hover-token rounded-container-token p-2">
         {#if entity.browserPath}
           <a
-            href={entity.browserPath}
+            {href}
             on:click={drawerClose}
             class="entity-title flex flex-row items-center"
             class:active={decodeURI($page.url.pathname) + '/' === entity.browserPath}

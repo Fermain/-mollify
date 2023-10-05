@@ -17,12 +17,31 @@
   import hljs from '$lib/utils/highlightjs.config';
   ('../lib/utils/highlightjs.config');
   import { storeHighlightJs } from '@skeletonlabs/skeleton';
-
+  import { setContext } from 'svelte';
+  import type { EntityMeta } from '@mollify/types';
   export let data: LayoutData;
 
   const scrollIntoView = (node: HTMLElement) => {
     node.scrollIntoView();
   };
+
+  let renderByType = '';
+  (function rendevNav() {
+    const navParam = $page.url.searchParams.get('nav');
+    if (navParam) return (renderByType = navParam);
+
+    let string = '';
+    const path = decodeURIComponent($page.url.pathname).toLowerCase() + '/';
+
+    function callback(entity: EntityMeta): unknown {
+      const match = path === entity.browserPath?.toLocaleLowerCase();
+      return match ? (string = entity.type) : entity.children?.find(callback);
+    }
+    data.sitemap.find(callback);
+    renderByType = string.toLowerCase();
+  })();
+
+  setContext('navRender', renderByType);
 </script>
 
 <Drawer>
