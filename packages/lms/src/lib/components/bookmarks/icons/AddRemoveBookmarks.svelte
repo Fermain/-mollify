@@ -35,15 +35,23 @@
 </script>
 
 <div>
-  <button
-    name="tile-2"
-    class="app-rail-tile unstyled grid place-content-center place-items-center w-full aspect-square space-y-1.5 cursor-pointer bg-primary-hover-token"
-    on:click={() => onclick()}
-  >
-    {#if hasBookmarks}
-      <Icon name="bookmark_remove" />
-    {:else}
-      <Icon name="bookmark_add" />
-    {/if}
-  </button>
+  {#if hasBookmarks}
+    <button
+      name="tile-2"
+      class="app-rail-tile unstyled grid place-content-center place-items-center w-full aspect-square space-y-1.5 cursor-pointer bg-primary-hover-token"
+      on:click={() => onclick()}
+      aria-label="remove bookmark"
+    >
+      <Icon name="bookmark_remove" title="remove bookmark" />
+    </button>
+  {:else}
+    <button
+      name="tile-2"
+      class="app-rail-tile unstyled grid place-content-center place-items-center w-full aspect-square space-y-1.5 cursor-pointer bg-primary-hover-token"
+      on:click={() => onclick()}
+      aria-label="add bookmark"
+    >
+      <Icon name="bookmark_add" title="add bookmark" /></button
+    >
+  {/if}
 </div>

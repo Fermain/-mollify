@@ -44,7 +44,9 @@
 </script>
 
 <div>
-  <button class="btn hover:bg-primary-hover-token" use:popup={settings}> <Icon name="settings" /></button>
+  <button class="btn hover:bg-primary-hover-token" use:popup={settings} aria-label="settings">
+    <Icon name="settings" title="settings" /></button
+  >
 
   <div class="card p-4 w-60 shadow-xl" data-popup="settings" id="settings-card">
     <h3 class="h3 mb-3">Settings</h3>
@@ -56,21 +58,39 @@
     <div class="flex justify-between my-5">
       <span class="p-1">Text</span>
       <div class="flex gap-4">
-        <button class="btn hover:bg-primary-hover-token p-1" on:click={fontSize.increaseFontSize}>
-          <Icon name="text_increase" /></button
+        <button
+          class="btn hover:bg-primary-hover-token p-1"
+          on:click={fontSize.increaseFontSize}
+          aria-label="increase font size"
         >
-        <button class="btn hover:bg-primary-hover-token p-1" on:click={fontSize.decreaseFontSize}>
-          <Icon name="text_decrease" /></button
+          <Icon name="text_increase" title="text increase" /></button
         >
-        <button class="btn hover:bg-primary-hover-token p-1" on:click={fontSize.resetFontSize}>
-          <Icon name="refresh" /></button
+        <button
+          class="btn hover:bg-primary-hover-token p-1"
+          on:click={fontSize.decreaseFontSize}
+          aria-label="decrease font size"
+        >
+          <Icon name="text_decrease" title="text decrease" /></button
+        >
+        <button
+          class="btn hover:bg-primary-hover-token p-1"
+          on:click={fontSize.resetFontSize}
+          aria-label="reset font size"
+        >
+          <Icon name="refresh" title="reset" /></button
         >
       </div>
     </div>
     <div class="flex justify-between my-5">
       <span class="p-1">Word emphasis</span>
       <div class="flex gap-4">
-        <SlideToggle name="slide" size="sm" on:click={toggleWordEmphasis} checked={$wordEmphasisEnabled} />
+        <SlideToggle
+          name="slide"
+          size="sm"
+          on:click={toggleWordEmphasis}
+          checked={$wordEmphasisEnabled}
+          aria-label="toggle word emphasis"
+        />
       </div>
     </div>
   </div>

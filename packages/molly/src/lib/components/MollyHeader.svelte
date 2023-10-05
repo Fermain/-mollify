@@ -13,7 +13,7 @@
     on:click={toggleExpand}
     aria-label="resize chat box"
   >
-    <img src={img} alt="resize" class="h-5 w-5 m-auto" />
+    <img src={img} alt="resize" class="h-5 w-5 m-auto" title="resize chat box" />
   </button>
   <button on:click={toggleMollyOpen} class="btn-icon drop-shadow-md hover:drop-shadow-lg" aria-label="hide chat box">
     <Logo />
