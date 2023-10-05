@@ -3,10 +3,13 @@
   import { drawerStore } from '@skeletonlabs/skeleton';
   import type { EntityMeta } from '@mollify/types';
   import Icon from '../ui/Icon.svelte';
+  import { progressMapStore } from '$lib/stores/courseProgress';
   import { getContext, onMount } from 'svelte';
+ 
   export let entity: EntityMeta;
 
   let open = false;
+  let completed: boolean | undefined = false;
 
   function drawerClose(): void {
     drawerStore.close();
@@ -33,7 +36,13 @@
   }
 
   onMount(() => {
-    if (decodeURI($page.url.pathname).includes(entity.browserPath as string)) toggle();
+    const currentPage = decodeURI($page.url.pathname);
+    const browserPath = entity.browserPath ?? '';
+    if (currentPage.includes(browserPath)) toggle();
+
+    progressMapStore.subscribe(() => {
+      completed = progressMapStore.getStatus(browserPath);
+    });
   });
 
   function toggle() {
@@ -41,7 +50,7 @@
   }
 </script>
 
-<nav class="entity">
+<nav class="entity" class:completed>
   {#if !entity.hidden}
     <div class="entity-inner">
       <div class="entity-header hover:bg-primary-hover-token rounded-container-token p-2">
@@ -80,6 +89,9 @@
 
 <style lang="scss">
   .entity {
+    &.completed {
+      color: green !important;
+    }
     &-header {
       display: flex;
       justify-content: space-between;

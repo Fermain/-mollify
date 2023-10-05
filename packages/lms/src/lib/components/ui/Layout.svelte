@@ -10,9 +10,14 @@
   import { wordEmphasisEnabled } from '$lib/stores/wordEmphasis';
   import { applyWordEmphasis } from '$lib/utils/settings/wordEmphasis/apply';
   import { load } from '$lib/utils/storage';
+  import observeContentProgress from '$lib/utils/progress/observeContentProgress';
+  import calculateProgress from '$lib/utils/progress/calculateProgress';
+  import ProgressBar from './ProgressBar.svelte';
+  import { page } from '$app/stores';
 
   export let title = '';
   export let tags = [''];
+  export let type = '';
 
   onMount(() => {
     const wordEmphasis = load('wordEmphasis');
@@ -20,7 +25,11 @@
       wordEmphasisEnabled.set(true);
       applyWordEmphasis();
     }
+
+    observeContentProgress();
   });
+
+  const displayProgressBar = type === 'Programme' || type === 'Course' || type === 'Module';
 </script>
 
 <svelte:head>
@@ -35,6 +44,9 @@
   {/if}
   <Tags {tags} />
   <div class="toc-container">
+    {#if displayProgressBar}
+      <ProgressBar value={calculateProgress(decodeURIComponent($page.url.pathname))} />
+    {/if}
     <TableOfContents width="w-auto" label="" target="#page" allowedHeadings="h2" />
   </div>
   <div class="content" id="content">
