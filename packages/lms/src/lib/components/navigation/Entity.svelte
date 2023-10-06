@@ -72,7 +72,7 @@
         {/if}
         {#if entity.children.length}
           <button on:click={toggle} class="btn hover:bg-primary-hover-token p-0">
-            <Icon name={open ? 'expand_less' : 'expand_more'} />
+            <Icon name={open ? 'expand_less' : 'expand_more'} title={open ? 'hide' : 'expand'} />
           </button>
         {/if}
       </div>

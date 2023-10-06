@@ -155,8 +155,9 @@
     />
     <button
       class="btn hover:bg-primary-hover-token sm:variant-filled-primary sm:rounded-l-none sm:hover:bg-primary-active-token"
+      aria-label="search"
     >
-      <Icon name="search" /></button
+      <Icon name="search" title="search" /></button
     >
   </form>
   {#if searchResults.length > 0}

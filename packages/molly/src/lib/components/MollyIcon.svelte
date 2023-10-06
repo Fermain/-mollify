@@ -2,4 +2,4 @@
   import img from './icons/molly_logo.png';
 </script>
 
-<img src={img} alt="Molly logo" class="rounded-full" />
+<img src={img} alt="Molly logo" class="rounded-full" title="open/close Molly" />

@@ -22,8 +22,9 @@
     name="tile-2"
     class="app-rail-tile unstyled grid place-content-center place-items-center w-full aspect-square space-y-1.5 cursor-pointer bg-primary-hover-token"
     on:click={() => modalStore.trigger(searchModal)}
+    aria-label="open bookmarks"
   >
-    <Icon name="bookmark" />
+    <Icon name="bookmark" title="bookmarks" />
   </button>
 
   <Modal components={modalComponent} />
