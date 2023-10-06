@@ -1,6 +1,6 @@
 {
   "name": "@mollify/lms",
-  "version": "0.2.11",
+  "version": "0.3.0",
   "license": "GPL",
   "scripts": {
     "dev": "vite dev",
@@ -17,10 +17,10 @@
   "type": "module",
   "dependencies": {
     "@floating-ui/dom": "^1.2.8",
-    "@mollify/cli": "^0.2.11",
-    "@mollify/molly": "^0.2.11",
-    "@mollify/tts": "^0.2.11",
-    "@mollify/types": "^0.2.11",
+    "@mollify/cli": "0.3.0",
+    "@mollify/molly": "0.3.0",
+    "@mollify/tts": "0.3.0",
+    "@mollify/types": "0.3.0",
     "@playwright/test": "^1.28.1",
     "@skeletonlabs/skeleton": "^1.5.1",
     "@sveltejs/adapter-auto": "^2.0.0",
@@ -39,6 +39,7 @@
     "gray-matter": "^4.0.3",
     "highlight.js": "^11.8.0",
     "js-yaml": "^4.1.0",
+    "material-icons": "^1.13.11",
     "mdsvex": "^0.10.6",
     "postcss": "^8.4.23",
     "postcss-load-config": "^4.0.1",
@@ -56,8 +57,7 @@
     "unist-builder": "^3.0.1",
     "unist-util-visit": "^4.1.2",
     "vite": "^4.2.0",
-    "vitest": "^0.25.3",
-    "material-icons": "^1.13.11"
+    "vitest": "^0.25.3"
   },
   "devDependencies": {
     "@sveltejs/adapter-node": "^1.3.1",
