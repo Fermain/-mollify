@@ -1,6 +1,6 @@
 {
   "name": "@mollify/types",
-  "version": "0.2.11",
+  "version": "0.3.0",
   "description": "Global type definitions for @mollify",
   "author": "Fermain <Fermain@users.noreply.github.com>",
   "homepage": "https://github.com/Fermain/-Mollify#readme",
