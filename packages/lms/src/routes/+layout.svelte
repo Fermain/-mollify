@@ -25,23 +25,21 @@
     node.scrollIntoView();
   };
 
-  let renderByType = '';
   (function rendevNav() {
+    let renderByType = '';
     const navParam = $page.url.searchParams.get('nav');
     if (navParam) return (renderByType = navParam);
 
-    let string = '';
     const path = decodeURIComponent($page.url.pathname).toLowerCase() + '/';
 
     function callback(entity: EntityMeta): unknown {
-      const match = path === entity.browserPath?.toLocaleLowerCase();
-      return match ? (string = entity.type) : entity.children?.find(callback);
+      const match = path === entity.browserPath?.toLowerCase();
+      return match ? (renderByType = entity.type?.toLowerCase()) : entity.children?.find(callback);
     }
     data.sitemap.find(callback);
-    renderByType = string.toLowerCase();
-  })();
 
-  setContext('navRender', renderByType);
+    setContext('navRender', renderByType);
+  })();
 </script>
 
 <Drawer>
