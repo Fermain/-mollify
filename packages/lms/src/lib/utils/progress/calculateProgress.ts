@@ -1,4 +1,4 @@
-import { progressMapStore } from '$lib/stores/courseProgress';
+import { progressStore } from '$lib/stores/courseProgress';
 import { courseRelationMap } from '$lib/stores/courseRelationMap';
 import { get } from 'svelte/store';
 
@@ -9,25 +9,25 @@ import { get } from 'svelte/store';
  * @returns percentage of completed entities
  */
 export default function calculateProgress(addressId = '') {
-  const progressStore = get(progressMapStore);
-  const courseRelationStore = get(courseRelationMap);
+	const progress = get(progressStore);
+	const courseRelationStore = get(courseRelationMap);
 
-  let entries: string[] = [];
+	let entries: string[] = [];
 
-  if (addressId) {
-    const currentPage = courseRelationStore.get(addressId + '/');
-    entries = currentPage?.children.length ? [...currentPage.children] : [addressId];
-  } else {
-    entries = [...courseRelationStore.keys()];
-  }
+	if (addressId) {
+		const currentPage = courseRelationStore.get(addressId + '/');
+		entries = currentPage?.children.length ? [...currentPage.children] : [addressId];
+	} else {
+		entries = [...courseRelationStore.keys()];
+	}
 
-  const total = entries.length;
-  let completedCounter = 0;
+	const total = entries.length;
+	let completedCounter = 0;
 
-  entries.forEach((entry) => {
-    const entryCompleted = progressStore.get(entry);
-    if (entryCompleted) completedCounter++;
-  });
+	entries.forEach((entry) => {
+		const entryCompleted = progress.has(entry);
+		if (entryCompleted) completedCounter++;
+	});
 
-  return (completedCounter / total) * 100;
+	return (completedCounter / total) * 100;
 }

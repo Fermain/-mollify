@@ -1,39 +1,35 @@
 import { browser } from '$app/environment';
-import { get, writable } from 'svelte/store';
-import { courseRelationMap } from './courseRelationMap';
+import { writable, type Writable } from 'svelte/store';
 
-// a custom store for storing progress map. will automatically save to localStorage when store is updated.
-// data is stored as [ [address<string>, <boolean>], ...]
-async function localStorageProgressMapStore(key: string) {
-  let map: Map<string, boolean> = new Map();
-  const store = writable(map);
+// a custom store for storing progress Set. will automatically save to localStorage when store is updated.
+// data is stored as [ documentAddress<string>, ...]
+const createProgressStore = () => {
+	let store: Writable<Set<string>> = writable(new Set());
 
-  if (browser) {
-    const storedValue = localStorage.getItem(key);
-    map = new Map(storedValue ? JSON.parse(storedValue) : await buildContentCompletionMap());
-    store.subscribe(($storeValue) => {
-      localStorage.setItem(key, JSON.stringify([...$storeValue]));
-    });
-  }
+	if (browser) {
+		const key = 'contentCompletionSet'
+		const storedValue = localStorage.getItem(key);
 
-  store.set(map);
+		if (storedValue) store = writable(new Set(JSON.parse(storedValue)))
+		store.subscribe(($storeValue) => {
+			localStorage.setItem(key, JSON.stringify([...$storeValue]));
+		});
 
-  return {
-    ...store,
-    getStatus: (id: string) => map.get(id),
-    setComplete: (id: string, value: boolean) => {
-      map.set(id, value);
-      store.set(map);
-    }
-  };
+	}
+
+	return {
+		...store,
+		getStatus,
+		setComplete
+	};
+
+	function getStatus(id: string) {
+		store.subscribe(storeValue => storeValue.has(id))
+	}
+	function setComplete(id: string) {
+		store.update(storevalue => storevalue.add(id))
+	}
 }
 
-async function buildContentCompletionMap() {
-  const map = new Map();
-  const hierarchyMap = get(courseRelationMap);
 
-  for (const [browserPath] of hierarchyMap) map.set(browserPath, false);
-  return map;
-}
-
-export const progressMapStore = await localStorageProgressMapStore('contentCompletionMap');
+export const progressStore = createProgressStore()
