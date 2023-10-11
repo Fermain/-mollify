@@ -1,3 +1,4 @@
+
 {
   "extends": "./.svelte-kit/tsconfig.json",
   "compilerOptions": {
@@ -9,31 +10,12 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
-    "ignoreDeprecations": "5.0", // Ensure this line exists and has a string value
-    "module": "ESNext",
-    "moduleResolution": "node",
-    "jsx": "preserve"
-  },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.svelte", "src/**/*.js"],
-  "exclude": ["node_modules/*", ".svelte/*"]
+    "ignoreDeprecations": ["5.0"], // Add this line to ignore the deprecation warning
+    "verbatimModuleSyntax": true // Use 'verbatimModuleSyntax' instead of deprecated option
 }
-// {
-//   "extends": "./.svelte-kit/tsconfig.json",
-//   "compilerOptions": {
-//     "allowJs": true,
-//     "checkJs": true,
-//     "esModuleInterop": true,
-//     "forceConsistentCasingInFileNames": true,
-//     "resolveJsonModule": true,
-//     "skipLibCheck": true,
-//     "sourceMap": true,
-//     "strict": true,
-//     "ignoreDeprecations": ["5.0"], // Add this line to ignore the deprecation warning
-//     "verbatimModuleSyntax": true // Use 'verbatimModuleSyntax' instead of deprecated option
-// }
 
-//   // Path aliases are handled by https://kit.svelte.dev/docs/configuration#alias
-//   //
-//   // If you want to overwrite includes/excludes, make sure to copy over the relevant includes/excludes
-//   // from the referenced tsconfig.json - TypeScript does not merge them in
-// }
+  // Path aliases are handled by https://kit.svelte.dev/docs/configuration#alias
+  //
+  // If you want to overwrite includes/excludes, make sure to copy over the relevant includes/excludes
+  // from the referenced tsconfig.json - TypeScript does not merge them in
+}
