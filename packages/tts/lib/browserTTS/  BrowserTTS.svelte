@@ -6,14 +6,13 @@
     import { generateBrowserTTS } from "./  generateBrowserTTS"
     import { fetchElevenLabsAudio } from './fetchElevenLabsAudio';
     import { convertBlobToDataUrl } from './convertBlobToDataUrl';
-  
-    /**
+  /**
      * Generates audio content using browser-based Text-to-Speech (TTS) or a fallback option.
      * @param {string} content Content string to be converted to audio
      * @param {string} elevenLabsApiKey ElevenLabs API key (optional)
      * @returns {Promise<string>} Audio content in base64 format
      */
-    export async function generateAudio(content: string, elevenLabsApiKey?: string): Promise<string> {
+     export async function generateAudio(content: string, elevenLabsApiKey?: string): Promise<string> {
       // Check if an ElevenLabs API key is available
       if (elevenLabsApiKey) {
         // Attempt to generate audio using ElevenLabs
@@ -43,22 +42,5 @@
       return generateBrowserTTS(content);
     }
   </script>
-  
-  <div>
-    <p>This is a placeholder for content in the BrowserTTS component.</p>
-  </div>
-  
-  <style>
-    /* Component CSS styles here */
-    div {
-      background-color: #f0f0f0;
-      padding: 10px;
-      border: 1px solid #ccc;
-    }
-  
-    p {
-      font-size: 16px;
-      color: #333;
-    }
-  </style>
+ 
   
