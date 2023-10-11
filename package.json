@@ -22,7 +22,8 @@
     "packages/flow"
   ],
   "devDependencies": {
-    "lerna": "^6.6.1"
+    "lerna": "^6.6.1",
+    "svelte-preprocess": "^5.0.4"
   },
   "dependencies": {
     "dotenv": "^16.0.3"
