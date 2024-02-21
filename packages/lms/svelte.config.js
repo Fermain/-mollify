@@ -9,6 +9,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 import codeBlockPlugin from './src/lib/utils/remarkPlugins/codeBlockPlugin.js';
+import embedVideoPlugin from './src/lib/utils/remarkPlugins/embedVideoPlugin.js';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -28,7 +29,8 @@ const config = {
           iconTagName: 'span'
           // ...
         },
-        codeBlockPlugin
+        codeBlockPlugin, 
+        embedVideoPlugin
       ]
     }),
     preprocess({
@@ -36,7 +38,6 @@ const config = {
     })
   ],
   extensions: ['.svelte', '.md'],
-
   kit: {
     // See https://kit.svelte.dev/docs/adapters for more information about adapters.
     adapter: node({
