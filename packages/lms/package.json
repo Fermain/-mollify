@@ -48,6 +48,7 @@
     "remark": "^15.0.1",
     "remark-emoji-callout": "^1.0.0",
     "remark-gfm": "^3.0.1",
+    "remark-iframes": "^4.1.0",
     "remark-parse": "^11.0.0",
     "remark-stringify": "^11.0.0",
     "sass": "^1.62.0",
