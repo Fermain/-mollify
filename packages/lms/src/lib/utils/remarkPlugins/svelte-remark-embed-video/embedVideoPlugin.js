@@ -8,10 +8,7 @@ import { visit } from 'unist-util-visit';
 export default function embedVideoPlugin() {
   return function (tree) {
     visit(tree, 'link', (node) => {
-      // Assuming the link node has a property `url` that contains the link's URL
-      // and `title` property that contains the link's title
-      // You can adjust this based on the actual structure of your nodes
-
+      
       // Regular expression to match links in the format @[url](title)
       const linkRegex = /\@\[(.*?)\]\((.*?)\)/;
 
