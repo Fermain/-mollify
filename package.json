@@ -25,6 +25,8 @@
     "lerna": "^6.6.1"
   },
   "dependencies": {
+    "@mollify/lms": "^0.3.0",
+    "@mollify/molly": "^0.3.0",
     "dotenv": "^16.0.3"
   }
 }

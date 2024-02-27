@@ -11,6 +11,7 @@ const __dirname = path.dirname(__filename);
 import codeBlockPlugin from './src/lib/utils/remarkPlugins/codeBlockPlugin.js';
 import embedVideoPlugin from './src/lib/utils/remarkPlugins/svelte-remark-embed-video/embedVideoPlugin.js';
 
+
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
   // Consult https://kit.svelte.dev/docs/integrations#preprocessors
@@ -30,7 +31,7 @@ const config = {
           // ...
         },
         codeBlockPlugin, 
-        embedVideoPlugin
+        embedVideoPlugin,
       ]
     }),
     preprocess({
