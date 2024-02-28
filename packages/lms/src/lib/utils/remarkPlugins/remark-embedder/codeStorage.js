@@ -7,6 +7,13 @@ function generateIframeCode(videoLink) {
 function iframePlugin() {
   return function transformer(tree) {
     visit(tree, 'link', function (node) {
+      if (node.type === 'link') {
+        console.log('Node', node);
+        if (node.children.value === '@Video') {
+          console.log('Child Node', node.children);
+        }
+      }
+
       if (
         node.children.length === 1 &&
         node.children[0].type === 'text' && // Check if the child node is text
@@ -23,18 +30,35 @@ function iframePlugin() {
         node.value = iframeCode;
       }
     });
-
-    // Remove paragraph nodes that only contain iframes
-    visit(tree, 'paragraph', function (node, index, parent) {
-      if (
-        node.children.length === 1 &&
-        node.children[0].type === 'html' &&
-        node.children[0].value.startsWith('<iframe')
-      ) {
-        parent.children[index] = node.children[0]; // Replace paragraph with iframe
-      }
-    });
   };
 }
 
 export default iframePlugin;
+
+
+
+import { visit } from 'unist-util-visit';
+import getVimeoLink from './getVimeoLink.js';
+
+const transformers = [getVimeoLink];
+
+module.exports = async ({ markdownAST }) => {
+  const transformations = [];
+  visit(markdownAST, 'text', (node) => {
+    const { value } = node;
+    transformers.forEach((transformer) => {
+      if (transformer.shouldTransform(value)) {
+        transformations.push(async () => {
+          const html = await transformer(value);
+          node.type = 'html';
+          node.value = html;
+        });
+      }
+    });
+  });
+
+  const promises = transformations.map((t) => t());
+  await Promise.all(promises);
+
+  return markdownAST;
+};

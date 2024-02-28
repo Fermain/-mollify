@@ -64,6 +64,7 @@
     "tailwindcss": "^3.3.1",
     "tslib": "^2.4.1",
     "typescript": "^5.0.0",
+    "unified": "^11.0.4",
     "vite": "^4.2.0",
     "vitest": "^0.25.3"
   }

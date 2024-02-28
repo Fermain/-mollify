@@ -9,8 +9,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 import codeBlockPlugin from './src/lib/utils/remarkPlugins/codeBlockPlugin.js';
-import embedVideoPlugin from './src/lib/utils/remarkPlugins/svelte-remark-embed-video/embedVideoPlugin.js';
-
+import iframePlugin from './src/lib/utils/remarkPlugins/remark-embedder/iframePlugin.js';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -30,8 +29,8 @@ const config = {
           iconTagName: 'span'
           // ...
         },
-        codeBlockPlugin, 
-        embedVideoPlugin,
+        codeBlockPlugin,
+        iframePlugin
       ]
     }),
     preprocess({
