@@ -2,39 +2,29 @@ import { visit } from 'unist-util-visit';
 
 function iframePlugin() {
   return (tree) => {
-    visit(tree, 'text', (node, index, parent) => {
-      if (node.type === 'text' && node.value === '@') {
-        // Getting node value
-        const nodeValue = node.value;
+    visit(tree, 'link', (node, index, parent) => {
+      // Correctly handle possible undefined index
+      index = index ?? 0;
+      const prevIndex = index > 0 ? index - 1 : null;
+      const prevNode = typeof prevIndex === 'number' ? parent.children[prevIndex] : null;
 
-        // Finding link in child
-        const linkObject = parent.children.find((child) => child.type === 'link');
+      console.log(prevNode);
 
-        if (nodeValue === '@' && linkObject) {
-          // Setting the url
-          // console.log('NodeValue: ', nodeValue);
-          const url = parent.children[1].url;
-          // console.log('Url:', url);
+      if (prevNode && prevNode.type === 'text' && /@/.test(prevNode.value)) {
+        const url = node.url;
+        const title = node.children[0]?.value || 'Embedded content';
 
-          if (parent.children[1].url.startsWith('https://www.youtube.com')) {
-            // Create a URL object
-            const videoId = new URL(url);
+        const iframeNode = {
+          type: 'html',
+          value: `<iframe src="${url}" title="${title}" style="aspect-ratio: 16 / 9; width: 100%;" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`
+        };
+        
+        const linkNode = {
+          type: 'html',
+          value: `<a href="${url}" target="_blank" rel="noopener noreferrer">Open in new tab</a>`
+        };
 
-            // Get the value of the 'v' parameter
-            const youtubeId = videoId.searchParams.get('v');
-
-            // Setting youtube url as embed video
-            const youtubeVideoUrl = `https://www.youtube.com/embed/${youtubeId}`;
-
-            // Returning html if youtube video
-            node.type = 'html';
-            node.value = `<iframe src="${youtubeVideoUrl}" style="aspect-ratio: 16 / 9; width: 100%;" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
-          } else {
-            // Returning html if not youtube video
-            node.type = 'html';
-            node.value = `<iframe src="${url}" style="aspect-ratio: 16 / 9; width: 100%;" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
-          }
-        }
+        parent.children.splice(prevIndex, 2, iframeNode, linkNode);
       }
     });
   };
